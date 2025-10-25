@@ -19,6 +19,8 @@ variables:
   value: 'backend/src/lrembecki.obsluga-it.api/lrembecki.obsluga-it.api.csproj'
 - name: buildConfiguration
   value: 'Release'
+- name: dotnetVersion
+  value: '8.0.x'
 
 stages:
 - stage: build
