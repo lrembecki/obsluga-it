@@ -1,8 +1,10 @@
+using lrembecki.obsluga_it.domain.Events;
+
 namespace lrembecki.obsluga_it.domain.Entities;
 
 public class Subscription : BaseEntity, IHasId<Guid>
 {
-    private HashSet<UserSubscription> _userSubscriptions = [];
+    private readonly HashSet<UserSubscription> _userSubscriptions = [];
     public IReadOnlyCollection<UserSubscription> UserSubscriptions => _userSubscriptions.AsReadOnly();
 
     public Guid Id { get; set; }
@@ -20,6 +22,4 @@ public class Subscription : BaseEntity, IHasId<Guid>
 
         return subscription;
     }
-
-    public record SubscriptionCreatedDomainEvent(Guid SubscriptionId, string Name) : DomainEvent(Guid.NewGuid(), "Subscription", DateTime.UtcNow);
 }

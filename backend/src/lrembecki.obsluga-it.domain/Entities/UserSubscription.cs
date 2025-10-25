@@ -16,6 +16,4 @@ public class UserSubscription : BaseEntity
             SubscriptionId = subscriptionId
         };
     }
-
-    public record UserSubscriptionCreatedDomainEvent(Guid UserId, Guid SubscriptionId) : DomainEvent(Guid.NewGuid(), "UserSubscription", DateTime.UtcNow);
 }

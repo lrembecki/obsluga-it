@@ -1,0 +1,23 @@
+﻿using lrembecki.obsluga_it.domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace lrembecki.obsluga_it.infrastructure.Entities;
+
+internal class SubscriptionEntityTypeConfiguration : IEntityTypeConfiguration<Subscription>
+{
+    public void Configure(EntityTypeBuilder<Subscription> builder)
+    {
+        builder.ToTable(nameof(Subscription));
+
+        builder.HasKey(x => x.Id);
+        builder.HasIndex(e => e.Name).IsUnique();
+
+        builder.Property(e => e.Id).HasColumnName("SubscriptionId");
+        builder.Property(e => e.Name).HasMaxLength(150).IsRequired();
+        builder.Property(e => e.CreatedById);
+        builder.Property(e => e.UpdatedById);
+        builder.Property(e => e.CreatedAt);
+        builder.Property(e => e.UpdatedAt);
+    }
+}

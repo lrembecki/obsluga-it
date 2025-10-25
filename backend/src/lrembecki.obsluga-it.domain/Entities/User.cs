@@ -1,3 +1,4 @@
+using lrembecki.obsluga_it.domain.Events;
 using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.domain.Entities;
@@ -22,6 +23,4 @@ public class User : BaseEntity, IHasId<Guid>
 
         return user;
     }
-
-    public record UserCreatedDomainEvent(Guid UserId, Email Email) : DomainEvent(Guid.NewGuid(), nameof(User), DateTime.UtcNow);
 }
