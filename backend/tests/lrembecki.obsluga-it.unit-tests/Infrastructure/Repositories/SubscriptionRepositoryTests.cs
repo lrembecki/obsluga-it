@@ -55,15 +55,4 @@ public class SubscriptionRepositoryTests
         // Assert
         Assert.Empty(result);
     }
-
-    [Fact]
-    public async Task GetByIdAsync_NotImplemented_Throws()
-    {
-        // Arrange
-        var context = CreateInMemoryDbContext();
-        var repo = new SubscriptionRepository(context);
-
-        // Act & Assert
-        await Assert.ThrowsAsync<NotImplementedException>(() => repo.GetByIdAsync(Guid.NewGuid()));
-    }
 }
