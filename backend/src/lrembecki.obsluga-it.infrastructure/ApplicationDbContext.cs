@@ -2,7 +2,7 @@ namespace lrembecki.obsluga_it.infrastructure;
 
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext(
+internal class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options) 
     : DbContext(options)
 {
