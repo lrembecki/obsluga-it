@@ -19,6 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\lrembecki.obsluga-it.application\lrembecki.obsluga-it.application.csproj" />
+    <ProjectReference Include="..\..\src\lrembecki.obsluga-it.domain\lrembecki.obsluga-it.domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

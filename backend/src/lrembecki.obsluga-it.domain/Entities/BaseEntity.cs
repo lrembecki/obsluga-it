@@ -8,9 +8,9 @@ public class BaseEntity : IHasDomainEvents, IHasAuditFields
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.ToList().AsReadOnly();
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public Guid? CreatedById { get; set;  }
-    public DateTime UpdatedAt { get; set;  } = DateTime.UtcNow;
-    public Guid? UpdatedById { get; set;  }
+    public Guid? CreatedById { get; set; }
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public Guid? UpdatedById { get; set; }
 
     public void AddDomainEvent(DomainEvent domainEvent)
     {
