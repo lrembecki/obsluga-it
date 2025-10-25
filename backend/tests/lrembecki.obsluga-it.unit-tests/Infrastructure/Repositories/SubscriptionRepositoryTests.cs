@@ -1,5 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
-using lrembecki.obsluga_it.infrastructure;
+﻿using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Repositories;
 using lrembecki.obsluga_it.domain.Entities;
 using Microsoft.EntityFrameworkCore;

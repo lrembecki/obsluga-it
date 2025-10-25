@@ -1,10 +1,9 @@
+using lrembecki.obsluga_it.api.Endpoints;
 using lrembecki.obsluga_it.application;
-using lrembecki.obsluga_it.application.Abstractions;
-using lrembecki.obsluga_it.application.Queries;
 using lrembecki.obsluga_it.infrastructure;
-using lrembecki.obsluga_it.infrastructure.Extensions;
+
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
+
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -52,21 +51,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/api/account", (IAuthenticationService authentication, ClaimsPrincipal user) =>
-{
-    var email = user.Claims.First(c => c.Type is "emails" or "preferred_username" or ClaimTypes.Email).Value;
-    return authentication.SignInAsync(email, null);
-}).RequireAuthorization(AuthenticationExtensions.AzureAdUserScopePolicy);
+var endpointModules = typeof(IEndpointModule).Assembly
+    .GetTypes()
+    .Where(t => !t.IsAbstract && typeof(IEndpointModule).IsAssignableFrom(t))
+    .Select(Activator.CreateInstance)
+    .Cast<IEndpointModule>();
 
-app.MapGet("/api/account/{subscriptionId:guid}", (Guid subscriptionId, IAuthenticationService authentication, ClaimsPrincipal user) =>
-{
-    var email = user.Claims.First(c => c.Type is "emails" or "preferred_username" or ClaimTypes.Email).Value;
-    return authentication.SignInAsync(email, subscriptionId);
-}).RequireAuthorization(AuthenticationExtensions.AzureAdUserScopePolicy);
-
-app.MapGet("/api/subscriptions", (ISender sender) =>
-{
-    return sender.SendAsync(new GetSubscriptions());
-}).RequireAuthorization(AuthenticationExtensions.InternalJwtPolicy);
+foreach (var m in endpointModules)
+    m.MapEndpoints(app);
 
 app.Run();

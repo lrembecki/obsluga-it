@@ -1,0 +1,10 @@
+using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.obsluga_it.domain.Entities;
+
+namespace lrembecki.obsluga_it.application.Abstractions.Repositories;
+
+public interface ISubscriptionRepository : IRepository
+{
+    Task<Subscription?> GetByIdAsync(Guid id);
+    Task<List<SubscriptionVM>> GetAllAsync();
+}

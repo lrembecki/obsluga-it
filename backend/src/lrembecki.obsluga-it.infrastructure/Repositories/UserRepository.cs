@@ -1,4 +1,4 @@
-using lrembecki.obsluga_it.application.Repositories;
+using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using lrembecki.obsluga_it.domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
