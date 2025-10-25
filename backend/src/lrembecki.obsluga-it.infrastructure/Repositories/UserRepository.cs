@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Repositories;
 
-public class UserRepository(ApplicationDbContext dbContext) : IUserRepository
+internal class UserRepository(ApplicationDbContext dbContext) : IUserRepository
 {
     private readonly DbSet<User> _users = dbContext.Set<User>();
 
