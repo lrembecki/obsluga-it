@@ -15,3 +15,8 @@ public interface ISubscriptionRepository
     Task<Subscription?> GetByIdAsync(Guid id);
     Task<List<SubscriptionVM>> GetAllAsync();
 }
+
+public interface ISubscriptionUserRepository
+{
+    Task<SubscriptionUser?> GetByEmailAndSubscriptionId(string email, Guid? subscriptionId);
+}

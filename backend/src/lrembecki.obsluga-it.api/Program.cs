@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.application;
+using lrembecki.obsluga_it.application.Commands;
 using lrembecki.obsluga_it.application.Queries;
 using lrembecki.obsluga_it.infrastructure;
 
@@ -49,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "obsluga-it API", Version = "v1" });
 });
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddServices();
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment());
@@ -74,6 +76,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/subscriptions", (ISender sender) => sender.SendAsync(new GetSubscriptions())).RequireAuthorization();
+app.MapGet("/api/account", (ISender sender, IHttpContextAccessor accessor) => sender.SendAsync(new SignInCommand(accessor.HttpContext!.User.Claims.First(e => e.Type == "emails").Value, null!)));
+app.MapGet("/api/account/{subscriptionId:guid}", (Guid subscriptionId, ISender sender, IHttpContextAccessor accessor) => sender.SendAsync(new SignInCommand(accessor.HttpContext!.User.Claims.First(e => e.Type == "emails").Value, subscriptionId)));
+app.MapGet("/api/subscriptions", (ISender sender) => sender.SendAsync(new GetSubscriptions())).RequireAuthorization();
 
 app.Run();

@@ -18,5 +18,18 @@ public static class ServiceRegistration
                 }
             });
         });
+
+        typeof(ServiceRegistration).Assembly.GetTypes().ToList()
+            .Where(t => t.IsClass && !t.IsAbstract)
+            .Where(t => t.GetInterfaces().Any(i => i.Name == $"I{t.Name}"))
+            .ToList()
+            .ForEach(implType =>
+            {
+                var interfaceType = implType.GetInterface($"I{implType.Name}");
+                if (interfaceType != null)
+                {
+                    services.AddTransient(interfaceType, implType);
+                }
+            });
     }
 }
