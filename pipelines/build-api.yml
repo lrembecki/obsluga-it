@@ -7,7 +7,7 @@ trigger:
 			- main
 	paths:
 		include:
-			- backend/src/lrembecki.obsluga-it.api/
+			- backend/
 
 pr:
 	branches:
