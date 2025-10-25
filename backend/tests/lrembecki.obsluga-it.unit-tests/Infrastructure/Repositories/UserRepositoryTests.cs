@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Repositories;
@@ -34,7 +35,7 @@ public class UserRepositoryTests
         var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
         var user = User.Create(Guid.NewGuid(), new Email("bob@example.com"));
         var subscription = Subscription.Create(subscriptionId, "Main");
-        var link = SubscriptionUser.Create(user, subscription, true);
+        var link = SubscriptionUser.Create(user, true);
         link.User = user;
 
         ctx.Set<User>().Add(user);

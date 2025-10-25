@@ -5,6 +5,6 @@ namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 
 public class SubscriptionEntity : BaseEntity, IHasSubscriptionId
 {
-    public Guid SubscriptionId { get; private set; }
-    public Subscription Subscription { get; private set; } = null!;
+    public Guid SubscriptionId { get; protected set; }
+    public Subscription Subscription { get; protected set; } = null!;
 }

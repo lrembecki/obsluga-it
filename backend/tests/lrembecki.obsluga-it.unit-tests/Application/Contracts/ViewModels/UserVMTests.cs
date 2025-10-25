@@ -3,6 +3,7 @@ using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using lrembecki.obsluga_it.unit_tests.Shared;
+using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
@@ -32,7 +33,7 @@ public class UserVMTests
         var context = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
         var user = User.Create(Guid.NewGuid(), new Email("alice@example.com"));
         var subscription = Subscription.Create(subscriptionId, "Premium");
-        var link = SubscriptionUser.Create(user, subscription, true);
+        var link = SubscriptionUser.Create(user, true);
         link.User = user;
 
         context.Set<User>().Add(user);

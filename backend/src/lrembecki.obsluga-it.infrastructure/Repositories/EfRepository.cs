@@ -8,7 +8,7 @@ internal class EfRepository<T>(ApplicationDbContext dbContext): IRepository<T>
 {
     protected readonly DbSet<T> _dbSet = dbContext.Set<T>();
 
-    public IQueryable<T> GetAll() => _dbSet.AsNoTracking();
+    public virtual IQueryable<T> GetAll() => _dbSet.AsNoTracking();
 
     public async Task<T> AddAsync(T entity)
     {

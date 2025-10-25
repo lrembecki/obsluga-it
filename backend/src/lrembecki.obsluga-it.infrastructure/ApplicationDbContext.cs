@@ -13,45 +13,65 @@ internal class ApplicationDbContext(
     ISessionAccessor sessionFactory)
     : DbContext(options)
 {
+
     override protected void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        var subscriptionId = sessionFactory.SubscriptionId;
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var entities = ChangeTracker.Entries().ToList();
-        var now = dateProvider.UtcNow;
+        UpdateMetadata();
 
-        foreach (var entity in entities)
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override int SaveChanges()
+    {
+        UpdateMetadata();
+
+        return base.SaveChanges();
+    }
+
+    private void UpdateMetadata()
+    {
+        try
         {
-            if (entity.Entity is IHasSubscriptionId subscriptionEntity)
-            {
-                subscriptionEntity.GetType().GetProperty(nameof(IHasSubscriptionId.SubscriptionId))!
-                    .SetValue(entity.Entity, sessionFactory.SubscriptionId);
-            }
+            var entities = ChangeTracker.Entries().ToList();
+            var now = dateProvider.UtcNow;
 
-            if (entity.Entity is IHasAuditFields auditableEntity && sessionFactory.UserId is not null)
+            foreach (var entity in entities)
             {
-                switch (entity.State)
+                if (entity.Entity is IHasSubscriptionId subscriptionEntity)
                 {
-                    case EntityState.Added:
+                    subscriptionEntity.GetType().GetProperty(nameof(IHasSubscriptionId.SubscriptionId))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
+                }
 
-                        auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.CreatedById))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
-                        auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.CreatedAt))!.SetValue(entity.Entity, now);
-                        auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedById))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
-                        auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedAt))!.SetValue(entity.Entity, now);
-                        break;
-                    case EntityState.Modified:
-                        auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedById))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
-                        auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedAt))!.SetValue(entity.Entity, now);
-                        break;
+                if (entity.Entity is IHasAuditFields auditableEntity && sessionFactory.UserId is not null)
+                {
+                    switch (entity.State)
+                    {
+                        case EntityState.Added:
+
+                            auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.CreatedById))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
+                            auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.CreatedAt))!.SetValue(entity.Entity, now);
+                            auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedById))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
+                            auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedAt))!.SetValue(entity.Entity, now);
+                            break;
+                        case EntityState.Modified:
+                            auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedById))!.SetValue(entity.Entity, sessionFactory.SubscriptionId);
+                            auditableEntity.GetType().GetProperty(nameof(IHasAuditFields.UpdatedAt))!.SetValue(entity.Entity, now);
+                            break;
+                    }
                 }
             }
         }
-
-        return base.SaveChangesAsync(cancellationToken);
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 }

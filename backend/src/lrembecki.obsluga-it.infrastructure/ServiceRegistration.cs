@@ -32,7 +32,11 @@ public static class ServiceRegistration
         services.AddProjectAuthentication(configuration);
 
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("sql")));
+            options.UseSqlServer(configuration.GetConnectionString("sql"), _ =>
+            {
+                _.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                _.MigrationsHistoryTable("__EFMigrationsHistory", "oit");
+            }));
 
         services.AddScoped<ApplicationDbContext>();
 

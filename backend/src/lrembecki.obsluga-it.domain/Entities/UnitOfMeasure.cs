@@ -1,11 +1,7 @@
 using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.obsluga_it.domain.Enums;
 
 namespace lrembecki.obsluga_it.domain.Entities;
-
-public enum UnitOfMeasureType
-{
-	Currency
-}
 
 public class UnitOfMeasure : BaseEntity, IHasId<Guid>
 {

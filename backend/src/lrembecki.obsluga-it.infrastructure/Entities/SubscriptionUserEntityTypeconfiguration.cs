@@ -1,4 +1,5 @@
-﻿using lrembecki.obsluga_it.domain.Entities;
+﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
+using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
