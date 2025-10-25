@@ -14,18 +14,29 @@ pr:
     include:
     - main
 
+variables:
+- name: projectFile
+  value: 'backend/src/lrembecki.obsluga-it.api/lrembecki.obsluga-it.api.csproj'
+
 stages:
 - stage: build
   jobs:
   - job: build
     steps:
-    - checkout: self
+    - task: UseDotNet@2
+      displayName: 'Use .NET SDK $(dotnetVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(dotnetVersion)'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: './backend/'
+        projects: '$(projectFile)'
         feedsToUse: 'select'
+
     - task: DotNetCoreCLI@2
+      displayName: Build
       inputs:
         command: 'build'
-        projects: './backend/'
+        projects: '$(projectFile)'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
