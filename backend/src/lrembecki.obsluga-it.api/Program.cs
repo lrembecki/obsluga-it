@@ -1,35 +1,17 @@
 using lrembecki.obsluga_it.application;
-using lrembecki.obsluga_it.application.Commands;
+using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Queries;
 using lrembecki.obsluga_it.infrastructure;
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-using System.Text;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, _ =>
-    {
-        _.TokenValidationParameters = new TokenValidationParameters
-        {
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["OpenId:Secret"]!)),
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidIssuers = [builder.Configuration["OpenId:Issuer"]],
-            ValidAudiences = [builder.Configuration["OpenId:Audience"]]
-        };
-    })
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"), jwtBearerScheme: "AzureAd");
 
 builder.Services
     .AddCors(_ => _
@@ -76,8 +58,21 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/api/account", (ISender sender, IHttpContextAccessor accessor) => sender.SendAsync(new SignInCommand(accessor.HttpContext!.User.Claims.First(e => e.Type == "emails").Value, null!)));
-app.MapGet("/api/account/{subscriptionId:guid}", (Guid subscriptionId, ISender sender, IHttpContextAccessor accessor) => sender.SendAsync(new SignInCommand(accessor.HttpContext!.User.Claims.First(e => e.Type == "emails").Value, subscriptionId)));
-app.MapGet("/api/subscriptions", (ISender sender) => sender.SendAsync(new GetSubscriptions())).RequireAuthorization();
+app.MapGet("/api/account", (IAuthenticationService authentication, ClaimsPrincipal user) =>
+{
+    var email = user.Claims.First(e => e.Type == "emails").Value;
+    return authentication.SignInAsync(email, null);
+}).RequireAuthorization(AuthenticationExtensions.AzureAdUserScopePolicy);
+
+app.MapGet("/api/account/{subscriptionId:guid}", (Guid subscriptionId, IAuthenticationService authentication, ClaimsPrincipal user) =>
+{
+    var email = user.Claims.First(e => e.Type == "emails").Value;
+    return authentication.SignInAsync(email, subscriptionId);
+}).RequireAuthorization(AuthenticationExtensions.AzureAdUserScopePolicy);
+
+app.MapGet("/api/subscriptions", (ISender sender) =>
+{
+    return sender.SendAsync(new GetSubscriptions());
+}).RequireAuthorization(AuthenticationExtensions.InternalJwtScheme);
 
 app.Run();

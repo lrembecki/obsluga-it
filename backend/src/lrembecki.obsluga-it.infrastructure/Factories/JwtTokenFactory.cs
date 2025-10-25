@@ -1,12 +1,13 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace lrembecki.obsluga_it.infrastructure.Helpers;
+namespace lrembecki.obsluga_it.infrastructure.Factories;
 
-internal class TokenHelper(IConfiguration configuration) : ITokenHelper
+internal class JwtTokenFactory(IConfiguration configuration) : IJwtTokenFactory
 {
     public string CreateToken(
         UserVM userVM,
@@ -16,14 +17,13 @@ internal class TokenHelper(IConfiguration configuration) : ITokenHelper
         DateTime expires)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
+        var securityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["OpenId:Secret"]!));
 
-        var token = tokenHandler.CreateToken(new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
+        var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
         {
             Issuer = configuration["OpenId:Issuer"],
             Audience = configuration["OpenId:Audience"],
-            SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(
-                new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["OpenId:Secret"]!)),
-                Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256),
+            SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256),
             Subject = new ClaimsIdentity([
                 new Claim(CustomClaimTypes.Subject, userVM.Id.ToString()),
                 new Claim(CustomClaimTypes.UserId, userVM.Id.ToString()),

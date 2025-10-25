@@ -14,6 +14,7 @@ public static class ServiceRegistration
         ConfigurationManager configuration,
         bool isDevelopment)
     {
+
         configuration.AddAzureAppConfiguration(ac =>
         {
             TokenCredential credential = isDevelopment
@@ -26,6 +27,8 @@ public static class ServiceRegistration
             ac.ConfigureKeyVault(kv => kv.SetCredential(credential));
             ac.Connect(new Uri(configuration.GetConnectionString("AppConfiguration")!), credential);
         });
+
+        services.AddProjectAuthentication(configuration);
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("sql")));

@@ -2,7 +2,7 @@
 
 namespace lrembecki.obsluga_it.application.Abstractions;
 
-public interface ITokenHelper
+public interface IJwtTokenFactory
 {
     string CreateToken(
         UserVM userVM,
