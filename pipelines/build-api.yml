@@ -23,9 +23,9 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '/backend'
+        projects: './backend/'
         feedsToUse: 'select'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: '/backend'
+        projects: './backend/'
