@@ -21,7 +21,6 @@ public static class AuthenticationExtensions
         services
             .AddAuthentication(options =>
             {
-                // INTERNAL JWT is now the default for all API calls.
                 options.DefaultAuthenticateScheme = InternalJwtScheme;
                 options.DefaultChallengeScheme = InternalJwtScheme;
             })
@@ -42,7 +41,6 @@ public static class AuthenticationExtensions
                 configuration.GetSection("AzureAd"),
                 jwtBearerScheme: AzureAdScheme);
 
-        // Use AddAuthorizationBuilder instead of AddAuthorization
         services.AddAuthorizationBuilder()
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .AddAuthenticationSchemes(InternalJwtScheme)

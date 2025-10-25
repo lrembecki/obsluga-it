@@ -21,10 +21,10 @@ internal class SubscriptionUserEntityTypeconfiguration : IEntityTypeConfiguratio
 
         builder.Property(e => e.IsDefault);
 
-        builder.HasOne(e => e.Subscription).WithMany().HasForeignKey(e => e.SubscriptionId)
+        builder.HasOne(e => e.Subscription).WithMany(e => e.UserSubscriptions).HasForeignKey(e => e.SubscriptionId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(e => e.User).WithMany().HasForeignKey(e => e.UserId)
+        builder.HasOne(e => e.User).WithMany(e => e.UserSubscriptions).HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
