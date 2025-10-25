@@ -340,6 +340,8 @@ CREATE TABLE bookings (
 - Authentication flows
 - Booking processes
 
+For full conventions and detailed guidelines see `testing-overview.md`.
+
 ## Deployment Architecture
 
 ### Environment Configuration
