@@ -1,26 +1,18 @@
 ﻿using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Repositories;
 using lrembecki.obsluga_it.domain.Entities;
-using Microsoft.EntityFrameworkCore;
+using lrembecki.obsluga_it.unit_tests.Shared;
 
 namespace lrembecki.obsluga_it.unit_tests.Infrastructure.Repositories;
 
 public class SubscriptionRepositoryTests
 {
-    private static ApplicationDbContext CreateInMemoryDbContext(string? dbName = null)
-    {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(dbName ?? Guid.NewGuid().ToString())
-            .EnableSensitiveDataLogging()
-            .Options;
-        return new ApplicationDbContext(options);
-    }
 
     [Fact]
     public async Task GetAllAsync_ReturnsMappedViewModels()
     {
         // Arrange
-        var context = CreateInMemoryDbContext();
+        var context = InMemoryApplicationDbContext.Create();
         var subs = new[]
         {
             Subscription.Create(Guid.NewGuid(), "Alpha"),
@@ -31,7 +23,7 @@ public class SubscriptionRepositoryTests
         var repo = new SubscriptionRepository(context);
 
         // Act
-        var result = await repo.GetAllAsync();
+        var result = await repo.GetAllSubscriptionVMAsync();
 
         // Assert
         Assert.Equal(subs.Length, result.Count);
@@ -46,11 +38,11 @@ public class SubscriptionRepositoryTests
     public async Task GetAllAsync_Empty_ReturnsEmptyList()
     {
         // Arrange
-        var context = CreateInMemoryDbContext();
+        var context = InMemoryApplicationDbContext.Create();
         var repo = new SubscriptionRepository(context);
 
         // Act
-        var result = await repo.GetAllAsync();
+        var result = await repo.GetAllSubscriptionVMAsync();
 
         // Assert
         Assert.Empty(result);

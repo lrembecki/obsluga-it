@@ -1,4 +1,4 @@
-using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 
 namespace lrembecki.obsluga_it.unit_tests.Domain.Entities;
 
@@ -10,7 +10,7 @@ public class FileGroupTests
         var id = Guid.NewGuid();
         var fg = FileGroup.Create(id, "Group1");
 
-        Assert.Equal(id, fg.FileGroupId);
+        Assert.Equal(id, fg.Id);
         Assert.Equal("Group1", fg.Name);
     }
 }

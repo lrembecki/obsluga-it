@@ -1,7 +1,8 @@
 using lrembecki.obsluga_it.application.Abstractions.Repositories;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using System.Collections;
 
-namespace lrembecki.obsluga_it.unit_tests.Application;
+namespace lrembecki.obsluga_it.unit_tests.Shared;
 
 internal sealed class FakeUnitOfWork(Hashtable hashset) : IUnitOfWork
 {

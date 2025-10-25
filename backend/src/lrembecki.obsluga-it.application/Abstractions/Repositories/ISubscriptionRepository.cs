@@ -3,10 +3,7 @@ using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Abstractions.Repositories;
 
-public interface ISubscriptionRepository : IRepository
+public interface ISubscriptionRepository : IRepository<Subscription>
 {
-    Task<Subscription?> GetByIdAsync(Guid id);
-    Task<List<SubscriptionVM>> GetAllAsync();
-    Task<Subscription> AddAsync(Subscription subscription);
-    Task<Subscription> UpdateAsync(Subscription subscription);
+    Task<List<SubscriptionVM>> GetAllSubscriptionVMAsync(CancellationToken cancellationToken = default);
 }

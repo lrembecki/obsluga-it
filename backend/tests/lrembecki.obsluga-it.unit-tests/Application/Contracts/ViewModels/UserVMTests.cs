@@ -2,20 +2,12 @@
 using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using lrembecki.obsluga_it.infrastructure;
+using lrembecki.obsluga_it.unit_tests.Shared;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
 public class UserVMTests
 {
-    private static ApplicationDbContext CreateInMemoryDbContext(string? dbName = null)
-    {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(dbName ?? Guid.NewGuid().ToString())
-            .EnableSensitiveDataLogging()
-            .Options;
-        return new ApplicationDbContext(options);
-    }
 
     [Fact]
     public void MapFromDomainEntity_NoSubscriptions_MapsEmptyList()
@@ -36,12 +28,12 @@ public class UserVMTests
     public void MapFromDomainEntity_WithSubscriptions_MapsAllFields()
     {
         // Arrange
-        var context = CreateInMemoryDbContext();
+        var subscriptionId = Guid.NewGuid();
+        var context = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
         var user = User.Create(Guid.NewGuid(), new Email("alice@example.com"));
-        var subscription = Subscription.Create(Guid.NewGuid(), "Premium");
-        var link = SubscriptionUser.Create(user.Id, subscription.Id);
+        var subscription = Subscription.Create(subscriptionId, "Premium");
+        var link = SubscriptionUser.Create(user, subscription, true);
         link.User = user;
-        link.Subscription = subscription;
 
         context.Set<User>().Add(user);
         context.Set<Subscription>().Add(subscription);

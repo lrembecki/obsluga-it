@@ -2,28 +2,19 @@ using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Repositories;
+using lrembecki.obsluga_it.unit_tests.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.unit_tests.Infrastructure.Repositories;
 
 public class SubscriptionUserRepositoryTests
 {
-    private static ApplicationDbContext CreateInMemoryDbContext(string? dbName = null)
-    {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(dbName ?? Guid.NewGuid().ToString())
-        .EnableSensitiveDataLogging()
-             .Options;
-        return new ApplicationDbContext(options);
-    }
-
-    private static (User user, Subscription subscription, SubscriptionUser link) SeedLink(ApplicationDbContext ctx, string email, string subName)
+    private static (User user, Subscription subscription, SubscriptionUser link) SeedLink(Guid subscriptionId, ApplicationDbContext ctx, string email, string subName)
     {
         var user = User.Create(Guid.NewGuid(), new Email(email));
         var subscription = Subscription.Create(Guid.NewGuid(), subName);
-        var link = SubscriptionUser.Create(user.Id, subscription.Id);
+        var link = SubscriptionUser.Create(user, subscription, true);
         link.User = user;
-        link.Subscription = subscription;
         ctx.Set<User>().Add(user);
         ctx.Set<Subscription>().Add(subscription);
         ctx.Set<SubscriptionUser>().Add(link);
@@ -34,8 +25,9 @@ public class SubscriptionUserRepositoryTests
     public async Task GetByEmailAndSubscriptionId_EmailOnly_ReturnsMatch()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
-        var (user, subscription, _) = SeedLink(ctx, "dave@example.com", "SubA");
+        var subscriptionId = Guid.NewGuid();
+        var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
+        var (user, subscription, _) = SeedLink(subscriptionId, ctx, "dave@example.com", "SubA");
         await ctx.SaveChangesAsync();
         var repo = new SubscriptionUserRepository(ctx);
 
@@ -54,9 +46,10 @@ public class SubscriptionUserRepositoryTests
     public async Task GetByEmailAndSubscriptionId_EmailAndSubscription_ReturnsSpecificMatch()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
-        var (targetUser, targetSub, _) = SeedLink(ctx, "erin@example.com", "TargetSub");
-        var (_, otherSub, _) = SeedLink(ctx, "erin@example.com", "OtherSub"); // same email different subscription
+        var subscriptionId = Guid.NewGuid();
+        var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
+        var (targetUser, targetSub, _) = SeedLink(subscriptionId, ctx, "erin@example.com", "TargetSub");
+        var (_, otherSub, _) = SeedLink(subscriptionId, ctx, "erin@example.com", "OtherSub"); // same email different subscription
         await ctx.SaveChangesAsync();
         var repo = new SubscriptionUserRepository(ctx);
 
@@ -74,8 +67,9 @@ public class SubscriptionUserRepositoryTests
     public async Task GetByEmailAndSubscriptionId_WrongSubscription_ReturnsNull()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
-        var (user, sub, _) = SeedLink(ctx, "frank@example.com", "SubX");
+        var subscriptionId = Guid.NewGuid();
+        var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
+        var (user, sub, _) = SeedLink(subscriptionId, ctx, "frank@example.com", "SubX");
         await ctx.SaveChangesAsync();
         var repo = new SubscriptionUserRepository(ctx);
 
@@ -90,7 +84,7 @@ public class SubscriptionUserRepositoryTests
     public async Task GetByEmailAndSubscriptionId_EmailNotFound_ReturnsNull()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
+        var ctx = InMemoryApplicationDbContext.Create();
         var repo = new SubscriptionUserRepository(ctx);
 
         // Act

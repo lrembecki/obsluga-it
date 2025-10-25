@@ -8,5 +8,5 @@ public record SubscriptionsGetQuery() : IRequest<List<SubscriptionVM>>;
 internal sealed class SubscriptionsGetQueryHandler(IUnitOfWork uow) : IRequestHandler<SubscriptionsGetQuery, List<SubscriptionVM>>
 {
     public Task<List<SubscriptionVM>> HandleAsync(SubscriptionsGetQuery request, CancellationToken cancellationToken = default)
-        => uow.GetRepository<ISubscriptionRepository>().GetAllAsync();
+        => uow.GetRepository<ISubscriptionRepository>().GetAllSubscriptionVMAsync(cancellationToken);
 }

@@ -5,18 +5,26 @@ public class SubscriptionUser : BaseEntity
     public Guid UserId { get; set; }
     public User User { get; set; } = default!;
 
-    public bool IsActive { get; set; } = true;
-    public bool IsDefault { get; set; } = false;
-
     public Guid SubscriptionId { get; set; }
     public Subscription Subscription { get; set; } = default!;
 
-    public static SubscriptionUser Create(Guid userId, Guid subscriptionId)
-    {
-        return new SubscriptionUser
+    public bool IsActive { get; set; } = true;
+    public bool IsDefault { get; set; } = false;
+
+    public static SubscriptionUser Create(User user, Subscription subscription, bool isDefault)
+        => new ()
         {
-            UserId = userId,
-            SubscriptionId = subscriptionId
+            UserId = user.Id,
+            User = user,
+            SubscriptionId = subscription.Id,
+            Subscription = subscription,
+            IsActive = true,
+            IsDefault = isDefault
         };
+
+    public void Update(bool isDefault, bool isActive)
+    {
+        IsDefault = isDefault;
+        IsActive = isActive;
     }
 }

@@ -2,26 +2,18 @@ using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Repositories;
+using lrembecki.obsluga_it.unit_tests.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.unit_tests.Infrastructure.Repositories;
 
 public class UserRepositoryTests
 {
-    private static ApplicationDbContext CreateInMemoryDbContext(string? dbName = null)
-    {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        .UseInMemoryDatabase(dbName ?? Guid.NewGuid().ToString())
-       .EnableSensitiveDataLogging()
-             .Options;
-        return new ApplicationDbContext(options);
-    }
-
     [Fact]
     public async Task AddAsync_PersistsUser()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
+        var ctx = InMemoryApplicationDbContext.Create();
         var repo = new UserRepository(ctx);
         var user = User.Create(Guid.NewGuid(), new Email("alice@example.com"));
 
@@ -38,12 +30,12 @@ public class UserRepositoryTests
     public async Task GetByEmailAsync_ReturnsUserWithSubscriptions()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
+        var subscriptionId = Guid.NewGuid();
+        var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
         var user = User.Create(Guid.NewGuid(), new Email("bob@example.com"));
-        var subscription = Subscription.Create(Guid.NewGuid(), "Main");
-        var link = SubscriptionUser.Create(user.Id, subscription.Id);
+        var subscription = Subscription.Create(subscriptionId, "Main");
+        var link = SubscriptionUser.Create(user, subscription, true);
         link.User = user;
-        link.Subscription = subscription;
 
         ctx.Set<User>().Add(user);
         ctx.Set<Subscription>().Add(subscription);
@@ -65,7 +57,7 @@ public class UserRepositoryTests
     public async Task GetByEmailAsync_NotFound_ReturnsNull()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
+        var ctx = InMemoryApplicationDbContext.Create();
         var repo = new UserRepository(ctx);
 
         // Act
@@ -79,7 +71,7 @@ public class UserRepositoryTests
     public async Task GetByIdAsync_ReturnsUser()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
+        var ctx = InMemoryApplicationDbContext.Create();
         var user = User.Create(Guid.NewGuid(), new Email("carol@example.com"));
         ctx.Set<User>().Add(user);
         await ctx.SaveChangesAsync();
@@ -97,7 +89,7 @@ public class UserRepositoryTests
     public async Task GetByIdAsync_NotFound_ReturnsNull()
     {
         // Arrange
-        var ctx = CreateInMemoryDbContext();
+        var ctx = InMemoryApplicationDbContext.Create();
         var repo = new UserRepository(ctx);
 
         // Act

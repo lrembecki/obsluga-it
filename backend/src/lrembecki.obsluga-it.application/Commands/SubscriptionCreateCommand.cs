@@ -7,7 +7,7 @@ namespace lrembecki.obsluga_it.application.Commands;
 public record SubscriptionCreateCommand(string Name): IRequest<SubscriptionVM>;
 public record SubscriptionUpdateCommand(Guid SubscriptionId, string Name): IRequest<SubscriptionVM>;
 
-internal sealed class SubscriptionCommandHandler(IUnitOfWork uow) 
+internal sealed class SubscriptionCommandHandler(IUnitOfWork uow)
     : IRequestHandler<SubscriptionCreateCommand, SubscriptionVM>
     , IRequestHandler<SubscriptionUpdateCommand, SubscriptionVM>
 {
@@ -28,7 +28,7 @@ internal sealed class SubscriptionCommandHandler(IUnitOfWork uow)
 
     public async Task<SubscriptionVM> HandleAsync(SubscriptionUpdateCommand request, CancellationToken cancellationToken = default)
     {
-        var subscription = (await _subscriptions.GetByIdAsync(request.SubscriptionId))
+        var subscription = (await _subscriptions.FindByIdAsync(request.SubscriptionId, cancellationToken))
             ?? throw new Exception("Subscription not found");
 
         subscription.Name = request.Name;
