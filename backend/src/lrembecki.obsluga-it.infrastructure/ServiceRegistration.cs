@@ -1,9 +1,10 @@
 using Azure.Core;
 using Azure.Identity;
-
+using lrembecki.obsluga_it.infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace lrembecki.obsluga_it.infrastructure;
 
@@ -37,15 +38,10 @@ public static class ServiceRegistration
 
         typeof(ServiceRegistration).Assembly.GetTypes().ToList()
             .Where(t => t.IsClass && !t.IsAbstract)
-            .Where(t => t.GetInterfaces().Any(i => i.Name == $"I{t.Name}"))
+            .Where(t => !t.IsDefined(typeof(CompilerGeneratedAttribute), inherit: false))
+            .Select(t => new { Impl = t, Interface = t.GetInterface($"I{t.Name}") })
+            .Where(x => x.Interface != null && x.Interface.Namespace != null && x.Interface.Namespace.StartsWith("lrembecki.obsluga_it."))
             .ToList()
-            .ForEach(implType =>
-            {
-                var interfaceType = implType.GetInterface($"I{implType.Name}");
-                if (interfaceType != null)
-                {
-                    services.AddScoped(interfaceType, implType);
-                }
-            });
+            .ForEach(x => services.AddScoped(x.Interface!, x.Impl));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace lrembecki.obsluga_it.application;
 
@@ -7,8 +8,12 @@ public static class ServiceRegistration
 {
     public static void AddServices(this IServiceCollection services)
     {
-        typeof(ServiceRegistration).Assembly.GetTypes().ToList().ForEach(type =>
+        var assembly = typeof(ServiceRegistration).Assembly;
+
+        assembly.GetTypes().ToList().ForEach(type =>
         {
+            if (type.IsDefined(typeof(CompilerGeneratedAttribute), inherit: false)) return;
+
             type.GetInterfaces().Where(e => e.IsGenericType).ToList().ForEach(handlerType =>
             {
                 var genericDef = handlerType.GetGenericTypeDefinition();
@@ -19,17 +24,12 @@ public static class ServiceRegistration
             });
         });
 
-        typeof(ServiceRegistration).Assembly.GetTypes().ToList()
+        assembly.GetTypes().ToList()
             .Where(t => t.IsClass && !t.IsAbstract)
-            .Where(t => t.GetInterfaces().Any(i => i.Name == $"I{t.Name}"))
+            .Where(t => !t.IsDefined(typeof(CompilerGeneratedAttribute), inherit: false))
+            .Select(t => new { Impl = t, Interface = t.GetInterface($"I{t.Name}") })
+            .Where(x => x.Interface != null && x.Interface.Namespace != null && x.Interface.Namespace.StartsWith("lrembecki.obsluga_it."))
             .ToList()
-            .ForEach(implType =>
-            {
-                var interfaceType = implType.GetInterface($"I{implType.Name}");
-                if (interfaceType != null)
-                {
-                    services.AddTransient(interfaceType, implType);
-                }
-            });
+            .ForEach(x => services.AddTransient(x.Interface!, x.Impl));
     }
 }

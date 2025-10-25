@@ -1,16 +1,18 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace lrembecki.obsluga_it.infrastructure;
+namespace lrembecki.obsluga_it.infrastructure.Extensions;
 
 public static class AuthenticationExtensions
 {
     public const string AzureAdScheme = "AzureAd";
     public const string InternalJwtScheme = "InternalJwt";
     public const string AzureAdUserScopePolicy = "AzureAdUserScope";
+    public const string InternalJwtPolicy = "InternalJwtPolicy";
 
     public static IServiceCollection AddProjectAuthentication(
         this IServiceCollection services,
@@ -19,9 +21,9 @@ public static class AuthenticationExtensions
         services
             .AddAuthentication(options =>
             {
-                // Default authenticate can remain AzureAd (for initial sign-in)
-                options.DefaultAuthenticateScheme = AzureAdScheme;
-                options.DefaultChallengeScheme = AzureAdScheme;
+                // INTERNAL JWT is now the default for all API calls.
+                options.DefaultAuthenticateScheme = InternalJwtScheme;
+                options.DefaultChallengeScheme = InternalJwtScheme;
             })
             .AddJwtBearer(InternalJwtScheme, o =>
             {
@@ -40,16 +42,25 @@ public static class AuthenticationExtensions
                 configuration.GetSection("AzureAd"),
                 jwtBearerScheme: AzureAdScheme);
 
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy(AzureAdUserScopePolicy, policy =>
+        // Use AddAuthorizationBuilder instead of AddAuthorization
+        services.AddAuthorizationBuilder()
+            .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes(InternalJwtScheme)
+                .RequireAuthenticatedUser()
+                .Build())
+            .AddPolicy(AzureAdUserScopePolicy, policy =>
             {
                 policy
                     .AddAuthenticationSchemes(AzureAdScheme)
                     .RequireAuthenticatedUser()
                     .RequireClaim("scp", "access_as_user");
+            })
+            .AddPolicy(InternalJwtPolicy, policy =>
+            {
+                policy
+                    .AddAuthenticationSchemes(InternalJwtScheme)
+                    .RequireAuthenticatedUser();
             });
-        });
 
         return services;
     }
