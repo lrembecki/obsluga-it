@@ -1,8 +1,8 @@
-using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Abstractions.Repositories;
 
 public interface IFileGroupRepository : IRepository
 {
-    Task<FileGroup?> GetByIdAsync(Guid id);
+    Task<List<FileGroupVM>> GetAllAsync(CancellationToken cancellationToken);
 }

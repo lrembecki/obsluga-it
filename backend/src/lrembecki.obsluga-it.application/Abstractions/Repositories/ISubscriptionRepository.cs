@@ -7,4 +7,6 @@ public interface ISubscriptionRepository : IRepository
 {
     Task<Subscription?> GetByIdAsync(Guid id);
     Task<List<SubscriptionVM>> GetAllAsync();
+    Task<Subscription> AddAsync(Subscription subscription);
+    Task<Subscription> UpdateAsync(Subscription subscription);
 }

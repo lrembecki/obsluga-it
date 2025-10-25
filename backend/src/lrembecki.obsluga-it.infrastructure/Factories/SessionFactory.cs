@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

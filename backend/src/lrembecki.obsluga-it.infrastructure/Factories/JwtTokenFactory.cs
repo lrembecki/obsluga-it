@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

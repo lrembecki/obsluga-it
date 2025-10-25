@@ -11,7 +11,7 @@ public sealed class SubscriptionEndpoints : IEndpointModule
         app.MapGroup("/api/subscriptions")
            .RequireAuthorization(AuthenticationExtensions.InternalJwtPolicy)
            .WithTags("Subscriptions")
-           .MapGet("/", (ISender sender) => sender.SendAsync(new GetSubscriptions()));
+           .MapGet("/", (ISender sender) => sender.SendAsync(new SubscriptionsGetQuery()));
     }
 }
 

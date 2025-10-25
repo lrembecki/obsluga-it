@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace lrembecki.obsluga_it.infrastructure;

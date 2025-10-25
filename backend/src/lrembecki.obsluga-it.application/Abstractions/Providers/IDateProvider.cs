@@ -1,4 +1,4 @@
-namespace lrembecki.obsluga_it.application.Abstractions;
+namespace lrembecki.obsluga_it.application.Abstractions.Providers;
 
 public interface IDateProvider
 {

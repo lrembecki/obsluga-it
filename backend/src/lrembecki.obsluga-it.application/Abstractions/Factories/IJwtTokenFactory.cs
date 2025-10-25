@@ -1,6 +1,6 @@
 ﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
 
-namespace lrembecki.obsluga_it.application.Abstractions;
+namespace lrembecki.obsluga_it.application.Abstractions.Factories;
 
 public interface IJwtTokenFactory
 {

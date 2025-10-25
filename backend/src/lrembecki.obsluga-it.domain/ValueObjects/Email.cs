@@ -2,11 +2,10 @@ using System.Text.RegularExpressions;
 
 namespace lrembecki.obsluga_it.domain.ValueObjects;
 
-public class Email
+public partial class Email
 {
-    private static readonly Regex EmailRegex = new Regex(
-        @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase)]
+    private static partial Regex EmailRegex();
 
     public string Address { get; }
 
@@ -22,7 +21,7 @@ public class Email
 
     private static bool IsValidEmail(string email)
     {
-        return EmailRegex.IsMatch(email);
+        return EmailRegex().IsMatch(email);
     }
 
     public override string ToString()
