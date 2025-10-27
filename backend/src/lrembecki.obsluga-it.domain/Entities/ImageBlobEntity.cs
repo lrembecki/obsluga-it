@@ -1,17 +1,19 @@
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities.BlobEntities;
+using lrembecki.obsluga_it.domain.Common;
 
-internal class ImageBlobEntity : BlobEntity
+namespace lrembecki.obsluga_it.domain.Entities;
+
+internal class ImageBlobEntity : BlobSubscriptionBaseEntity
 {
-	private readonly HashSet<Tag> _tags = [];
+	private readonly HashSet<TagEnity> _tags = [];
 
 	public string? DisplayName { get; private set; } = default!;
 	public string? Description { get; private set; } = default!;
 	public long? Width { get; private set; } = default!;
 	public long? Height { get; private set; } = default!;
 
-	public IReadOnlyCollection<Tag> Tags => _tags.ToList().AsReadOnly();
+	public IReadOnlyCollection<TagEnity> Tags => _tags.ToList().AsReadOnly();
 
-    public static ImageBlobEntity Create (BlobEntity blob, List<Tag> tags)
+    public static ImageBlobEntity Create (BlobSubscriptionBaseEntity blob, List<TagEnity> tags)
 	{
 		var image = Create<ImageBlobEntity>(blob)!;
 
@@ -20,7 +22,7 @@ internal class ImageBlobEntity : BlobEntity
 		return image;
 	}
 
-	public void Update (BlobEntity blob, string displayName, string description, List<Tag> tags)
+	public void Update (BlobSubscriptionBaseEntity blob, string displayName, string description, List<TagEnity> tags)
 	{
 
 		if (blob is not null) Update(blob);
@@ -31,7 +33,7 @@ internal class ImageBlobEntity : BlobEntity
 		Update(tags);
     }
 
-    private void Update(List<Tag> tags)
+    private void Update(List<TagEnity> tags)
     {
         var tagsToRemove = Tags.Where(existingTag => !tags.Any(newTag => newTag.Name == existingTag.Name)).ToList();
         foreach (var tag in tagsToRemove)

@@ -1,9 +1,10 @@
 using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.obsluga_it.domain.Common;
 using lrembecki.obsluga_it.domain.ValueObjects;
 
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities.Actors;
+namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class Contact : SubscriptionEntity, IHasId<Guid>
+internal class ContactEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
 	public Guid Id { get; private set; } = default!;
 	public Guid ActorId { get; private set; }
@@ -11,9 +12,9 @@ internal class Contact : SubscriptionEntity, IHasId<Guid>
 	public Email Email { get; private set; } = default!;
 	public Phone Phone { get; private set; } = default!;
 
-	public static Contact Create(Guid contactId, string email, string phone)
+	public static ContactEntity Create(Guid contactId, string email, string phone)
 	{
-		Contact contact = new()
+		ContactEntity contact = new()
         {
             Id = contactId
         };

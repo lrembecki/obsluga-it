@@ -15,10 +15,10 @@ public class SubscriptionRepositoryTests
         var context = InMemoryApplicationDbContext.Create();
         var subs = new[]
         {
-            Subscription.Create(Guid.NewGuid(), "Alpha"),
-            Subscription.Create(Guid.NewGuid(), "Beta")
+            SubscriptionEntity.Create(Guid.NewGuid(), "Alpha"),
+            SubscriptionEntity.Create(Guid.NewGuid(), "Beta")
         };
-        context.Set<Subscription>().AddRange(subs);
+        context.Set<SubscriptionEntity>().AddRange(subs);
         await context.SaveChangesAsync();
         var repo = new SubscriptionRepository(context);
 

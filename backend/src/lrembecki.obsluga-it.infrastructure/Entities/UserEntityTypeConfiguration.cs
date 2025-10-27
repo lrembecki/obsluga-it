@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace lrembecki.obsluga_it.infrastructure.Entities;
 
-internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserEntity>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
-        builder.ToTable(nameof(User));
+        builder.ToTable(nameof(UserEntity));
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Id).HasColumnName("UserId");

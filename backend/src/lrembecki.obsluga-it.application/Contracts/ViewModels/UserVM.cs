@@ -7,7 +7,7 @@ public record UserVM(
     string Email,
     List<SubscriptionVM> Subscriptions)
 {
-    internal static UserVM MapFromDomainEntity(User user)
+    internal static UserVM MapFromDomainEntity(UserEntity user)
     {
         return new UserVM(
             user.Id,

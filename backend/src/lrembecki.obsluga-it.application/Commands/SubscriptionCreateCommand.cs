@@ -15,7 +15,7 @@ internal sealed class SubscriptionCommandHandler(IUnitOfWork uow)
 
     public async Task<SubscriptionVM> HandleAsync(SubscriptionCreateCommand request, CancellationToken cancellationToken = default)
     {
-        var subscription = new domain.Entities.Subscription
+        var subscription = new domain.Entities.SubscriptionEntity
         {
             Id = Guid.NewGuid(),
             Name = request.Name

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Repositories;
 
-internal class SubscriptionRepository(ApplicationDbContext dbContext) : EfRepository<Subscription>(dbContext), ISubscriptionRepository
+internal class SubscriptionRepository(ApplicationDbContext dbContext) : EfRepository<SubscriptionEntity>(dbContext), ISubscriptionRepository
 {
     public Task<List<SubscriptionVM>> GetAllSubscriptionVMAsync(CancellationToken cancellationToken = default)
         => _dbSet.Select(e => SubscriptionVM.MapFromDomainEntity(e)).ToListAsync(cancellationToken);

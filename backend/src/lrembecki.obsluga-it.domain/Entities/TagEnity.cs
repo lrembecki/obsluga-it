@@ -1,13 +1,14 @@
 using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.obsluga_it.domain.Common;
 
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
+namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class Tag : SubscriptionEntity, IHasId<Guid>
+internal class TagEnity : SubscriptionBaseEntity, IHasId<Guid>
 {
 	public Guid Id { get; private set; } = default!;
 	public string Name { get; private set; } = default!;
 
-	public static Tag Create(Guid tagId, string name)
+	public static TagEnity Create(Guid tagId, string name)
 		=> new()
         {
             Id = tagId,

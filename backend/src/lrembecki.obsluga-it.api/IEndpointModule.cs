@@ -1,4 +1,4 @@
-﻿namespace lrembecki.obsluga_it.api.Endpoints;
+﻿namespace lrembecki.obsluga_it.api;
 
 public interface IEndpointModule
 {

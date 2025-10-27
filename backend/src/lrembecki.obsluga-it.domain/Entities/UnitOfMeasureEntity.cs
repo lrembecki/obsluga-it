@@ -1,9 +1,10 @@
 using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.obsluga_it.domain.Common;
 using lrembecki.obsluga_it.domain.Enums;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class UnitOfMeasure : BaseEntity, IHasId<Guid>
+public class UnitOfMeasureEntity : BaseEntity, IHasId<Guid>
 {
 	public Guid Id { get; set; } = Guid.Empty;
 	public string Name { get; set; } = string.Empty;
@@ -11,7 +12,7 @@ public class UnitOfMeasure : BaseEntity, IHasId<Guid>
 	public string ShortCode { get; set; } = string.Empty;
 	public UnitOfMeasureType Type { get; set; }
 
-	public static UnitOfMeasure Create (Guid unitOfMeasureId, UnitOfMeasureType type, string name, string shortName, string shortCode)
+	public static UnitOfMeasureEntity Create (Guid unitOfMeasureId, UnitOfMeasureType type, string name, string shortName, string shortCode)
 		=> new()
 		{
 			Id = unitOfMeasureId,

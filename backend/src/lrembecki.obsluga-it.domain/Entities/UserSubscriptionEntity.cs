@@ -1,13 +1,15 @@
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
+using lrembecki.obsluga_it.domain.Common;
 
-public class SubscriptionUser : SubscriptionEntity
+namespace lrembecki.obsluga_it.domain.Entities;
+
+public class UserSubscriptionEntity : SubscriptionBaseEntity
 {
     public Guid UserId { get; set; }
-    public User User { get; set; } = default!;
+    public UserEntity User { get; set; } = default!;
     public bool IsActive { get; set; } = true;
     public bool IsDefault { get; set; } = false;
 
-    public static SubscriptionUser Create(User user, bool isDefault)
+    public static UserSubscriptionEntity Create(UserEntity user, bool isDefault)
         => new ()
         {
             UserId = user.Id,

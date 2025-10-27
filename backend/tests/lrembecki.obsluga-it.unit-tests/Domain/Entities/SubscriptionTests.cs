@@ -8,7 +8,7 @@ public class SubscriptionTests
     public void Create_SetsProperties_AndAddsDomainEvent()
     {
         var id = Guid.NewGuid();
-        var sub = Subscription.Create(id, "Alpha");
+        var sub = SubscriptionEntity.Create(id, "Alpha");
 
         Assert.Equal(id, sub.Id);
         Assert.Equal("Alpha", sub.Name);

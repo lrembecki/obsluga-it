@@ -1,13 +1,14 @@
 using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.obsluga_it.domain.Common;
 
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
+namespace lrembecki.obsluga_it.domain.Entities;
 
-public class FileGroup : SubscriptionEntity, IHasId<Guid>
+public class FileGroupEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = default!;
 
-    public static FileGroup Create(Guid fileGroupId, string name)
+    public static FileGroupEntity Create(Guid fileGroupId, string name)
         => new ()
         {
             Id = fileGroupId,

@@ -1,4 +1,4 @@
-using lrembecki.obsluga_it.api.Endpoints;
+using lrembecki.obsluga_it.api;
 using lrembecki.obsluga_it.application;
 using lrembecki.obsluga_it.infrastructure;
 

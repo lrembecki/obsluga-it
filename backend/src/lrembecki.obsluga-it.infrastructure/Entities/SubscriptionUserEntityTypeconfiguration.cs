@@ -1,15 +1,15 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
-using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
+using lrembecki.obsluga_it.domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace lrembecki.obsluga_it.infrastructure.Entities;
 
-internal class SubscriptionUserEntityTypeconfiguration : IEntityTypeConfiguration<SubscriptionUser>
+internal class SubscriptionUserEntityTypeconfiguration : IEntityTypeConfiguration<UserSubscriptionEntity>
 {
-    public void Configure(EntityTypeBuilder<SubscriptionUser> builder)
+    public void Configure(EntityTypeBuilder<UserSubscriptionEntity> builder)
     {
-        builder.ToTable(nameof(SubscriptionUser));
+        builder.ToTable(nameof(UserSubscriptionEntity));
 
         builder.HasKey(e => new { e.SubscriptionId, e.UserId });
 

@@ -1,20 +1,20 @@
 using lrembecki.obsluga_it.domain.Abstractions;
-using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
+using lrembecki.obsluga_it.domain.Common;
 using lrembecki.obsluga_it.domain.Events;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class Subscription : BaseEntity, IHasId<Guid>
+public class SubscriptionEntity : BaseEntity, IHasId<Guid>
 {
-    private readonly HashSet<SubscriptionUser> _userSubscriptions = [];
-    public IReadOnlyCollection<SubscriptionUser> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();
+    private readonly HashSet<UserSubscriptionEntity> _userSubscriptions = [];
+    public IReadOnlyCollection<UserSubscriptionEntity> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();
 
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
-    public static Subscription Create(Guid id, string name)
+    public static SubscriptionEntity Create(Guid id, string name)
     {
-        var subscription = new Subscription
+        var subscription = new SubscriptionEntity
         {
             Id = id,
             Name = name

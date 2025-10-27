@@ -1,8 +1,8 @@
-using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
+using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Abstractions.Repositories;
 
-public interface ISubscriptionUserRepository : IRepository<SubscriptionUser>
+public interface ISubscriptionUserRepository : IRepository<UserSubscriptionEntity>
 {
-    Task<SubscriptionUser?> GetByEmailAndSubscriptionId(string email, Guid? subscriptionId);
+    Task<UserSubscriptionEntity?> GetByEmailAndSubscriptionId(string email, Guid? subscriptionId);
 }

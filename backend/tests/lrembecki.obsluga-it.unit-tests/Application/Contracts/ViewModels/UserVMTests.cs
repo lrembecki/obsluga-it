@@ -3,7 +3,6 @@ using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using lrembecki.obsluga_it.unit_tests.Shared;
-using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
@@ -14,7 +13,7 @@ public class UserVMTests
     public void MapFromDomainEntity_NoSubscriptions_MapsEmptyList()
     {
         // Arrange
-        var user = User.Create(Guid.NewGuid(), new Email("nosubs@example.com"));
+        var user = UserEntity.Create(Guid.NewGuid(), new Email("nosubs@example.com"));
 
         // Act
         var vm = UserVM.MapFromDomainEntity(user);
@@ -31,18 +30,18 @@ public class UserVMTests
         // Arrange
         var subscriptionId = Guid.NewGuid();
         var context = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
-        var user = User.Create(Guid.NewGuid(), new Email("alice@example.com"));
-        var subscription = Subscription.Create(subscriptionId, "Premium");
-        var link = SubscriptionUser.Create(user, true);
+        var user = UserEntity.Create(Guid.NewGuid(), new Email("alice@example.com"));
+        var subscription = SubscriptionEntity.Create(subscriptionId, "Premium");
+        var link = UserSubscriptionEntity.Create(user, true);
         link.User = user;
 
-        context.Set<User>().Add(user);
-        context.Set<Subscription>().Add(subscription);
-        context.Set<SubscriptionUser>().Add(link);
+        context.Set<UserEntity>().Add(user);
+        context.Set<SubscriptionEntity>().Add(subscription);
+        context.Set<UserSubscriptionEntity>().Add(link);
         context.SaveChanges();
 
         // Load with navigation fix-up
-        var loadedUser = context.Set<User>()
+        var loadedUser = context.Set<UserEntity>()
             .Include(u => u.UserSubscriptions)
             .ThenInclude(us => us.Subscription)
             .Single(u => u.Id == user.Id);

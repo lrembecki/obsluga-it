@@ -9,7 +9,7 @@ namespace lrembecki.obsluga_it.unit_tests.Application.Queries;
 
 public class GetSubscriptionsHandlerTests
 {
-    private sealed class FakeSubscriptionRepository(List<Subscription>? items = null) : FakeRepository<Subscription>(items ?? []), ISubscriptionRepository
+    private sealed class FakeSubscriptionRepository(List<SubscriptionEntity>? items = null) : FakeRepository<SubscriptionEntity>(items ?? []), ISubscriptionRepository
     {
         public Task<List<SubscriptionVM>> GetAllSubscriptionVMAsync(CancellationToken cancellationToken = default)
             => Task.FromResult(GetAll().Select(SubscriptionVM.MapFromDomainEntity).ToList());
@@ -19,10 +19,10 @@ public class GetSubscriptionsHandlerTests
     public async Task HandleAsync_ReturnsAllSubscriptions()
     {
         // Arrange
-        var expected = new List<Subscription>
+        var expected = new List<SubscriptionEntity>
         {
-            Subscription.Create(Guid.NewGuid(), "Sub A"),
-            Subscription.Create(Guid.NewGuid(), "Sub B")
+            SubscriptionEntity.Create(Guid.NewGuid(), "Sub A"),
+            SubscriptionEntity.Create(Guid.NewGuid(), "Sub B")
         };
 
         var uow = new FakeUnitOfWork(new Hashtable()

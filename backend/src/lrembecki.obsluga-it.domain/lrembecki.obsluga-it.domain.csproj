@@ -13,9 +13,4 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\SubscriptionEntities\Forms\" />
-    <Folder Include="Entities\SubscriptionEntities\Trotamundos\" />
-  </ItemGroup>
-
 </Project>

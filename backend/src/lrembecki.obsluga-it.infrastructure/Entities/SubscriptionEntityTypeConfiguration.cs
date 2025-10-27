@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace lrembecki.obsluga_it.infrastructure.Entities;
 
-internal class SubscriptionEntityTypeConfiguration : IEntityTypeConfiguration<Subscription>
+internal class SubscriptionEntityTypeConfiguration : IEntityTypeConfiguration<SubscriptionEntity>
 {
-    public void Configure(EntityTypeBuilder<Subscription> builder)
+    public void Configure(EntityTypeBuilder<SubscriptionEntity> builder)
     {
-        builder.ToTable(nameof(Subscription));
+        builder.ToTable(nameof(SubscriptionEntity));
 
         builder.HasKey(x => x.Id);
         builder.HasIndex(e => e.Name).IsUnique();

@@ -10,7 +10,7 @@ public class UserTests
     {
         var id = Guid.NewGuid();
         var email = new Email("alice@example.com");
-        var user = User.Create(id, email);
+        var user = UserEntity.Create(id, email);
 
         Assert.Equal(id, user.Id);
         Assert.Equal(email, user.Email);

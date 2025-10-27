@@ -1,5 +1,4 @@
 using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.Entities.SubscriptionEntities;
 using lrembecki.obsluga_it.domain.ValueObjects;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Repositories;
@@ -16,13 +15,13 @@ public class UserRepositoryTests
         // Arrange
         var ctx = InMemoryApplicationDbContext.Create();
         var repo = new UserRepository(ctx);
-        var user = User.Create(Guid.NewGuid(), new Email("alice@example.com"));
+        var user = UserEntity.Create(Guid.NewGuid(), new Email("alice@example.com"));
 
         // Act
         await repo.AddAsync(user);
 
         // Assert
-        var stored = await ctx.Set<User>().FirstOrDefaultAsync(e => e.Id == user.Id);
+        var stored = await ctx.Set<UserEntity>().FirstOrDefaultAsync(e => e.Id == user.Id);
         Assert.NotNull(stored);
         Assert.Equal(user.Email.Address, stored!.Email.Address);
     }
@@ -33,14 +32,14 @@ public class UserRepositoryTests
         // Arrange
         var subscriptionId = Guid.NewGuid();
         var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
-        var user = User.Create(Guid.NewGuid(), new Email("bob@example.com"));
-        var subscription = Subscription.Create(subscriptionId, "Main");
-        var link = SubscriptionUser.Create(user, true);
+        var user = UserEntity.Create(Guid.NewGuid(), new Email("bob@example.com"));
+        var subscription = SubscriptionEntity.Create(subscriptionId, "Main");
+        var link = UserSubscriptionEntity.Create(user, true);
         link.User = user;
 
-        ctx.Set<User>().Add(user);
-        ctx.Set<Subscription>().Add(subscription);
-        ctx.Set<SubscriptionUser>().Add(link);
+        ctx.Set<UserEntity>().Add(user);
+        ctx.Set<SubscriptionEntity>().Add(subscription);
+        ctx.Set<UserSubscriptionEntity>().Add(link);
         await ctx.SaveChangesAsync();
         var repo = new UserRepository(ctx);
 
@@ -73,8 +72,8 @@ public class UserRepositoryTests
     {
         // Arrange
         var ctx = InMemoryApplicationDbContext.Create();
-        var user = User.Create(Guid.NewGuid(), new Email("carol@example.com"));
-        ctx.Set<User>().Add(user);
+        var user = UserEntity.Create(Guid.NewGuid(), new Email("carol@example.com"));
+        ctx.Set<UserEntity>().Add(user);
         await ctx.SaveChangesAsync();
         var repo = new UserRepository(ctx);
 

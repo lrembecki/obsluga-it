@@ -1,13 +1,15 @@
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities.BlobEntities;
+using lrembecki.obsluga_it.domain.Common;
 
-public class FileBlobEntity : BlobEntity
+namespace lrembecki.obsluga_it.domain.Entities;
+
+public class FileBlobEntity : BlobSubscriptionBaseEntity
 {
     public string? DisplayName { get; private set; } = default!;
     public string? Description { get; private set; }
     public int Position { get; private set; }
 
     public Guid? GroupId { get; set; }
-    public FileGroup? Group { get; set; } = default!;
+    public FileGroupEntity? Group { get; set; } = default!;
 
     public static FileBlobEntity Create(Guid fileId) => Create<FileBlobEntity>(fileId, null!, null!, null!, null);
 
@@ -15,8 +17,8 @@ public class FileBlobEntity : BlobEntity
         string description,
         string displayName,
         int position, 
-        FileGroup? group,
-        BlobEntity? blob)
+        FileGroupEntity? group,
+        BlobSubscriptionBaseEntity? blob)
     {
         if (blob is not null) Update(blob);
 

@@ -1,8 +1,8 @@
 using lrembecki.obsluga_it.domain.Abstractions;
 
-namespace lrembecki.obsluga_it.domain.Entities.SubscriptionEntities.BlobEntities;
+namespace lrembecki.obsluga_it.domain.Common;
 
-public class BlobEntity : SubscriptionEntity, IHasId<Guid>
+public class BlobSubscriptionBaseEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; protected set; }
     public string Filename { get; protected set; } = default!;
@@ -11,10 +11,10 @@ public class BlobEntity : SubscriptionEntity, IHasId<Guid>
     public long? Size { get; protected set; } = default!;
 
     
-    public static T Create<T>(BlobEntity blob) where T : BlobEntity, new()
+    public static T Create<T>(BlobSubscriptionBaseEntity blob) where T : BlobSubscriptionBaseEntity, new()
         => Create<T>(blob.Id, blob.Filename, blob.BlobUrl, blob.BlobPath, blob.Size);
 
-    public static T Create<T>(Guid id, string filename, string blobUrl, string blobPath, long? size) where T : BlobEntity, new()
+    public static T Create<T>(Guid id, string filename, string blobUrl, string blobPath, long? size) where T : BlobSubscriptionBaseEntity, new()
     {
         var blob = new T
         {
@@ -28,7 +28,7 @@ public class BlobEntity : SubscriptionEntity, IHasId<Guid>
         return blob;
     }
 
-    public void Update(BlobEntity blob) => Update(blob.Filename, blob.BlobUrl, blob.BlobPath, blob.Size);
+    public void Update(BlobSubscriptionBaseEntity blob) => Update(blob.Filename, blob.BlobUrl, blob.BlobPath, blob.Size);
 
     public void Update(string filename, string blobUrl, string blobPath, long? size)
     {
