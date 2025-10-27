@@ -1,5 +1,5 @@
 ﻿using lrembecki.obsluga_it.application.Queries;
-using lrembecki.obsluga_it.infrastructure;
+using lrembecki.obsluga_it.infrastructure.Abstractions;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 
 namespace lrembecki.obsluga_it.api.Endpoints;

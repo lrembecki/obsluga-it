@@ -1,6 +1,7 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Repositories;

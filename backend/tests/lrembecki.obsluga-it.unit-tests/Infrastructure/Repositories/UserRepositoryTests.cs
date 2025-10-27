@@ -1,6 +1,6 @@
 using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
-using lrembecki.obsluga_it.infrastructure;
+using lrembecki.obsluga_it.infrastructure.Extensions;
 using lrembecki.obsluga_it.infrastructure.Repositories;
 using lrembecki.obsluga_it.unit_tests.Shared;
 using Microsoft.EntityFrameworkCore;

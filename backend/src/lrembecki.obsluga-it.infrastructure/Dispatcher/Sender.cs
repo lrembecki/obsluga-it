@@ -1,4 +1,5 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
+using lrembecki.obsluga_it.infrastructure.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace lrembecki.obsluga_it.infrastructure.Dispatcher;

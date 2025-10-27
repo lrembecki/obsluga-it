@@ -1,7 +1,7 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace lrembecki.obsluga_it.infrastructure.Repositories;
+namespace lrembecki.obsluga_it.infrastructure.Persistence;
 
 internal class EfRepository<T>(ApplicationDbContext dbContext): IRepository<T>
     where T : class

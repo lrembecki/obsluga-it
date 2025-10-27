@@ -1,5 +1,4 @@
-using lrembecki.obsluga_it.infrastructure;
-using lrembecki.obsluga_it.infrastructure.Providers;
+using lrembecki.obsluga_it.infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.unit_tests.Shared;
@@ -13,6 +12,6 @@ internal static class InMemoryApplicationDbContext
             .EnableSensitiveDataLogging()
             .Options;
 
-        return new ApplicationDbContext(options, new DateProvider(), FakeSessionAccessor.Dummy(subscriptionId: subscriptionId));
+        return new ApplicationDbContext(options);
     }
 }

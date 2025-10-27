@@ -1,7 +1,7 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace lrembecki.obsluga_it.infrastructure;
+namespace lrembecki.obsluga_it.infrastructure.Persistence;
 
 internal class EfUnitOfWork(IServiceProvider serviceProvider, ApplicationDbContext dbContext) : IUnitOfWork
 {

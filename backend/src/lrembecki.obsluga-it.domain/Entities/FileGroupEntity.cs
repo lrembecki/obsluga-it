@@ -3,7 +3,7 @@ using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class FileGroupEntity : SubscriptionBaseEntity, IHasId<Guid>
+internal class FileGroupEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = default!;

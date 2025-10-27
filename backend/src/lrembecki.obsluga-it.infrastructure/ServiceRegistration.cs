@@ -1,6 +1,7 @@
 using Azure.Core;
 using Azure.Identity;
 using lrembecki.obsluga_it.infrastructure.Extensions;
+using lrembecki.obsluga_it.infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

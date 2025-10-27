@@ -5,7 +5,7 @@ using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class UserEntity : BaseEntity, IHasId<Guid>
+internal class UserEntity : BaseEntity, IHasId<Guid>
 {
     private HashSet<UserSubscriptionEntity> _userSubscriptions = [];
     public IReadOnlyCollection<UserSubscriptionEntity> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();

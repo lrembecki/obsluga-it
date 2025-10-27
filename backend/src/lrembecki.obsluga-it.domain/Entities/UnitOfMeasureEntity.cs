@@ -4,7 +4,7 @@ using lrembecki.obsluga_it.domain.Enums;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class UnitOfMeasureEntity : BaseEntity, IHasId<Guid>
+internal class UnitOfMeasureEntity : BaseEntity, IHasId<Guid>
 {
 	public Guid Id { get; set; } = Guid.Empty;
 	public string Name { get; set; } = string.Empty;

@@ -2,7 +2,7 @@ using lrembecki.obsluga_it.domain.Abstractions;
 
 namespace lrembecki.obsluga_it.domain.Common;
 
-public class BaseEntity : IHasDomainEvents, IHasAuditFields
+internal class BaseEntity : IHasDomainEvents, IHasAuditFields
 {
     private readonly HashSet<DomainEvent> _domainEvents = [];
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.ToList().AsReadOnly();

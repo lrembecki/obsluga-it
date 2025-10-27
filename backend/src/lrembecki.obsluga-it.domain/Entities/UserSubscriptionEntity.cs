@@ -2,7 +2,7 @@ using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class UserSubscriptionEntity : SubscriptionBaseEntity
+internal class UserSubscriptionEntity : SubscriptionBaseEntity
 {
     public Guid UserId { get; set; }
     public UserEntity User { get; set; } = default!;

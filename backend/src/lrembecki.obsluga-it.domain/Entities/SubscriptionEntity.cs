@@ -4,7 +4,7 @@ using lrembecki.obsluga_it.domain.Events;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class SubscriptionEntity : BaseEntity, IHasId<Guid>
+internal class SubscriptionEntity : BaseEntity, IHasId<Guid>
 {
     private readonly HashSet<UserSubscriptionEntity> _userSubscriptions = [];
     public IReadOnlyCollection<UserSubscriptionEntity> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();

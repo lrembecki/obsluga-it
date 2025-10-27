@@ -1,6 +1,6 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
 
-namespace lrembecki.obsluga_it.infrastructure;
+namespace lrembecki.obsluga_it.infrastructure.Abstractions;
 
 public interface ISender
 {

@@ -2,7 +2,7 @@ using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-public class FileBlobEntity : BlobSubscriptionBaseEntity
+internal class FileBlobEntity : BlobBaseEntity
 {
     public string? DisplayName { get; private set; } = default!;
     public string? Description { get; private set; }
@@ -18,7 +18,7 @@ public class FileBlobEntity : BlobSubscriptionBaseEntity
         string displayName,
         int position, 
         FileGroupEntity? group,
-        BlobSubscriptionBaseEntity? blob)
+        BlobBaseEntity? blob)
     {
         if (blob is not null) Update(blob);
 

@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace lrembecki.obsluga_it.infrastructure;
+namespace lrembecki.obsluga_it.infrastructure.Defaults;
 
 internal class CustomClaimTypes
 {
