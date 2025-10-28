@@ -47,26 +47,34 @@ stages:
         projects: '$(projectFile)'
         arguments: '--configuration $(buildConfiguration) --no-restore'
 
+    # - task: DotNetCoreCLI@2
+    #   displayName: Test
+    #   inputs:
+    #     command: 'test'
+    #     projects: '$(testProjects)'
+    #     arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage"'
+
     - task: DotNetCoreCLI@2
       displayName: Test
       inputs:
         command: 'test'
         projects: '$(testProjects)'
-        arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --results-directory $(System.DefaultWorkingDirectory)/TestResults'
+        arguments: '--verbosity diag --configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --results-directory $(Agent.TempDirectory)/TestResults'
+        publishTestResults: false
 
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       inputs:
         testResultsFormat: 'VSTest'
-        testResultsFiles: '*.trx'
-        searchFolder: '$(System.DefaultWorkingDirectory)/TestResults'
+        testResultsFiles: '**/TestResults/*.trx'
+        searchFolder: '$(Agent.TempDirectory)/TestResults'
         mergeTestResults: true
-        failTaskOnFailedTests: false
+        failTaskOnFailedTests: true
 
     - task: PublishCodeCoverageResults@2
       displayName: 'Publish code coverage'
       inputs:
         codeCoverageTool: 'Cobertura'
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.cobertura.xml'
+        summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
         reportDirectory: '$(System.DefaultWorkingDirectory)'
-        failIfCoverageEmpty: false
+        failIfCoverageEmpty: true
