@@ -11,7 +11,7 @@ internal class TripRequirementEntityTypeConfiguration : IEntityTypeConfiguration
         builder.ToTable("TripRequirement");
         builder.HasKey(x => new { x.TripId, x.Order });
 
-        builder.HasOne<TripEntity>().WithMany().HasForeignKey(e => e.TripId);
+        builder.HasOne<TripEntity>().WithMany(e => e.Requirements).HasForeignKey(e => e.TripId);
 
         builder.Property(e => e.Description)
             .IsRequired()

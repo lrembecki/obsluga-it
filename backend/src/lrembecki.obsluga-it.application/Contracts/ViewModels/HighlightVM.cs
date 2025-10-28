@@ -2,21 +2,23 @@ using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
-public record FileGroupVM(
+public record HighlightVM(
     Guid Id, 
-    string Name
+    string Title, 
+    string Icon
 )
 {
-    internal static FileGroupVM MapFromDomainEntity(FileGroupEntity entity)
+    internal static HighlightVM MapFromDomainEntity(HighlightEntity entity)
     {
         if (entity == null)
         {
             return null!;
         }
 
-        return new FileGroupVM(
+        return new HighlightVM(
             entity.Id, 
-            entity.Name
+            entity.Title, 
+            entity.Icon
         );
     }
 }

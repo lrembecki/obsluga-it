@@ -10,12 +10,14 @@ internal class TripEntity : SubscriptionBaseEntity, IHasId<Guid>
     public string Subtitle { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
 
-    public virtual List<TripImageEntity> Images { get; private set; } = [];
-    public virtual List<HighlightEntity> Highlights { get; private set; } = [];
     public virtual List<AdvantageEntity> Advantages { get; private set; } = [];
-    public virtual List<TripScheduleEntity> Schedules { get; private set; } = [];
+    public virtual List<HighlightEntity> Highlights { get; private set; } = [];
+    public virtual List<TripImageEntity> Images { get; private set; } = [];
     public virtual List<TripPaymentScheduleEntity> PaymentSchedules { get; private set; } = [];
     public virtual List<TripPriceIncludeEntity> PriceIncludes { get; private set; } = [];
+    public virtual List<TripRequirementEntity> Requirements { get; private set; } = [];
+    public virtual List<TripScheduleEntity> Schedules { get; private set; } = [];
+    public virtual List<TripSuggestedFlightEntity> SuggestedFlights { get; private set; } = [];
 
     public static TripEntity Create(Guid tripId)
     {

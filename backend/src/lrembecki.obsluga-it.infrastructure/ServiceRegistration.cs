@@ -36,7 +36,7 @@ public static class ServiceRegistration
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("sql"), _ =>
             {
-                //_.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                _.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 _.MigrationsHistoryTable("__EFMigrationsHistory", "oit");
             }));
 

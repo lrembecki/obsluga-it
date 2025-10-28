@@ -14,4 +14,3 @@ public sealed class SubscriptionEndpoints : IEndpointModule
            .MapGet("/", (ISender sender) => sender.SendAsync(new SubscriptionsGetQuery()));
     }
 }
-
