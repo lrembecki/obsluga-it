@@ -16,9 +16,9 @@ pr:
 
 variables:
 - name: projectFile
-  value: 'backend/src/lrembecki.obsluga-it.api/lrembecki.obsluga-it.api.csproj'
+  value: 'backend'
 - name: testProjects
-  value: 'backend/tests/*'
+  value: 'backend/tests/**/*.csproj'
 - name: buildConfiguration
   value: 'Release'
 - name: dotnetVersion
@@ -52,16 +52,16 @@ stages:
       inputs:
         command: 'test'
         projects: '$(testProjects)'
-        arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage"'
+        arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --results-directory $(System.DefaultWorkingDirectory)/TestResults'
 
-    - task: PublishTestResults@2
-      displayName: 'Publish test results'
-      inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '**/TestResults/*.trx'
-        searchFolder: '$(System.DefaultWorkingDirectory)'
-        mergeTestResults: true
-        failTaskOnFailedTests: true
+    # - task: PublishTestResults@2
+    #   displayName: 'Publish test results'
+    #   inputs:
+    #     testResultsFormat: 'VSTest'
+    #     testResultsFiles: '**/TestResults/*.trx'
+    #     searchFolder: '$(System.DefaultWorkingDirectory)'
+    #     mergeTestResults: true
+    #     failTaskOnFailedTests: true
 
     - task: PublishCodeCoverageResults@2
       displayName: 'Publish code coverage'
