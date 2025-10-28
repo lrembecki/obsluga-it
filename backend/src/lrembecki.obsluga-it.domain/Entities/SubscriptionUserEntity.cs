@@ -10,12 +10,15 @@ internal class SubscriptionUserEntity : SubscriptionBaseEntity
     public bool IsActive { get; set; } = true;
     public bool IsDefault { get; set; } = false;
 
-    public static SubscriptionUserEntity Create(Guid id, UserEntity user, bool isDefault)
+    // UPDATED: include subscription to ensure composite key {SubscriptionId, UserId} has values
+    public static SubscriptionUserEntity Create(Guid id, UserEntity user, SubscriptionEntity subscription, bool isDefault)
         => new ()
         {
             Id = id,
             UserId = user.Id,
             User = user,
+            SubscriptionId = subscription.Id,
+            Subscription = subscription,
             IsActive = true,
             IsDefault = isDefault
         };

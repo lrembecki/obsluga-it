@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Repositories;
 
-internal class UserRepository(ApplicationDbContext dbContext) : EfRepository<UserEntity>(dbContext), IUserRepository
+internal class UserRepository(IUnitOfWork uow) : EfRepository<UserEntity>(uow), IUserRepository
 {
-    private readonly DbSet<UserEntity> _users = dbContext.Set<UserEntity>();
+    private readonly DbSet<UserEntity> _users = (uow as EfUnitOfWork)!.DbContext.Set<UserEntity>();
 
     public Task<UserEntity?> GetByEmailAsync(string email)
         => _users

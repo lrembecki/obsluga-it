@@ -29,4 +29,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Queries\" />
+    <Folder Include="Infrastructure\Repositories\" />
+  </ItemGroup>
+
 </Project>

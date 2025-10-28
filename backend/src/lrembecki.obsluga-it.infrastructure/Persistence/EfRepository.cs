@@ -3,23 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Persistence;
 
-internal class EfRepository<T>(ApplicationDbContext dbContext): IRepository<T>
+internal class EfRepository<T>(IUnitOfWork uow): IRepository<T>
     where T : class
 {
-    protected readonly DbSet<T> _dbSet = dbContext.Set<T>();
+    protected readonly DbSet<T> _dbSet = (uow as EfUnitOfWork)!.DbContext.Set<T>();
 
     public virtual IQueryable<T> GetAll() => _dbSet.AsNoTracking();
 
     public async Task<T> AddAsync(T entity)
     {
         _dbSet.Add(entity);
-        await dbContext.SaveChangesAsync();
+        await uow.SaveChangesAsync();
         return entity;
     }
+
     public async Task<T> UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
-        await dbContext.SaveChangesAsync();
+        await uow.SaveChangesAsync();
         return entity;
     }
 }

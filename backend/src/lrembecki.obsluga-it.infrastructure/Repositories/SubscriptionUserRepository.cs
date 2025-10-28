@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Repositories;
 
-internal class SubscriptionUserRepository(ApplicationDbContext dbcontext, ISessionAccessor sessionAccessor) : EfRepository<SubscriptionUserEntity>(dbcontext), ISubscriptionUserRepository
+internal class SubscriptionUserRepository(IUnitOfWork uow, ISessionAccessor sessionAccessor) : EfRepository<SubscriptionUserEntity>(uow), ISubscriptionUserRepository
 {
     public override IQueryable<SubscriptionUserEntity> GetAll()
     {
