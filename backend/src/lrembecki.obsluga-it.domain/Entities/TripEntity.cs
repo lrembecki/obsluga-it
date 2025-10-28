@@ -19,13 +19,22 @@ internal class TripEntity : SubscriptionBaseEntity, IHasId<Guid>
     public virtual List<TripScheduleEntity> Schedules { get; private set; } = [];
     public virtual List<TripSuggestedFlightEntity> SuggestedFlights { get; private set; } = [];
 
-    public static TripEntity Create(Guid tripId)
+    // Factory method patterned after ActorEntity.Create
+    public static TripEntity Create(Guid tripId, string title, string subtitle, string description)
     {
-        var entity = new TripEntity
+        var trip = new TripEntity
         {
             Id = tripId
         };
+        trip.Update(title, subtitle, description);
+        return trip;
+    }
 
-        return entity;
+    // Update method patterned after ActorEntity.Update
+    public void Update(string title, string subtitle, string description)
+    {
+        Title = title;
+        Subtitle = subtitle;
+        Description = description;
     }
 }

@@ -4,31 +4,31 @@ namespace lrembecki.obsluga_it.domain.Entities;
 
 internal class ImageBlobEntity : BlobBaseEntity
 {
-	public string? DisplayName { get; private set; } = default!;
-	public string? Description { get; private set; } = default!;
-	public long? Width { get; private set; } = default!;
-	public long? Height { get; private set; } = default!;
+    public string? DisplayName { get; private set; } = default!;
+    public string? Description { get; private set; } = default!;
+    public long? Width { get; private set; } = default!;
+    public long? Height { get; private set; } = default!;
 
-	public List<TagEnity> Tags { get; private set; } = [];
+    public List<TagEnity> Tags { get; private set; } = [];
 
-    public static ImageBlobEntity Create (BlobBaseEntity blob, List<TagEnity> tags)
-	{
-		var image = Create<ImageBlobEntity>(blob)!;
+    public static ImageBlobEntity Create(BlobBaseEntity blob, List<TagEnity> tags)
+    {
+        var image = Create<ImageBlobEntity>(blob)!;
 
-		image.Update(tags);
+        image.Update(tags);
 
-		return image;
-	}
+        return image;
+    }
 
-	public void Update (BlobBaseEntity blob, string displayName, string description, List<TagEnity> tags)
-	{
+    public void Update(BlobBaseEntity blob, string displayName, string description, List<TagEnity> tags)
+    {
 
-		if (blob is not null) Update(blob);
+        if (blob is not null) Update(blob);
 
-		DisplayName = displayName;
-		Description = description;
+        DisplayName = displayName;
+        Description = description;
 
-		Update(tags);
+        Update(tags);
     }
 
     private void Update(List<TagEnity> tags)

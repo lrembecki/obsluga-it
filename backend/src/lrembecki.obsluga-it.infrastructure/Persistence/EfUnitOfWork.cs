@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace lrembecki.obsluga_it.infrastructure.Persistence;
 
 internal class EfUnitOfWork(
-    IServiceProvider serviceProvider, 
+    IServiceProvider serviceProvider,
     ApplicationDbContext dbContext) : IUnitOfWork
 {
     public ApplicationDbContext DbContext => dbContext;

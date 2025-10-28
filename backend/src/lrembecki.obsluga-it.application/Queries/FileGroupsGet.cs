@@ -4,7 +4,7 @@ using lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Queries;
 
-public record FileGroupsGet(): IRequest<List<FileGroupVM>>;
+public record FileGroupsGet() : IRequest<List<FileGroupVM>>;
 internal sealed class FileGroupsGetHandler(IUnitOfWork uow) : IRequestHandler<FileGroupsGet, List<FileGroupVM>>
 {
     public Task<List<FileGroupVM>> HandleAsync(FileGroupsGet request, CancellationToken cancellationToken = default)

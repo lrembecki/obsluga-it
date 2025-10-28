@@ -10,7 +10,7 @@ internal class BlobBaseEntity : SubscriptionBaseEntity, IHasId<Guid>
     public string? BlobPath { get; protected set; } = default!;
     public long? Size { get; protected set; } = default!;
 
-    
+
     public static T Create<T>(BlobBaseEntity blob) where T : BlobBaseEntity, new()
         => Create<T>(blob.Id, blob.Filename, blob.BlobUrl, blob.BlobPath, blob.Size);
 

@@ -3,7 +3,7 @@ using lrembecki.obsluga_it.domain.Entities;
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 public record LoyalityProgramVM(
-    Guid Id, 
+    Guid Id,
     string Title,
     string Name,
     string Description,
@@ -17,10 +17,10 @@ public record LoyalityProgramVM(
         }
 
         return new LoyalityProgramVM(
-            entity.Id, 
-            entity.Title, 
-            entity.Name, 
-            entity.Description, 
+            entity.Id,
+            entity.Title,
+            entity.Name,
+            entity.Description,
             ImageBlobVM.MapFromDomainEntity(entity.Image)
         );
     }

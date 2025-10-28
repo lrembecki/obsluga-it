@@ -9,13 +9,19 @@ internal class TripImageEntity
     public bool IsMain { get; private set; }
     public int Order { get; private set; }
 
-    public static TripImageEntity Create(Guid tripId, bool isMain, int order)
+    public static TripImageEntity Create(bool isMain, int order, ImageBlobEntity image)
     {
-        return new TripImageEntity
-        {
-            TripId = tripId,
-            IsMain = isMain,
-            Order = order
-        };
+        var entity = new TripImageEntity();
+
+        entity.Update(isMain, order, image);
+
+        return entity;
+    }
+
+    public void Update(bool isMain, int order, ImageBlobEntity image)
+    {
+        IsMain = isMain;
+        Order = order;
+        Image = image;
     }
 }

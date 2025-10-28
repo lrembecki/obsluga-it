@@ -22,7 +22,7 @@ internal class FileBlobEntity : BlobBaseEntity
     public void Update(
         string description,
         string displayName,
-        int position, 
+        int position,
         FileGroupEntity? group,
         BlobBaseEntity? blob)
     {

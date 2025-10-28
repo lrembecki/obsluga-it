@@ -3,7 +3,7 @@ using lrembecki.obsluga_it.domain.Entities;
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 public record TagVM(
-    Guid Id, 
+    Guid Id,
     string Name
 )
 {
@@ -15,7 +15,7 @@ public record TagVM(
         }
 
         return new TagVM(
-            entity.Id, 
+            entity.Id,
             entity.Name
         );
     }

@@ -9,9 +9,14 @@ internal class FileGroupEntity : SubscriptionBaseEntity, IHasId<Guid>
     public string Name { get; private set; } = default!;
 
     public static FileGroupEntity Create(Guid fileGroupId, string name)
-        => new ()
+        => new()
         {
             Id = fileGroupId,
             Name = name
         };
+
+    public void Update(string name)
+    {
+        Name = name;
+    }
 }

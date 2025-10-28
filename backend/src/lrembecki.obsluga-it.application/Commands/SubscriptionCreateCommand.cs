@@ -4,8 +4,8 @@ using lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Commands;
 
-public record SubscriptionCreateCommand(string Name): IRequest<SubscriptionVM>;
-public record SubscriptionUpdateCommand(Guid SubscriptionId, string Name): IRequest<SubscriptionVM>;
+public record SubscriptionCreateCommand(string Name) : IRequest<SubscriptionVM>;
+public record SubscriptionUpdateCommand(Guid SubscriptionId, string Name) : IRequest<SubscriptionVM>;
 
 internal sealed class SubscriptionCommandHandler(IUnitOfWork uow)
     : IRequestHandler<SubscriptionCreateCommand, SubscriptionVM>

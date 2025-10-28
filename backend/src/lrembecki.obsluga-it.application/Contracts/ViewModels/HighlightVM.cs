@@ -3,8 +3,8 @@ using lrembecki.obsluga_it.domain.Entities;
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 public record HighlightVM(
-    Guid Id, 
-    string Title, 
+    Guid Id,
+    string Title,
     string Icon
 )
 {
@@ -16,8 +16,8 @@ public record HighlightVM(
         }
 
         return new HighlightVM(
-            entity.Id, 
-            entity.Title, 
+            entity.Id,
+            entity.Title,
             entity.Icon
         );
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Persistence;
 
-internal class EfRepository<T>(IUnitOfWork uow): IRepository<T>
+internal class EfRepository<T>(IUnitOfWork uow) : IRepository<T>
     where T : class
 {
     protected readonly DbSet<T> _dbSet = (uow as EfUnitOfWork)!.DbContext.Set<T>();

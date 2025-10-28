@@ -12,7 +12,7 @@ internal class SubscriptionUserEntity : SubscriptionBaseEntity
 
     // UPDATED: include subscription to ensure composite key {SubscriptionId, UserId} has values
     public static SubscriptionUserEntity Create(Guid id, UserEntity user, SubscriptionEntity subscription, bool isDefault)
-        => new ()
+        => new()
         {
             Id = id,
             UserId = user.Id,

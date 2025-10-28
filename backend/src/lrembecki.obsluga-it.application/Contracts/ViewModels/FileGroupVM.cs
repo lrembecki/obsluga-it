@@ -3,7 +3,7 @@ using lrembecki.obsluga_it.domain.Entities;
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 public record FileGroupVM(
-    Guid Id, 
+    Guid Id,
     string Name
 )
 {
@@ -15,7 +15,7 @@ public record FileGroupVM(
         }
 
         return new FileGroupVM(
-            entity.Id, 
+            entity.Id,
             entity.Name
         );
     }

@@ -2,5 +2,6 @@
 
 public enum UnitOfMeasureType
 {
-    Currency
+    Currency,
+    Weight
 }

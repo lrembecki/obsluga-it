@@ -3,10 +3,10 @@ using lrembecki.obsluga_it.domain.Entities;
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 public record FileBlobVM(
-    Guid Id, 
-    string Filename, 
-    string BlobUrl, 
-    string BlobPath, 
+    Guid Id,
+    string? Filename,
+    string? BlobUrl,
+    string? BlobPath,
     long? Size,
     string? DisplayName,
     string? Description,
@@ -21,7 +21,7 @@ public record FileBlobVM(
         }
 
         return new FileBlobVM(
-            entity.Id, 
+            entity.Id,
             entity.Filename,
             entity.BlobUrl,
             entity.BlobPath,

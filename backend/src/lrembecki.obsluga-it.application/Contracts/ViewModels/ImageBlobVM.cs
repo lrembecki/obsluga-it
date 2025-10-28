@@ -4,9 +4,9 @@ namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 public record ImageBlobVM(
     Guid Id,
-    string Filename,
-    string BlobUrl,
-    string BlobPath,
+    string? Filename,
+    string? BlobUrl,
+    string? BlobPath,
     long? Size,
     string? DisplayName,
     string? Description,
