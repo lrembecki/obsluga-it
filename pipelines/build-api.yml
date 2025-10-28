@@ -60,13 +60,13 @@ stages:
         command: 'test'
         projects: '$(testProjects)'
         arguments: '--verbosity diag --configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --results-directory $(Agent.TempDirectory)/TestResults'
-        publishTestResults: false
+        publishTestResults: true
 
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       inputs:
         testResultsFormat: 'VSTest'
-        testResultsFiles: '**/.trx'
+        testResultsFiles: '**/*.trx'
         searchFolder: '$(Agent.TempDirectory)/TestResults'
         mergeTestResults: true
         failTaskOnFailedTests: true
