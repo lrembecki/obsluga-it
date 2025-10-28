@@ -11,16 +11,12 @@ public class ContactVMTests
     public void MapFromDomainEntity_MapsAllFields()
     {
         var id = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(ContactEntity), true)!;
-        Set(entity, "Id", id);
-        Set(entity, "Email", new Email("contact@example.com"));
-        Set(entity, "Phone", new Phone("999"));
-
-        var vm = ContactVM.MapFromDomainEntity((ContactEntity)entity);
+        var entity = ContactEntity.Create(id, "contact@example.com", "234567890");
+        var vm = ContactVM.MapFromDomainEntity(entity);
 
         Assert.Equal(id, vm.Id);
         Assert.Equal("contact@example.com", vm.Email);
-        Assert.Equal("999", vm.Phone);
+        Assert.Equal("234567890", vm.Phone);
     }
 
     [Fact]
@@ -29,7 +25,4 @@ public class ContactVMTests
         var vm = ContactVM.MapFromDomainEntity(null!);
         Assert.Null(vm);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

@@ -1,4 +1,3 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
 
@@ -7,22 +6,13 @@ namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 public class HighlightVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFields()
     {
-        // Arrange
-        var id = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(HighlightEntity), true)!;
-        Set(entity, "Id", id);
-        Set(entity, "Title", "Highlight");
-        Set(entity, "Icon", "star");
-
-        // Act
-        var vm = HighlightVM.MapFromDomainEntity((HighlightEntity)entity);
-
-        // Assert
-        Assert.Equal(id, vm.Id);
-        Assert.Equal("Highlight", vm.Title);
-        Assert.Equal("star", vm.Icon);
+        var entity = HighlightEntity.Create(Guid.NewGuid(), "Title", "Icon");
+        var vm = HighlightVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.Id, vm.Id);
+        Assert.Equal(entity.Title, vm.Title);
+        Assert.Equal(entity.Icon, vm.Icon);
     }
 
     [Fact]
@@ -31,7 +21,4 @@ public class HighlightVMTests
         var vm = HighlightVM.MapFromDomainEntity(null!);
         Assert.Null(vm);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

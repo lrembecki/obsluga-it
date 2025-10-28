@@ -17,7 +17,7 @@ public partial class Phone
     }
     private static bool IsValidPhone(string phone)
     {
-        return PhoneRegex().IsMatch(phone);
+        return PhoneRegex().IsMatch(phone) && phone.Length == 9;
     }
     public override string ToString()
     {

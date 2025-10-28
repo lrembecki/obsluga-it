@@ -12,22 +12,13 @@ public class ActorVMTests
     {
         var actorId = Guid.NewGuid();
         var contactId = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(ActorEntity), true)!;
-        Set(entity, "Id", actorId);
-        Set(entity, "Firstname", "Alice");
-        Set(entity, "Lastname", "Smith");
 
-        var contact = Activator.CreateInstance(typeof(ContactEntity), true)!;
-        Set(contact, "Id", contactId);
-        Set(contact, "Email", new Email("alice@example.com"));
-        Set(contact, "Phone", new Phone("123"));
+        var entity = ActorEntity.Create(actorId, "Alice", "Smith");
+        var contact = ContactEntity.Create(contactId, "alice@example.com", "123123123");
 
-        // add contact via backing field
-        var contactsField = typeof(ActorEntity).GetField("_contacts", BindingFlags.Instance | BindingFlags.NonPublic)!;
-        var set = (HashSet<ContactEntity>)contactsField.GetValue(entity)!;
-        set.Add((ContactEntity)contact);
+        entity.Contacts.Add(contact);
 
-        var vm = ActorVM.MapFromDomainEntity((ActorEntity)entity);
+        var vm = ActorVM.MapFromDomainEntity(entity);
 
         Assert.Equal(actorId, vm.Id);
         Assert.Equal("Alice", vm.Firstname);
@@ -36,7 +27,7 @@ public class ActorVMTests
         var c = vm.Contacts.First();
         Assert.Equal(contactId, c.Id);
         Assert.Equal("alice@example.com", c.Email);
-        Assert.Equal("123", c.Phone);
+        Assert.Equal("123123123", c.Phone);
     }
 
     [Fact]
@@ -45,7 +36,4 @@ public class ActorVMTests
         var vm = ActorVM.MapFromDomainEntity(null!);
         Assert.Null(vm);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

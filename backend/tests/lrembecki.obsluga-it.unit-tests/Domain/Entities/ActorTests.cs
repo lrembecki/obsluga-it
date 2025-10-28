@@ -38,7 +38,7 @@ public class ActorTests
     public void AddAndRemoveContact_ModifiesContactsCollection()
     {
         var actor = ActorEntity.Create(Guid.NewGuid(), "Alice", "Smith");
-        var contact = ContactEntity.Create(Guid.NewGuid(), "alice@example.com", "+48123123123");
+        var contact = ContactEntity.Create(Guid.NewGuid(), "alice@example.com", "234567890");
 
         // Act - add
         actor.AddContact(contact);

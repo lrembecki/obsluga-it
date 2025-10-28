@@ -1,33 +1,20 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
 public class TripSuggestedFlightVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFields()
     {
-        var tripId = Guid.NewGuid();
-        var imageId = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(TripSuggestedFlightEntity), true)!;
-        Set(entity, "TripId", tripId);
-        Set(entity, "Order", 6);
-
-        var image = Activator.CreateInstance(typeof(ImageBlobEntity), true)!;
-        Set(image, "Id", imageId);
-        Set(image, "Filename", "flight.png");
-        Set(image, "BlobUrl", "https://blob");
-        Set(image, "BlobPath", "/fl");
-        Set(image, "Size", 3L);
-        Set(entity, "Image", image);
-
-        var vm = TripSuggestedFlightVM.MapFromDomainEntity((TripSuggestedFlightEntity)entity);
-
-        Assert.Equal(tripId, vm.TripId);
-        Assert.Equal(6, vm.Order);
-        Assert.Equal(imageId, vm.Image.Id);
+        var image = ImageBlobEntity.Create(CreateBlob("img.png"), []);
+        var entity = TripSuggestedFlightEntity.Create(1, image);
+        var vm = TripSuggestedFlightVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.TripId, vm.TripId);
+        Assert.Equal(entity.Order, vm.Order);
+        Assert.Equal(entity.Image.Id, vm.Image.Id);
     }
 
     [Fact]
@@ -37,6 +24,14 @@ public class TripSuggestedFlightVMTests
         Assert.Null(vm);
     }
 
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
+    private static BlobBaseEntity CreateBlob(string filename)
+    {
+        var blob = Activator.CreateInstance(typeof(BlobBaseEntity), true)!;
+        blob.GetType().GetProperty("Id")!.SetValue(blob, Guid.NewGuid());
+        blob.GetType().GetProperty("Filename")!.SetValue(blob, filename);
+        blob.GetType().GetProperty("BlobUrl")!.SetValue(blob, "https://blob");
+        blob.GetType().GetProperty("BlobPath")!.SetValue(blob, "/p");
+        blob.GetType().GetProperty("Size")!.SetValue(blob, 10L);
+        return (BlobBaseEntity)blob;
+    }
 }

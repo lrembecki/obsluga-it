@@ -1,4 +1,3 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
 
@@ -7,21 +6,14 @@ namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 public class TripPriceIncludeVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFields()
     {
-        var tripId = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(TripPriceIncludeEntity), true)!;
-        Set(entity, "TripId", tripId);
-        Set(entity, "Order", 2);
-        Set(entity, "Includes", true);
-        Set(entity, "Content", "Includes something");
-
-        var vm = TripPriceIncludeVM.MapFromDomainEntity((TripPriceIncludeEntity)entity);
-
-        Assert.Equal(tripId, vm.TripId);
-        Assert.Equal(2, vm.Order);
-        Assert.True(vm.Includes);
-        Assert.Equal("Includes something", vm.Content);
+        var entity = TripPriceIncludeEntity.Create(1, true, "Content");
+        var vm = TripPriceIncludeVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.TripId, vm.TripId);
+        Assert.Equal(entity.Order, vm.Order);
+        Assert.Equal(entity.Includes, vm.Includes);
+        Assert.Equal(entity.Content, vm.Content);
     }
 
     [Fact]
@@ -30,7 +22,4 @@ public class TripPriceIncludeVMTests
         var vm = TripPriceIncludeVM.MapFromDomainEntity(null!);
         Assert.Null(vm);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

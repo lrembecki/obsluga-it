@@ -1,35 +1,22 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
 public class TripImageVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFields()
     {
-        var tripId = Guid.NewGuid();
-        var imageId = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(TripImageEntity), true)!;
-        Set(entity, "TripId", tripId);
-        Set(entity, "IsMain", true);
-        Set(entity, "Order", 3);
-
-        var image = Activator.CreateInstance(typeof(ImageBlobEntity), true)!;
-        Set(image, "Id", imageId);
-        Set(image, "Filename", "trip.png");
-        Set(image, "BlobUrl", "https://blob");
-        Set(image, "BlobPath", "/tp");
-        Set(image, "Size", 2L);
-        Set(entity, "Image", image);
-
-        var vm = TripImageVM.MapFromDomainEntity((TripImageEntity)entity);
-
-        Assert.Equal(tripId, vm.TripId);
-        Assert.Equal(3, vm.Order);
-        Assert.True(vm.IsMain);
-        Assert.Equal(imageId, vm.Image.Id);
+        var blob = CreateBlob("img.png");
+        var image = ImageBlobEntity.Create(blob, []);
+        var entity = TripImageEntity.Create(true, 1, image);
+        var vm = TripImageVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.TripId, vm.TripId);
+        Assert.Equal(entity.Order, vm.Order);
+        Assert.Equal(entity.IsMain, vm.IsMain);
+        Assert.Equal(entity.Image.Id, vm.Image.Id);
     }
 
     [Fact]
@@ -39,6 +26,14 @@ public class TripImageVMTests
         Assert.Null(vm);
     }
 
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
+    private static BlobBaseEntity CreateBlob(string filename)
+    {
+        var blob = Activator.CreateInstance(typeof(BlobBaseEntity), true)!;
+        blob.GetType().GetProperty("Id")!.SetValue(blob, Guid.NewGuid());
+        blob.GetType().GetProperty("Filename")!.SetValue(blob, filename);
+        blob.GetType().GetProperty("BlobUrl")!.SetValue(blob, "https://blob");
+        blob.GetType().GetProperty("BlobPath")!.SetValue(blob, "/p");
+        blob.GetType().GetProperty("Size")!.SetValue(blob, 10L);
+        return (BlobBaseEntity)blob;
+    }
 }

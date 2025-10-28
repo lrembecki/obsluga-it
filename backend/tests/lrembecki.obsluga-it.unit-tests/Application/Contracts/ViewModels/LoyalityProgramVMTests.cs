@@ -1,37 +1,23 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
 public class LoyalityProgramVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFieldsAndImage()
     {
-        var id = Guid.NewGuid();
-        var imageId = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(LoyalityProgramEntity), true)!;
-        Set(entity, "Id", id);
-        Set(entity, "Title", "Title");
-        Set(entity, "Name", "Name");
-        Set(entity, "Description", "Description");
-
-        var image = Activator.CreateInstance(typeof(ImageBlobEntity), true)!;
-        Set(image, "Id", imageId);
-        Set(image, "Filename", "lp.png");
-        Set(image, "BlobUrl", "https://blob");
-        Set(image, "BlobPath", "/p");
-        Set(image, "Size", 1L);
-        Set(entity, "Image", image);
-
-        var vm = LoyalityProgramVM.MapFromDomainEntity((LoyalityProgramEntity)entity);
-
-        Assert.Equal(id, vm.Id);
-        Assert.Equal("Title", vm.Title);
-        Assert.Equal("Name", vm.Name);
-        Assert.Equal("Description", vm.Description);
-        Assert.Equal(imageId, vm.Image.Id);
+        var blob = CreateBlob("img.png");
+        var image = ImageBlobEntity.Create(blob, []);
+        var entity = LoyalityProgramEntity.Create(Guid.NewGuid(), "Name", "Title", "Desc", image);
+        var vm = LoyalityProgramVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.Id, vm.Id);
+        Assert.Equal(entity.Title, vm.Title);
+        Assert.Equal(entity.Name, vm.Name);
+        Assert.Equal(entity.Description, vm.Description);
+        Assert.Equal(entity.Image.Id, vm.Image.Id);
     }
 
     [Fact]
@@ -41,6 +27,14 @@ public class LoyalityProgramVMTests
         Assert.Null(vm);
     }
 
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
+    private static BlobBaseEntity CreateBlob(string filename)
+    {
+        var blob = Activator.CreateInstance(typeof(BlobBaseEntity), true)!;
+        blob.GetType().GetProperty("Id")!.SetValue(blob, Guid.NewGuid());
+        blob.GetType().GetProperty("Filename")!.SetValue(blob, filename);
+        blob.GetType().GetProperty("BlobUrl")!.SetValue(blob, "https://blob");
+        blob.GetType().GetProperty("BlobPath")!.SetValue(blob, "/p");
+        blob.GetType().GetProperty("Size")!.SetValue(blob, 10L);
+        return (BlobBaseEntity)blob;
+    }
 }

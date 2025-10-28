@@ -1,4 +1,3 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
 
@@ -7,19 +6,11 @@ namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 public class SubscriptionVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFields()
     {
-        var id = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(SubscriptionEntity), true)!;
-        Set(entity, "Id", id);
-        Set(entity, "Name", "SubName");
-
-        var vm = SubscriptionVM.MapFromDomainEntity((SubscriptionEntity)entity);
-
-        Assert.Equal(id, vm.Id);
-        Assert.Equal("SubName", vm.Name);
+        var entity = SubscriptionEntity.Create(Guid.NewGuid(), "Sub");
+        var vm = SubscriptionVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.Id, vm.Id);
+        Assert.Equal(entity.Name, vm.Name);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

@@ -11,13 +11,10 @@ public class AdvantageVMTests
     {
         // Arrange
         var id = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(AdvantageEntity), true)!;
-        Set(entity, "Id", id);
-        Set(entity, "Title", "Title A");
-        Set(entity, "Content", "Content A");
+        var entity = AdvantageEntity.Create(id, "Title A", "Content A");
 
         // Act
-        var vm = AdvantageVM.MapFromDomainEntity((AdvantageEntity)entity);
+        var vm = AdvantageVM.MapFromDomainEntity(entity);
 
         // Assert
         Assert.Equal(id, vm.Id);
@@ -33,7 +30,4 @@ public class AdvantageVMTests
         // Assert
         Assert.Null(vm);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

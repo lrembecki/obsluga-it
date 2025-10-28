@@ -1,4 +1,3 @@
-using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
 
@@ -7,17 +6,12 @@ namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 public class TagVMTests
 {
     [Fact]
-    public void MapFromDomainEntity_MapsAllFields()
+    public void MapFromDomainEntity_MapsFields()
     {
-        var id = Guid.NewGuid();
-        var entity = Activator.CreateInstance(typeof(TagEnity), true)!;
-        Set(entity, "Id", id);
-        Set(entity, "Name", "Tag1");
-
-        var vm = TagVM.MapFromDomainEntity((TagEnity)entity);
-
-        Assert.Equal(id, vm.Id);
-        Assert.Equal("Tag1", vm.Name);
+        var entity = TagEnity.Create(Guid.NewGuid(), "Tag");
+        var vm = TagVM.MapFromDomainEntity(entity);
+        Assert.Equal(entity.Id, vm.Id);
+        Assert.Equal(entity.Name, vm.Name);
     }
 
     [Fact]
@@ -26,7 +20,4 @@ public class TagVMTests
         var vm = TagVM.MapFromDomainEntity(null!);
         Assert.Null(vm);
     }
-
-    private static void Set(object target, string property, object? value)
-    => target.GetType().GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!.SetValue(target, value);
 }

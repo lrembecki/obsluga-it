@@ -25,4 +25,9 @@ internal class UserEntity : BaseEntity, IHasId<Guid>
 
         return user;
     }
+
+    public void AddSubscription(SubscriptionUserEntity userSubscription)
+    {
+        this._userSubscriptions.Add(userSubscription);
+    }
 }

@@ -1,59 +1,31 @@
-﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.obsluga_it.domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
-using lrembecki.obsluga_it.unit_tests.Shared;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
 public class UserVMTests
 {
-
     [Fact]
-    public void MapFromDomainEntity_NoSubscriptions_MapsEmptyList()
+    public void MapFromDomainEntity_MapsEmailAndActiveSubscriptionsOnly()
     {
-        // Arrange
-        var user = UserEntity.Create(Guid.NewGuid(), new Email("nosubs@example.com"));
+        var user = UserEntity.Create(Guid.NewGuid(), new Email("user@example.com"));
 
-        // Act
+        var sub1 = SubscriptionEntity.Create(Guid.NewGuid(), "Sub1");
+        var sub2 = SubscriptionEntity.Create(Guid.NewGuid(), "Sub2");
+
+        var active = SubscriptionUserEntity.Create(Guid.NewGuid(), user, sub1, true);
+
+        var inactive = SubscriptionUserEntity.Create(Guid.NewGuid(), user, sub2, false);
+        inactive.Update(false, false);
+
+        user.AddSubscription(active);
+        user.AddSubscription(inactive);
+
         var vm = UserVM.MapFromDomainEntity(user);
-
-        // Assert
         Assert.Equal(user.Id, vm.Id);
-        Assert.Equal(user.Email.Address, vm.Email);
-        Assert.Empty(vm.Subscriptions);
-    }
-
-    [Fact]
-    public void MapFromDomainEntity_WithSubscriptions_MapsAllFields()
-    {
-        // Arrange
-        var subscriptionId = Guid.NewGuid();
-        var context = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
-        var user = UserEntity.Create(Guid.NewGuid(), new Email("alice@example.com"));
-        var subscription = SubscriptionEntity.Create(subscriptionId, "Premium");
-        var link = SubscriptionUserEntity.Create(Guid.NewGuid(), user, subscription, true);
-
-        context.Set<UserEntity>().Add(user);
-        context.Set<SubscriptionEntity>().Add(subscription);
-        context.Set<SubscriptionUserEntity>().Add(link);
-        context.SaveChanges();
-
-        // Load with navigation fix-up
-        var loadedUser = context.Set<UserEntity>()
-            .Include(u => u.UserSubscriptions)
-            .ThenInclude(us => us.Subscription)
-            .Single(u => u.Id == user.Id);
-
-        // Act
-        var vm = UserVM.MapFromDomainEntity(loadedUser);
-
-        // Assert
-        Assert.Equal(user.Id, vm.Id);
-        Assert.Equal(user.Email.Address, vm.Email);
+        Assert.Equal("user@example.com", vm.Email);
         Assert.Single(vm.Subscriptions);
-        var subVm = vm.Subscriptions.First();
-        Assert.Equal(subscription.Id, subVm.Id);
-        Assert.Equal(subscription.Name, subVm.Name);
+        Assert.Equal(sub1.Id, vm.Subscriptions[0].Id);
     }
 }
