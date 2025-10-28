@@ -44,3 +44,10 @@ stages:
         command: 'build'
         projects: '$(projectFile)'
         arguments: '--configuration $(buildConfiguration) --no-restore'
+
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: 'test'
+        projects: '$(projectFile)'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
