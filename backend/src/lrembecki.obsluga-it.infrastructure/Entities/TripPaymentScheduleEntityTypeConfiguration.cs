@@ -11,7 +11,7 @@ internal class TripPaymentScheduleEntityTypeConfiguration : IEntityTypeConfigura
         builder.ToTable("TripPaymentSchedule");
         builder.HasKey(x => new { x.TripId, x.Order });
 
-        builder.HasOne<TripEntity>().WithMany().HasForeignKey(e => e.TripId);
+        builder.HasOne<TripEntity>().WithMany(e => e.PaymentSchedules).HasForeignKey(e => e.TripId);
 
         builder.Property(e => e.Title)
             .IsRequired()

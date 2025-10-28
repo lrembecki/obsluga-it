@@ -32,12 +32,12 @@ public class UserVMTests
         var context = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
         var user = UserEntity.Create(Guid.NewGuid(), new Email("alice@example.com"));
         var subscription = SubscriptionEntity.Create(subscriptionId, "Premium");
-        var link = UserSubscriptionEntity.Create(user, true);
+        var link = SubscriptionUserEntity.Create(Guid.NewGuid(), user, true);
         link.User = user;
 
         context.Set<UserEntity>().Add(user);
         context.Set<SubscriptionEntity>().Add(subscription);
-        context.Set<UserSubscriptionEntity>().Add(link);
+        context.Set<SubscriptionUserEntity>().Add(link);
         context.SaveChanges();
 
         // Load with navigation fix-up

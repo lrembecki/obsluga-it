@@ -3,7 +3,7 @@ using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class TripHighlightEntity : SubscriptionBaseEntity, IHasId<Guid>
+internal class HighlightEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Title { get; private set; } = string.Empty;

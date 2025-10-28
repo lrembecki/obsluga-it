@@ -16,5 +16,7 @@ internal class SubscriptionEntityTypeConfiguration : BaseEntityTypeConfiguration
 
         builder.Property(e => e.Name).HasMaxLength(150).IsRequired();
         builder.HasIndex(e => e.Name).IsUnique();
+
+        builder.HasMany(e => e.UserSubscriptions).WithOne(e => e.Subscription).HasForeignKey(e => e.SubscriptionId);
     }
 }

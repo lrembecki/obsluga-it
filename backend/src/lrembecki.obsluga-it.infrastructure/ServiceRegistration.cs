@@ -1,5 +1,6 @@
 using Azure.Core;
 using Azure.Identity;
+using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 using lrembecki.obsluga_it.infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -35,11 +36,12 @@ public static class ServiceRegistration
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("sql"), _ =>
             {
-                _.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                //_.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 _.MigrationsHistoryTable("__EFMigrationsHistory", "oit");
             }));
 
         services.AddScoped<ApplicationDbContext>();
+        services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         typeof(ServiceRegistration).Assembly.GetTypes().ToList()
             .Where(t => t.IsClass && !t.IsAbstract)

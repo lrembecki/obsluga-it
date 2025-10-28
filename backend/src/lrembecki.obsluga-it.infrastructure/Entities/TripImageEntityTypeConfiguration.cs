@@ -11,7 +11,7 @@ internal class TripImageEntityTypeConfiguration : IEntityTypeConfiguration<TripI
         builder.ToTable("TripImage");
         builder.HasKey(e => new { e.TripId, e.Order });
 
-        builder.HasOne<TripEntity>().WithMany().HasForeignKey(e => e.TripId);
-        builder.HasOne(e => e.Image).WithOne().HasForeignKey<TripImageEntity>(e => e.ImageId);
+        builder.HasOne<TripEntity>().WithMany(e => e.Images).HasForeignKey(e => e.TripId);
+        builder.HasOne(e => e.Image).WithOne().HasForeignKey<TripImageEntity>(e => e.ImageId).OnDelete(DeleteBehavior.Restrict);
     }
 }

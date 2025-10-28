@@ -2,16 +2,18 @@ using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class UserSubscriptionEntity : SubscriptionBaseEntity
+internal class SubscriptionUserEntity : SubscriptionBaseEntity
 {
+    public Guid Id { get; private set; }
     public Guid UserId { get; set; }
     public UserEntity User { get; set; } = default!;
     public bool IsActive { get; set; } = true;
     public bool IsDefault { get; set; } = false;
 
-    public static UserSubscriptionEntity Create(UserEntity user, bool isDefault)
+    public static SubscriptionUserEntity Create(Guid id, UserEntity user, bool isDefault)
         => new ()
         {
+            Id = id,
             UserId = user.Id,
             User = user,
             IsActive = true,

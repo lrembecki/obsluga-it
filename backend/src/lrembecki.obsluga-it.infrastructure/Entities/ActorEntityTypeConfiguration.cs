@@ -21,6 +21,6 @@ internal class ActorEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigur
             .WithOne()
             .HasForeignKey(c => c.ActorId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

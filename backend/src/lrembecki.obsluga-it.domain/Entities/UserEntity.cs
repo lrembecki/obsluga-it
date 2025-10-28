@@ -7,8 +7,8 @@ namespace lrembecki.obsluga_it.domain.Entities;
 
 internal class UserEntity : BaseEntity, IHasId<Guid>
 {
-    private HashSet<UserSubscriptionEntity> _userSubscriptions = [];
-    public IReadOnlyCollection<UserSubscriptionEntity> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();
+    private HashSet<SubscriptionUserEntity> _userSubscriptions = [];
+    public IReadOnlyCollection<SubscriptionUserEntity> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();
 
     public Guid Id { get; set; }
     public Email Email { get; set; } = default!;

@@ -34,12 +34,12 @@ public class UserRepositoryTests
         var ctx = InMemoryApplicationDbContext.Create(subscriptionId: subscriptionId);
         var user = UserEntity.Create(Guid.NewGuid(), new Email("bob@example.com"));
         var subscription = SubscriptionEntity.Create(subscriptionId, "Main");
-        var link = UserSubscriptionEntity.Create(user, true);
+        var link = SubscriptionUserEntity.Create(Guid.NewGuid(), user, true);
         link.User = user;
 
         ctx.Set<UserEntity>().Add(user);
         ctx.Set<SubscriptionEntity>().Add(subscription);
-        ctx.Set<UserSubscriptionEntity>().Add(link);
+        ctx.Set<SubscriptionUserEntity>().Add(link);
         await ctx.SaveChangesAsync();
         var repo = new UserRepository(ctx);
 

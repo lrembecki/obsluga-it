@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace lrembecki.obsluga_it.infrastructure.Entities;
 
-internal class TripAdvantageEntityTypeConfiguration : SubscriptionBaseEntityTypeConfiguration<TripAdvantageEntity>
+internal class AdvantageEntityTypeConfiguration : SubscriptionBaseEntityTypeConfiguration<AdvantageEntity>
 {
-    public override void Configure(EntityTypeBuilder<TripAdvantageEntity> builder)
+    public override void Configure(EntityTypeBuilder<AdvantageEntity> builder)
     {
         base.Configure(builder);
 
-        builder.ToTable("TripAdvantage");
+        builder.ToTable("Advantage");
         builder.HasKey(x => x.Id);
 
         builder.Property(e => e.Title)

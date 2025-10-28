@@ -15,20 +15,18 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
         builder.HasKey(x => x.Id);
 
         builder.Property(e => e.Title)
-            .IsRequired()
-            .HasMaxLength(200);
+            .IsRequired().HasMaxLength(200);
 
         builder.Property(e => e.Description)
-            .IsRequired()
-            .HasMaxLength(2048);
+            .IsRequired().HasMaxLength(2048);
 
-        builder.HasMany(e => e.Images).WithOne().HasForeignKey(e => e.TripId);
-        builder.HasMany(e => e.Schedules).WithOne().HasForeignKey(e => e.TripId);
-        builder.HasMany(e => e.PriceIncludes).WithOne().HasForeignKey(e => e.TripId);
-        builder.HasMany(e => e.PaymentSchedules).WithOne().HasForeignKey(e => e.TripId);
+        builder.HasMany(e => e.Images).WithOne().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(e => e.Schedules).WithOne().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(e => e.PriceIncludes).WithOne().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(e => e.PaymentSchedules).WithOne().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(e => e.Highlights).WithMany().UsingEntity<Dictionary<string, object>>("TripHighlight",
-            j => j.HasOne<TripHighlightEntity>().WithMany().HasForeignKey("HighlightId").OnDelete(DeleteBehavior.Restrict),
+            j => j.HasOne<HighlightEntity>().WithMany().HasForeignKey("HighlightId").OnDelete(DeleteBehavior.Restrict),
             j => j.HasOne<TripEntity>().WithMany().HasForeignKey("TripId").OnDelete(DeleteBehavior.Restrict),
             j =>
             {
@@ -37,7 +35,7 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
             });
 
         builder.HasMany(e => e.Advantages).WithMany().UsingEntity<Dictionary<string, object>>("TripAdvantage",
-            j => j.HasOne<TripAdvantageEntity>().WithMany().HasForeignKey("AdvantageId").OnDelete(DeleteBehavior.Restrict),
+            j => j.HasOne<AdvantageEntity>().WithMany().HasForeignKey("AdvantageId").OnDelete(DeleteBehavior.Restrict),
             j => j.HasOne<TripEntity>().WithMany().HasForeignKey("TripId").OnDelete(DeleteBehavior.Restrict),
             j =>
             {

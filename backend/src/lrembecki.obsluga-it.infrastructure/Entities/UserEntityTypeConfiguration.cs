@@ -19,5 +19,7 @@ internal class UserEntityTypeConfiguration : BaseEntityTypeConfiguration<UserEnt
             .HasConversion(e => e.Address, e => new Email(e));
 
         builder.HasIndex(e => e.Email).IsUnique();
+
+        builder.HasMany(e => e.UserSubscriptions).WithOne(e => e.User).HasForeignKey(e => e.UserId);
     }
 }

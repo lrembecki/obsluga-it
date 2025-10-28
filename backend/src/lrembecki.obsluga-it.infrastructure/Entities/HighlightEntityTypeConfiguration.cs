@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace lrembecki.obsluga_it.infrastructure.Entities;
 
-internal class TripHighlightEntityTypeConfiguration : SubscriptionBaseEntityTypeConfiguration<TripHighlightEntity>
+internal class HighlightEntityTypeConfiguration : SubscriptionBaseEntityTypeConfiguration<HighlightEntity>
 {
-    public override void Configure(EntityTypeBuilder<TripHighlightEntity> builder)
+    public override void Configure(EntityTypeBuilder<HighlightEntity> builder)
     {
         base.Configure(builder);
         builder.HasKey(x => x.Id);
 
-        builder.ToTable("TripHighlight");
+        builder.ToTable("Highlight");
 
         builder.Property(e => e.Title)
             .IsRequired()

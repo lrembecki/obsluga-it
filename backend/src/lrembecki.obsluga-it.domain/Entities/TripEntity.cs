@@ -11,8 +11,8 @@ internal class TripEntity : SubscriptionBaseEntity, IHasId<Guid>
     public string Description { get; private set; } = string.Empty;
 
     public virtual List<TripImageEntity> Images { get; private set; } = [];
-    public virtual List<TripHighlightEntity> Highlights { get; private set; } = [];
-    public virtual List<TripAdvantageEntity> Advantages { get; private set; } = [];
+    public virtual List<HighlightEntity> Highlights { get; private set; } = [];
+    public virtual List<AdvantageEntity> Advantages { get; private set; } = [];
     public virtual List<TripScheduleEntity> Schedules { get; private set; } = [];
     public virtual List<TripPaymentScheduleEntity> PaymentSchedules { get; private set; } = [];
     public virtual List<TripPriceIncludeEntity> PriceIncludes { get; private set; } = [];

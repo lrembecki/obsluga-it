@@ -31,6 +31,6 @@ internal class ContactEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
 
         builder.HasIndex(e => new { e.SubscriptionId, e.Email }).IsUnique();
 
-        builder.HasOne<ActorEntity>().WithMany().HasForeignKey(e => e.ActorId).IsRequired();
+        builder.HasOne<ActorEntity>().WithMany(e => e.Contacts).HasForeignKey(e => e.ActorId).IsRequired();
     }
 }

@@ -10,7 +10,6 @@ internal class BaseEntityTypeConfiguration<T> : IEntityTypeConfiguration<T>
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {
         builder.Ignore(e => e.DomainEvents);
-
         builder.HasIndex(e => e.UpdatedAt).IsDescending(true);
     }
 }

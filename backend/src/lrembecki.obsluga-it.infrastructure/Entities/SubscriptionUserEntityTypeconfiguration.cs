@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace lrembecki.obsluga_it.infrastructure.Entities;
 
-internal class SubscriptionUserEntityTypeconfiguration : SubscriptionBaseEntityTypeConfiguration<UserSubscriptionEntity>
+internal class SubscriptionUserEntityTypeconfiguration : SubscriptionBaseEntityTypeConfiguration<SubscriptionUserEntity>
 {
-    public override void Configure(EntityTypeBuilder<UserSubscriptionEntity> builder)
+    public override void Configure(EntityTypeBuilder<SubscriptionUserEntity> builder)
     {
         base.Configure(builder);
 
@@ -17,7 +17,9 @@ internal class SubscriptionUserEntityTypeconfiguration : SubscriptionBaseEntityT
         builder.Property(e => e.IsActive);
         builder.Property(e => e.IsDefault);
 
-        builder.HasOne(e => e.User).WithMany(e => e.UserSubscriptions).HasForeignKey(e => e.UserId)
+        builder.HasOne(e => e.User)
+            .WithMany(e => e.UserSubscriptions)
+            .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

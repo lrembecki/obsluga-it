@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.infrastructure.Repositories;
 
-internal class SubscriptionUserRepository(ApplicationDbContext dbcontext, ISessionAccessor sessionAccessor) : EfRepository<UserSubscriptionEntity>(dbcontext), ISubscriptionUserRepository
+internal class SubscriptionUserRepository(ApplicationDbContext dbcontext, ISessionAccessor sessionAccessor) : EfRepository<SubscriptionUserEntity>(dbcontext), ISubscriptionUserRepository
 {
-    public override IQueryable<UserSubscriptionEntity> GetAll()
+    public override IQueryable<SubscriptionUserEntity> GetAll()
     {
         return base.GetAll().Where(e => e.SubscriptionId == sessionAccessor.SubscriptionId);
     }
 
-    public Task<UserSubscriptionEntity?> GetByEmailAndSubscriptionId(string email, Guid? subscriptionId)
+    public Task<SubscriptionUserEntity?> GetByEmailAndSubscriptionId(string email, Guid? subscriptionId)
         => GetAll()
             .Include(e => e.Subscription)
             .Include(e => e.User)
