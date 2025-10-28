@@ -18,7 +18,7 @@ variables:
 - name: projectFile
   value: 'backend/src/lrembecki.obsluga-it.api/lrembecki.obsluga-it.api.csproj'
 - name: testProjects
-  value: 'backend/src/tests/*'
+  value: 'backend/tests/*'
 - name: buildConfiguration
   value: 'Release'
 - name: dotnetVersion
