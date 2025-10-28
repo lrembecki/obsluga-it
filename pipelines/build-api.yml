@@ -52,14 +52,14 @@ stages:
       inputs:
         command: 'test'
         projects: '$(testProjects)'
-        arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --results-directory $(System.DefaultWorkingDirectory)/TestResults'
+        arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage"'
 
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       inputs:
         testResultsFormat: 'VSTest'
         testResultsFiles: '**/TestResults/*.trx'
-        searchFolder: '$(System.DefaultWorkingDirectory)'
+        searchFolder: '$(Agent.TempDirectory)'
         mergeTestResults: true
         failTaskOnFailedTests: true
 
