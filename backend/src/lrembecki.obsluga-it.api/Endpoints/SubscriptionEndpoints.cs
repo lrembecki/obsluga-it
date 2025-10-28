@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Queries;
+﻿using lrembecki.obsluga_it.application.Contracts.Queries;
 using lrembecki.obsluga_it.infrastructure.Abstractions;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 

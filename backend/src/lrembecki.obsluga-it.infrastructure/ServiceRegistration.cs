@@ -42,6 +42,7 @@ public static class ServiceRegistration
 
         services.AddScoped<ApplicationDbContext>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
         typeof(ServiceRegistration).Assembly.GetTypes().ToList()
             .Where(t => t.IsClass && !t.IsAbstract)
