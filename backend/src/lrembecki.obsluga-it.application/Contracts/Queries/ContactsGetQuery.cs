@@ -3,5 +3,5 @@ using lrembecki.obsluga_it.application.Contracts.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Contracts.Queries;
 
-public record ContactsGetQuery(): IRequest<List<ContactVM>>;
+public record ContactsGetQuery() : IRequest<List<ContactVM>>;
 
