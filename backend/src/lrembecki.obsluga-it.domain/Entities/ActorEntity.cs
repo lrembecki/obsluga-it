@@ -5,13 +5,11 @@ namespace lrembecki.obsluga_it.domain.Entities;
 
 internal class ActorEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
-	private readonly HashSet<ContactEntity> _contacts = [];
-
 	public Guid Id { get; private set; }
 	public string? Firstname { get; private set; }
 	public string? Lastname { get; private set; }
 
-	public IReadOnlyCollection<ContactEntity> Contacts => _contacts.ToList().AsReadOnly();
+	public virtual List<ContactEntity> Contacts { get; private set; } = [];
 
 	public static ActorEntity Create(Guid actorId, string? firstname, string? lastname)
 	{
@@ -29,6 +27,6 @@ internal class ActorEntity : SubscriptionBaseEntity, IHasId<Guid>
 		Lastname = lastname;
     }
 
-	public void AddContact(ContactEntity contact) => _contacts.Add(contact);
-    public void RemoveContact(ContactEntity contact) => _contacts.Remove(contact);
+	public void AddContact(ContactEntity contact) => Contacts.Add(contact);
+    public void RemoveContact(ContactEntity contact) => Contacts.Remove(contact);
 }
