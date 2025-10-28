@@ -1,4 +1,5 @@
 ﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using System.Security.Claims;
 
 namespace lrembecki.obsluga_it.application.Abstractions.Factories;
 
@@ -10,4 +11,12 @@ public interface IJwtTokenFactory
         SubscriptionVM subscriptionVM,
         DateTime created,
         DateTime expires);
+
+    ClaimsIdentity GetClaimsIdentity(
+        UserVM userVM, 
+        SubscriptionVM subscriptionVM, 
+        string[] permissions, 
+        DateTime created, 
+        DateTime expires
+    );
 }

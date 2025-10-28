@@ -1,5 +1,4 @@
 ﻿using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.ValueObjects;
 using lrembecki.obsluga_it.infrastructure.Entities.Templates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -15,8 +14,7 @@ internal class UserEntityTypeConfiguration : BaseEntityTypeConfiguration<UserEnt
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Email)
-            .IsRequired().HasMaxLength(150)
-            .HasConversion(e => e.Address, e => new Email(e));
+            .IsRequired().HasMaxLength(150);
 
         builder.HasIndex(e => e.Email).IsUnique();
 

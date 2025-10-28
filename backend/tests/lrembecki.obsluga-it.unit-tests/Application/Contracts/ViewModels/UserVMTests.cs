@@ -1,6 +1,5 @@
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 
@@ -9,7 +8,7 @@ public class UserVMTests
     [Fact]
     public void MapFromDomainEntity_MapsEmailAndActiveSubscriptionsOnly()
     {
-        var user = UserEntity.Create(Guid.NewGuid(), new Email("user@example.com"));
+        var user = UserEntity.Create(Guid.NewGuid(), "user@example.com");
 
         var sub1 = SubscriptionEntity.Create(Guid.NewGuid(), "Sub1");
         var sub2 = SubscriptionEntity.Create(Guid.NewGuid(), "Sub2");

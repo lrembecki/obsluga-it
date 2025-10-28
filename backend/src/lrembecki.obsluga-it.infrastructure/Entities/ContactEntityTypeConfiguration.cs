@@ -1,5 +1,4 @@
 ﻿using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.ValueObjects;
 using lrembecki.obsluga_it.infrastructure.Entities.Templates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,16 +15,10 @@ internal class ContactEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
         builder.HasKey(a => a.Id);
 
         builder.Property(e => e.Email)
-            .HasConversion(
-                v => v.Address,
-                v => new Email(v))
             .IsRequired()
             .HasMaxLength(320);
 
         builder.Property(e => e.Phone)
-            .HasConversion(
-                v => v.Number,
-                v => new Phone(v))
             .IsRequired()
             .HasMaxLength(15);
 

@@ -1,5 +1,4 @@
 using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.unit_tests.Domain.Entities;
 
@@ -11,8 +10,8 @@ public class ContactEntityTests
         var id = Guid.NewGuid();
         var entity = ContactEntity.Create(id, "john.doe@example.com", "234567890");
         Assert.Equal(id, entity.Id);
-        Assert.Equal("john.doe@example.com", entity.Email.Address);
-        Assert.Equal("234567890", entity.Phone.Number);
+        Assert.Equal("john.doe@example.com", entity.Email);
+        Assert.Equal("234567890", entity.Phone);
     }
 
     [Fact]
@@ -20,8 +19,8 @@ public class ContactEntityTests
     {
         var entity = ContactEntity.Create(Guid.NewGuid(), "john.doe@example.com", "234567890");
         entity.Update("alice@example.com", "234567890");
-        Assert.Equal("alice@example.com", entity.Email.Address);
-        Assert.Equal("234567890", entity.Phone.Number);
+        Assert.Equal("alice@example.com", entity.Email);
+        Assert.Equal("234567890", entity.Phone);
     }
 
     [Theory]

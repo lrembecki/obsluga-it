@@ -1,6 +1,7 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.infrastructure.Defaults;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,20 +26,23 @@ internal class JwtTokenFactory(IConfiguration configuration) : IJwtTokenFactory
             Issuer = configuration["OpenId:Issuer"],
             Audience = configuration["OpenId:Audience"],
             SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256),
-            Subject = new ClaimsIdentity([
-                new Claim(CustomClaimTypes.Subject, userVM.Id.ToString()),
-                new Claim(CustomClaimTypes.UserId, userVM.Id.ToString()),
-                new Claim(CustomClaimTypes.SubscriptionId, subscriptionVM.Id.ToString()),
-                new Claim(CustomClaimTypes.NameIdentifier, userVM.Id.ToString()),
-                new Claim(CustomClaimTypes.Email, userVM.Email),
-                ..permissionVMs.Select(p => new Claim(CustomClaimTypes.Role, p)),
-                new Claim(CustomClaimTypes.Created, created.ToString()),
-                new Claim(CustomClaimTypes.Expires, expires.ToString())
-            ]),
+            Subject = GetClaimsIdentity(userVM, subscriptionVM, [.. permissionVMs], created, expires),
             Expires = expires,
             IssuedAt = created
         });
 
         return tokenHandler.WriteToken(token);
     }
+
+    public ClaimsIdentity GetClaimsIdentity(UserVM userVM, SubscriptionVM subscriptionVM, string[] permissions, DateTime created, DateTime expires)
+        => new ClaimsIdentity([
+                new Claim(CustomClaimTypes.Subject, userVM.Id.ToString()),
+                new Claim(CustomClaimTypes.UserId, userVM.Id.ToString()),
+                new Claim(CustomClaimTypes.SubscriptionId, subscriptionVM.Id.ToString()),
+                new Claim(CustomClaimTypes.NameIdentifier, userVM.Id.ToString()),
+                new Claim(CustomClaimTypes.Email, userVM.Email),
+                ..permissions.Select(p => new Claim(CustomClaimTypes.Role, p)),
+                new Claim(CustomClaimTypes.Created, created.ToString()),
+                new Claim(CustomClaimTypes.Expires, expires.ToString())
+            ]);
 }

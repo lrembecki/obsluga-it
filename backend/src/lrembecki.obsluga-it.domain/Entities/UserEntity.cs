@@ -1,19 +1,18 @@
 using lrembecki.obsluga_it.domain.Abstractions;
 using lrembecki.obsluga_it.domain.Common;
 using lrembecki.obsluga_it.domain.Events;
-using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
 internal class UserEntity : BaseEntity, IHasId<Guid>
 {
-    private HashSet<SubscriptionUserEntity> _userSubscriptions = [];
+    private readonly HashSet<SubscriptionUserEntity> _userSubscriptions = [];
     public IReadOnlyCollection<SubscriptionUserEntity> UserSubscriptions => _userSubscriptions.ToList().AsReadOnly();
 
     public Guid Id { get; set; }
-    public Email Email { get; set; } = default!;
+    public string Email { get; set; } = default!;
 
-    public static UserEntity Create(Guid id, Email email)
+    public static UserEntity Create(Guid id, string email)
     {
         var user = new UserEntity
         {

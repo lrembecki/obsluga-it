@@ -6,6 +6,10 @@ using Microsoft.OpenApi.Models;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Security.Claims; // added
+using lrembecki.obsluga_it.infrastructure.Extensions;
+using lrembecki.obsluga_it.application.Abstractions.Factories;
+using lrembecki.obsluga_it.application.Contracts.ViewModels; // for AuthenticationExtensions
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +50,37 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 
 app.UseHttpsRedirection();
+
+if (app.Environment.IsDevelopment())
+{
+    var devEmail = builder.Configuration["Dev:Email"] ?? "dev@local.test";
+    var userVM = new UserVM(Guid.NewGuid(), devEmail, [new SubscriptionVM(Guid.Parse("999CDDA0-FC38-4030-B329-11CB867D38DE"), "Test")]);
+
+    app.Use(async (ctx, next) =>
+    {
+        if (ctx.User?.Identity?.IsAuthenticated != true)
+        {
+            var tokenFactory = ctx.RequestServices.GetRequiredService<IJwtTokenFactory>();
+            ctx.User = new ClaimsPrincipal([
+                new ClaimsIdentity([
+                    new (ClaimTypes.Email, devEmail),
+                    new ("scp", "access_as_user"),
+                    new (ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+                ], AuthenticationExtensions.AzureAdScheme),
+                tokenFactory.GetClaimsIdentity(
+                    userVM,
+                    userVM.Subscriptions[0], 
+                    [], 
+                    DateTime.UtcNow, 
+                    DateTime.UtcNow.AddDays(15)
+                )
+            ]);
+        }
+        await next();
+    });
+}
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 

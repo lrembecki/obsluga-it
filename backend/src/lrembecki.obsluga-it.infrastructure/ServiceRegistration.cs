@@ -31,7 +31,7 @@ public static class ServiceRegistration
             ac.Connect(new Uri(configuration.GetConnectionString("AppConfiguration")!), credential);
         });
 
-        services.AddProjectAuthentication(configuration);
+        services.AddProjectAuthentication(configuration, isDevelopment);
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("sql"), _ =>

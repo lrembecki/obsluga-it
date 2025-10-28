@@ -10,12 +10,22 @@ internal class SubscriptionUserRepository(IUnitOfWork uow, ISessionAccessor sess
 {
     public override IQueryable<SubscriptionUserEntity> GetAll()
     {
-        return base.GetAll().Where(e => e.SubscriptionId == sessionAccessor.SubscriptionId);
+        return base.GetAll().Where(e => sessionAccessor.SubscriptionId == null || e.SubscriptionId == sessionAccessor.SubscriptionId);
     }
 
     public Task<SubscriptionUserEntity?> GetByEmailAndSubscriptionId(string email, Guid? subscriptionId)
-        => GetAll()
+    {
+        IQueryable<SubscriptionUserEntity> query = GetAll()
+            .Where(e => e.User.Email == email)
             .Include(e => e.Subscription)
-            .Include(e => e.User)
-            .FirstOrDefaultAsync(e => e.User.Email.Address == email && (subscriptionId == null || e.SubscriptionId == subscriptionId));
+            .Include(e => e.User);
+
+        if (subscriptionId is not null)
+        {
+            query = query.Where(e => e.SubscriptionId == subscriptionId);
+        }
+
+        return query
+            .FirstOrDefaultAsync();
+    }
 }

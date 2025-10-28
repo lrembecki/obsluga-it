@@ -20,6 +20,11 @@ internal class SubscriptionUserEntityTypeconfiguration : SubscriptionBaseEntityT
         builder.HasOne(e => e.User)
             .WithMany(e => e.UserSubscriptions)
             .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(e => e.Subscription)
+            .WithMany(e => e.UserSubscriptions)
+            .HasForeignKey(e => e.SubscriptionId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

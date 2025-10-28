@@ -13,10 +13,12 @@ public static class AuthenticationExtensions
     public const string InternalJwtScheme = "InternalJwt";
     public const string AzureAdUserScopePolicy = "AzureAdUserScope";
     public const string InternalJwtPolicy = "InternalJwtPolicy";
+    public const string LocalMockupPolicy = "LocalMockupPolicy";
 
     public static IServiceCollection AddProjectAuthentication(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        bool isDevelopment)
     {
         services
             .AddAuthentication(options =>
@@ -49,15 +51,25 @@ public static class AuthenticationExtensions
             .AddPolicy(AzureAdUserScopePolicy, policy =>
             {
                 policy
-                    .AddAuthenticationSchemes(AzureAdScheme)
                     .RequireAuthenticatedUser()
                     .RequireClaim("scp", "access_as_user");
+
+                if (!isDevelopment)
+                {
+                    policy
+                        .AddAuthenticationSchemes(AzureAdScheme);
+                }
             })
             .AddPolicy(InternalJwtPolicy, policy =>
             {
                 policy
-                    .AddAuthenticationSchemes(InternalJwtScheme)
                     .RequireAuthenticatedUser();
+
+                if (!isDevelopment)
+                {
+                    policy
+                        .AddAuthenticationSchemes(InternalJwtScheme);
+                }
             });
 
         return services;

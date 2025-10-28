@@ -17,8 +17,8 @@ public record ContactVM(
 
         return new ContactVM(
             contactEntity.Id,
-            contactEntity.Email.Address,
-            contactEntity.Phone.Number
+            contactEntity.Email,
+            contactEntity.Phone
         );
     }
 }

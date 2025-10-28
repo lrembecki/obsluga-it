@@ -1,5 +1,4 @@
 using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.unit_tests.Domain.Entities;
 
@@ -9,7 +8,7 @@ public class UserTests
     public void Create_SetsProperties_AndAddsDomainEvent()
     {
         var id = Guid.NewGuid();
-        var email = new Email("alice@example.com");
+        var email = "alice@example.com";
         var user = UserEntity.Create(id, email);
 
         Assert.Equal(id, user.Id);

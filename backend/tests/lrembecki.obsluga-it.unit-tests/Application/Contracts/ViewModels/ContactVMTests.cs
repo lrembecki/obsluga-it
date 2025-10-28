@@ -1,7 +1,6 @@
 using System.Reflection;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.domain.ValueObjects;
 
 namespace lrembecki.obsluga_it.unit_tests.Application.Contracts.ViewModels;
 

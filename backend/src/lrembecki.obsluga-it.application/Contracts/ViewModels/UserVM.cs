@@ -11,7 +11,7 @@ public record UserVM(
     {
         return new UserVM(
             user.Id,
-            user.Email.Address,
+            user.Email,
             user.UserSubscriptions.Where(e => e.IsActive)
                 .Select(e => e.Subscription)
                 .Select(SubscriptionVM.MapFromDomainEntity)

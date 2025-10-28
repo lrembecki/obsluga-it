@@ -14,5 +14,5 @@ internal class UserRepository(IUnitOfWork uow) : EfRepository<UserEntity>(uow), 
         .Include(e => e.UserSubscriptions)
         .ThenInclude(e => e.Subscription)
         .AsNoTracking()
-        .FirstOrDefaultAsync(u => u.Email.Address == email);
+        .FirstOrDefaultAsync(u => u.Email == email);
 }
