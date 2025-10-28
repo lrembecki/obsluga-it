@@ -1,13 +1,11 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Abstractions.Repositories;
+using lrembecki.obsluga_it.application.Contracts.Commands;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 
-namespace lrembecki.obsluga_it.application.Commands;
+namespace lrembecki.obsluga_it.application.Handlers;
 
-public record SubscriptionCreateCommand(string Name) : IRequest<SubscriptionVM>;
-public record SubscriptionUpdateCommand(Guid SubscriptionId, string Name) : IRequest<SubscriptionVM>;
-
-internal sealed class SubscriptionCommandHandler(IUnitOfWork uow)
+internal sealed class SubscriptionHandler(IUnitOfWork uow)
     : IRequestHandler<SubscriptionCreateCommand, SubscriptionVM>
     , IRequestHandler<SubscriptionUpdateCommand, SubscriptionVM>
 {
