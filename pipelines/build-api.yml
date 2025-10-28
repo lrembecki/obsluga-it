@@ -66,7 +66,7 @@ stages:
       displayName: 'Publish test results'
       inputs:
         testResultsFormat: 'VSTest'
-        testResultsFiles: 'TestResults/*.trx'
+        testResultsFiles: '*.trx'
         searchFolder: '$(Agent.TempDirectory)/TestResults'
         mergeTestResults: true
         failTaskOnFailedTests: true
