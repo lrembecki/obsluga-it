@@ -1,5 +1,7 @@
 using lrembecki.obsluga_it.application.Abstractions.Repositories;
+using lrembecki.obsluga_it.application.Contracts.Specifications;
 using lrembecki.obsluga_it.domain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.obsluga_it.unit_tests.Shared;
 
@@ -16,6 +18,12 @@ internal class FakeRepository<T>(ICollection<T> data = null!) : IRepository<T>
 
     public IQueryable<T> GetAll()
         => _data.AsQueryable();
+
+    public IQueryable<T> GetAll(Specification<T> specification = null!)
+        => _data.Where((specification ?? Specification<T>.All).Predicate.Compile()).AsQueryable();
+
+    public Task<List<VM>> SelectAsync<VM>(Specification<T, VM> specification)
+        => GetAll(specification).Select(specification.Project).ToListAsync();
 
     public Task<T> UpdateAsync(T entity)
     {

@@ -3,6 +3,8 @@ using lrembecki.obsluga_it.application.Abstractions.Providers;
 using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using lrembecki.obsluga_it.application.Abstractions.Services;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.obsluga_it.application.Extensions;
+using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Services;
 
@@ -15,7 +17,8 @@ internal class AuthenticationService(
     {
         var now = dateProvider.UtcNow;
 
-        var subscriptionUser = (await uow.GetRepository<ISubscriptionUserRepository>().GetByEmailAndSubscriptionId(email, subscriptionId))
+        var subscriptionUser = await uow.GetRepository<IRepository<SubscriptionUserEntity>>()
+            .FirstOrDefaultAsync(e => e.User.Email == email)
             ?? throw new UnauthorizedAccessException("Invalid email or subscription.");
 
         var userVM = UserVM.MapFromDomainEntity(subscriptionUser.User);
