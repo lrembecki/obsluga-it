@@ -21,4 +21,12 @@ internal class UnitOfMeasureEntity : BaseEntity, IHasId<Guid>
             ShortName = shortName,
             ShortCode = shortCode
         };
+
+    public void Update(UnitOfMeasureType type, string name, string shortName, string shortCode)
+    {
+        Type = type;
+        Name = name;
+        ShortName = shortName;
+        ShortCode = shortCode;
+    }
 }
