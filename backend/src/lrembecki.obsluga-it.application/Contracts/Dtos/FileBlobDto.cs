@@ -1,4 +1,6 @@
-﻿namespace lrembecki.obsluga_it.application.Contracts.Dtos;
+﻿using lrembecki.obsluga_it.domain.Entities;
+
+namespace lrembecki.obsluga_it.application.Contracts.Dtos;
 
 public record FileBlobDto : BlobDto
 {

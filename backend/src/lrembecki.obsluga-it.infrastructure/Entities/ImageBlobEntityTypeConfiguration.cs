@@ -23,7 +23,7 @@ internal class ImageBlobEntityTypeConfiguration : BlobBaseEntityTypeConfiguratio
             .HasMaxLength(1000);
 
         builder.HasMany(e => e.Tags).WithMany().UsingEntity<Dictionary<string, object>>("ImageBlobTag",
-            j => j.HasOne<TagEnity>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.Restrict),
+            j => j.HasOne<TagEntity>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.Restrict),
             j => j.HasOne<ImageBlobEntity>().WithMany().HasForeignKey("ImageBlobId").OnDelete(DeleteBehavior.Restrict),
             j =>
             {

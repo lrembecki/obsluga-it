@@ -45,7 +45,7 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
 
         model.BlobUrl = blobClient.Uri.ToString();
         model.BinaryData = null;
-        
+
         return model;
     }
 

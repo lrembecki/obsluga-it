@@ -7,7 +7,7 @@ public record TagVM(
     string Name
 )
 {
-    internal static TagVM MapFromDomainEntity(TagEnity entity)
+    internal static TagVM MapFromDomainEntity(TagEntity entity)
     {
         if (entity == null)
         {

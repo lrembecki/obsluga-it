@@ -13,10 +13,10 @@ public interface IJwtTokenFactory
         DateTime expires);
 
     ClaimsIdentity GetClaimsIdentity(
-        UserVM userVM, 
-        SubscriptionVM subscriptionVM, 
-        string[] permissions, 
-        DateTime created, 
+        UserVM userVM,
+        SubscriptionVM subscriptionVM,
+        string[] permissions,
+        DateTime created,
         DateTime expires
     );
 }

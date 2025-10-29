@@ -1,9 +1,12 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.obsluga_it.application.Extensions;
 using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Services;
+
+public interface IActorService : ICrudService<ActorDto, ActorVM>;
 internal sealed class ActorService(IUnitOfWork uow) : IActorService
 {
     private readonly IRepository<ActorEntity> _actors = uow.GetRepository<ActorEntity>();
@@ -12,7 +15,7 @@ internal sealed class ActorService(IUnitOfWork uow) : IActorService
         => _actors.SelectAsync(e => ActorVM.MapFromDomainEntity(e));
 
     public async Task<ActorVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => ActorVM.MapFromDomainEntity(await RequireById(id, cancellationToken));
+        => ActorVM.MapFromDomainEntity(await _actors.RequireByIdAsync(id, cancellationToken));
 
     public async Task<ActorVM> CreateAsync(ActorDto model, CancellationToken cancellationToken = default)
     {
@@ -29,13 +32,13 @@ internal sealed class ActorService(IUnitOfWork uow) : IActorService
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var actor = await RequireById(id, cancellationToken);
+        var actor = await _actors.RequireByIdAsync(id, cancellationToken);
         await _actors.DeleteAsync(actor);
     }
 
     public async Task<ActorVM> UpdateAsync(Guid id, ActorDto model, CancellationToken cancellationToken = default)
     {
-        var actor = await RequireById(id, cancellationToken);
+        var actor = await _actors.RequireByIdAsync(id, cancellationToken);
 
         actor.Update(model.Firstname, model.Lastname);
 
@@ -43,8 +46,4 @@ internal sealed class ActorService(IUnitOfWork uow) : IActorService
 
         return await GetByIdAsync(actor.Id, cancellationToken);
     }
-
-    private async Task<ActorEntity> RequireById(Guid id, CancellationToken cancellationToken)
-        => await _actors.FindByIdAsync(id, cancellationToken)
-            ?? throw new ArgumentNullException(nameof(id), "Actor not found");
 }

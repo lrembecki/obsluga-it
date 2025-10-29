@@ -14,4 +14,9 @@ public static class RepositoryExtensions
     public static Task<T?> FirstOrDefaultAsync<T>(this IRepository<T> repository, Expression<Func<T, bool>> predicate)
         where T : class
         => Task.Run(() => repository.GetAll().FirstOrDefault(predicate));
+
+    public static async Task<T> RequireByIdAsync<T>(this IRepository<T> repository, Guid id, CancellationToken cancellationToken = default, string errorMessage = "Record not found")
+        where T : class, IHasId<Guid>
+        => await repository.GetByIdAsync(id)
+        ?? throw new ArgumentNullException(nameof(id), errorMessage);
 }

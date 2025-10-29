@@ -69,9 +69,9 @@ if (app.Environment.IsDevelopment())
                 ], AuthenticationExtensions.AzureAdScheme),
                 tokenFactory.GetClaimsIdentity(
                     userVM,
-                    userVM.Subscriptions[0], 
-                    [], 
-                    DateTime.UtcNow, 
+                    userVM.Subscriptions[0],
+                    [],
+                    DateTime.UtcNow,
                     DateTime.UtcNow.AddDays(15)
                 )
             ]);

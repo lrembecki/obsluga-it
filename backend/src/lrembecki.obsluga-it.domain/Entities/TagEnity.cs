@@ -3,12 +3,12 @@ using lrembecki.obsluga_it.domain.Common;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class TagEnity : SubscriptionBaseEntity, IHasId<Guid>
+internal class TagEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
-    public Guid Id { get; private set; } = default!;
+    public Guid Id { get; private set; }
     public string Name { get; private set; } = default!;
 
-    public static TagEnity Create(Guid tagId, string name)
+    public static TagEntity Create(Guid tagId, string name)
         => new()
         {
             Id = tagId,
