@@ -29,6 +29,16 @@ stages:
   jobs:
   - job: build
     steps:
+
+    - task: SonarCloudPrepare@3
+      inputs:
+        SonarQube: 'sc-sonarqbue'
+        organization: 'k1t5'
+        scannerMode: 'dotnet'
+        dotnetScannerVersion: '11.0.0'
+        projectKey: 'k1t5_obsluga-it'
+        projectName: 'obsluga-it'
+
     - task: UseDotNet@2
       displayName: 'Use .NET SDK $(dotnetVersion)'
       inputs:
@@ -61,6 +71,10 @@ stages:
         projects: '$(testProjects)'
         arguments: '--verbosity diag --configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --results-directory $(Agent.TempDirectory)/TestResults'
         publishTestResults: true
+
+    - task: SonarCloudAnalyze@3
+      inputs:
+        jdkversion: 'JAVA_HOME_21_X64'
 
     - task: PublishCodeCoverageResults@2
       displayName: 'Publish code coverage'
