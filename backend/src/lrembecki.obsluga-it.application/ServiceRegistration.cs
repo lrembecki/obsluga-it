@@ -24,7 +24,7 @@ public static class ServiceRegistration
             });
         });
 
-        assembly.GetTypes().ToList()
+        assembly.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract)
             .Where(t => !t.IsDefined(typeof(CompilerGeneratedAttribute), inherit: false))
             .Select(t => new { Impl = t, Interface = t.GetInterface($"I{t.Name}") })
