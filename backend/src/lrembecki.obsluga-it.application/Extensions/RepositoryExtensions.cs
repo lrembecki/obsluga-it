@@ -15,7 +15,9 @@ public static class RepositoryExtensions
         where T : class
         => Task.Run(() => repository.GetAll().FirstOrDefault(predicate));
 
+#pragma warning disable CA1068 // CancellationToken parameters must come last
     public static async Task<T> RequireByIdAsync<T>(this IRepository<T> repository, Guid id, CancellationToken cancellationToken = default, string errorMessage = "Record not found")
+#pragma warning restore CA1068 // CancellationToken parameters must come last
         where T : class, IHasId<Guid>
         => await repository.GetByIdAsync(id)
         ?? throw new ArgumentNullException(nameof(id), errorMessage);
