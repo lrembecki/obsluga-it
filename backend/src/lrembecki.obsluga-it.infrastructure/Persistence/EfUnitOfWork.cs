@@ -1,6 +1,6 @@
-﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
+﻿using lrembecki.obsluga_it.application.Abstractions;
+using lrembecki.obsluga_it.application.Abstractions.Factories;
 using lrembecki.obsluga_it.application.Abstractions.Providers;
-using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using lrembecki.obsluga_it.domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

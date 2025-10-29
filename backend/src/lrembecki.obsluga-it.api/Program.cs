@@ -95,4 +95,4 @@ var endpointModules = typeof(IEndpointModule).Assembly
 foreach (var m in endpointModules)
     m.MapEndpoints(app);
 
-app.Run();
+await app.RunAsync();

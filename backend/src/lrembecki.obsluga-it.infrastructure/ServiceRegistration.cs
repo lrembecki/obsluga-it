@@ -1,6 +1,6 @@
 using Azure.Core;
 using Azure.Identity;
-using lrembecki.obsluga_it.application.Abstractions.Repositories;
+using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 using lrembecki.obsluga_it.infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

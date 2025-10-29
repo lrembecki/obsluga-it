@@ -1,4 +1,4 @@
-using lrembecki.obsluga_it.application.Abstractions.Repositories;
+using lrembecki.obsluga_it.application.Abstractions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using System.Collections;
 

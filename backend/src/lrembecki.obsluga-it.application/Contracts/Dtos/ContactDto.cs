@@ -1,4 +1,4 @@
-﻿namespace lrembecki.obsluga_it.application.Handlers;
+﻿namespace lrembecki.obsluga_it.application.Contracts.Dtos;
 
 public record ContactDto
 {

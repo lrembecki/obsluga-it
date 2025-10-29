@@ -1,4 +1,4 @@
-﻿namespace lrembecki.obsluga_it.application.Abstractions.Repositories;
+﻿namespace lrembecki.obsluga_it.application.Abstractions;
 
 public interface IUnitOfWork
 {

@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions.Repositories;
+﻿using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Extensions;
 using lrembecki.obsluga_it.domain.Abstractions;
 using System.Linq.Expressions;
