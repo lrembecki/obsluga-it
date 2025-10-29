@@ -18,7 +18,7 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
 
         var binaryData = Convert.FromBase64String(model.BinaryData);
         using var ms = new MemoryStream();
-        ms.Write(binaryData, 0, binaryData.Length);
+        await ms.WriteAsync(binaryData, 0, binaryData.Length);
 
         var containerClient = serviceClient.GetBlobContainerClient(container);
         await containerClient.CreateIfNotExistsAsync(
@@ -36,7 +36,7 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
                 snapshotsOption: DeleteSnapshotsOption.None,
                 cancellationToken: cancellationToken);
 
-        var contentInfo = await blobClient.UploadAsync(
+        await blobClient.UploadAsync(
                 content: ms,
                 httpHeaders: blobHttpHeaders,
                 metadata: new Dictionary<string, string> { },
@@ -48,7 +48,7 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
         return model;
     }
 
-    private string CalculateContentType(string filename)
+    private static string CalculateContentType(string filename)
     {
         var extension = Path.GetExtension(filename).ToLowerInvariant();
         return extension switch

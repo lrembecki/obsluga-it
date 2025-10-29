@@ -49,7 +49,7 @@ internal sealed class ActorService(IUnitOfWork uow) : IActorService
 
     private async Task<ActorEntity> RequireById(Guid actorId, CancellationToken cancellationToken)
         => await _actors.FindByIdAsync(actorId, cancellationToken)
-            ?? throw new NullReferenceException("Actor not found");
+            ?? throw new ArgumentNullException("Actor not found");
 }
 
 public record FileBlobDto : BlobDto
