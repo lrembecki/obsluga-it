@@ -13,7 +13,7 @@ internal sealed class SubscriptionHandler(IUnitOfWork uow)
 
     public async Task<SubscriptionVM> HandleAsync(SubscriptionCreateCommand request, CancellationToken cancellationToken = default)
     {
-        var subscription = new domain.Entities.SubscriptionEntity
+        var subscription = new SubscriptionEntity
         {
             Id = Guid.NewGuid(),
             Name = request.Name
@@ -27,7 +27,7 @@ internal sealed class SubscriptionHandler(IUnitOfWork uow)
     public async Task<SubscriptionVM> HandleAsync(SubscriptionUpdateCommand request, CancellationToken cancellationToken = default)
     {
         var subscription = (await _subscriptions.FindByIdAsync(request.SubscriptionId, cancellationToken))
-            ?? throw new Exception("Subscription not found");
+            ?? throw new ArgumentNullException(nameof(request), "Actor not found");
 
         subscription.Name = request.Name;
 

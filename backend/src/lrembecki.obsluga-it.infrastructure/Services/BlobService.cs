@@ -1,7 +1,8 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using lrembecki.obsluga_it.application.Abstractions;
-using lrembecki.obsluga_it.application.Services;
+using lrembecki.obsluga_it.application.Contracts.Dtos;
+using System.ComponentModel;
 
 namespace lrembecki.obsluga_it.infrastructure.Services;
 
@@ -18,7 +19,7 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
 
         var binaryData = Convert.FromBase64String(model.BinaryData);
         using var ms = new MemoryStream();
-        await ms.WriteAsync(binaryData, 0, binaryData.Length);
+        await ms.WriteAsync(binaryData, 0, binaryData.Length, cancellationToken);
 
         var containerClient = serviceClient.GetBlobContainerClient(container);
         await containerClient.CreateIfNotExistsAsync(
@@ -46,6 +47,16 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
         model.BinaryData = null;
         
         return model;
+    }
+
+    public async Task RemoveBlobAsync(string blobPath, string container, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrEmpty(blobPath)) return;
+
+        var containerClient = serviceClient.GetBlobContainerClient(container);
+        var blobClient = containerClient.GetBlobClient(blobPath);
+
+        await blobClient.DeleteAsync(DeleteSnapshotsOption.IncludeSnapshots);
     }
 
     private static string CalculateContentType(string filename)
