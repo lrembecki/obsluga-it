@@ -19,7 +19,7 @@ internal class BlobService(BlobServiceClient serviceClient) : IBlobService
 
         var binaryData = Convert.FromBase64String(model.BinaryData);
         using var ms = new MemoryStream();
-        await ms.WriteAsync(binaryData, 0, binaryData.Length, cancellationToken);
+        await ms.WriteAsync(binaryData, cancellationToken);
 
         var containerClient = serviceClient.GetBlobContainerClient(container);
         await containerClient.CreateIfNotExistsAsync(
