@@ -73,8 +73,7 @@ stages:
         publishTestResults: true
 
     - task: SonarCloudAnalyze@3
-      inputs:
-        jdkversion: 'JAVA_HOME_21_X64'
+    - task: SonarCloudPublish@3
 
     - task: PublishCodeCoverageResults@2
       displayName: 'Publish code coverage'
