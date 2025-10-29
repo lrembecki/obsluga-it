@@ -17,7 +17,7 @@ internal class AuthenticationService(
     {
         var now = dateProvider.UtcNow;
 
-        var subscriptionUser = await uow.GetRepository<IRepository<SubscriptionUserEntity>>()
+        var subscriptionUser = await uow.GetRepository<SubscriptionUserEntity>()
             .FirstOrDefaultAsync(e => e.User.Email == email)
             ?? throw new UnauthorizedAccessException("Invalid email or subscription.");
 

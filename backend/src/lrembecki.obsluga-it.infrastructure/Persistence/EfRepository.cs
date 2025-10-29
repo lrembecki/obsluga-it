@@ -1,27 +1,13 @@
-﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
-using lrembecki.obsluga_it.application.Abstractions.Repositories;
-using lrembecki.obsluga_it.application.Contracts.Specifications;
-using lrembecki.obsluga_it.domain.Abstractions;
+﻿using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace lrembecki.obsluga_it.infrastructure.Persistence;
 
-internal class EfRepository<T>(IUnitOfWork uow, ISessionAccessor session) : IRepository<T>
+internal class EfRepository<T>(IUnitOfWork uow) : IRepository<T>
     where T : class
 {
     protected readonly DbSet<T> _dbSet = (uow as EfUnitOfWork)!.DbContext.Set<T>();
-
-    public virtual IQueryable<T> GetAll(Specification<T> specification = null!)
-    {
-        specification ??= Specification<T>.All;
-
-        specification = specification.ReflectWithSubscriptionId(session.SubscriptionId);
-
-        return _dbSet.Where(specification?.Predicate ?? Specification<T>.All.Predicate).AsNoTracking(); ;
-    }
-
-    public Task<List<VM>> SelectAsync<VM>(Specification<T, VM> specification)
-        => GetAll(specification).Select(specification.Project).ToListAsync();
 
     public async Task<T> AddAsync(T entity)
     {
@@ -43,4 +29,10 @@ internal class EfRepository<T>(IUnitOfWork uow, ISessionAccessor session) : IRep
         await uow.SaveChangesAsync();
         return entity;
     }
+
+    public IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate = null)
+        => predicate is not null ? _dbSet.Where(predicate) : _dbSet;
+
+    public Task<List<VM>> SelectAsync<VM>(Expression<Func<T, VM>> project, Expression<Func<T, bool>>? predicate = null)
+        => GetAll(predicate).Select(project).ToListAsync();
 }

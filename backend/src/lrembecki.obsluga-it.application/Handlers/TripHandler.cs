@@ -9,8 +9,8 @@ namespace lrembecki.obsluga_it.application.Handlers;
 internal sealed class TripHandler(IUnitOfWork uow) : IRequestHandler<TripsGetQuery, List<TripVM>>
 {
     public Task<List<TripVM>> HandleAsync(TripsGetQuery request, CancellationToken cancellationToken = default)
-    => Task.Run(() => uow.GetRepository<IRepository<TripEntity>>()
-    .GetAll()
-    .Select(TripVM.MapFromDomainEntity)
-    .ToList(), cancellationToken);
+    => Task.Run(() => uow.GetRepository<TripEntity>()
+        .GetAll()
+        .Select(TripVM.MapFromDomainEntity)
+        .ToList(), cancellationToken);
 }

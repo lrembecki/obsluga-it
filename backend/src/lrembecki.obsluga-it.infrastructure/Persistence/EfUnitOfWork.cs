@@ -13,8 +13,8 @@ internal class EfUnitOfWork(
 {
     public ApplicationDbContext DbContext => dbContext;
 
-    public T GetRepository<T>() where T : IRepository
-        => serviceProvider.GetRequiredService<T>();
+    public IRepository<T> GetRepository<T>() where T : class
+        => serviceProvider.GetRequiredService<IRepository<T>>();
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

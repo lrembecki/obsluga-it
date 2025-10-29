@@ -2,11 +2,12 @@
 using lrembecki.obsluga_it.application.Abstractions.Repositories;
 using lrembecki.obsluga_it.application.Contracts.Queries;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Handlers;
 
 internal sealed class FileGroupHandler(IUnitOfWork uow) : IRequestHandler<FileGroupsGetQuery, List<FileGroupVM>>
 {
     public Task<List<FileGroupVM>> HandleAsync(FileGroupsGetQuery request, CancellationToken cancellationToken = default)
-        => uow.GetRepository<IFileGroupRepository>().GetAllAsync(cancellationToken);
+        => uow.GetRepository<FileGroupEntity>().SelectAsync(e => FileGroupVM.MapFromDomainEntity(e));
 }

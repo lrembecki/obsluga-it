@@ -2,6 +2,6 @@
 
 public interface IUnitOfWork
 {
-    T GetRepository<T>() where T : IRepository;
+    IRepository<T> GetRepository<T>() where T : class;
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

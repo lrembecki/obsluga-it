@@ -10,10 +10,10 @@ public interface IActorService : ICrudService<ActorDto, ActorVM>;
 
 internal sealed class ActorService(IUnitOfWork uow) : IActorService
 {
-    private readonly IRepository<ActorEntity> _actors = uow.GetRepository<IRepository<ActorEntity>>();
+    private readonly IRepository<ActorEntity> _actors = uow.GetRepository<ActorEntity>();
 
     public Task<List<ActorVM>> GetAllAsync(CancellationToken cancellationToken = default)
-        => uow.GetRepository<IRepository<ActorEntity>>().SelectAsync(e => ActorVM.MapFromDomainEntity(e));
+        => _actors.SelectAsync(e => ActorVM.MapFromDomainEntity(e));
 
     public async Task<ActorVM> GetByIdAsync(Guid actorId, CancellationToken cancellationToken = default)
         => ActorVM.MapFromDomainEntity(await RequireById(actorId, cancellationToken));

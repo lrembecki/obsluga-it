@@ -9,8 +9,8 @@ namespace lrembecki.obsluga_it.application.Handlers;
 internal sealed class HighlightHandler(IUnitOfWork uow) : IRequestHandler<HighlightsGetQuery, List<HighlightVM>>
 {
     public Task<List<HighlightVM>> HandleAsync(HighlightsGetQuery request, CancellationToken cancellationToken = default)
-    => Task.Run(() => uow.GetRepository<IRepository<HighlightEntity>>()
-    .GetAll()
-    .Select(HighlightVM.MapFromDomainEntity)
-    .ToList(), cancellationToken);
+    => Task.Run(() => uow.GetRepository<HighlightEntity>()
+        .GetAll()
+        .Select(HighlightVM.MapFromDomainEntity)
+        .ToList(), cancellationToken);
 }

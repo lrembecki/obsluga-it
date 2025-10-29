@@ -9,8 +9,8 @@ namespace lrembecki.obsluga_it.application.Handlers;
 internal sealed class FileBlobHandler(IUnitOfWork uow) : IRequestHandler<FileBlobsGetQuery, List<FileBlobVM>>
 {
     public Task<List<FileBlobVM>> HandleAsync(FileBlobsGetQuery request, CancellationToken cancellationToken = default)
-    => Task.Run(() => uow.GetRepository<IRepository<FileBlobEntity>>()
-    .GetAll()
-    .Select(FileBlobVM.MapFromDomainEntity)
-    .ToList(), cancellationToken);
+        => Task.Run(() => uow.GetRepository<FileBlobEntity>()
+        .GetAll()
+        .Select(FileBlobVM.MapFromDomainEntity)
+        .ToList(), cancellationToken);
 }

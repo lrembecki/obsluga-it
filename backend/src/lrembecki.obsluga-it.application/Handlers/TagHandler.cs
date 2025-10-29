@@ -9,8 +9,8 @@ namespace lrembecki.obsluga_it.application.Handlers;
 internal sealed class TagHandler(IUnitOfWork uow) : IRequestHandler<TagsGetQuery, List<TagVM>>
 {
     public Task<List<TagVM>> HandleAsync(TagsGetQuery request, CancellationToken cancellationToken = default)
-    => Task.Run(() => uow.GetRepository<IRepository<TagEnity>>()
-    .GetAll()
-    .Select(TagVM.MapFromDomainEntity)
-    .ToList(), cancellationToken);
+    => Task.Run(() => uow.GetRepository<TagEnity>()
+        .GetAll()
+        .Select(TagVM.MapFromDomainEntity)
+        .ToList(), cancellationToken);
 }

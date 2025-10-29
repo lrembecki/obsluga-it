@@ -6,12 +6,12 @@ namespace lrembecki.obsluga_it.unit_tests.Shared;
 
 internal sealed class FakeUnitOfWork(Hashtable hashset) : IUnitOfWork
 {
-    public T GetRepository<T>() where T : IRepository
+    public IRepository<T> GetRepository<T>() where T : class
     {
         var type = typeof(T);
         if (hashset.ContainsKey(type))
         {
-            return (T)hashset[type]!;
+            return (IRepository<T>)hashset[type]!;
         }
 
         throw new NotImplementedException();

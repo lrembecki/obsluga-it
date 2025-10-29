@@ -9,8 +9,8 @@ namespace lrembecki.obsluga_it.application.Handlers;
 internal sealed class UserHandler(IUnitOfWork uow) : IRequestHandler<UsersGetQuery, List<UserVM>>
 {
     public Task<List<UserVM>> HandleAsync(UsersGetQuery request, CancellationToken cancellationToken = default)
-    => Task.Run(() => uow.GetRepository<IRepository<UserEntity>>()
-    .GetAll()
-    .Select(UserVM.MapFromDomainEntity)
-    .ToList(), cancellationToken);
+    => Task.Run(() => uow.GetRepository<UserEntity>()
+        .GetAll()
+        .Select(UserVM.MapFromDomainEntity)
+        .ToList(), cancellationToken);
 }

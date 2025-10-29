@@ -9,8 +9,8 @@ namespace lrembecki.obsluga_it.application.Handlers;
 internal sealed class ContactHandler(IUnitOfWork uow) : IRequestHandler<ContactsGetQuery, List<ContactVM>>
 {
     public Task<List<ContactVM>> HandleAsync(ContactsGetQuery request, CancellationToken cancellationToken = default)
-    => Task.Run(() => uow.GetRepository<IRepository<ContactEntity>>()
-    .GetAll()
-    .Select(ContactVM.MapFromDomainEntity)
-    .ToList(), cancellationToken);
+        => Task.Run(() => uow.GetRepository<ContactEntity>()
+        .GetAll()
+        .Select(ContactVM.MapFromDomainEntity)
+        .ToList(), cancellationToken);
 }
