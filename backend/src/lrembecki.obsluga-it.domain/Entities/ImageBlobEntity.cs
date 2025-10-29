@@ -11,22 +11,13 @@ internal class ImageBlobEntity : BlobBaseEntity
 
     public List<TagEnity> Tags { get; private set; } = [];
 
-    public static ImageBlobEntity Create(BlobBaseEntity blob, List<TagEnity> tags)
+    public void Update(string? displayName, string? description, long? width, long? height, List<TagEnity> tags)
     {
-        var image = Create<ImageBlobEntity>(blob)!;
-
-        image.Update(tags);
-
-        return image;
-    }
-
-    public void Update(BlobBaseEntity blob, string displayName, string description, List<TagEnity> tags)
-    {
-
-        if (blob is not null) Update(blob);
 
         DisplayName = displayName;
         Description = description;
+        Width = width;
+        Height = height;
 
         Update(tags);
     }

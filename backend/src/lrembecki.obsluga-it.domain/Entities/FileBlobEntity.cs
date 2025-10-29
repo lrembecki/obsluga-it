@@ -11,23 +11,12 @@ internal class FileBlobEntity : BlobBaseEntity
     public Guid? GroupId { get; set; }
     public FileGroupEntity? Group { get; set; } = default!;
 
-    public static FileBlobEntity Create(Guid fileId, string displayName, string description, int position, FileGroupEntity fileGroup, BlobBaseEntity blob)
-    {
-        var entity = Create<FileBlobEntity>(fileId, blob?.Filename, blob?.BlobUrl, blob?.BlobPath, blob?.Size);
-        entity.Update(description, displayName, position, fileGroup, blob);
-
-        return entity;
-    }
-
     public void Update(
         string description,
         string displayName,
         int position,
-        FileGroupEntity? group,
-        BlobBaseEntity? blob)
+        FileGroupEntity? group)
     {
-        if (blob is not null) Update(blob);
-
         Description = description;
         DisplayName = displayName;
         Position = position;

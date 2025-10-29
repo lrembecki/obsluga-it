@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.domain.Common;
 
@@ -9,10 +10,6 @@ internal class BlobBaseEntity : SubscriptionBaseEntity, IHasId<Guid>
     public string? BlobUrl { get; protected set; } = default!;
     public string? BlobPath { get; protected set; } = default!;
     public long? Size { get; protected set; } = default!;
-
-
-    public static T Create<T>(BlobBaseEntity blob) where T : BlobBaseEntity, new()
-        => Create<T>(blob.Id, blob.Filename, blob.BlobUrl, blob.BlobPath, blob.Size);
 
     public static T Create<T>(Guid id, string? filename, string? blobUrl, string? blobPath, long? size) where T : BlobBaseEntity, new()
     {

@@ -1,12 +1,12 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.obsluga_it.domain.Common;
 using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Services;
 
 public interface IActorService : ICrudService<ActorDto, ActorVM>;
-
 internal sealed class ActorService(IUnitOfWork uow) : IActorService
 {
     private readonly IRepository<ActorEntity> _actors = uow.GetRepository<ActorEntity>();
@@ -49,5 +49,74 @@ internal sealed class ActorService(IUnitOfWork uow) : IActorService
 
     private async Task<ActorEntity> RequireById(Guid actorId, CancellationToken cancellationToken)
         => await _actors.FindByIdAsync(actorId, cancellationToken)
-            ?? throw new ArgumentException("Actor not found");
+            ?? throw new NullReferenceException("Actor not found");
+}
+
+public record FileBlobDto : BlobDto
+{
+    public string DisplayName { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public int Position { get; set; }
+    public Guid? FileGroupId { get; set; }
+}
+
+public record BlobDto
+{
+    public Guid? Id { get; set; }
+    public string? BinaryData { get; set; }
+    public string? Filename { get; set; }
+    public string? BlobUrl { get; set; }
+    public string? BlobPath { get; set; }
+    public long? Size { get; set; }
+}
+
+internal sealed class FileBlobService(IUnitOfWork uow, IBlobService blobService) : ICrudService<FileBlobDto, FileBlobVM>
+{
+    private readonly IRepository<FileBlobEntity> _files = uow.GetRepository<FileBlobEntity>();
+
+    public async Task<FileBlobVM> CreateAsync(FileBlobDto model, CancellationToken cancellationToken = default)
+    {
+        model = await blobService.SyncBlobDataAsync(model, "files", cancellationToken);
+
+        var fileBlob = BlobBaseEntity.Create<FileBlobEntity>(
+            id: model.Id!.Value, 
+            filename: model.Filename, 
+            blobUrl: model.BlobUrl, 
+            blobPath: model.BlobPath, 
+            size: model.Size
+        );
+
+        fileBlob.Update(
+            description: model.Description, 
+            displayName: model.DisplayName, 
+            position: model.Position, 
+            group: model.FileGroupId is null
+                ? null
+                : await uow.GetRepository<FileGroupEntity>().FindByIdAsync(model.FileGroupId.Value, cancellationToken)
+        );
+
+        await _files.AddAsync(fileBlob);
+
+        return await GetByIdAsync(fileBlob.Id, cancellationToken);
+    }
+
+    public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<FileBlobVM>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<FileBlobVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<FileBlobVM> UpdateAsync(Guid id, FileBlobDto model, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 }

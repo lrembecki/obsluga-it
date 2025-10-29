@@ -1,5 +1,6 @@
 using Azure.Core;
 using Azure.Identity;
+using Azure.Storage.Blobs;
 using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 using lrembecki.obsluga_it.infrastructure.Persistence;
@@ -39,6 +40,8 @@ public static class ServiceRegistration
                 _.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 _.MigrationsHistoryTable("__EFMigrationsHistory", "oit");
             }));
+
+        services.AddScoped(provider => new BlobServiceClient(configuration.GetConnectionString("Blob")));
 
         services.AddScoped<ApplicationDbContext>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
