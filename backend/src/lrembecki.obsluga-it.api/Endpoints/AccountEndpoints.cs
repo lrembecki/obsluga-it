@@ -1,4 +1,5 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
+using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 using System.Security.Claims;
 
@@ -15,13 +16,13 @@ public sealed class AccountEndpoints : IEndpointModule
         group.MapGet("/", async (IAuthenticationService auth, ClaimsPrincipal user) =>
         {
             var email = GetEmail(user);
-            return await auth.SignInAsync(email, null);
+            return ServiceCallResult.CreateSuccessResult(await auth.SignInAsync(email, null));
         });
 
         group.MapGet("/{subscriptionId:guid}", async (Guid subscriptionId, IAuthenticationService auth, ClaimsPrincipal user) =>
         {
             var email = GetEmail(user);
-            return await auth.SignInAsync(email, subscriptionId);
+            return ServiceCallResult.CreateSuccessResult(await auth.SignInAsync(email, subscriptionId));
         });
     }
 
