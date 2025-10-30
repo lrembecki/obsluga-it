@@ -1,11 +1,16 @@
 ﻿using lrembecki.obsluga_it.application.Abstractions;
-using lrembecki.obsluga_it.application.Abstractions.Factories;
-using lrembecki.obsluga_it.application.Abstractions.Providers;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
-using lrembecki.obsluga_it.application.Extensions;
 using lrembecki.obsluga_it.domain.Entities;
 
+using lrembecki.shared.application.Abstractions;
+using lrembecki.shared.application.Extensions;
+
 namespace lrembecki.obsluga_it.application.Services;
+
+public interface IAuthenticationService
+{
+    Task<AccountVM> SignInAsync(string email, Guid? subscriptionId, CancellationToken cancellationToken = default);
+}
 
 internal class AuthenticationService(
     IDateProvider dateProvider,

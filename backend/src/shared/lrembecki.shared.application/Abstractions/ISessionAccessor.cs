@@ -1,4 +1,4 @@
-﻿namespace lrembecki.obsluga_it.application.Abstractions.Factories;
+﻿namespace lrembecki.shared.application.Abstractions;
 
 public interface ISessionAccessor
 {

@@ -1,8 +1,8 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.shared.application.Abstractions;
 using lrembecki.shared.domain.Abstractions;
 using System.Linq.Expressions;
 
-namespace lrembecki.obsluga_it.application.Extensions;
+namespace lrembecki.shared.application.Extensions;
 
 public static class RepositoryExtensions
 {

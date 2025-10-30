@@ -1,5 +1,5 @@
-﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
-using lrembecki.obsluga_it.infrastructure.Defaults;
+﻿using lrembecki.obsluga_it.infrastructure.Defaults;
+using lrembecki.shared.application.Abstractions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

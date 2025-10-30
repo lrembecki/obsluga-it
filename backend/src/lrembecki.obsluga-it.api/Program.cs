@@ -1,7 +1,7 @@
 using lrembecki.obsluga_it.api;
 using lrembecki.obsluga_it.api.Infrastructure;
 using lrembecki.obsluga_it.application;
-using lrembecki.obsluga_it.application.Abstractions.Factories;
+using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Extensions;

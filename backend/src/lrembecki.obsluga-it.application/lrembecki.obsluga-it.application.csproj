@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\lrembecki.obsluga-it.domain\lrembecki.obsluga-it.domain.csproj" />
+    <ProjectReference Include="..\shared\lrembecki.shared.application\lrembecki.shared.application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

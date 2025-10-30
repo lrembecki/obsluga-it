@@ -1,8 +1,8 @@
-using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
-using lrembecki.obsluga_it.application.Extensions;
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.application.Abstractions;
+using lrembecki.shared.application.Extensions;
 
 namespace lrembecki.obsluga_it.application.Services;
 

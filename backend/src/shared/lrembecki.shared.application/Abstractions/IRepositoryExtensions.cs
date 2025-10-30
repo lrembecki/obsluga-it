@@ -1,6 +1,6 @@
 using lrembecki.shared.domain.Abstractions;
 
-namespace lrembecki.obsluga_it.application.Abstractions;
+namespace lrembecki.shared.application.Abstractions;
 
 public static class IRepositoryExtensions
 {

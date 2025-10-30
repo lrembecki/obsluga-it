@@ -1,4 +1,3 @@
-using lrembecki.obsluga_it.api;
 using lrembecki.obsluga_it.application.Services;
 using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.infrastructure.Extensions;

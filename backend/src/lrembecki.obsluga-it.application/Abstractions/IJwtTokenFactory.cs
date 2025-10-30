@@ -1,7 +1,7 @@
 ﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using System.Security.Claims;
 
-namespace lrembecki.obsluga_it.application.Abstractions.Factories;
+namespace lrembecki.obsluga_it.application.Abstractions;
 
 public interface IJwtTokenFactory
 {

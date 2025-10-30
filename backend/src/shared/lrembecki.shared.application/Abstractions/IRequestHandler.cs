@@ -1,4 +1,4 @@
-namespace lrembecki.obsluga_it.application.Abstractions;
+namespace lrembecki.shared.application.Abstractions;
 
 public interface IRequestHandler<in TRequest>
     where TRequest : IRequest

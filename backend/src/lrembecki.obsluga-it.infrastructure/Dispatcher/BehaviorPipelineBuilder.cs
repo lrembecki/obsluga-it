@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.shared.application.Abstractions;
 
 namespace lrembecki.obsluga_it.infrastructure.Dispatcher;
 

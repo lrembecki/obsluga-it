@@ -1,7 +1,6 @@
-﻿using lrembecki.obsluga_it.application.Abstractions.Factories;
+﻿using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.infrastructure.Defaults;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

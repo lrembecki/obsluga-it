@@ -1,4 +1,4 @@
-namespace lrembecki.obsluga_it.application.Abstractions;
+namespace lrembecki.shared.application.Abstractions;
 
 public interface IRequest;
 #pragma warning disable S2326 // Unused type parameters should be removed

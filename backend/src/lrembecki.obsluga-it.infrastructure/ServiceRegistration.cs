@@ -1,9 +1,10 @@
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage.Blobs;
-using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 using lrembecki.obsluga_it.infrastructure.Persistence;
+using lrembecki.shared.application.Abstractions;
+using lrembecki.shared.infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,8 @@ public static class ServiceRegistration
         ConfigurationManager configuration,
         bool isDevelopment)
     {
+
+        services.AddSharedInfrastructureServices(configuration, isDevelopment);
 
         configuration.AddAzureAppConfiguration(ac =>
         {
@@ -47,7 +50,7 @@ public static class ServiceRegistration
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
-        typeof(ServiceRegistration).Assembly.GetTypes().ToList()
+        typeof(ServiceRegistration).Assembly.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract)
             .Where(t => !t.IsDefined(typeof(CompilerGeneratedAttribute), inherit: false))
             .Select(t => new { Impl = t, Interface = t.GetInterface($"I{t.Name}") })

@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.shared.application.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

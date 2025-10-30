@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.application.Abstractions;
+﻿using lrembecki.shared.application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
 
@@ -19,7 +19,7 @@ public static class ServiceRegistration
                 var genericDef = handlerType.GetGenericTypeDefinition();
                 if (genericDef == typeof(IRequestHandler<>) || genericDef == typeof(IRequestHandler<,>))
                 {
-                    services.AddTransient(handlerType, type);
+                    services.AddScoped(handlerType, type);
                 }
             });
         });
@@ -30,6 +30,6 @@ public static class ServiceRegistration
             .Select(t => new { Impl = t, Interface = t.GetInterface($"I{t.Name}") })
             .Where(x => x.Interface != null && x.Interface.Namespace != null && x.Interface.Namespace.StartsWith("lrembecki.obsluga_it."))
             .ToList()
-            .ForEach(x => services.AddTransient(x.Interface!, x.Impl));
+            .ForEach(x => services.AddScoped(x.Interface!, x.Impl));
     }
 }
