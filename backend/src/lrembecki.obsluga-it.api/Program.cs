@@ -1,24 +1,24 @@
 using lrembecki.obsluga_it.api;
+using lrembecki.obsluga_it.api.Infrastructure;
 using lrembecki.obsluga_it.application;
+using lrembecki.obsluga_it.application.Abstractions.Factories;
+using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.infrastructure;
+using lrembecki.obsluga_it.infrastructure.Extensions;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Security.Claims; // added
-using lrembecki.obsluga_it.infrastructure.Extensions;
-using lrembecki.obsluga_it.application.Abstractions.Factories;
-using lrembecki.obsluga_it.application.Contracts.ViewModels; // for AuthenticationExtensions
-using lrembecki.obsluga_it.api.Infrastructure; // added
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddCors(_ => _
-    .AddDefaultPolicy(p => p
- .WithOrigins(builder.Configuration["Cors"]!.Split(Environment.NewLine))
-       .AllowAnyMethod()
-       .AllowAnyHeader()
-   )
+    .AddDefaultPolicy(p => 
+        p.WithOrigins(builder.Configuration["Cors"]!.Split(Environment.NewLine))
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+        )
     )
     .AddControllers()
     .AddJsonOptions(o =>
@@ -38,7 +38,6 @@ builder.Services.AddInfrastructureServices(builder.Configuration, builder.Enviro
 
 var app = builder.Build();
 
-// Global exception handler
 app.UseGlobalExceptionHandler();
 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
@@ -64,20 +63,21 @@ if (app.Environment.IsDevelopment())
         {
             var tokenFactory = ctx.RequestServices.GetRequiredService<IJwtTokenFactory>();
             ctx.User = new ClaimsPrincipal([
-           new ClaimsIdentity([
-     new (ClaimTypes.Email, devEmail),
-     new ("scp", "access_as_user"),
-     new (ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
-       ], AuthenticationExtensions.AzureAdScheme),
- tokenFactory.GetClaimsIdentity(
-     userVM,
-     userVM.Subscriptions[0],
-     [],
-     DateTime.UtcNow,
-     DateTime.UtcNow.AddDays(15)
-       )
-             ]);
+                new ClaimsIdentity([
+                    new (ClaimTypes.Email, devEmail),
+                    new ("scp", "access_as_user"),
+                    new (ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+                ], AuthenticationExtensions.AzureAdScheme),
+                tokenFactory.GetClaimsIdentity(
+                    userVM,
+                    userVM.Subscriptions[0],
+                    [],
+                    DateTime.UtcNow,
+                    DateTime.UtcNow.AddDays(15)
+                )
+            ]);
         }
+
         await next();
     });
 }
