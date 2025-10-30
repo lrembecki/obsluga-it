@@ -2,7 +2,6 @@
 using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.application.Extensions;
-using lrembecki.obsluga_it.domain.Common;
 using lrembecki.obsluga_it.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Services;

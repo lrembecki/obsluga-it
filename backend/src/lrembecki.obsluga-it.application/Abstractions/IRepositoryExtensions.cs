@@ -1,4 +1,4 @@
-using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.shared.domain.Abstractions;
 
 namespace lrembecki.obsluga_it.application.Abstractions;
 

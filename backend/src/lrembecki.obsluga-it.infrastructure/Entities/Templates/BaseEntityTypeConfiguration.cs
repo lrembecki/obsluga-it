@@ -1,4 +1,4 @@
-﻿using lrembecki.obsluga_it.domain.Common;
+﻿using lrembecki.shared.domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

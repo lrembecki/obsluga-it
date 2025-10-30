@@ -1,4 +1,4 @@
-namespace lrembecki.obsluga_it.domain.Abstractions;
+namespace lrembecki.shared.domain.Abstractions;
 
 #pragma warning disable S3246 // Generic type parameters should be co/contravariant when possible
 public interface IHasId<T>

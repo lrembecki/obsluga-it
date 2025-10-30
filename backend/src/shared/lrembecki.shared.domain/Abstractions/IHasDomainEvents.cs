@@ -1,6 +1,6 @@
-using lrembecki.obsluga_it.domain.Common;
+using lrembecki.shared.domain.Events;
 
-namespace lrembecki.obsluga_it.domain.Abstractions;
+namespace lrembecki.shared.domain.Abstractions;
 
 public interface IHasDomainEvents
 {

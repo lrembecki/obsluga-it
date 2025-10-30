@@ -1,6 +1,7 @@
-using lrembecki.obsluga_it.domain.Abstractions;
+using lrembecki.shared.domain.Abstractions;
+using lrembecki.shared.domain.Events;
 
-namespace lrembecki.obsluga_it.domain.Common;
+namespace lrembecki.shared.domain.Entities;
 
 internal class BaseEntity : IHasDomainEvents, IHasAuditFields
 {

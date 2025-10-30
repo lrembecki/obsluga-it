@@ -1,5 +1,4 @@
-﻿using lrembecki.obsluga_it.domain.Abstractions;
-using lrembecki.obsluga_it.domain.Common;
+﻿using lrembecki.shared.domain.Abstractions;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
@@ -19,7 +18,8 @@ internal class LoyalityProgramEntity : SubscriptionBaseEntity, IHasId<Guid>
             Name = name,
             Title = title,
             Description = description,
-            Image = image
+            Image = image,
+            ImageId = image.Id
         };
 
     public void Update(string name, string title, string description, ImageBlobEntity image)

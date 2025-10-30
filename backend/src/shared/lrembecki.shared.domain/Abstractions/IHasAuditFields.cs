@@ -1,4 +1,4 @@
-namespace lrembecki.obsluga_it.domain.Abstractions;
+namespace lrembecki.shared.domain.Abstractions;
 
 public interface IHasAuditFields
 {

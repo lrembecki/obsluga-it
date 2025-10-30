@@ -1,5 +1,3 @@
-using lrembecki.obsluga_it.domain.Common;
-
 namespace lrembecki.obsluga_it.domain.Entities;
 
 internal class SubscriptionUserEntity : SubscriptionBaseEntity

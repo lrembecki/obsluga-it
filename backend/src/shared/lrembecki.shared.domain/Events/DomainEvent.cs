@@ -1,3 +1,3 @@
-namespace lrembecki.obsluga_it.domain.Common;
+namespace lrembecki.shared.domain.Events;
 
 public record DomainEvent(Guid Id, string EventType, DateTime OccurredOn);

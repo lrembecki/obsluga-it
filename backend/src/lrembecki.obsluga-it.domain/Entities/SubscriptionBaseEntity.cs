@@ -1,7 +1,7 @@
-using lrembecki.obsluga_it.domain.Abstractions;
-using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.domain.Abstractions;
+using lrembecki.shared.domain.Entities;
 
-namespace lrembecki.obsluga_it.domain.Common;
+namespace lrembecki.obsluga_it.domain.Entities;
 
 internal class SubscriptionBaseEntity : BaseEntity, IHasSubscriptionId
 {

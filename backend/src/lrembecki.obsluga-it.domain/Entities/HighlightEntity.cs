@@ -1,5 +1,4 @@
-﻿using lrembecki.obsluga_it.domain.Abstractions;
-using lrembecki.obsluga_it.domain.Common;
+﻿using lrembecki.shared.domain.Abstractions;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
