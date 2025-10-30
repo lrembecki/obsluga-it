@@ -1,6 +1,6 @@
-namespace lrembecki.obsluga_it.domain.Entities;
+namespace lrembecki.shared.domain.Entities;
 
-internal class ImageBlobEntity : BlobBaseEntity
+public class ImageBlobEntity : BlobBaseEntity
 {
     public string? DisplayName { get; private set; } = default!;
     public string? Description { get; private set; } = default!;

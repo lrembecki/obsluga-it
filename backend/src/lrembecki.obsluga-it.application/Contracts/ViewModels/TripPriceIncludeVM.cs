@@ -9,7 +9,7 @@ public record TripPriceIncludeVM(
     string Content
 )
 {
-    internal static TripPriceIncludeVM MapFromDomainEntity(TripPriceIncludeEntity entity)
+    public static TripPriceIncludeVM MapFromDomainEntity(TripPriceIncludeEntity entity)
     {
         if (entity == null)
         {

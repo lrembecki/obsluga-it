@@ -1,6 +1,6 @@
 ﻿using lrembecki.shared.application.Abstractions;
 
-namespace lrembecki.obsluga_it.infrastructure.Providers;
+namespace lrembecki.shared.infrastructure.Providers;
 
 internal class DateProvider : IDateProvider
 {

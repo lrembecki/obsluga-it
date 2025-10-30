@@ -8,7 +8,7 @@ public record HighlightVM(
     string Icon
 )
 {
-    internal static HighlightVM MapFromDomainEntity(HighlightEntity entity)
+    public static HighlightVM MapFromDomainEntity(HighlightEntity entity)
     {
         if (entity == null)
         {

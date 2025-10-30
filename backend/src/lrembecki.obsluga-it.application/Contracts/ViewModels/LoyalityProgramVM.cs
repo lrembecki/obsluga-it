@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.application.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
@@ -9,7 +10,7 @@ public record LoyalityProgramVM(
     string Description,
     ImageBlobVM Image)
 {
-    internal static LoyalityProgramVM MapFromDomainEntity(LoyalityProgramEntity entity)
+    public static LoyalityProgramVM MapFromDomainEntity(LoyalityProgramEntity entity)
     {
         if (entity == null)
         {

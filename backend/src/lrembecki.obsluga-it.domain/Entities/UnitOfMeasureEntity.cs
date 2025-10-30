@@ -4,7 +4,7 @@ using lrembecki.shared.domain.Entities;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class UnitOfMeasureEntity : BaseEntity, IHasId<Guid>
+public class UnitOfMeasureEntity : BaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; } = Guid.Empty;
     public string Name { get; private set; } = string.Empty;

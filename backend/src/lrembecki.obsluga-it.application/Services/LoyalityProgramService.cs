@@ -3,6 +3,7 @@ using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.domain.Entities;
 using lrembecki.shared.application.Abstractions;
 using lrembecki.shared.application.Extensions;
+using lrembecki.shared.domain.Entities;
 
 namespace lrembecki.obsluga_it.application.Services;
 
@@ -17,11 +18,11 @@ internal sealed class LoyalityProgramService(IUnitOfWork uow, IBlobService blobS
         model.Image = await blobService.SyncBlobDataAsync(model.Image, "images", cancellationToken);
 
         var imageBlob = BlobBaseEntity.Create<ImageBlobEntity>(
-        id: model.Image.Id!.Value,
-        filename: model.Image.Filename,
-        blobUrl: model.Image.BlobUrl,
-        blobPath: model.Image.BlobPath,
-        size: model.Image.Size
+            id: model.Image.Id!.Value,
+            filename: model.Image.Filename,
+            blobUrl: model.Image.BlobUrl,
+            blobPath: model.Image.BlobPath,
+            size: model.Image.Size
         );
 
         imageBlob.Update(model.Image.DisplayName, model.Image.Description, model.Image.Width, model.Image.Height, []);

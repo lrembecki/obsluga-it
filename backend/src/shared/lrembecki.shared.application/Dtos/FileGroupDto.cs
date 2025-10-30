@@ -1,4 +1,4 @@
-﻿namespace lrembecki.obsluga_it.application.Contracts.Dtos;
+﻿namespace lrembecki.shared.application.Dtos;
 
 public record FileGroupDto
 {

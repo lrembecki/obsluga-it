@@ -1,8 +1,8 @@
 using lrembecki.shared.domain.Abstractions;
 
-namespace lrembecki.obsluga_it.domain.Entities;
+namespace lrembecki.shared.domain.Entities;
 
-internal class BlobBaseEntity : SubscriptionBaseEntity, IHasId<Guid>
+public class BlobBaseEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; protected set; }
     public string? Filename { get; protected set; } = default!;

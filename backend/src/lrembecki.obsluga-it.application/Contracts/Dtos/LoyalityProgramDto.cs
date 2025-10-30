@@ -1,4 +1,6 @@
-﻿namespace lrembecki.obsluga_it.application.Contracts.Dtos;
+﻿using lrembecki.shared.application.Dtos;
+
+namespace lrembecki.obsluga_it.application.Contracts.Dtos;
 
 public record LoyalityProgramDto
 {

@@ -1,5 +1,5 @@
-﻿using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.infrastructure.Entities.Templates;
+﻿using lrembecki.obsluga_it.infrastructure.Entities.Templates;
+using lrembecki.shared.domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +16,5 @@ internal class SubscriptionEntityTypeConfiguration : BaseEntityTypeConfiguration
 
         builder.Property(e => e.Name).HasMaxLength(150).IsRequired();
         builder.HasIndex(e => e.Name).IsUnique();
-
-        builder.HasMany(e => e.UserSubscriptions).WithOne(e => e.Subscription).HasForeignKey(e => e.SubscriptionId);
     }
 }

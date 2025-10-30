@@ -11,7 +11,7 @@ public record UnitOfMeasureVM(
  UnitOfMeasureType Type
 )
 {
-    internal static UnitOfMeasureVM MapFromDomainEntity(UnitOfMeasureEntity entity)
+    public static UnitOfMeasureVM MapFromDomainEntity(UnitOfMeasureEntity entity)
     {
         if (entity == null)
         {

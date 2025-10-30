@@ -1,8 +1,8 @@
-using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.domain.Entities;
 
-namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
+namespace lrembecki.shared.application.ViewModels;
 
-public record FileBlobVM(
+public record ImageBlobVM(
     Guid Id,
     string? Filename,
     string? BlobUrl,
@@ -10,17 +10,17 @@ public record FileBlobVM(
     long? Size,
     string? DisplayName,
     string? Description,
-    int Postion,
-    Guid? GroupId)
+    long? Width,
+    long? Heiht)
 {
-    internal static FileBlobVM MapFromDomainEntity(FileBlobEntity entity)
+    public static ImageBlobVM MapFromDomainEntity(ImageBlobEntity entity)
     {
         if (entity == null)
         {
             return null!;
         }
 
-        return new FileBlobVM(
+        return new ImageBlobVM(
             entity.Id,
             entity.Filename,
             entity.BlobUrl,
@@ -28,8 +28,8 @@ public record FileBlobVM(
             entity.Size,
             entity.DisplayName,
             entity.Description,
-            entity.Position,
-            entity.GroupId
+            entity.Width,
+            entity.Height
         );
     }
 }

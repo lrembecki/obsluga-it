@@ -8,7 +8,7 @@ public record TripRequirementVM(
     string Description
 )
 {
-    internal static TripRequirementVM MapFromDomainEntity(TripRequirementEntity entity)
+    public static TripRequirementVM MapFromDomainEntity(TripRequirementEntity entity)
     {
         if (entity == null)
         {

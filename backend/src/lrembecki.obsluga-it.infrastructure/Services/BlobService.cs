@@ -1,7 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.application.Services;
+using lrembecki.shared.application.Dtos;
 
 namespace lrembecki.obsluga_it.infrastructure.Services;
 

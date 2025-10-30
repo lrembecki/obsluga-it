@@ -17,7 +17,7 @@ public record TripVM(
     List<TripSuggestedFlightVM> SuggestedFlights
 )
 {
-    internal static TripVM MapFromDomainEntity(TripEntity entity)
+    public static TripVM MapFromDomainEntity(TripEntity entity)
     {
         if (entity == null)
         {

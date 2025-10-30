@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entitites\" />
     <Folder Include="Events\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\shared\lrembecki.shared.domain\lrembecki.shared.domain.csproj" />
   </ItemGroup>
 
 </Project>

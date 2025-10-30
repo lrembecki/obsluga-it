@@ -1,6 +1,6 @@
 ﻿namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class TripPaymentScheduleEntity
+public class TripPaymentScheduleEntity
 {
     public Guid TripId { get; private set; }
     public int Order { get; private set; }

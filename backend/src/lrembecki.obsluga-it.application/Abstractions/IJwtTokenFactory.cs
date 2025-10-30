@@ -1,4 +1,5 @@
 ﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
+using lrembecki.shared.application.ViewModels;
 using System.Security.Claims;
 
 namespace lrembecki.obsluga_it.application.Abstractions;

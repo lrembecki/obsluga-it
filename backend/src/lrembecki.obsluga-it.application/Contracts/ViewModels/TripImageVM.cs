@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.application.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
@@ -9,7 +10,7 @@ public record TripImageVM(
     ImageBlobVM Image
 )
 {
-    internal static TripImageVM MapFromDomainEntity(TripImageEntity entity)
+    public static TripImageVM MapFromDomainEntity(TripImageEntity entity)
     {
         if (entity == null)
         {

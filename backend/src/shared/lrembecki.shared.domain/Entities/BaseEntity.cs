@@ -3,7 +3,7 @@ using lrembecki.shared.domain.Events;
 
 namespace lrembecki.shared.domain.Entities;
 
-internal class BaseEntity : IHasDomainEvents, IHasAuditFields
+public class BaseEntity : IHasDomainEvents, IHasAuditFields
 {
     private readonly HashSet<DomainEvent> _domainEvents = [];
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.ToList().AsReadOnly();

@@ -1,6 +1,8 @@
+using lrembecki.shared.domain.Entities;
+
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class SubscriptionUserEntity : SubscriptionBaseEntity
+public class SubscriptionUserEntity : SubscriptionBaseEntity
 {
     public Guid Id { get; private set; }
     public Guid UserId { get; set; }

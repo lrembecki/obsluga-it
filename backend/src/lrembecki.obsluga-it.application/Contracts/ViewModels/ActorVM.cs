@@ -9,7 +9,7 @@ public record ActorVM(
     List<ContactVM> Contacts
 )
 {
-    internal static ActorVM MapFromDomainEntity(ActorEntity entity)
+    public static ActorVM MapFromDomainEntity(ActorEntity entity)
     {
         if (entity == null)
         {

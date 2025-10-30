@@ -8,7 +8,7 @@ public record AdvantageVM(
     string Content
 )
 {
-    internal static AdvantageVM MapFromDomainEntity(AdvantageEntity entity)
+    public static AdvantageVM MapFromDomainEntity(AdvantageEntity entity)
     {
         if (entity == null)
         {

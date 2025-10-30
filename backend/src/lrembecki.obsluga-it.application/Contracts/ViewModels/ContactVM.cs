@@ -8,7 +8,7 @@ public record ContactVM(
     string Phone
 )
 {
-    internal static ContactVM MapFromDomainEntity(ContactEntity contactEntity)
+    public static ContactVM MapFromDomainEntity(ContactEntity contactEntity)
     {
         if (contactEntity == null)
         {

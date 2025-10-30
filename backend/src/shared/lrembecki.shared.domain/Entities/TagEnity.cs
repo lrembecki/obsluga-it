@@ -1,16 +1,16 @@
 using lrembecki.shared.domain.Abstractions;
 
-namespace lrembecki.obsluga_it.domain.Entities;
+namespace lrembecki.shared.domain.Entities;
 
-internal class FileGroupEntity : SubscriptionBaseEntity, IHasId<Guid>
+public class TagEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = default!;
 
-    public static FileGroupEntity Create(Guid fileGroupId, string name)
+    public static TagEntity Create(Guid tagId, string name)
         => new()
         {
-            Id = fileGroupId,
+            Id = tagId,
             Name = name
         };
 

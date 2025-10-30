@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.application.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
@@ -7,7 +8,7 @@ public record UserVM(
     string Email,
     List<SubscriptionVM> Subscriptions)
 {
-    internal static UserVM MapFromDomainEntity(UserEntity user)
+    public static UserVM MapFromDomainEntity(UserEntity user)
     {
         return new UserVM(
             user.Id,

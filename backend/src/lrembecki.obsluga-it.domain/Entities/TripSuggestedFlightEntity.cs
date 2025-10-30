@@ -1,6 +1,8 @@
-﻿namespace lrembecki.obsluga_it.domain.Entities;
+﻿using lrembecki.shared.domain.Entities;
 
-internal class TripSuggestedFlightEntity
+namespace lrembecki.obsluga_it.domain.Entities;
+
+public class TripSuggestedFlightEntity
 {
     public Guid TripId { get; private set; }
     public Guid ImageId { get; private set; }

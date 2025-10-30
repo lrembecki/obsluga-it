@@ -23,7 +23,7 @@ internal class SubscriptionUserEntityTypeconfiguration : SubscriptionBaseEntityT
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(e => e.Subscription)
-            .WithMany(e => e.UserSubscriptions)
+            .WithMany()
             .HasForeignKey(e => e.SubscriptionId)
             .OnDelete(DeleteBehavior.Cascade);
     }

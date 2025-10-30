@@ -1,8 +1,9 @@
 using lrembecki.shared.domain.Abstractions;
+using lrembecki.shared.domain.Entities;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class ContactEntity : SubscriptionBaseEntity, IHasId<Guid>
+public class ContactEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
 #pragma warning disable S1144 // Unused private types or members should be removed

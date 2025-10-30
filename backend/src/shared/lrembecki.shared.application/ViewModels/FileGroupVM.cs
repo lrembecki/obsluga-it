@@ -1,13 +1,13 @@
-using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.domain.Entities;
 
-namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
+namespace lrembecki.shared.application.ViewModels;
 
 public record FileGroupVM(
     Guid Id,
     string Name
 )
 {
-    internal static FileGroupVM MapFromDomainEntity(FileGroupEntity entity)
+    public static FileGroupVM MapFromDomainEntity(FileGroupEntity entity)
     {
         if (entity == null)
         {

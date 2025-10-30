@@ -1,4 +1,5 @@
 using lrembecki.obsluga_it.domain.Entities;
+using lrembecki.shared.application.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Contracts.ViewModels;
 
@@ -8,7 +9,7 @@ public record TripSuggestedFlightVM(
     ImageBlobVM Image
 )
 {
-    internal static TripSuggestedFlightVM MapFromDomainEntity(TripSuggestedFlightEntity entity)
+    public static TripSuggestedFlightVM MapFromDomainEntity(TripSuggestedFlightEntity entity)
     {
         if (entity == null)
         {

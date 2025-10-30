@@ -9,7 +9,7 @@ public record TripScheduleVM(
     string Content
 )
 {
-    internal static TripScheduleVM MapFromDomainEntity(TripScheduleEntity entity)
+    public static TripScheduleVM MapFromDomainEntity(TripScheduleEntity entity)
     {
         if (entity == null)
         {

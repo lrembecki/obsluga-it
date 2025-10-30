@@ -1,6 +1,7 @@
 ﻿using lrembecki.obsluga_it.application.Services;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace lrembecki.obsluga_it.api.Endpoints;
@@ -13,13 +14,20 @@ public sealed class AccountEndpoints : IEndpointModule
             .RequireAuthorization(AuthenticationExtensions.AzureAdUserScopePolicy)
             .WithTags("Account");
 
-        group.MapGet("/", async (IAuthenticationService auth, ClaimsPrincipal user) =>
+        group.MapGet("/", async (
+            [FromServices] IAuthenticationService auth,
+            [FromServices] ClaimsPrincipal user
+        ) =>
         {
             var email = GetEmail(user);
             return ServiceCallResult.CreateSuccessResult(await auth.SignInAsync(email, null));
         });
 
-        group.MapGet("/{subscriptionId:guid}", async (Guid subscriptionId, IAuthenticationService auth, ClaimsPrincipal user) =>
+        group.MapGet("/{subscriptionId:guid}", async (
+            [FromRoute] Guid subscriptionId, 
+            [FromServices] IAuthenticationService auth,
+            [FromServices] ClaimsPrincipal user
+        ) =>
         {
             var email = GetEmail(user);
             return ServiceCallResult.CreateSuccessResult(await auth.SignInAsync(email, subscriptionId));

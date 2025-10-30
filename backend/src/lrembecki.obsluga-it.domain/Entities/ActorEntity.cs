@@ -1,8 +1,9 @@
 using lrembecki.shared.domain.Abstractions;
+using lrembecki.shared.domain.Entities;
 
 namespace lrembecki.obsluga_it.domain.Entities;
 
-internal class ActorEntity : SubscriptionBaseEntity, IHasId<Guid>
+public class ActorEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string? Firstname { get; private set; }

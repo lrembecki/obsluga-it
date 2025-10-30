@@ -1,5 +1,5 @@
-﻿using lrembecki.obsluga_it.domain.Entities;
-using lrembecki.obsluga_it.infrastructure.Entities.Templates;
+﻿using lrembecki.obsluga_it.infrastructure.Entities.Templates;
+using lrembecki.shared.domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

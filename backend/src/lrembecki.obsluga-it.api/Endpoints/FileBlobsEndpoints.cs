@@ -1,7 +1,8 @@
-using lrembecki.obsluga_it.application.Services;
-using lrembecki.obsluga_it.application.Contracts.Dtos;
 using lrembecki.obsluga_it.infrastructure.Extensions;
 using lrembecki.obsluga_it.infrastructure;
+using lrembecki.shared.application.Dtos;
+using lrembecki.shared.application.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace lrembecki.obsluga_it.api.Endpoints;
 
@@ -13,19 +14,33 @@ public sealed class FileBlobsEndpoints : IEndpointModule
             .RequireAuthorization(AuthenticationExtensions.AzureAdUserScopePolicy)
             .WithTags("Files");
 
-        group.MapGet("/", async (IFileBlobService service) =>
-            ServiceCallResult.CreateSuccessResult(await service.GetAllAsync()));
+        group.MapGet("/", async (
+            [FromServices] IFileBlobService service
+        ) => ServiceCallResult.CreateSuccessResult(await service.GetAllAsync()));
 
-        group.MapGet("/{id:guid}", async (Guid id, IFileBlobService service) =>
-            ServiceCallResult.CreateSuccessResult(await service.GetByIdAsync(id)));
+        group.MapGet("/{id:guid}", async (
+            [FromRoute] Guid id, 
+            [FromServices] IFileBlobService service
+        ) => ServiceCallResult.CreateSuccessResult(await service.GetByIdAsync(id)));
 
-        group.MapPost("/", async (FileBlobDto dto, IFileBlobService service, CancellationToken ct) =>
-            ServiceCallResult.CreateSuccessResult(await service.CreateAsync(dto, ct)));
+        group.MapPost("/", async (
+            [FromBody] FileBlobDto dto, 
+            [FromServices] IFileBlobService service, 
+            CancellationToken ct
+        ) => ServiceCallResult.CreateSuccessResult(await service.CreateAsync(dto, ct)));
 
-        group.MapPut("/{id:guid}", async (Guid id, FileBlobDto dto, IFileBlobService service, CancellationToken ct) =>
-            ServiceCallResult.CreateSuccessResult(await service.UpdateAsync(id, dto, ct)));
+        group.MapPut("/{id:guid}", async (
+            [FromRoute] Guid id, 
+            [FromBody] FileBlobDto dto, 
+            [FromServices] IFileBlobService service, 
+            CancellationToken ct
+        ) => ServiceCallResult.CreateSuccessResult(await service.UpdateAsync(id, dto, ct)));
 
-        group.MapDelete("/{id:guid}", async (Guid id, IFileBlobService service, CancellationToken ct) =>
+        group.MapDelete("/{id:guid}", async (
+            [FromRoute] Guid id, 
+            [FromServices] IFileBlobService service, 
+            CancellationToken ct
+        ) =>
         {
             await service.DeleteAsync(id, ct);
             return ServiceCallResult.CreateSuccessResult(errorMessage: null);

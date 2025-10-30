@@ -1,5 +1,5 @@
-﻿using lrembecki.obsluga_it.application.Contracts.ViewModels;
-using lrembecki.shared.application.Abstractions;
+﻿using lrembecki.shared.application.Abstractions;
+using lrembecki.shared.application.ViewModels;
 
 namespace lrembecki.obsluga_it.application.Contracts.Commands;
 

@@ -5,6 +5,7 @@ using lrembecki.obsluga_it.application.Abstractions;
 using lrembecki.obsluga_it.application.Contracts.ViewModels;
 using lrembecki.obsluga_it.infrastructure;
 using lrembecki.obsluga_it.infrastructure.Extensions;
+using lrembecki.shared.application.ViewModels;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using System.Text.Json;
