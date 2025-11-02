@@ -37,6 +37,7 @@
     <ProjectReference Include="..\storage\lrembecki.core.storage\lrembecki.core.storage.csproj" />
     <ProjectReference Include="..\subscription\lrembecki.core.subscription\lrembecki.core.subscription.csproj" />
     <ProjectReference Include="..\trotamundos\lrembecki.core.trotamundos\lrembecki.core.trotamundos.csproj" />
+    <ProjectReference Include="..\security\lrembecki.core.security\lrembecki.core.security.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,7 @@
     <ProjectReference Include="..\lrembecki.infrastructure\lrembecki.infrastructure.csproj" />
     <ProjectReference Include="..\storage\lrembecki.presentation.storage\lrembecki.presentation.storage.csproj" />
     <ProjectReference Include="..\trotamundos\lrembecki.presentation.trotamundos\lrembecki.presentation.trotamundos.csproj" />
+    <ProjectReference Include="..\security\lrembecki.presentation.security\lrembecki.presentation.security.csproj" />
   </ItemGroup>
 
 </Project>

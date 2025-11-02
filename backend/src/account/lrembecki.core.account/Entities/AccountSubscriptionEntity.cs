@@ -5,14 +5,12 @@ namespace lrembecki.core.account.Entities;
 
 public class AccountSubscriptionEntity : BaseEntity, IHasId<Guid>
 {
-    private readonly HashSet<PermissionGroupEntity> _permissionGroups = [];
-    public IReadOnlyCollection<PermissionGroupEntity> PermissionGroups => _permissionGroups.ToList().AsReadOnly();
-
     public Guid Id { get; private set; }
     public Guid AccountId { get; private set; }
     public Guid SubscriptionId { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsDefault { get; private set; }
+    public List<PermissionGroupEntity> PermissionGroups { get; private set; } = [];
 
     public static AccountSubscriptionEntity Create(Guid id, Guid accountId, Guid subscriptionId)
         => new()
@@ -23,10 +21,6 @@ public class AccountSubscriptionEntity : BaseEntity, IHasId<Guid>
             IsActive = true,
             IsDefault = false
         };
-
-    public void AddPermissionGroup(PermissionGroupEntity permissionGroupEntity) => _permissionGroups.Add(permissionGroupEntity);
-    public void ClearPermissionGroups() => _permissionGroups.Clear();
-    public void RemovePermissionGroup(PermissionGroupEntity permissionGroupEntity) => _permissionGroups.Remove(permissionGroupEntity);
 
     public void Update(bool isActive, bool isDefault)
     {
