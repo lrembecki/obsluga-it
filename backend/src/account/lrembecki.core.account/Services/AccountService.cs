@@ -1,0 +1,21 @@
+﻿using lrembecki.core.account.Dtos;
+using lrembecki.core.account.Entities;
+using lrembecki.core.account.ViewModels;
+using lrembecki.core.Services;
+
+namespace lrembecki.core.account.Services;
+
+public interface IAccountService : ICrudService<AccountDto, AccountVM>;
+internal class AccountService(IUnitOfWork uow) : BaseCrudService<AccountEntity, AccountVM, AccountDto>(uow), IAccountService
+{
+    private readonly IRepository<PermissionGroupEntity> _permissionGroups = uow.GetRepository<PermissionGroupEntity>();
+
+    protected override async Task UpdateEntity(AccountEntity entity, AccountDto model)
+    {
+        await  base.UpdateEntity(entity, model);
+
+        entity.ClearPermissionGroups();
+        (await _permissionGroups.GetAsync(e => model.PermissionGroups.Contains(e.Id)))
+            .ForEach(entity.AddPermissionGroup);
+    }
+}

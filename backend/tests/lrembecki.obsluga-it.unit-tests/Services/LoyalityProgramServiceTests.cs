@@ -1,7 +1,8 @@
-using lrembecki.obsluga_it.application.Contracts.Dtos;
-using lrembecki.obsluga_it.application.Services;
 using lrembecki.shared.application.Abstractions;
 using lrembecki.shared.application.Dtos;
+using lrembecki.shared.application.Services;
+using lrembecki.trotamundos.application.Dtos;
+using lrembecki.trotamundos.application.Services;
 
 namespace lrembecki.obsluga_it.unit_tests.Services;
 

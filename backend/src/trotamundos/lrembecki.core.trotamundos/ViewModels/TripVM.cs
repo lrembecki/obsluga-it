@@ -1,0 +1,43 @@
+using lrembecki.core.trotamundos.Entitites;
+
+namespace lrembecki.core.trotamundos.ViewModels;
+
+public record TripVM(
+    Guid Id,
+    string Title,
+    string Subtitle,
+    string Description,
+    List<AdvantageVM> Advantages,
+    List<HighlightVM> Highlights,
+    List<TripImageVM> Images,
+    List<TripPaymentScheduleVM> PaymentSchedules,
+    List<TripPriceIncludeVM> PriceIncludes,
+    List<TripRequirementVM> Requirements,
+    List<TripScheduleVM> Schedules,
+    List<TripSuggestedFlightVM> SuggestedFlights
+)
+{
+    public static TripVM Map(TripEntity entity)
+    {
+        if (entity == null)
+        {
+            return null!;
+        }
+
+        return new TripVM(
+            entity.Id,
+            entity.Title,
+            entity.Subtitle,
+            entity.Description,
+            entity.Advantages.Select(AdvantageVM.Map).ToList(),
+            entity.Highlights.Select(HighlightVM.Map).ToList(),
+            entity.Images.Select(TripImageVM.Map).ToList(),
+            entity.PaymentSchedules.Select(TripPaymentScheduleVM.Map).ToList(),
+            entity.PriceIncludes.Select(TripPriceIncludeVM.Map).ToList(),
+            entity.Requirements.Select(TripRequirementVM.Map).ToList(),
+            entity.Schedules.Select(TripScheduleVM.Map).ToList(),
+            entity.SuggestedFlights.Select(TripSuggestedFlightVM.Map).ToList()
+        );
+    }
+}
+

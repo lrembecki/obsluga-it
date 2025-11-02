@@ -1,6 +1,0 @@
-@lrembecki.obsluga_it.api_HostAddress = http://localhost:5263
-
-GET {{lrembecki.obsluga_it.api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

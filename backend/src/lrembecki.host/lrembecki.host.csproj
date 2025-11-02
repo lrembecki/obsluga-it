@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>8e03dd87-59b8-49eb-95ac-fbd63b749667</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\lrembecki.obsluga-it.ServiceDefaults\lrembecki.obsluga-it.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\account\lrembecki.presentation.account\lrembecki.presentation.account.csproj" />
+    <ProjectReference Include="..\lrembecki.infrastructure\lrembecki.infrastructure.csproj" />
+    <ProjectReference Include="..\storage\lrembecki.presentation.storage\lrembecki.presentation.storage.csproj" />
+    <ProjectReference Include="..\trotamundos\lrembecki.presentation.trotamundos\lrembecki.presentation.trotamundos.csproj" />
+  </ItemGroup>
+
+</Project>
