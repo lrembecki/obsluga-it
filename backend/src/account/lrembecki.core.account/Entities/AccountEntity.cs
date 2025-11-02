@@ -4,7 +4,7 @@ using lrembecki.core.Markers;
 
 namespace lrembecki.core.account.Entities;
 
-internal class AccountEntity : BaseEntity, IHasId<Guid>
+public class AccountEntity : BaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public bool IsActive { get; private set; }
@@ -18,5 +18,6 @@ internal class AccountEntity : BaseEntity, IHasId<Guid>
             IsActive = true,
             Email = model.Email
         };
+
     public void Update(AccountDto model) => Email = model.Email;
 }

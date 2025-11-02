@@ -1,10 +1,10 @@
-﻿using lrembecki.core.storage.Services;
-using lrembecki.presentation.account;
+﻿using lrembecki.core.security.Services;
+using lrembecki.core.storage.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace lrembecki.core.storage;
+namespace lrembecki.presentation.storage;
 
 public static class ServiceRegistration
 {

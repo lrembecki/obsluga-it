@@ -1,11 +1,10 @@
 ﻿using lrembecki.core.storage.Services;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace lrembecki.presentation.account;
+namespace lrembecki.presentation.storage;
 
 public static class StorageEndpoint
 {

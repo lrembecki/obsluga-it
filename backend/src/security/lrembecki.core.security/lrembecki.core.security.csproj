@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\account\lrembecki.core.account\lrembecki.core.account.csproj" />
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
+    <ProjectReference Include="..\..\subscription\lrembecki.core.subscription\lrembecki.core.subscription.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -9,5 +11,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>lrembecki.presentation.security</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
 </Project>

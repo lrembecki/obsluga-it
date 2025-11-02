@@ -14,8 +14,13 @@ internal class AccountService(IUnitOfWork uow) : BaseCrudService<AccountEntity, 
     {
         await  base.UpdateEntity(entity, model);
 
-        entity.ClearPermissionGroups();
-        (await _permissionGroups.GetAsync(e => model.PermissionGroups.Contains(e.Id)))
-            .ForEach(entity.AddPermissionGroup);
+        entity.PermissionGroups.Clear();
+        
+        if (entity.PermissionGroups.Count > 0)
+        {
+            entity.PermissionGroups.AddRange(
+                await _permissionGroups.GetAsync(e => model.PermissionGroups.Contains(e.Id))
+            );
+        }
     }
 }

@@ -47,6 +47,7 @@ public static class ServiceRegistration
 
         builder.Services.AddSingleton<IJwtTokenFactory, JwtTokenFactory>();
         builder.Services.AddScoped<ISessionAccessor, SessionAccessor>();
+        builder.Services.AddScoped<IDateProvider, DateProvider>();
         builder.Services.AddScoped<IBlobHelper, BlobHelper>();
         builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

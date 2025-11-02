@@ -12,8 +12,14 @@ internal class PermissionGroupService(IUnitOfWork uow)
     private readonly IRepository<PermissionEntity> _permissions = uow.GetRepository<PermissionEntity>();
     protected override async Task UpdateEntity(PermissionGroupEntity entity, PermissionGroupDto model)
     {
-        entity.ClearPermissions();
-        (await _permissions.GetAsync(e => model.Permissions.Contains(e.Id))).ForEach(entity.AddPermission);
+        entity.Permissions.Clear();
+
+        if (entity.Permissions.Count > 0)
+        {
+            entity.Permissions.AddRange(
+                await _permissions.GetAsync(e => model.Permissions.Contains(e.Id))
+            );
+        }
 
         await base.UpdateEntity(entity, model);
     }

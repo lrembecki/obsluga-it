@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\security\lrembecki.core.security\lrembecki.core.security.csproj" />
     <ProjectReference Include="..\lrembecki.core.storage\lrembecki.core.storage.csproj" />
   </ItemGroup>
 

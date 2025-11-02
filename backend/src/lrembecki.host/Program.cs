@@ -1,9 +1,12 @@
 using lrembecki.core.Helpers;
-using lrembecki.core.storage;
 using lrembecki.infrastructure;
 using lrembecki.infrastructure.Extensions;
+
 using lrembecki.presentation.account;
+using lrembecki.presentation.security;
+using lrembecki.presentation.storage;
 using lrembecki.presentation.trotamundos;
+
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,7 @@ builder.AddAccount();
 builder.AddStorage();
 builder.AddTrotamundos();
 builder.AddInfrastructure();
+builder.AddSecurity();
 
 var app = builder.Build();
 
@@ -54,5 +58,6 @@ app.UseAuthorization();
 app.MapAccount();
 app.MapStorage();
 app.MapTrotamundos();
+app.MapSecurity();
 
 await app.RunAsync();

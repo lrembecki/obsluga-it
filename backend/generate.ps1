@@ -78,6 +78,36 @@ function addAspNetCoreAppFrameworkReference {
     Write-Host "Added Microsoft.AspNetCore.App FrameworkReference to $ProjectPath"
 }
 
+function addInternalsVisibleTo {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ProjectPath,
+        
+        [Parameter(Mandatory=$true)]
+        [string]$FriendAssemblyName
+    )
+
+    Write-Host "Adding InternalsVisibleTo attribute to $ProjectPath for $FriendAssemblyName"
+    [xml]$xmlDoc = Get-Content -Path $ProjectPath
+
+    $projectNode = $xmlDoc.SelectSingleNode("/Project");
+
+    $itemGroupNode = $xmlDoc.CreateElement("ItemGroup");
+    $attributeNode = $xmlDoc.CreateElement("AssemblyAttribute");
+    $attributeNode.SetAttribute("Include", "System.Runtime.CompilerServices.InternalsVisibleToAttribute");
+
+    $argumentNode = $xmlDoc.CreateElement("_Parameter1");
+    $argumentNode.InnerText = $FriendAssemblyName;
+
+    $attributeNode.AppendChild($argumentNode) | Out-Null
+    $itemGroupNode.AppendChild($attributeNode) | Out-Null
+
+    $projectNode.AppendChild($itemGroupNode) | Out-Null
+
+    $xmlDoc.Save($ProjectPath);
+    Write-Host "Added InternalsVisibleTo attribute to $ProjectPath for $FriendAssemblyName"
+}
+
 function generateFeature {
     param(
         [Parameter(Mandatory=$true)]

@@ -3,7 +3,7 @@ using lrembecki.core.Markers;
 
 namespace lrembecki.core.subscription.Entities;
 
-internal class SubscriptionEntity : BaseEntity, IHasId<Guid>
+public class SubscriptionEntity : BaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty;

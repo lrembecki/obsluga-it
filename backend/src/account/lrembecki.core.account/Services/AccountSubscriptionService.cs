@@ -9,8 +9,20 @@ public interface IAccountSubscriptionService : ICrudService<AccountSubscriptionD
 internal class AccountSubscriptionService(IUnitOfWork uow) 
     : BaseCrudService<AccountSubscriptionEntity, AccountSubscriptionVM, AccountSubscriptionDto>(uow), IAccountSubscriptionService
 {
-    protected override Task UpdateEntity(AccountSubscriptionEntity entity, AccountSubscriptionDto model)
+    private readonly IRepository<PermissionGroupEntity> _permissionGroups = uow.GetRepository<PermissionGroupEntity>();
+
+    protected override async Task UpdateEntity(AccountSubscriptionEntity entity, AccountSubscriptionDto model)
     {
-        return base.UpdateEntity(entity, model);
+
+        await base.UpdateEntity(entity, model);
+
+        entity.PermissionGroups.Clear();
+
+        if (entity.PermissionGroups.Count > 0)
+        {
+            entity.PermissionGroups.AddRange(
+                await _permissionGroups.GetAsync(e => model.PermissionGroups.Contains(e.Id))
+            );
+        }
     }
 }
