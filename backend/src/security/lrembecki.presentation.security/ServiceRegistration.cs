@@ -22,8 +22,8 @@ public static class ServiceRegistration
 
         group.MapGet("/{subscriptionId:guid?}", (
             [FromServices] IAuthenticationService authService,
-            [FromServices] ClaimsPrincipal principal,
             [FromRoute] Guid? subscriptionId,
+            ClaimsPrincipal principal,
             CancellationToken ct
         ) => authService.AuthenticateAsync(
             email: principal.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Upn)?.Value!, 

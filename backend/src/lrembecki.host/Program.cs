@@ -35,7 +35,8 @@ if (app.Environment.IsDevelopment())
             ctx.User = new ClaimsPrincipal([
                 new ClaimsIdentity([
                     new ("scp", "access_as_user"),
-                    new (ClaimTypes.NameIdentifier, builder.Configuration["Dev:UserId"]!)
+                    new (ClaimTypes.NameIdentifier, builder.Configuration["Dev:UserId"]!),
+                    new (ClaimTypes.Email, builder.Configuration["Dev:Email"]!)
                 ], AuthenticationExtensions.AzureAdScheme),
                 tokenFactory.GetClaimsIdentity(
                     Guid.Parse(builder.Configuration["Dev:SubscriptionId"]!),
