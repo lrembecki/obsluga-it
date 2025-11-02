@@ -20,7 +20,6 @@ public static class ServiceRegistration
         builder.AddAzureAppConfiguration();
         builder.AddProjectAuthentication();
 
-
         builder.Services.AddScoped<ObslugaItDbContext>();
         builder.Services.AddDbContext<ObslugaItDbContext>(_ => _.UseSqlServer(
             builder.Configuration.GetConnectionString("sql"), 
