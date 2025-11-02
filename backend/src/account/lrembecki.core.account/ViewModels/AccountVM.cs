@@ -8,7 +8,7 @@ public record AccountVM(
     ICollection<PermissionGroupVM> PermissionGroups
 )
 {
-    internal static AccountVM Map(AccountEntity accountEntity)
+    public static AccountVM Map(AccountEntity accountEntity)
     {
         if (accountEntity == null) return null!;
 

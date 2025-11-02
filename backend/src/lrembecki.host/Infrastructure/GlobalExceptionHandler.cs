@@ -1,4 +1,11 @@
+using lrembecki.core;
+
 namespace lrembecki.host.Infrastructure;
+
+public static class DbTranslactionHandler
+{
+
+}
 
 public static class GlobalExceptionHandler
 {

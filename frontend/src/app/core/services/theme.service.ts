@@ -1,0 +1,40 @@
+import { effect, Injectable, signal } from '@angular/core';
+import { themes, ThemeType } from '../defaults/theme.default';
+
+@Injectable({ providedIn: 'root' })
+export class ThemeService {
+  private readonly _theme = signal<ThemeType>(
+    (localStorage.getItem('theme') as ThemeType) ?? 'system'
+  );
+  private readonly _data = signal<ThemeType[]>(themes.map((e) => <ThemeType>e));
+  public readonly theme = this._theme.asReadonly();
+  public readonly data = this._data.asReadonly();
+
+  constructor() {
+    effect(() => {
+      let theme = this.theme();
+      const root = document.documentElement;
+      root.classList.remove('app-light', 'app-dark');
+
+      if (theme === 'system') {
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
+
+        theme = prefersDark ? 'dark' : 'light';
+      }
+
+      root.classList.add(`app-${theme}`);
+    });
+  }
+
+  setTheme(theme: ThemeType) {
+    this._theme.set(theme);
+    localStorage.setItem('theme', theme);
+    this.applyTheme(theme);
+  }
+
+  private applyTheme(theme: ThemeType) {
+    this._theme.set(theme);
+  }
+}

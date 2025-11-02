@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Import SCSS modules using modern @use syntax
+@use "./styles/variables" as vars;
+
+/* Import PrimeNG theme and Material Icons */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "primeicons/primeicons.css";
+
+html {
+  height: 100dvh;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+
+  font-family: vars.$font-family-base;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+// Utility classes using SCSS features
+.mb-3 {
+  margin-bottom: vars.$spacing-unit;
+}
+
+// Dodatkowe utility classes z SCSS
+@for $i from 1 through 5 {
+  .mb-#{$i} {
+    margin-bottom: vars.$spacing-unit * $i;
+  }
+
+  .mt-#{$i} {
+    margin-top: vars.$spacing-unit * $i;
+  }
+
+  .p-#{$i} {
+    padding: vars.$spacing-unit * $i;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  input,
+  .p-select,
+  .p-textarea {
+    width: 100%;
+  }
+}

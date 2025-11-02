@@ -4,7 +4,7 @@ namespace lrembecki.core.subscription.ViewModels;
 
 public record SubscriptionVM(Guid Id, string Name)
 {
-    internal static SubscriptionVM MapFromDomainEntity(SubscriptionEntity subscription)
+    public static SubscriptionVM Map(SubscriptionEntity subscription)
     {
         return new SubscriptionVM(
             subscription.Id,

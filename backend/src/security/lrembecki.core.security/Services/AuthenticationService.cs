@@ -1,8 +1,10 @@
 ﻿using lrembecki.core.account.Entities;
+using lrembecki.core.account.ViewModels;
 using lrembecki.core.Helpers;
 using lrembecki.core.security.ViewModels;
 using lrembecki.core.Services;
 using lrembecki.core.subscription.Entities;
+using lrembecki.core.subscription.ViewModels;
 
 namespace lrembecki.core.security.Services;
 
@@ -15,7 +17,7 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
 {
     public Task<AuthenticationViewModel> AuthenticateAsync(string email, Guid? subscriptionId, CancellationToken ct)
     {
-        var accountSubscriptionsQuery = uow.GetRepository<AccountSubscriptionEntity>().GetAll();
+        var accountSubscriptionsQuery = uow.GetRepository<AccountSubscriptionEntity>().GetAll(e => (subscriptionId == null && e.IsDefault) || e.SubscriptionId == subscriptionId);
         var subscriptions = uow.GetRepository<SubscriptionEntity>().GetAll(e => subscriptionId == null || subscriptionId == e.Id);
         var accounts = uow.GetRepository<AccountEntity>().GetAll(e => e.Email == email);
 
@@ -30,7 +32,8 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
                 inner: subscriptions,
                 outerKeySelector: l => l.AccountSubscription.SubscriptionId,
                 innerKeySelector: a => a.Id,
-                resultSelector: (outer, inner) => new { outer.AccountSubscription, outer.Account, Subscription = inner });
+                resultSelector: (outer, inner) => new { outer.AccountSubscription, outer.Account, Subscription = inner })
+            .Where(e => e.Account.Email.ToUpper() == email.ToUpper());
 
         var data = query.SingleOrDefault()
         ?? throw new ArgumentNullException(nameof(email), "You are not authenticated to access this platform");
@@ -43,10 +46,13 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
 
         return Task.FromResult(
             new AuthenticationViewModel(
-                UserId: data.Account.Id,
-                SubscriptionId: data.Subscription.Id,
+                IsAuthenticated: true,
+                User: AccountVM.Map(data.Account),
+                Subscription: SubscriptionVM.Map(data.Subscription),
                 Permissions: permissions,
-                jwtToken: jwtTokenFactory.CreateToken(
+                Created: now,
+                Expires: now.AddDays(15),
+                Token: jwtTokenFactory.CreateToken(
                     identity: jwtTokenFactory.GetClaimsIdentity(
                         subscriptionId: data.Subscription.Id, 
                         userId: data.Account.Id, 

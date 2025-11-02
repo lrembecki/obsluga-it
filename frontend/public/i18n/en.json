@@ -1,0 +1,107 @@
+{
+  "welcome": "Welcome",
+  "language": "Language",
+  "FOOTER": {
+    "ALL_RIGHTS_RESERVED": "All rights reserved.",
+    "CHOOSE_LANGUAGE": "Choose Language"
+  },
+  "LANGUAGE": {
+    "SELECT": "Select language",
+    "PL": "Polish",
+    "EN": "English"
+  },
+  "THEME": {
+    "SELECT": "Select theme",
+    "LIGHT": "Light",
+    "DARK": "Dark",
+    "SYSTEM": "System"
+  },
+  "DASHBOARD": {
+    "NAME": "Dashboard",
+    "WELCOME": "Welcome to the OBSŁUGA-IT"
+  },
+  "TROTAMUNDOS": {
+    "NAME": "Trotamundos",
+    "FILES": "Files",
+    "IMAGES": "Images",
+    "LOCATIONS": "Locations",
+    "TRIP_REQUESTS": "Trip Requests"
+  },
+  "SECURITY": {
+    "NAME": "Security"
+  },
+  "FILES": "Files",
+  "SUBSCRIPTIONS": {
+    "NAME": "Subscriptions",
+    "LIST": "List"
+  },
+  "SIGN_IN_TITLE": "Sign In",
+  "SIGN_IN_SUBTITLE": "Access your account",
+  "SIGN_IN_DESCRIPTION": "Please sign in to continue to your dashboard.",
+  "SIGN_IN_BUTTON": "Sign In with Microsoft",
+  "UNAUTHORIZED": {
+    "TITLE": "Access Denied",
+    "SUBTITLE": "Authentication Required",
+    "MESSAGE": "You need to sign in to access this resource. Please authenticate with your Microsoft account.",
+    "SIGN_IN": "Sign In",
+    "GO_HOME": "Go to Home"
+  },
+  "FORBIDDEN": {
+    "TITLE": "Access Forbidden",
+    "SUBTITLE": "Insufficient Permissions",
+    "MESSAGE": "You don't have permission to access this resource. Please contact your administrator if you believe this is an error.",
+    "GO_BACK": "Go Back",
+    "GO_HOME": "Go to Dashboard",
+    "SIGN_OUT": "Sign Out"
+  },
+  "UI": {
+    "NAME": "Name",
+    "DISPLAY_NAME": "Display Name",
+    "EMAIL": "Email",
+    "STATUS": "Status",
+    "IMAGE": "Image",
+    "FILENAME": "Filename",
+    "TAGS": "Tags",
+    "DESCRIPTION": "Description",
+    "LOGOUT": "Logout",
+    "CREATE": "Create",
+    "SAVE": "Save",
+    "BROWSE": "Browse",
+    "NEW": "New",
+    "OK": "OK"
+  },
+  "TRIP_REQUEST": {
+    "FIRST_AND_LAST_NAME": "First and Last Name",
+    "PHONE_NUMBER": "Phone Number",
+    "TRIP_DIRECTION": "Trip Direction",
+    "TRIP_DATE": "Trip Date",
+    "TRIP_DURATION": "Trip Duration",
+    "AMOUNT_OF_PEOPLE": "Amount of People",
+    "AMOUNT_OF_KIDS": "Amount of Kids",
+    "GROUP_RELATION_TYPE": "Group Relation Type",
+    "PREFERRED_AIRPORT": "Preferred Airport",
+    "PREFERRED_TRIP_TYPE": "Preferred Trip Type"
+  },
+  "ERRORS": {
+    "SERVICE_NOT_RESPONDING": "Service not responding",
+    "SERVICE_OFFLINE": "Service is offline, wait for few minutes or contact administrator.",
+    "UNAUTHORIZED": "Unauthorized",
+    "AUTHENTICATION_REQUIRED": "You are not authenticated. Please relog and try again.",
+    "FORBIDDEN": "Forbidden",
+    "NO_PERMISSION": "You don't have permission to access this resource.",
+    "METHOD_NOT_ALLOWED": "Method Not Allowed",
+    "METHOD_NOT_IMPLEMENTED": "Endpoint exists but method [GET/PUT/POST/DELETE] is not implemented in api service.",
+    "UNHANDLED_EXCEPTION": "Unhandled exception",
+    "SOMETHING_WENT_WRONG": "Something went wrong."
+  },
+  "UPDATE": {
+    "NEW_VERSION_TITLE": "New Version Available",
+    "NEW_VERSION_MESSAGE": "A new version of the application is available. Click OK to update now.",
+    "RELOAD_REQUIRED_TITLE": "App Update Required",
+    "RELOAD_REQUIRED_MESSAGE": "The application needs to be reloaded to apply updates.",
+    "NO_UPDATE_TITLE": "No Updates Available",
+    "NO_UPDATE_MESSAGE": "You are using the latest version of the application.",
+    "UPDATE_CHECK_FAILED": "Failed to check for updates. Please try again later.",
+    "CHECK_FOR_UPDATES": "Check for Updates"
+  }
+}

@@ -1,4 +1,4 @@
-﻿namespace lrembecki.host.Infrastructure;
+﻿namespace lrembecki.core;
 
 public record ServiceCallResult
 {
@@ -24,11 +24,11 @@ public record ServiceCallResult
         {
             Success = true,
             ErrorMessage = errorMessage,
-            Result = result
+            Data = result
         };
 }
 
 public record ServiceCallResult<T> : ServiceCallResult
 {
-    public T Result { get; set; } = default!;
+    public T Data { get; set; } = default!;
 }

@@ -30,10 +30,10 @@ public static class ServiceRegistration
 
         builder.Services.AddHttpContextAccessor();
 
+        var cors = builder.Configuration["Cors"]!.Split(Environment.NewLine);
         builder.Services
             .AddCors(_ => _
-            .AddDefaultPolicy(p =>
-                p.WithOrigins(builder.Configuration["Cors"]!.Split(Environment.NewLine))
+                .AddDefaultPolicy(p => p.WithOrigins(cors)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                 )

@@ -1,4 +1,5 @@
-﻿using lrembecki.core.security.Services;
+﻿using lrembecki.core;
+using lrembecki.core.security.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +21,15 @@ public static class ServiceRegistration
             .WithTags("Authenticate")
             .RequireAuthorization("AzureAdUserScope");
 
-        group.MapGet("/{subscriptionId:guid?}", (
+        group.MapGet("/{subscriptionId:guid?}", async (
             [FromServices] IAuthenticationService authService,
             [FromRoute] Guid? subscriptionId,
             ClaimsPrincipal principal,
             CancellationToken ct
-        ) => authService.AuthenticateAsync(
-            email: principal.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Upn)?.Value!, 
-            subscriptionId: subscriptionId, 
-            ct: ct)
+        ) => (await authService.AuthenticateAsync(
+            email: principal.Claims.FirstOrDefault(e => e.Type == "emails")?.Value!,
+            subscriptionId: subscriptionId,
+            ct: ct)).ToServiceCallResult()
         );
     }
 }

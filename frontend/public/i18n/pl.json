@@ -1,0 +1,107 @@
+{
+  "welcome": "Witamy",
+  "language": "Język",
+  "FOOTER": {
+    "ALL_RIGHTS_RESERVED": "Wszelkie prawa zastrzeżone.",
+    "CHOOSE_LANGUAGE": "Wybierz język"
+  },
+  "LANGUAGE": {
+    "SELECT": "Wybierz język",
+    "PL": "Polski",
+    "EN": "Angielski"
+  },
+  "THEME": {
+    "SELECT": "Wybierz motyw",
+    "LIGHT": "Jasny",
+    "DARK": "Ciemny",
+    "SYSTEM": "Systemowy"
+  },
+  "DASHBOARD": {
+    "NAME": "Pulpit",
+    "WELCOME": "Witamy w OBSŁUGA-IT"
+  },
+  "TROTAMUNDOS": {
+    "NAME": "Trotamundos",
+    "FILES": "Pliki",
+    "IMAGES": "Obrazy",
+    "LOCATIONS": "Lokalizacje",
+    "TRIP_REQUESTS": "Prośby o podróż"
+  },
+  "SECURITY": {
+    "NAME": "Bezpieczeństwo"
+  },
+  "FILES": "Pliki",
+  "SUBSCRIPTIONS": {
+    "NAME": "Subskrypcje",
+    "LIST": "Lista"
+  },
+  "SIGN_IN_TITLE": "Zaloguj się",
+  "SIGN_IN_SUBTITLE": "Dostęp do konta",
+  "SIGN_IN_DESCRIPTION": "Proszę zalogować się, aby przejść do pulpitu.",
+  "SIGN_IN_BUTTON": "Zaloguj się przez Microsoft",
+  "UNAUTHORIZED": {
+    "TITLE": "Brak dostępu",
+    "SUBTITLE": "Wymagana autoryzacja",
+    "MESSAGE": "Musisz się zalogować, aby uzyskać dostęp do tego zasobu. Proszę uwierzytelnić się za pomocą konta Microsoft.",
+    "SIGN_IN": "Zaloguj się",
+    "GO_HOME": "Przejdź do strony głównej"
+  },
+  "FORBIDDEN": {
+    "TITLE": "Dostęp zabroniony",
+    "SUBTITLE": "Niewystarczające uprawnienia",
+    "MESSAGE": "Nie masz uprawnień do tego zasobu. Skontaktuj się z administratorem, jeśli uważasz, że to błąd.",
+    "GO_BACK": "Wróć",
+    "GO_HOME": "Przejdź do pulpitu",
+    "SIGN_OUT": "Wyloguj się"
+  },
+  "UI": {
+    "NAME": "Nazwa",
+    "DISPLAY_NAME": "Nazwa wyświetlana",
+    "EMAIL": "Email",
+    "STATUS": "Status",
+    "IMAGE": "Obraz",
+    "FILENAME": "Nazwa pliku",
+    "TAGS": "Tagi",
+    "DESCRIPTION": "Opis",
+    "LOGOUT": "Wyloguj się",
+    "CREATE": "Utwórz",
+    "SAVE": "Zapisz",
+    "BROWSE": "Przeglądaj",
+    "NEW": "Nowy",
+    "OK": "OK"
+  },
+  "TRIP_REQUEST": {
+    "FIRST_AND_LAST_NAME": "Imię i nazwisko",
+    "PHONE_NUMBER": "Numer telefonu",
+    "TRIP_DIRECTION": "Kierunek podróży",
+    "TRIP_DATE": "Data podróży",
+    "TRIP_DURATION": "Czas trwania podróży",
+    "AMOUNT_OF_PEOPLE": "Liczba osób",
+    "AMOUNT_OF_KIDS": "Liczba dzieci",
+    "GROUP_RELATION_TYPE": "Typ relacji grupy",
+    "PREFERRED_AIRPORT": "Preferowane lotnisko",
+    "PREFERRED_TRIP_TYPE": "Preferowany typ podróży"
+  },
+  "ERRORS": {
+    "SERVICE_NOT_RESPONDING": "Usługa nie odpowiada",
+    "SERVICE_OFFLINE": "Usługa jest niedostępna, poczekaj kilka minut lub skontaktuj się z administratorem.",
+    "UNAUTHORIZED": "Brak autoryzacji",
+    "AUTHENTICATION_REQUIRED": "Nie jesteś uwierzytelniony. Proszę zalogować się ponownie i spróbować ponownie.",
+    "FORBIDDEN": "Zabronione",
+    "NO_PERMISSION": "Nie masz uprawnień do tego zasobu.",
+    "METHOD_NOT_ALLOWED": "Metoda niedozwolona",
+    "METHOD_NOT_IMPLEMENTED": "Endpoint istnieje, ale metoda [GET/PUT/POST/DELETE] nie jest zaimplementowana w usłudze API.",
+    "UNHANDLED_EXCEPTION": "Nieobsłużony wyjątek",
+    "SOMETHING_WENT_WRONG": "Coś poszło nie tak."
+  },
+  "UPDATE": {
+    "NEW_VERSION_TITLE": "Dostępna nowa wersja",
+    "NEW_VERSION_MESSAGE": "Dostępna jest nowa wersja aplikacji. Kliknij OK, aby zaktualizować teraz.",
+    "RELOAD_REQUIRED_TITLE": "Wymagana aktualizacja aplikacji",
+    "RELOAD_REQUIRED_MESSAGE": "Aplikacja musi zostać przeładowana, aby zastosować aktualizacje.",
+    "NO_UPDATE_TITLE": "Brak dostępnych aktualizacji",
+    "NO_UPDATE_MESSAGE": "Używasz najnowszej wersji aplikacji.",
+    "UPDATE_CHECK_FAILED": "Nie udało się sprawdzić aktualizacji. Spróbuj ponownie później.",
+    "CHECK_FOR_UPDATES": "Sprawdź aktualizacje"
+  }
+}

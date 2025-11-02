@@ -1,8 +1,14 @@
-﻿namespace lrembecki.core.security.ViewModels;
+﻿using lrembecki.core.account.ViewModels;
+using lrembecki.core.subscription.ViewModels;
+
+namespace lrembecki.core.security.ViewModels;
 
 public record AuthenticationViewModel(
-    Guid UserId,
-    Guid SubscriptionId,
+    string Token,
     string[] Permissions,
-    string jwtToken
+    DateTime Expires,
+    DateTime Created,
+    AccountVM User,
+    SubscriptionVM Subscription,
+    bool IsAuthenticated
 );

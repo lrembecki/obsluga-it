@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 namespace lrembecki.infrastructure.Extensions;
@@ -50,24 +51,13 @@ public static class AuthenticationExtensions
             {
                 policy
                     .RequireAuthenticatedUser()
-                    .RequireClaim("scp", "access_as_user");
-
-                if (!builder.Environment.IsDevelopment())
-                {
-                    policy
-                        .AddAuthenticationSchemes(AzureAdScheme);
-                }
+                    .AddAuthenticationSchemes(AzureAdScheme);
             })
             .AddPolicy(InternalJwtPolicy, policy =>
             {
                 policy
-                    .RequireAuthenticatedUser();
-
-                if (!builder.Environment.IsDevelopment())
-                {
-                    policy
-                        .AddAuthenticationSchemes(InternalJwtScheme);
-                }
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(InternalJwtScheme); ;
             });
     }
 }
