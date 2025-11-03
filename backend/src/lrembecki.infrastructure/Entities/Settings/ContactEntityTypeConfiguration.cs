@@ -1,0 +1,27 @@
+﻿using lrembecki.core.settings.Entities;
+using lrembecki.infrastructure.Entities.Shared;
+
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace lrembecki.infrastructure.Entities.Settings;
+
+internal class ContactEntityTypeConfiguration : SubscriptionBaseEntityTypeConfiguration<ContactEntity>
+{
+    public override void Configure(EntityTypeBuilder<ContactEntity> builder)
+    {
+        base.Configure(builder);
+        builder.HasKey(e => e.Id);
+
+        builder.Property(e => e.Name)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        builder.Property(e => e.Email)
+            .IsRequired(false)
+            .HasMaxLength(200);
+
+        builder.Property(e => e.Phone)
+            .IsRequired(false)
+            .HasMaxLength(15);
+    }
+}

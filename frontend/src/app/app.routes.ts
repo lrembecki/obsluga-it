@@ -15,8 +15,8 @@ export const routes: Routes = [
     loadChildren: () => import('./forms/routes').then((e) => e.routes),
   },
   {
-    path: 'settings',
-    loadChildren: () => import('./settings/routes').then((e) => e.routes),
+    path: 'modules',
+    loadChildren: () => import('./modules/routes').then((e) => e.routes),
   },
   {
     path: '',

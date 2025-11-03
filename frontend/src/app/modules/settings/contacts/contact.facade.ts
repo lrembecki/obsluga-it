@@ -3,6 +3,6 @@ import { ContactModel } from './contact.model';
 
 export class ContactsFacade extends ApiFacade<ContactModel[]> {
   constructor() {
-    super([], 'settings/contact');
+    super([], 'settings/contacts');
   }
 }

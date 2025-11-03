@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Required } from 'app/core/directives/required';
 import { Valid } from 'app/core/directives/valid';
+import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
 import { ButtonDelete } from 'app/shared/ui/button/button-delete';
 import { ButtonReturn } from 'app/shared/ui/button/button-return';
@@ -11,7 +12,6 @@ import { ButtonSubmit } from 'app/shared/ui/button/button-submit';
 import { CheckboxInputComponent } from 'app/shared/ui/inputs/checkbox-input.component';
 import { TextInputComponent } from 'app/shared/ui/inputs/text-input.component';
 import { UiPanel } from 'app/shared/ui/ui-panel';
-import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import { ContactModel } from './contact.model';
 import { injectSettingContacts } from './contact.provider';
 
@@ -58,7 +58,7 @@ import { injectSettingContacts } from './contact.provider';
 
         <app-checkbox-input [(value)]="model()!.isActive" label="Active" />
         <app-text-input
-          [disabled]="!!model().contactId"
+          [disabled]="!!model().id"
           [(value)]="model().name"
           [required]="true"
           label="Name"
@@ -76,13 +76,13 @@ import { injectSettingContacts } from './contact.provider';
         />
         <app-text-input [(value)]="model().position" label="Position" />
 
-        @if (model().contactId) {
+        @if (model().id) {
           <app-ui-panel>
             <ng-template #end>
               <app-button
                 delete
                 [facade]="{
-                  identity: model().contactId,
+                  identity: model().id,
                   facade: _services.contacts,
                 }"
                 (deleted)="returnToList()"
@@ -113,7 +113,7 @@ export class ContactForm {
     () =>
       this._services.contacts
         .data()
-        .find((e) => e.contactId === this.contactId()) ?? new ContactModel(),
+        .find((e) => e.id === this.contactId()) ?? new ContactModel(),
   );
 
   protected minContactNumber() {
@@ -128,8 +128,8 @@ export class ContactForm {
     model.order =
       Math.max(...this._services.contacts.data().map((e) => e.order), 0) + 1;
 
-    const response = model.contactId
-      ? await this._services.contacts.update(model.contactId, model)
+    const response = model.id
+      ? await this._services.contacts.update(model.id, model)
       : await this._services.contacts.create('', model);
 
     if (response.success) {

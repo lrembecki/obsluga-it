@@ -6,7 +6,8 @@ import { StorageService } from 'app/core/services/storage.service';
 import { TranslationService } from 'app/core/services/translation.service';
 import * as feature from 'app/features/routes';
 import * as forms from 'app/forms/routes';
-import * as settings from 'app/settings/routes';
+import * as settings from 'app/modules/settings/routes';
+import * as trotamundos from 'app/modules/trotamundos/routes';
 
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
@@ -49,16 +50,14 @@ export class NavbarComponent {
         'forms/',
       );
       const featureRoutes = await this.getItemGroup('Features', feature.routes);
-      const settingsRoutes = await this.getItemGroup(
-        'Settings',
-        settings.routes,
-        'settings/',
-      );
+      const settingsRoutes = await this.getItemGroup('Settings', settings.routes, 'modules/settings/');
+      const trotamundosRoutes = await this.getItemGroup('Settings', trotamundos.routes, 'modules/trotamundos/');
 
       this.items.set([
         ...this.provideIfAny(featureRoutes),
         ...this.provideIfAny(requestRoutes),
         ...this.provideIfAny(settingsRoutes),
+        ...this.provideIfAny(trotamundosRoutes),
         {
           label: this._storage.account.data()?.user.email,
           expanded: true,

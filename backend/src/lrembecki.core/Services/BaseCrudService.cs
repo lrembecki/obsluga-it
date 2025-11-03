@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace lrembecki.core.Services;
 #pragma warning disable S2436 // Types and methods should not have too many generic parameters
-public abstract class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService<TDto, TVM>
+public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService<TDto, TVM>
 #pragma warning restore S2436 // Types and methods should not have too many genericParameters
     where TEntity : class, IHasId<Guid>
     where TVM : class
@@ -26,7 +26,7 @@ public abstract class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICr
     public async virtual Task<List<TVM>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _repository.SelectAsync(BuildSelectExpression());
     public async virtual Task<TVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => (TVM)typeof(TVM).GetMethod("Map")!.Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
+        => (TVM)typeof(TVM).GetMethod("Map", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
     public async Task<TVM> UpdateAsync(Guid id, TDto model, CancellationToken cancellationToken = default)
     {
         var entity = await _repository.RequireByIdAsync(id, cancellationToken);

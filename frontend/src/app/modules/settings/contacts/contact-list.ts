@@ -42,5 +42,5 @@ import { injectSettingContacts } from './contact.provider';
 export class ContactList {
   protected readonly _services = injectSettingContacts();
 
-  protected renderLink = (record: ContactModel) => ['..', record.contactId];
+  protected renderLink = (record: ContactModel) => ['..', record.id];
 }

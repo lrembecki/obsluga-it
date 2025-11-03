@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Valid } from 'app/core/directives/valid';
 import { Button } from 'app/shared/ui/button/button';
 import { CheckboxInputComponent } from 'app/shared/ui/inputs/checkbox-input.component';
 import { TextInputComponent } from 'app/shared/ui/inputs/text-input.component';
 import { UiPanel } from 'app/shared/ui/ui-panel';
-import { Valid } from '../../core/directives/valid';
 import { injectServices } from './email-settings.provider';
 
 @Component({

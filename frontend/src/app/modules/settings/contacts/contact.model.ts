@@ -1,5 +1,5 @@
 export class ContactModel {
-  contactId: string = null!;
+  id: string = null!;
   name: string = null!;
   isActive: boolean = false;
   order: number = null!;

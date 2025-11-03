@@ -42,7 +42,7 @@ export const routes: Routes = [
             return computed(() => {
               const result = services.contacts
                 .data()
-                .find((e) => e.contactId === contactId);
+                .find((e) => e.id === contactId);
 
               return result;
             });
