@@ -44,6 +44,8 @@ export class ButtonDelete {
           this.deleted.emit();
         }
       });
+    } else {
+      this.deleted.emit();
     }
 
     this._button.color.set('danger');

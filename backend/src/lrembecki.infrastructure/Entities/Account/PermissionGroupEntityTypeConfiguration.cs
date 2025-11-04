@@ -30,5 +30,7 @@ internal class PermissionGroupEntityTypeConfiguration : BaseEntityTypeConfigurat
                 j.ToTable("PermissionGroupPermission");
                 j.HasKey("PermissionGrupId", "PermissionId");
             });
+
+        builder.Navigation(e => e.Permissions).AutoInclude();
     }
 }

@@ -48,7 +48,7 @@ internal class EfRepository<T>(IUnitOfWork uow, ISessionAccessor sessionAccessor
             query = query.Where(subscriptionPredicate);
         }
 
-        return query.AsNoTracking();
+        return query;
     }
 
     public Expression<Func<Y, bool>> SubscriptionIdPredicate<Y>()

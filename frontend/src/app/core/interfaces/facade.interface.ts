@@ -5,6 +5,7 @@ import {
   Signal,
   WritableSignal,
 } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ServiceCallResult } from '../models/service-call-result.model';
 import { ApiService } from '../services/api.service';
 
@@ -32,6 +33,11 @@ export class ApiFacade<T> implements Facade<T> {
   public readonly loading = this._loading.asReadonly();
   public readonly saving = this._saving.asReadonly();
   public readonly deleting = this._deleting.asReadonly();
+
+  private readonly _onLoaded = new Subject();
+  public get onLoaded() {
+    return this._onLoaded.asObservable();
+  }
 
   constructor(
     defaultData: T,
@@ -64,10 +70,13 @@ export class ApiFacade<T> implements Facade<T> {
     this._loading.set(true);
     const response = await this._api.get<T>(this._endpoint, {}, headers);
     this._loading.set(false);
+
     if (response.success && response.data) {
       this._data.set(response.data!);
       this._initialized.set(true);
     }
+
+    this._onLoaded.next(null!);
 
     return this;
   }

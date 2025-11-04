@@ -9,6 +9,10 @@ export class SecurityPermissionGroupFacade extends ApiFacade<PermissionGroupVM[]
   constructor() {
     super([], 'account/permission-groups');
   }
+
+  protected override withData(data: PermissionGroupVM[]): PermissionGroupVM[] {
+    return data.sort((a, b) => a.name.localeCompare(b.name));
+  }
 }
 
 export function provideSecurityPermissionGroups(): (Provider | EnvironmentProviders)[] {
