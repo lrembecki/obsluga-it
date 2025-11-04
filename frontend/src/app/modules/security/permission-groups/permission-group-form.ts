@@ -63,7 +63,6 @@ import { PermissionGroupVM } from './permission-group.vm';
         </app-ui-panel>
 
         <app-text-input
-          [disabled]="!!model.session().id"
           [(value)]="model.session().name"
           [required]="true"
           label="Name"
@@ -135,8 +134,6 @@ export class PermissionGroupForm {
   
   protected readonly assignedPermissions = computed(() => this._services.permissions.data().filter(p => this.model.session().permissions.includes(p.id)));
   protected readonly availablePermissions = computed(() => this._services.permissions.data().filter(p => !this.model.session().permissions.includes(p.id)));
-
-
 
   protected addPermission(selectedPermission: DropdownInputComponent<string>): void {
     if (selectedPermission.value()) {
