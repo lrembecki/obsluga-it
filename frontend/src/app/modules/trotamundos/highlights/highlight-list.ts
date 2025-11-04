@@ -27,11 +27,11 @@ import { HighlightVM } from './highlight.vm';
     <app-ui-table [data]="_services.highlights.data()">
       <app-ui-table-column
         text="Title"
-        field="title" width="200px"
+        field="title"
         link
         [renderLink]="renderLink"
       />
-      <app-ui-table-column text="Icon" field="icon" />
+      <app-ui-table-column text="Icon" field="icon" width="200px" />
     </app-ui-table>
   `,
   styles: ``

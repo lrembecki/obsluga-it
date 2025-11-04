@@ -7,6 +7,6 @@ public record StorageDto
     public string? BlobUrl { get; init; }
     public string? BlobPath { get; init; }
     public long? Size { get; init; }
-    public FileStorageDto File { get; init; } = default!;
-    public ImageStorageDto Image { get; init; } = default!;
+    public FileStorageDto? File { get; init; }
+    public ImageStorageDto? Image { get; init; }
 }

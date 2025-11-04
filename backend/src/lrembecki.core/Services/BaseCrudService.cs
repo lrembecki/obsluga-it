@@ -14,9 +14,7 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
     protected readonly IRepository<TEntity> _repository = uow.GetRepository<TEntity>();
     public async Task<TVM> CreateAsync(TDto model, CancellationToken cancellationToken = default)
     {
-        var entity = await CreateEntity(model, cancellationToken);
-
-        await UpdateEntity(entity, model);
+        var entity = await CreateEntity(Guid.NewGuid(), model, cancellationToken);
         await _repository.AddAsync(entity);
 
         return await GetByIdAsync(entity.Id, cancellationToken);
@@ -81,9 +79,9 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
         return Expression.Lambda<Func<TEntity, TVM>>(call, param);
     }
 
-    protected virtual Task<TEntity> CreateEntity(TDto model, CancellationToken cancellationToken)
+    protected virtual Task<TEntity> CreateEntity(Guid id, TDto model, CancellationToken cancellationToken)
     {
-        var entity = (TEntity)typeof(TEntity).GetMethod("Create")!.Invoke(null, new object[] { Guid.NewGuid(), model })!;
+        var entity = (TEntity)typeof(TEntity).GetMethod("Create")!.Invoke(null, new object[] { id, model })!;
 
         return Task.FromResult(entity);
     }

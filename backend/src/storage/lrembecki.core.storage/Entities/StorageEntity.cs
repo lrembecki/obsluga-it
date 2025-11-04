@@ -15,12 +15,11 @@ public class StorageEntity : SubscriptionBaseEntity, IHasId<Guid>
     public FileStorageEntity File { get; private set; } = default!;
     public ImageStorageEntity Image { get; private set; } = default!;
 
-    public static StorageEntity Create(Guid id, Guid subscriptionId, StorageDto model)
+    public static StorageEntity Create(Guid id, StorageDto model)
     {
         var blob = new StorageEntity
         {
-            Id = id,
-            SubscriptionId = subscriptionId
+            Id = id
         };
 
         blob.Update(model);

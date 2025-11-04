@@ -18,5 +18,8 @@ internal class StorageEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
         builder.Property(e => e.Filename).IsRequired().HasMaxLength(500);
         builder.Property(e => e.BlobUrl).IsRequired().HasMaxLength(500);
         builder.Property(e => e.BlobPath).IsRequired().HasMaxLength(500);
+
+        builder.Navigation(e => e.Image).AutoInclude();
+        builder.Navigation(e => e.File).AutoInclude();
     }
 }

@@ -5,7 +5,7 @@ namespace lrembecki.core.storage.Entities;
 public class ImageStorageEntity
 {
     public Guid StorageId { get; private set; }
-    public string DisplayName { get; private set; } = string.Empty;
+    public string? DisplayName { get; private set; } = string.Empty;
     public long Width { get; private set; }
     public long Height { get; private set; }
 

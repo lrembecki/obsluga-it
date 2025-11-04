@@ -8,4 +8,7 @@ export const routes: Routes = [
     featureRoute('highlights', 'Highlights', [], () => 
         import('./highlights/routes').then(e => e.routes)
     ),
+    featureRoute('loyality-program', 'Loyality Program', [], () => 
+        import('./loyality-program/routes').then(e => e.routes)
+    ),
 ];

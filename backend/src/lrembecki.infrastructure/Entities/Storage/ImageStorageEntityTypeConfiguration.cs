@@ -15,6 +15,6 @@ internal class ImageStorageEntityTypeConfiguration : IEntityTypeConfiguration<Im
         
         builder.Property(e => e.Width).IsRequired();
         builder.Property(e => e.Height).IsRequired();
-        builder.Property(e => e.DisplayName).IsRequired().HasMaxLength(500);
+        builder.Property(e => e.DisplayName).IsRequired(false).HasMaxLength(500);
     }
 }
