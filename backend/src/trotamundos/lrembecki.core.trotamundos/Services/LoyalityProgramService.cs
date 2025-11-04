@@ -24,6 +24,12 @@ internal sealed class LoyalityProgramService(IUnitOfWork uow, IStorageService st
         }).ToList();
     }
 
+    protected override async Task DeleteEntity(LoyalityProgramEntity entity, CancellationToken cancellationToken)
+    {
+        await base.DeleteEntity(entity, cancellationToken);
+        await storage.DeleteAsync(entity.ImageId, cancellationToken);
+    }
+
     protected override async Task<LoyalityProgramEntity> CreateEntity(Guid id, LoyalityProgramDto model, CancellationToken cancellationToken)
     {
         var storageVM = await storage.CreateAsync(model.Image);

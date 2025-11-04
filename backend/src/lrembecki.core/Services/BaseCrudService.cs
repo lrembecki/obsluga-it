@@ -20,7 +20,7 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
         return await GetByIdAsync(entity.Id, cancellationToken);
     }
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
-        => await _repository.DeleteAsync(await _repository.RequireByIdAsync(id, cancellationToken));
+        => await DeleteEntity(await _repository.RequireByIdAsync(id, cancellationToken), cancellationToken);
     public async virtual Task<List<TVM>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _repository.SelectAsync(BuildSelectExpression());
     public async virtual Task<TVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -85,11 +85,14 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
 
         return Task.FromResult(entity);
     }
-
     protected virtual Task UpdateEntity(TEntity entity, TDto model)
     {
         typeof(TEntity).GetMethod("Update")!.Invoke(entity, new object[] { model });
 
         return Task.CompletedTask;
+    }
+    protected virtual async Task DeleteEntity(TEntity entity, CancellationToken cancellationToken)
+    {
+        await _repository.DeleteAsync(entity);
     }
 }
