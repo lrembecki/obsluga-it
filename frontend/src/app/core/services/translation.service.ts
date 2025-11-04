@@ -64,6 +64,7 @@ export class TranslationService {
     localStorage.setItem('language', languageCode);
     this._selectLanguage.set(languageCode);
 
+    // eslint-disable-next-line no-self-assign
     window.location.href = window.location.href;
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { inject, Injectable, Provider, signal } from '@angular/core';
 import { ImageModel } from 'app/core/models/image.model';
 import { TagModel } from 'app/core/models/tag.model';

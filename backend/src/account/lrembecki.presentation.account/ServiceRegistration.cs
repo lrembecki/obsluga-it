@@ -13,6 +13,7 @@ public static class ServiceRegistration
     {
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IPermissionService, PermissionService>();
+        builder.Services.AddScoped<IPermissionGroupService, PermissionGroupService>();
     }
 
     public static void MapAccount(this WebApplication app)

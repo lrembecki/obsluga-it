@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { AccountModel } from '../models/account.model';
 
@@ -22,10 +23,15 @@ export class StorageService {
 class ModelLocalStorage<T> implements IStorage<T> {
   protected readonly _signal: WritableSignal<T | null> = null!;
   public readonly data: Signal<T | null> = null!;
+  public readonly key: string = null!;
+  public readonly parse: (raw: string) => T = null!;
+
   constructor(
-    public readonly key: string,
-    private readonly parse: (raw: string) => T,
+    key: string,
+    parse: (raw: string) => T,
   ) {
+    this.key = key;
+    this.parse = parse;
     this._signal = signal<T | null>(this.initialize());
     this.data = this._signal.asReadonly();
   }
@@ -46,7 +52,9 @@ class ModelLocalStorage<T> implements IStorage<T> {
 }
 
 class StringLocalStorage implements IStorage<string> {
-  constructor(public readonly key: string) {
+  public readonly key: string = null!;
+  constructor(key: string) {
+    this.key = key;
     this._signal.set(this.initialize());
   }
 

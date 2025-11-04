@@ -35,6 +35,7 @@ export class UiTableColumnLinkCellTemplate extends UiTableColumnCellTemplate {
 })
 export class UiTableColumnLink<T> extends UiTableColumnBase<T> {
   public readonly link = input<string>(null!);
+  // eslint-disable-next-line no-unused-vars
   public readonly renderLink = input<(record: T) => string[]>(null!);
 
   constructor() {

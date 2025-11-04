@@ -44,6 +44,7 @@ export class SubscriptionSwitcher {
 
   async onChange(event: SubscriptionVM): Promise<void> {
     await this._auth.changeSubscription(event.id);
+    // eslint-disable-next-line no-self-assign
     window.location.href = window.location.href;
   }
 }

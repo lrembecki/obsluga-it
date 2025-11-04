@@ -14,8 +14,10 @@ import { Observable } from 'rxjs';
 import { PermissionType } from '../defaults/permission.default';
 import { authorizedGuard } from '../guards/authorized-guard';
 
+
 export function listRoute<VM, TProvider>(
   providers: (Provider | EnvironmentProviders)[],
+  // eslint-disable-next-line no-unused-vars
   provideModel: (id: string, services: TProvider) => VM,
   serviceProvider: () => TProvider,
   loadListComponent: () => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,

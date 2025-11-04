@@ -25,6 +25,7 @@ export class ApiFacade<T> implements Facade<T> {
   protected readonly _saving = signal(false);
   protected readonly _deleting = signal(false);
   protected readonly _filter = signal<Record<string, unknown>>({});
+  protected readonly _endpoint: string = null!;
 
   public readonly data = computed(() => this.withData(this._data()));
   public readonly initialized = this._initialized.asReadonly();
@@ -33,9 +34,10 @@ export class ApiFacade<T> implements Facade<T> {
   public readonly deleting = this._deleting.asReadonly();
 
   constructor(
-    protected readonly defaultData: T,
-    protected readonly endpoint: string,
+    defaultData: T,
+    endpoint: string,
   ) {
+    this._endpoint = endpoint;
     this._data = signal<T>(defaultData);
   }
 
@@ -60,7 +62,7 @@ export class ApiFacade<T> implements Facade<T> {
     }
 
     this._loading.set(true);
-    const response = await this._api.get<T>(this.endpoint, {}, headers);
+    const response = await this._api.get<T>(this._endpoint, {}, headers);
     this._loading.set(false);
     if (response.success && response.data) {
       this._data.set(response.data!);
@@ -77,7 +79,7 @@ export class ApiFacade<T> implements Facade<T> {
     this._saving.set(true);
 
     const response = await this._api.put<T>(
-      `${this.endpoint}/${endpoint}`,
+      `${this._endpoint}/${endpoint}`,
       model,
     );
 
@@ -97,7 +99,7 @@ export class ApiFacade<T> implements Facade<T> {
     this._saving.set(true);
 
     const response = await this._api.post<T>(
-      `${this.endpoint}${endpoint}`,
+      `${this._endpoint}${endpoint}`,
       model,
     );
 
@@ -110,7 +112,7 @@ export class ApiFacade<T> implements Facade<T> {
 
   async delete(endpoint: string): Promise<ServiceCallResult<T>> {
     this._deleting.set(true);
-    const response = await this._api.delete<T>(`${this.endpoint}/${endpoint}`);
+    const response = await this._api.delete<T>(`${this._endpoint}/${endpoint}`);
     this._deleting.set(false);
 
     if (response.success) await this.populate();

@@ -1,13 +1,19 @@
+/* eslint-disable no-unused-vars */
 import { computed, signal } from '@angular/core';
 import { Facade } from '../interfaces/facade.interface';
 
 export class CacheService<T> {
   private readonly _data = signal<CacheItem<T>[]>([]);
+  private readonly facade: Facade<T[]>;
+  private readonly identityCallback: (record: T) => string;
 
   constructor(
-    private readonly facade: Facade<T[]>,
-    private readonly identityCallback: (record: T) => string,
-  ) {}
+    facade: Facade<T[]>,
+    identityCallback: (record: T) => string,
+  ) {
+    this.facade = facade;
+    this.identityCallback = identityCallback;
+  }
 
   public readonly data = computed(() => {
     const facadeData = this.facade.data().map(

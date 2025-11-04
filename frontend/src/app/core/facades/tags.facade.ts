@@ -10,7 +10,7 @@ export class TagsFacade extends ApiFacade<TagModel[]> {
     this._loading.set(true);
 
     const response = await this._api.post<TagModel>(
-      this.endpoint,
+      this._endpoint,
       new TagModel({ name }),
     );
 
