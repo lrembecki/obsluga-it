@@ -25,7 +25,9 @@
     "FILES": "Files",
     "IMAGES": "Images",
     "LOCATIONS": "Locations",
-    "TRIP_REQUESTS": "Trip Requests"
+    "TRIP_REQUESTS": "Trip Requests",
+    "ADVANTAGES": "Advantages",
+    "HIGHLIGHTS": "Highlights"
   },
   "SECURITY": {
     "NAME": "Security"

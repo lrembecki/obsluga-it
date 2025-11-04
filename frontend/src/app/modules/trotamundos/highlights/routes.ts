@@ -1,0 +1,16 @@
+import { Routes } from "@angular/router";
+import { listRoute } from "app/core/helpers/route.helper";
+import { injectTrotamundosHighlights, provideTrotamundosHighlights, TrotamundosHighlightProvider } from "./highlight.provider";
+import { HighlightVM } from "./highlight.vm";
+
+export const routes: Routes = [
+    listRoute<HighlightVM, TrotamundosHighlightProvider>(
+        provideTrotamundosHighlights(),
+        (id: string, services: TrotamundosHighlightProvider) => {
+            return services.highlights.data().find(e => e.id === id)!;
+        },
+        injectTrotamundosHighlights,
+        () => import('./highlight-list').then(e => e.HighlightList),
+        () => import('./highlight-form').then(e => e.HighlightForm)
+    )
+];

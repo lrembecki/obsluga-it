@@ -25,7 +25,9 @@
     "FILES": "Pliki",
     "IMAGES": "Obrazy",
     "LOCATIONS": "Lokalizacje",
-    "TRIP_REQUESTS": "Prośby o podróż"
+    "TRIP_REQUESTS": "Prośby o podróż",
+    "ADVANTAGES": "Zalety",
+    "HIGHLIGHTS": "Wyróżnienia"
   },
   "SECURITY": {
     "NAME": "Bezpieczeństwo"
