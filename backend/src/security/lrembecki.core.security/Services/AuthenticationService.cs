@@ -17,9 +17,9 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
 {
     public Task<AuthenticationViewModel> AuthenticateAsync(string email, Guid? subscriptionId, CancellationToken ct)
     {
-        var accountSubscriptionsQuery = uow.GetRepository<AccountSubscriptionEntity>().GetAll(e => (subscriptionId == null && e.IsDefault) || e.SubscriptionId == subscriptionId);
-        var subscriptions = uow.GetRepository<SubscriptionEntity>().GetAll(e => subscriptionId == null || subscriptionId == e.Id);
-        var accounts = uow.GetRepository<AccountEntity>().GetAll(e => e.Email == email);
+        var accountSubscriptionsQuery = uow.GetRepository<AccountSubscriptionEntity>().GetAll(e => e.IsActive);
+        var subscriptionsQuery = uow.GetRepository<SubscriptionEntity>().GetAll();
+        var accounts = uow.GetRepository<AccountEntity>().GetAll(e => e.Email.ToUpper() == email.ToUpper());
 
         var now = date.UtcNow;
         var query = accountSubscriptionsQuery
@@ -29,14 +29,23 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
                 innerKeySelector: a => a.Id,
                 resultSelector: (outer, inner) => new { AccountSubscription = outer, Account = inner })
             .Join(
-                inner: subscriptions,
+                inner: subscriptionsQuery,
                 outerKeySelector: l => l.AccountSubscription.SubscriptionId,
                 innerKeySelector: a => a.Id,
-                resultSelector: (outer, inner) => new { outer.AccountSubscription, outer.Account, Subscription = inner })
-            .Where(e => e.Account.Email.ToUpper() == email.ToUpper());
+                resultSelector: (outer, inner) => new { outer.AccountSubscription, outer.Account, Subscription = inner });
 
-        var data = query.SingleOrDefault()
-        ?? throw new ArgumentNullException(nameof(email), "You are not authenticated to access this platform");
+        var list = query
+            .Select(e => new
+            {
+                AccountSubscription = AccountSubscriptionVM.Map(e.AccountSubscription),
+                Subscription = SubscriptionVM.Map(e.Subscription),
+                Account = AccountVM.Map(e.Account)
+            }).ToList();
+
+        var subscriptions = list.Select(e => e.Subscription).ToList();
+
+        var data = list.SingleOrDefault(e => (subscriptionId == null && e.AccountSubscription.IsDefault) || e.AccountSubscription.SubscriptionId == subscriptionId)
+            ?? throw new ArgumentNullException(nameof(email), "You are not authenticated to access this platform");
 
         var permissions = data.AccountSubscription.PermissionGroups
                 .SelectMany(pg => pg.Permissions)
@@ -47,8 +56,9 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
         return Task.FromResult(
             new AuthenticationViewModel(
                 IsAuthenticated: true,
-                User: AccountVM.Map(data.Account),
-                Subscription: SubscriptionVM.Map(data.Subscription),
+                User: data.Account,
+                Subscription: data.Subscription,
+                Subscriptions: subscriptions,
                 Permissions: permissions,
                 Created: now,
                 Expires: now.AddDays(15),

@@ -5,13 +5,13 @@ namespace lrembecki.core.account.ViewModels;
 public record AccountSubscriptionVM(
     Guid Id,
     Guid AccountId,
-    Guid Subscriptionid,
+    Guid SubscriptionId,
     bool IsActive,
     bool IsDefault,
     ICollection<PermissionGroupVM> PermissionGroups
 )
 {
-    internal static AccountSubscriptionVM Map(
+    public static AccountSubscriptionVM Map(
         AccountSubscriptionEntity accountSubscriptionEntity
     )
     {

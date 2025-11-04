@@ -6,11 +6,4 @@ export const routes: Routes = [
     redirectTo: 'subscriptions',
     pathMatch: 'full',
   },
-  {
-    path: 'subscriptions',
-    loadChildren: () => import('./subscriptions/routes').then((e) => e.routes),
-    data: {
-      label: 'SUBSCRIPTIONS.NAME',
-    },
-  },
 ];

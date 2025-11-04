@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.component';
-import { LanguageSwitcherComponent } from '../../language-switcher/language-switcher.component';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
-import { SubscriptionSwitcher } from '../../subscription-switcher/subscription-switcher.component';
 import { StorageService } from 'app/core/services/storage.service';
-import { SubscriptionFacade } from 'app/core/facades/subscription.facade';
+import { LanguageSwitcherComponent } from '../../language-switcher/language-switcher.component';
+import { SubscriptionSwitcher } from '../../subscription-switcher/subscription-switcher.component';
+import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.component';
 
 @Component({
   standalone: true,
@@ -24,7 +23,7 @@ import { SubscriptionFacade } from 'app/core/facades/subscription.facade';
         <app-theme-switcher />
         <app-language-switcher />
 
-        @if (subscriptions().length && userData()) {
+        @if (userData()?.subscriptions?.length) {
           <app-subscription-switcher />
         }
       </div>
@@ -70,10 +69,5 @@ import { SubscriptionFacade } from 'app/core/facades/subscription.facade';
 })
 export class FooterComponent {
   private readonly _storage = inject(StorageService);
-  private readonly _facades = {
-    subscriptions: inject(SubscriptionFacade),
-  };
-
-  protected readonly subscriptions = this._facades.subscriptions.data;
   protected readonly userData = this._storage.account.data;
 }

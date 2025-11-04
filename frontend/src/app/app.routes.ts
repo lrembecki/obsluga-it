@@ -1,6 +1,5 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { SubscriptionFacade } from './core/facades/subscription.facade';
 import { TagsFacade } from './core/facades/tags.facade';
 import { authorizedGuard } from './core/guards/authorized-guard';
 
@@ -24,7 +23,6 @@ export const routes: Routes = [
     resolve: {
       init: async () =>
         Object.values({
-          subscriptions: inject(SubscriptionFacade),
           tags: inject(TagsFacade),
         }).map((e) => e.populate()),
     },

@@ -10,5 +10,6 @@ public record AuthenticationViewModel(
     DateTime Created,
     AccountVM User,
     SubscriptionVM Subscription,
+    List<SubscriptionVM> Subscriptions,
     bool IsAuthenticated
 );

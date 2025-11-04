@@ -5,11 +5,10 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { SubscriptionFacade } from 'app/core/facades/subscription.facade';
+import { SubscriptionVM } from 'app/core/models/account.model';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { AuthService } from 'app/core/services/auth.service';
 import { StorageService } from 'app/core/services/storage.service';
-import { SubscriptionModel } from 'app/features/security/subscriptions/subscription.model';
 import { DropdownInputComponent } from '../ui/inputs/dropdown-input.component';
 
 @Component({
@@ -35,22 +34,15 @@ import { DropdownInputComponent } from '../ui/inputs/dropdown-input.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubscriptionSwitcher {
-  private readonly _subscriptions = inject(SubscriptionFacade);
   private readonly _auth = inject(AuthService);
 
   userData = inject(StorageService).account.data;
-  subscriptions = this._subscriptions.data;
+  subscriptions = computed(() => this.userData()?.subscriptions || []);
   currentSubscription = computed(() =>
-    this.subscriptions().find(
-      (e) => e.id === this.userData()?.subscription?.id,
-    ),
+    this.userData()?.subscription ?? null!
   );
 
-  async ngOnInit() {
-    await this._subscriptions.initialize();
-  }
-
-  async onChange(event: SubscriptionModel): Promise<void> {
+  async onChange(event: SubscriptionVM): Promise<void> {
     await this._auth.changeSubscription(event.id);
     window.location.href = window.location.href;
   }

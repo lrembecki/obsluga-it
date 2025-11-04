@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { authorizedGuard } from 'app/core/guards/authorized-guard';
 import { withBreadcrumbs } from 'app/core/helpers/breadcrumbs.helper';
-import { provideSubscription } from './security/subscriptions/subscription.provider';
 
 export const routes: Routes = withBreadcrumbs([
   {
@@ -47,7 +46,7 @@ export const routes: Routes = withBreadcrumbs([
   {
     path: 'security',
     loadChildren: () => import('./security/routes').then((e) => e.routes),
-    providers: [provideSubscription()],
+    providers: [],
     data: {
       label: 'SECURITY.NAME',
     },

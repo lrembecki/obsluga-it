@@ -18,18 +18,27 @@ public static class ServiceRegistration
     public static void MapSecurity(this WebApplication app)
     {
         var group = app.MapGroup("/api/authenticate")
-            .WithTags("Authenticate")
-            .RequireAuthorization("AzureAdUserScope");
+            .WithTags("Authenticate");
 
-        group.MapGet("/{subscriptionId:guid?}", async (
+        group.MapGet("/", async (
             [FromServices] IAuthenticationService authService,
-            [FromRoute] Guid? subscriptionId,
             ClaimsPrincipal principal,
             CancellationToken ct
         ) => (await authService.AuthenticateAsync(
             email: principal.Claims.FirstOrDefault(e => e.Type == "emails")?.Value!,
+            subscriptionId: null!,
+            ct: ct)).ToServiceCallResult()
+        ).RequireAuthorization("AzureAdUserScope");
+
+        group.MapGet("/{subscriptionId:guid}", async (
+            [FromServices] IAuthenticationService authService,
+            [FromRoute] Guid subscriptionId,
+            ClaimsPrincipal principal,
+            CancellationToken ct
+        ) => (await authService.AuthenticateAsync(
+            email: principal.Claims.FirstOrDefault(e => e.Type == ClaimTypes.Email)?.Value!,
             subscriptionId: subscriptionId,
             ct: ct)).ToServiceCallResult()
-        );
+        ).RequireAuthorization("InternalJwtPolicy");
     }
 }

@@ -1,4 +1,3 @@
-import { SubscriptionModel } from 'app/features/security/subscriptions/subscription.model';
 
 export class AccountModel {
   token: string = null!;
@@ -9,7 +8,8 @@ export class AccountModel {
     id: string;
     email: string;
   } = null!;
-  subscription: SubscriptionModel = null!;
+  subscription: SubscriptionVM = null!;
+  subscriptions: SubscriptionVM[] = [];
   isAuthenticated: boolean = false;
 
   constructor(init?: Partial<AccountModel>) {
@@ -21,4 +21,9 @@ export class AccountModel {
       }
     });
   }
+}
+
+export class SubscriptionVM {
+  id: string = null!;
+  name: string = null!;
 }

@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input, model, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Valid } from 'app/core/directives/valid';
-import { Button } from 'app/shared/ui/button/button';
 import { HostControlDirective } from 'app/shared/ui/inputs/host-control.directive';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 import { ImageStorageVM, StorageVM } from './storage.vm';
 
 @Component({
   selector: 'app-upload-image-input',
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, Button, FileUpload],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, FileUpload],
   template: `
     <div class="app-upload-image-input-buttons">
       <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" accept="image/*" (onSelect)="uploadHandler($event)" />

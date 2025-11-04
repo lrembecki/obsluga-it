@@ -20,7 +20,6 @@ import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { provideMsal } from './config/msal.config';
-import { SubscriptionFacade } from './core/facades/subscription.facade';
 import { TagsFacade } from './core/facades/tags.facade';
 import {
   detectLocale,
@@ -63,7 +62,6 @@ export const appConfig: ApplicationConfig = {
     AppUpdateService,
     TranslatePipe,
     ApiService,
-    SubscriptionFacade,
     TagsFacade,
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
