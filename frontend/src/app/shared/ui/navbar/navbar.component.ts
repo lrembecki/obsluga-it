@@ -51,7 +51,7 @@ export class NavbarComponent {
       );
       const featureRoutes = await this.getItemGroup('Features', feature.routes);
       const settingsRoutes = await this.getItemGroup('Settings', settings.routes, 'modules/settings/');
-      const trotamundosRoutes = await this.getItemGroup('Settings', trotamundos.routes, 'modules/trotamundos/');
+      const trotamundosRoutes = await this.getItemGroup('Trotamundos', trotamundos.routes, 'modules/trotamundos/');
 
       this.items.set([
         ...this.provideIfAny(featureRoutes),

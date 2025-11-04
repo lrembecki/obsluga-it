@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\lrembecki.presentation\lrembecki.presentation.csproj" />
     <ProjectReference Include="..\lrembecki.core.trotamundos\lrembecki.core.trotamundos.csproj" />
   </ItemGroup>
 

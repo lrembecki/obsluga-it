@@ -1,6 +1,6 @@
-﻿using lrembecki.core.Services;
-using lrembecki.core.settings.Entities;
-using lrembecki.presentation.settings;
+﻿using lrembecki.core.settings.Dtos;
+using lrembecki.core.settings.Services;
+using lrembecki.core.settings.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +21,6 @@ public static class ServiceRegistration
             .WithTags("Settings")
             .RequireAuthorization("InternalJwtPolicy");
 
-        group.MapContacts();
+        group.MapCrud<IContactService, ContactDto, ContactVM>("contacts");
     }
 }

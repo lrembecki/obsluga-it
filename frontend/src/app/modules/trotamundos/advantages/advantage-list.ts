@@ -5,18 +5,18 @@ import { UiPanel } from 'app/shared/ui/ui-panel';
 import { UiTable } from 'app/shared/ui/ui-table';
 import { UiTableColumn } from 'app/shared/ui/ui-table-column';
 import { UiTableColumnLink } from 'app/shared/ui/ui-table-column-link';
-import { ContactModel } from './contact.model';
-import { injectSettingContacts } from './contact.provider';
+import { injectTrotamundosAdvantages } from './advantage.provider';
+import { AdvantageVM } from './advantage.vm';
 
 @Component({
-  selector: 'app-contact-list',
+  selector: 'app-advantage-list',
   imports: [
     UiPanel,
-    Button,
     UiTable,
     UiTableColumn,
     RouterLink,
     UiTableColumnLink,
+    Button
   ],
   template: `
     <app-ui-panel>
@@ -24,23 +24,20 @@ import { injectSettingContacts } from './contact.provider';
         <app-button color="primary" text="Create" routerLink="../create" />
       </ng-template>
     </app-ui-panel>
-    <app-ui-table [data]="_services.contacts.data()">
+    <app-ui-table [data]="_services.advantages.data()">
       <app-ui-table-column
-        text="Name"
-        field="name"
+        text="Title"
+        field="title" width="200px"
         link
         [renderLink]="renderLink"
       />
-      <app-ui-table-column text="Email" field="email" width="200px" />
-      <app-ui-table-column text="Phone" field="phone" width="200px" />
-      <app-ui-table-column text="Position" field="position" width="250px" />
-      <app-ui-table-column text="Is Active" field="isActive" width="120px" />
+      <app-ui-table-column text="Content" field="content" />
     </app-ui-table>
   `,
-  styles: ``,
+  styles: ``
 })
-export class ContactList {
-  protected readonly _services = injectSettingContacts();
+export class AdvantageList {
+  protected readonly _services = injectTrotamundosAdvantages();
 
-  protected renderLink = (record: ContactModel) => ['..', record.id];
+  protected renderLink = (record: AdvantageVM) => ['..', record.id];
 }

@@ -26,7 +26,7 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
     public async virtual Task<List<TVM>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _repository.SelectAsync(BuildSelectExpression());
     public async virtual Task<TVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => (TVM)typeof(TVM).GetMethod("Map", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
+        => (TVM)typeof(TVM).GetMethod("Map", BindingFlags.Public | BindingFlags.Static)!.Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
     public async Task<TVM> UpdateAsync(Guid id, TDto model, CancellationToken cancellationToken = default)
     {
         var entity = await _repository.RequireByIdAsync(id, cancellationToken);
@@ -43,12 +43,12 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
         var vmType = typeof(TVM);
         var entityType = typeof(TEntity);
         // Try to find Map(TEntity) first
-        var mapMethod = vmType.GetMethod("Map", BindingFlags.Static | BindingFlags.NonPublic, [entityType]);
+        var mapMethod = vmType.GetMethod("Map", BindingFlags.Static | BindingFlags.Public, [entityType]);
 
         // Fallback: find any public static Map method whose single parameter can accept TEntity
         if (mapMethod == null)
         {
-            foreach (var m in vmType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static))
+            foreach (var m in vmType.GetMethods(BindingFlags.Public | BindingFlags.Static))
             {
                 if (m.Name != "Map")
                     continue;

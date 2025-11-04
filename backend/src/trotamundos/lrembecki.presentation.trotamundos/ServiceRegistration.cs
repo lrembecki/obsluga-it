@@ -1,4 +1,6 @@
-﻿using lrembecki.core.trotamundos.Services;
+﻿using lrembecki.core.trotamundos.Dtos;
+using lrembecki.core.trotamundos.Services;
+using lrembecki.core.trotamundos.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,9 +24,9 @@ public static class ServiceRegistration
             .WithTags("Trotamundos")
             .RequireAuthorization("InternalJwtPolicy");
 
-        group.MapAdvantages();
-        group.MapHighlights();
-        group.MapLoyalityPrograms();
-        group.MapTrips();
+        group.MapCrud<IAdvantageService, AdvantageDto, AdvantageVM>("advantages");
+        group.MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights");
+        group.MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs");
+        group.MapCrud<ITripService, TripDto, TripVM>("trips");
     }
 }

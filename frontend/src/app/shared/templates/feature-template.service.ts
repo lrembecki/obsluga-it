@@ -10,8 +10,8 @@ import {
   populateFacades,
 } from 'app/core/helpers/facade.helper';
 
-class FeatureTemplateService {
-  constructor(private readonly _services: Record<string, unknown>) {
+class FeatureTemplateService<ProviderSettingsModel> {
+  constructor(private readonly _services: ProviderSettingsModel) {
     this.loading = isLoadingComputed(_services);
   }
 
@@ -26,8 +26,8 @@ class FeatureTemplateService {
   }
 }
 
-export function provideFeatureTemplate(
-  serviceProvider: () => Record<string, unknown>,
+export function provideFeatureTemplate<ProviderSettingsModel>(
+  serviceProvider: () => ProviderSettingsModel,
 ): (Provider | EnvironmentProviders)[] {
   return [
     {

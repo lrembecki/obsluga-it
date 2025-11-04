@@ -1,4 +1,6 @@
-﻿namespace lrembecki.core.settings.Entities;
+﻿using lrembecki.core.settings.Entities;
+
+namespace lrembecki.core.settings.ViewModels;
 
 public record ContactVM(
     Guid Id, 
@@ -8,7 +10,7 @@ public record ContactVM(
     string? Email,
     string? Phone)
 {
-    internal static ContactVM Map(ContactEntity contact)
+    public static ContactVM Map(ContactEntity contact)
     {
         if (contact == null) return null!;
 

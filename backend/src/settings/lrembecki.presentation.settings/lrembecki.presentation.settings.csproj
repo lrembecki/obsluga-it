@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\..\lrembecki.presentation\lrembecki.presentation.csproj" />
     <ProjectReference Include="..\lrembecki.core.settings\lrembecki.core.settings.csproj" />
   </ItemGroup>
   <ItemGroup>

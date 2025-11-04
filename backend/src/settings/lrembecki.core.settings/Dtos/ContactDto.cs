@@ -1,4 +1,4 @@
-﻿namespace lrembecki.core.settings.Entities;
+﻿namespace lrembecki.core.settings.Dtos;
 
 public record ContactDto
 {
