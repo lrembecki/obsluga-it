@@ -13,20 +13,19 @@ import { ImageStorageVM, StorageVM } from './storage.vm';
   template: `
     <div class="app-upload-image-input-buttons">
       <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" accept="image/*" (onSelect)="uploadHandler($event)" />
-      <app-button color="primary" text="Upload Image" (buttonClick)="fu.upload()" />
-    </div>
-    
 
-    @if (value()) {
-      <img [src]="value().binaryData ?? value().blobUrl" [alt]="value().filename" [width]="value().image?.width" [height]="value().image?.height" />
-    }
+      <span style="flex: auto;"></span>
+
+      @if (value()) {
+        <img [src]="value().binaryData ?? value().blobUrl" [alt]="value().filename" [width]="value().image?.width" [height]="value().image?.height" />
+      }
+    </div>
   `,
   styles: `
     .app-upload-image-input-buttons {
       display: flex;
       gap: 0.5rem;
       margin-bottom: 0.5rem;
-      justify-content: space-between;
     }
     :host {
       display: flex;
@@ -35,7 +34,8 @@ import { ImageStorageVM, StorageVM } from './storage.vm';
     }
 
     img {
-      max-height: 300px;
+      max-height: 30px;
+      max-width: 30px;
       object-fit: contain;
     }
   `,

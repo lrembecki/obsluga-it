@@ -3,6 +3,7 @@ using lrembecki.core.Services;
 using lrembecki.core.storage.Dtos;
 using lrembecki.core.storage.Entities;
 using lrembecki.core.storage.ViewModels;
+using System.Threading;
 
 namespace lrembecki.core.storage.Services;
 
@@ -20,33 +21,58 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
     protected override async Task<StorageEntity> CreateEntity(Guid id, StorageDto model, CancellationToken cancellationToken)
     {
 
-        if (!string.IsNullOrEmpty(model.BinaryData) && model.BinaryData.StartsWith("data:image/png;base64,"))
+        if (!string.IsNullOrEmpty(model.BinaryData) && model.BinaryData.StartsWith("data:image/"))
         {
             model = model with
             {
-                BinaryData = model.BinaryData!.Replace("data:image/png;base64,", string.Empty)
+                BlobPath = $"{id}/{model.Filename!}",
+                BinaryData = model.BinaryData!.Split(",")[1]
+            };
+
+            var ms = new MemoryStream(Convert.FromBase64String(model.BinaryData ?? string.Empty));
+
+            model = model with
+            {
+                BlobUrl = await blobHelper.UploadBlobAsync(
+                    "storage",
+                    model.BlobPath!,
+                    model.Filename!,
+                    ms,
+                    new Dictionary<string, string> { },
+                    cancellationToken)
             };
         }
 
-        var ms = new MemoryStream(Convert.FromBase64String(model.BinaryData ?? string.Empty));
-
-        model = model with
-        {
-            BlobPath = $"{id}/{model.Filename!}"
-        };
-
-        model = model with
-        {
-            BlobUrl = await blobHelper.UploadBlobAsync(
-                "storage",
-                model.BlobPath!,
-                model.Filename!,
-                ms,
-                new Dictionary<string, string> { },
-                cancellationToken)
-        };
-
         return await base.CreateEntity(id, model, cancellationToken);
+    }
+
+    protected override async Task UpdateEntity(StorageEntity entity, StorageDto model)
+    {
+        if (!string.IsNullOrEmpty(model.BinaryData) && model.BinaryData.StartsWith("data:image/"))
+        {
+            await blobHelper.RemoveBlobAsync(entity.BlobPath, "storage", default);
+
+            model = model with
+            {
+                BlobPath = $"{entity.Id}/{model.Filename!}",
+                BinaryData = model.BinaryData!.Split(",")[1]
+            };
+
+            var ms = new MemoryStream(Convert.FromBase64String(model.BinaryData ?? string.Empty));
+
+            model = model with
+            {
+                BlobUrl = await blobHelper.UploadBlobAsync(
+                    "storage",
+                    model.BlobPath!,
+                    model.Filename!,
+                    ms,
+                    new Dictionary<string, string> { },
+                    default)
+            };
+        }
+
+        await base.UpdateEntity(entity, model);
     }
 
     public Task<List<StorageVM>> GetAllImagesAsync(List<Guid>? imageIds, CancellationToken cancellationToken)
