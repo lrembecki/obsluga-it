@@ -8,7 +8,7 @@ public record PermissionGroupVM(
     ICollection<PermissionVM> Permissions
 )
 { 
-    internal static PermissionGroupVM Map(PermissionGroupEntity permissionGroupEntity)
+    public static PermissionGroupVM Map(PermissionGroupEntity permissionGroupEntity)
     {
         if (permissionGroupEntity == null) return null!;
         

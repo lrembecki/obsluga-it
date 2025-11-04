@@ -1,4 +1,6 @@
-﻿using lrembecki.core.account.Services;
+﻿using lrembecki.core.account.Dtos;
+using lrembecki.core.account.Services;
+using lrembecki.core.account.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,10 @@ public static class ServiceRegistration
         var group = app.MapGroup("/api/account")
             .WithTags("Account")
             .RequireAuthorization("InternalJwtPolicy");
+
+        group.MapCrud<IPermissionService, PermissionDto, PermissionVM>("permissions");
+        group.MapCrud<IPermissionGroupService, PermissionGroupDto, PermissionGroupVM>("permission-groups");
+        group.MapCrud<IAccountSubscriptionService, AccountSubscriptionDto, AccountSubscriptionVM>("account-subscriptions");
 
         group.MapAccount();
     }

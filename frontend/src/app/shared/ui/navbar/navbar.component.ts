@@ -6,6 +6,7 @@ import { StorageService } from 'app/core/services/storage.service';
 import { TranslationService } from 'app/core/services/translation.service';
 import * as feature from 'app/features/routes';
 import * as forms from 'app/forms/routes';
+import * as security from 'app/modules/security/routes';
 import * as settings from 'app/modules/settings/routes';
 import * as trotamundos from 'app/modules/trotamundos/routes';
 
@@ -52,12 +53,14 @@ export class NavbarComponent {
       const featureRoutes = await this.getItemGroup('Features', feature.routes);
       const settingsRoutes = await this.getItemGroup('Settings', settings.routes, 'modules/settings/');
       const trotamundosRoutes = await this.getItemGroup('Trotamundos', trotamundos.routes, 'modules/trotamundos/');
+      const securityRoutes = await this.getItemGroup('Security', security.routes, 'modules/security/');
 
       this.items.set([
         ...this.provideIfAny(featureRoutes),
         ...this.provideIfAny(requestRoutes),
         ...this.provideIfAny(settingsRoutes),
         ...this.provideIfAny(trotamundosRoutes),
+        ...this.provideIfAny(securityRoutes),
         {
           label: this._storage.account.data()?.user.email,
           expanded: true,

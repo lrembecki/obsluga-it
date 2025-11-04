@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\lrembecki.presentation\lrembecki.presentation.csproj" />
     <ProjectReference Include="..\lrembecki.core.account\lrembecki.core.account.csproj" />
   </ItemGroup>
 

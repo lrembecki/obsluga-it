@@ -7,7 +7,7 @@ public record PermissionVM(
     string Name
 )
 {
-    internal static PermissionVM Map(PermissionEntity permissionEntity)
+    public static PermissionVM Map(PermissionEntity permissionEntity)
     {
         if (permissionEntity == null) return null!;
 
