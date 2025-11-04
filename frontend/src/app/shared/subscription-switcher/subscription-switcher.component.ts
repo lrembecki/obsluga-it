@@ -5,7 +5,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { SubscriptionVM } from 'app/core/models/account.model';
+import { SubscriptionVM } from 'app/core/models/subscription.vm';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { AuthService } from 'app/core/services/auth.service';
 import { StorageService } from 'app/core/services/storage.service';

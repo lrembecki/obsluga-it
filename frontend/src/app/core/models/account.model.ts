@@ -1,3 +1,4 @@
+import { SubscriptionVM } from "./subscription.vm";
 
 export class AccountModel {
   token: string = null!;
@@ -23,7 +24,3 @@ export class AccountModel {
   }
 }
 
-export class SubscriptionVM {
-  id: string = null!;
-  name: string = null!;
-}
