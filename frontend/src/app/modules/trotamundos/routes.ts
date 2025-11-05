@@ -11,4 +11,7 @@ export const routes: Routes = [
     featureRoute('loyality-program', 'Loyality Program', ['Trotamundos.Loyality-Program'], () => 
         import('./loyality-program/routes').then(e => e.routes)
     ),
+    featureRoute('trips', 'Trips', ['Trotamundos.Trips'], () =>
+        import('./trips/routes').then(e => e.routes)
+    ),
 ];
