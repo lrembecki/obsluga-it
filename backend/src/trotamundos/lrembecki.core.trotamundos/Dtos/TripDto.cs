@@ -5,6 +5,9 @@ public record TripDto
     public string? Name { get; init; }
     public bool IsActive { get; init; } = true;
     public bool IsDisabled { get; init; } = false;
+    public DateTime? StartDate { get; init; }
+    public DateTime? EndDate { get; init; }
+    public string? Calendar { get; init; } // max length50
 
     public string Title { get; init; } = string.Empty;
     public string Subtitle { get; init; } = string.Empty;

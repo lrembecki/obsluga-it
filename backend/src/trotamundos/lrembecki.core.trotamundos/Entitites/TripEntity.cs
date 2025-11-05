@@ -8,6 +8,10 @@ public class TripEntity : TrotamundosBaseEntity
     public string? Name { get; private set; }
     public bool IsActive { get; private set; } = true;
     public bool IsDisabled { get; private set; } = false;
+    // New nullable date properties and calendar
+    public DateTime? StartDate { get; private set; }
+    public DateTime? EndDate { get; private set; }
+    public string? Calendar { get; private set; } // max length50 to enforce in validation/persistence
 
     public string Title { get; private set; } = string.Empty;
     public string Subtitle { get; private set; } = string.Empty;
@@ -39,6 +43,9 @@ public class TripEntity : TrotamundosBaseEntity
         Name = model.Name;
         IsActive = model.IsActive;
         IsDisabled = model.IsDisabled;
+        StartDate = model.StartDate;
+        EndDate = model.EndDate;
+        Calendar = model.Calendar;
 
         Title = model.Title;
         Subtitle = model.Subtitle;

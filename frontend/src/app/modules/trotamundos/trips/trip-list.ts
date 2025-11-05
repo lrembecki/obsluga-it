@@ -4,6 +4,7 @@ import { Button } from 'app/shared/ui/button/button';
 import { UiPanel } from 'app/shared/ui/ui-panel';
 import { UiTable } from 'app/shared/ui/ui-table';
 import { UiTableColumn } from 'app/shared/ui/ui-table-column';
+import { UiTableColumnDate } from "app/shared/ui/ui-table-column-date";
 import { UiTableColumnLink } from 'app/shared/ui/ui-table-column-link';
 import { injectTrotamundosTrips } from './trip.provider';
 import { TripVM } from './trip.vm';
@@ -16,8 +17,9 @@ import { TripVM } from './trip.vm';
     UiTableColumn,
     RouterLink,
     UiTableColumnLink,
-    Button
-  ],
+    Button,
+    UiTableColumnDate
+],
   template: `
     <app-ui-panel>
       <ng-template #start>
@@ -36,6 +38,9 @@ import { TripVM } from './trip.vm';
         field="title" 
       />
       <app-ui-table-column text="Subtitle" field="subtitle" />
+      <app-ui-table-column text="Start Date" field="startDate" date format="shortDate" width="140px" />
+      <app-ui-table-column text="End Date" field="endDate" date format="shortDate" width="140px" />
+      <app-ui-table-column text="Calendar" field="calendar" width="160px" />
       <app-ui-table-column text="Active" field="isActive" width="100px" />
       <app-ui-table-column text="Disabled" field="isDisabled" width="110px" />
     </app-ui-table>

@@ -7,7 +7,7 @@ import { UiTableColumnCellTemplate } from './ui-table-column-cell-template';
   selector: 'app-ui-table-column[date]',
 })
 export class UiTableColumnDate<T> extends UiTableColumnBase<T> {
-  public readonly format = input<string>('short');
+  public readonly format = input<'short' | 'shortDate'>('short');
   constructor() {
     super(UiTableColumnDateCellTemplate);
   }
