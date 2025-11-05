@@ -16,7 +16,7 @@ pr:
 
 variables:
 - name: projectFile
-  value: 'backend'
+  value: 'backend/lrembecki.family-pol.sln'
 - name: testProjects
   value: 'backend/tests/**/*.csproj'
 - name: buildConfiguration
