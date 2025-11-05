@@ -80,7 +80,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("TripAdvantage", "app");
+                    b.ToTable("TrotamundosTripAdvantage", "app");
                 });
 
             modelBuilder.Entity("TripHighlight", b =>
@@ -95,7 +95,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("TripHighlight", "app");
+                    b.ToTable("TrotamundosTripHighlight", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.account.Entities.AccountEntity", b =>
@@ -433,7 +433,45 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Advantage", "app");
+                    b.ToTable("TrotamundosAdvantage", "app");
+                });
+
+            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.FileEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Group")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("StorageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StorageId")
+                        .IsUnique();
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("TrotamundosFile", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.HighlightEntity", b =>
@@ -471,7 +509,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Highlight", "app");
+                    b.ToTable("TrotamundosHighlight", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", b =>
@@ -520,7 +558,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("LoyalityProgram", "app");
+                    b.ToTable("TrotamundosLoyalityProgram", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
@@ -563,7 +601,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Trip", "app");
+                    b.ToTable("TrotamundosTrip", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripImageEntity", b =>
@@ -582,7 +620,7 @@ namespace lrembecki.infrastructure.Migrations
                     b.HasIndex("ImageId")
                         .IsUnique();
 
-                    b.ToTable("TripImage", "app");
+                    b.ToTable("TrotamundosTripImage", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPaymentScheduleEntity", b =>
@@ -610,7 +648,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripPaymentSchedule", "app");
+                    b.ToTable("TrotamundosTripPaymentSchedule", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPriceIncludeEntity", b =>
@@ -631,7 +669,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripPriceInclude", "app");
+                    b.ToTable("TrotamundosTripPriceInclude", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripRequirementEntity", b =>
@@ -649,7 +687,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripRequirement", "app");
+                    b.ToTable("TrotamundosTripRequirement", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripScheduleEntity", b =>
@@ -672,7 +710,7 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripSchedule", "app");
+                    b.ToTable("TrotamundosTripSchedule", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", b =>
@@ -691,7 +729,7 @@ namespace lrembecki.infrastructure.Migrations
                     b.HasIndex("ImageId")
                         .IsUnique();
 
-                    b.ToTable("TripSuggestedFlight", "app");
+                    b.ToTable("TrotamundosTripSuggestedFlight", "app");
                 });
 
             modelBuilder.Entity("AccountPermissionGroup", b =>
@@ -827,6 +865,23 @@ namespace lrembecki.infrastructure.Migrations
                         .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.FileEntity", b =>
+                {
+                    b.HasOne("lrembecki.core.storage.Entities.StorageEntity", "Storage")
+                        .WithOne()
+                        .HasForeignKey("lrembecki.core.trotamundos.Entitites.FileEntity", "StorageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                        .WithMany()
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.HighlightEntity", b =>

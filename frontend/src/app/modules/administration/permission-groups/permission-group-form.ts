@@ -168,6 +168,6 @@ export class PermissionGroupForm {
   }
 
   protected returnToList() {
-    this._services.router.navigate(['/modules/security/permission-groups']);
+    this._services.router.navigate(['/modules/administration/permission-groups']);
   }
 }

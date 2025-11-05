@@ -1,7 +1,8 @@
-namespace lrembecki.core.Helpers;
-
-public interface IDateProvider
+namespace lrembecki.core.Helpers
 {
-    DateTime UtcNow { get; }
-    DateTime Today { get; }
+    public interface IDateProvider
+    {
+        DateTime UtcNow { get; }
+        DateTime Today { get; }
+    }
 }

@@ -1,3 +1,4 @@
-namespace lrembecki.core.Services;
-
-public interface INotification;
+namespace lrembecki.core.Services
+{
+    public interface INotification;
+}

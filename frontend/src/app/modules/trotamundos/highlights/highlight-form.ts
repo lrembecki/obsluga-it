@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Required } from 'app/core/directives/required';
 import { Valid } from 'app/core/directives/valid';
+import { cachedComputed } from 'app/core/helpers/signal.helper';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
 import { ButtonDelete } from 'app/shared/ui/button/button-delete';
@@ -34,7 +35,7 @@ import { HighlightVM } from './highlight.vm';
     ButtonDelete,
   ],
   template: `
-    @if (model()) {
+    @if (model.session()) {
       <ng-container validate #validate="validate">
         <h1>{{ 'Highlights' | translate }}</h1>
         <app-ui-panel>
@@ -51,22 +52,22 @@ import { HighlightVM } from './highlight.vm';
           </ng-template>
         </app-ui-panel>
         <app-text-input
-          [(value)]="model().title"
+          [(value)]="model.session().title"
           [required]="true"
           label="Title"
         />
         <app-text-input
-          [(value)]="model().icon"
+          [(value)]="model.session().icon"
           [required]="true"
           label="Icon"
         />
-        @if (model().id) {
+  @if (model.session().id) {
           <app-ui-panel>
             <ng-template #end>
               <app-button
                 delete
                 [facade]="{
-                  identity: model().id,
+                  identity: model.session().id,
                   facade: _services.highlights,
                 }"
                 (deleted)="returnToList()"
@@ -87,19 +88,19 @@ export class HighlightForm {
   protected readonly highlightId = computed(
     () => this.routeParams()!['id'] as string,
   );
-  protected readonly model = computed(
+  protected readonly model = cachedComputed(
     () =>
       this._services.highlights
         .data()
         .find((e) => e.id === this.highlightId()) ?? new HighlightVM(),
+    (entry) => new HighlightVM(entry)
   );
 
   protected async submit(): Promise<void> {
-    const model = this.model();
-
-    const response = model.id
-      ? await this._services.highlights.update(model.id, model)
-      : await this._services.highlights.create('', model);
+    const session = this.model.session();
+    const response = session.id
+      ? await this._services.highlights.update(session.id, session)
+      : await this._services.highlights.create('', session);
 
     if (response.success) {
       this.returnToList();

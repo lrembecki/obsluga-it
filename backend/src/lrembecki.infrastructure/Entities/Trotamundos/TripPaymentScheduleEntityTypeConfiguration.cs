@@ -9,7 +9,7 @@ internal class TripPaymentScheduleEntityTypeConfiguration : IEntityTypeConfigura
 {
     public void Configure(EntityTypeBuilder<TripPaymentScheduleEntity> builder)
     {
-        builder.ToTable("TripPaymentSchedule");
+        builder.ToTable("TrotamundosTripPaymentSchedule");
         builder.HasKey(x => new { x.TripId, x.Order });
 
         builder.HasOne<TripEntity>().WithMany(e => e.PaymentSchedules).HasForeignKey(e => e.TripId);

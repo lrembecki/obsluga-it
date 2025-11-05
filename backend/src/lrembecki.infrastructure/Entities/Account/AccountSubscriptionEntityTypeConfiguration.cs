@@ -17,12 +17,12 @@ internal class AccountSubscriptionEntityTypeConfiguration : BaseEntityTypeConfig
         
         builder.HasKey(e => e.Id);
 
-        builder.HasOne<AccountEntity>()
+        builder.HasOne(e => e.Account)
             .WithMany()
             .HasForeignKey(e => e.AccountId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne<SubscriptionEntity>()
+        builder.HasOne(e => e.Subscription)
             .WithMany()
             .HasForeignKey(e => e.SubscriptionId)
             .OnDelete(DeleteBehavior.Cascade);
@@ -35,5 +35,9 @@ internal class AccountSubscriptionEntityTypeConfiguration : BaseEntityTypeConfig
                 j.ToTable("AccountSubscriptionPermissionGroup");
                 j.HasKey("AccountSubscriptionId", "PermissionGroupId");
             });
+
+        builder.Navigation(e => e.Account).AutoInclude();
+        builder.Navigation(e => e.Subscription).AutoInclude();
+        builder.Navigation(e => e.PermissionGroups).AutoInclude();
     }
 }

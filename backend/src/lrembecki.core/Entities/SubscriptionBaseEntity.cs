@@ -1,8 +1,9 @@
 using lrembecki.core.Markers;
 
-namespace lrembecki.core.Entities;
-
-public class SubscriptionBaseEntity : BaseEntity, IHasSubscriptionId
+namespace lrembecki.core.Entities
 {
-    public Guid SubscriptionId { get; protected set; }
+    public class SubscriptionBaseEntity : BaseEntity, IHasSubscriptionId
+    {
+        public Guid SubscriptionId { get; protected set; }
+    }
 }

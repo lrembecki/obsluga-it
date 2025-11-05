@@ -1,9 +1,10 @@
-﻿namespace lrembecki.core.Helpers;
-
-public interface ISessionAccessor
+﻿namespace lrembecki.core.Helpers
 {
-    bool IsAuthenticated { get; }
-    string? Email { get; }
-    Guid? SubscriptionId { get; }
-    Guid? UserId { get; }
+    public interface ISessionAccessor
+    {
+        bool IsAuthenticated { get; }
+        string? Email { get; }
+        Guid? SubscriptionId { get; }
+        Guid? UserId { get; }
+    }
 }

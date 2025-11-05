@@ -1,13 +1,13 @@
-﻿using lrembecki.core.Helpers;
+﻿using lrembecki.core.GlobalFilters;
 using lrembecki.core.Markers;
 using lrembecki.core.Services;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+
 using System.Linq.Expressions;
 
 namespace lrembecki.infrastructure.Helpers;
 
-internal class EfRepository<T>(IUnitOfWork uow, ISessionAccessor sessionAccessor) : IRepository<T>
+internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filters) : IRepository<T>
     where T : class
 {
     protected readonly DbSet<T> _dbSet = (uow as EfUnitOfWork)!.DbContext.Set<T>();
@@ -37,23 +37,13 @@ internal class EfRepository<T>(IUnitOfWork uow, ISessionAccessor sessionAccessor
     {
         IQueryable<T> query = (predicate is not null ? _dbSet.Where(predicate) : _dbSet);
 
-        if (typeof(T).IsAssignableTo(typeof(IHasSubscriptionId)))
+        foreach (var filter in filters)
         {
-            var subscriptionId = sessionAccessor.SubscriptionId;
-
-            var subscriptionPredicate = (Expression<Func<T, bool>>)GetType()
-                .GetMethod(nameof(SubscriptionIdPredicate))!
-                .MakeGenericMethod(typeof(T)).Invoke(this, [])!;
-
-            query = query.Where(subscriptionPredicate);
+            query = filter.Evaluate(query);
         }
 
         return query;
     }
-
-    public Expression<Func<Y, bool>> SubscriptionIdPredicate<Y>()
-        where Y : IHasSubscriptionId
-        => item => item.SubscriptionId == sessionAccessor.SubscriptionId;
 
     public Task<List<VM>> SelectAsync<VM>(Expression<Func<T, VM>> project, Expression<Func<T, bool>>? predicate = null)
         => GetAll(predicate).Select(project).ToListAsync();

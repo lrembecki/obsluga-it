@@ -11,7 +11,7 @@ internal class AdvantageEntityTypeConfiguration : SubscriptionBaseEntityTypeConf
     {
         base.Configure(builder);
 
-        builder.ToTable("Advantage");
+        builder.ToTable("TrotamundosAdvantage");
         builder.HasKey(x => x.Id);
 
         builder.Property(e => e.Title)

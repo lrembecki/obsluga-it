@@ -30,7 +30,16 @@
     "HIGHLIGHTS": "Wyróżnienia"
   },
   "SECURITY": {
-    "NAME": "Bezpieczeństwo"
+    "NAME": "Bezpieczeństwo",
+    "SUBSCRIPTION_ACCOUNTS": {
+      "NAME": "Subskrypcje Kont",
+      "LIST": "Lista",
+      "IS_ACTIVE": "Aktywna",
+      "IS_DEFAULT": "Domyślna",
+      "EMAIL": "Email",
+      "SUBSCRIPTION": "Subskrypcja",
+      "PERMISSION_GROUPS": "Grupy Uprawnień"
+    }
   },
   "FILES": "Pliki",
   "SUBSCRIPTIONS": {

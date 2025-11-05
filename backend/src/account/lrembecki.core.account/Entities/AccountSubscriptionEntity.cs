@@ -1,30 +1,34 @@
-﻿using lrembecki.core.Entities;
+﻿using lrembecki.core.account.Dtos;
+using lrembecki.core.Entities;
 using lrembecki.core.Markers;
+using lrembecki.core.subscription.Entities;
 
 namespace lrembecki.core.account.Entities;
 
 public class AccountSubscriptionEntity : BaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
-    public Guid AccountId { get; private set; }
-    public Guid SubscriptionId { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsDefault { get; private set; }
+
+    public Guid AccountId { get; private set; }
+    public Guid SubscriptionId { get; private set; }
+
+    public AccountEntity Account { get; private set; } = default!;
+    public SubscriptionEntity Subscription { get; private set; } = default!;
     public List<PermissionGroupEntity> PermissionGroups { get; private set; } = [];
 
-    public static AccountSubscriptionEntity Create(Guid id, Guid accountId, Guid subscriptionId)
+    public static AccountSubscriptionEntity Create(Guid id, AccountSubscriptionDto model)
         => new()
         {
             Id = id,
-            AccountId = accountId,
-            SubscriptionId = subscriptionId,
-            IsActive = true,
-            IsDefault = false
+            IsActive = model.IsActive,
+            IsDefault = model.IsDefault
         };
 
-    public void Update(bool isActive, bool isDefault)
+    public void Update(AccountSubscriptionDto model)
     {
-        IsActive = isActive;
-        IsDefault = isDefault;
+        IsActive = model.IsActive;
+        IsDefault = model.IsDefault;
     }
 }

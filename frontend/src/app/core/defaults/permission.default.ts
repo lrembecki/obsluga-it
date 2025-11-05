@@ -1,8 +1,8 @@
 export type PermissionType =
-  | 'Files'
-  | 'Locations'
-  | 'Images'
-  | 'TripRequests'
-  | 'Forms'
-  | 'Settings.Contacts'
-  | 'Settings.Email';
+  | 'Security.Permissions'
+  | 'Security.AccountSubscriptions'
+  | 'Security.Accounts'
+  | 'Security.PermissionGroups'
+  | 'Trotamundos.Loyality-Program'
+  | 'Trotamundos.Advantages'
+  | 'Trotamundos.Highlights';

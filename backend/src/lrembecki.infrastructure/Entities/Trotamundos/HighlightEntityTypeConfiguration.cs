@@ -12,7 +12,7 @@ internal class HighlightEntityTypeConfiguration : SubscriptionBaseEntityTypeConf
         base.Configure(builder);
         builder.HasKey(x => x.Id);
 
-        builder.ToTable("Highlight");
+        builder.ToTable("TrotamundosHighlight");
 
         builder.Property(e => e.Title)
             .IsRequired()

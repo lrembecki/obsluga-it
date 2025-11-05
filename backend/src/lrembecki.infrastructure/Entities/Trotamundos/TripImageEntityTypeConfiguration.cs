@@ -10,7 +10,7 @@ internal class TripImageEntityTypeConfiguration : IEntityTypeConfiguration<TripI
 {
     public void Configure(EntityTypeBuilder<TripImageEntity> builder)
     {
-        builder.ToTable("TripImage");
+        builder.ToTable("TrotamundosTripImage");
         builder.HasKey(e => new { e.TripId, e.Order });
 
         builder.HasOne<TripEntity>().WithMany(e => e.Images).HasForeignKey(e => e.TripId);

@@ -1,14 +1,15 @@
-﻿namespace lrembecki.core;
-
-public static class ServiceCallResultExtension
+﻿namespace lrembecki.core
 {
-    public static async Task<ServiceCallResult> ToServiceCallResult(this Task result)
+    public static class ServiceCallResultExtension
     {
-        await result;
-        return ServiceCallResult.CreateSuccessResult();
+        public static async Task<ServiceCallResult> ToServiceCallResult(this Task result)
+        {
+            await result;
+            return ServiceCallResult.CreateSuccessResult();
+        }
+
+
+        public static ServiceCallResult<T> ToServiceCallResult<T>(this T result)
+            => ServiceCallResult.CreateSuccessResult(result);
     }
-
-
-    public static ServiceCallResult<T> ToServiceCallResult<T>(this T result)
-        => ServiceCallResult.CreateSuccessResult(result);
 }

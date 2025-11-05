@@ -11,7 +11,7 @@ export const routes: Routes = withBreadcrumbs([
       label: 'FILES',
       permissions: ['Files'],
     },
-    canActivate: [authorizedGuard(['Files'])],
+    canActivate: [authorizedGuard([])],
   },
   {
     path: 'images',
@@ -19,9 +19,9 @@ export const routes: Routes = withBreadcrumbs([
       import('app/features/images/routes').then((e) => e.routes),
     data: {
       label: 'IMAGES',
-      permissions: ['Images'],
+      permissions: [],
     },
-    canActivate: [authorizedGuard(['Images'])],
+    canActivate: [authorizedGuard([])],
   },
   {
     path: 'locations',
@@ -29,9 +29,9 @@ export const routes: Routes = withBreadcrumbs([
       import('app/features/locations/routes').then((e) => e.routes),
     data: {
       label: 'LOCATIONS',
-      permissions: ['Locations'],
+      permissions: [],
     },
-    canActivate: [authorizedGuard(['Locations'])],
+    canActivate: [authorizedGuard([])],
   },
   {
     path: 'trip-requests',
@@ -39,9 +39,9 @@ export const routes: Routes = withBreadcrumbs([
       import('app/features/trip-requests/routes').then((e) => e.routes),
     data: {
       label: 'TRIP_REQUESTS',
-      permissions: ['TripRequests'],
+      permissions: [],
     },
-    canActivate: [authorizedGuard(['TripRequests'])],
+    canActivate: [authorizedGuard([])],
   },
   {
     path: 'security',

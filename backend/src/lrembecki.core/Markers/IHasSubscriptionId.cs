@@ -1,6 +1,7 @@
-namespace lrembecki.core.Markers;
-
-public interface IHasSubscriptionId
+namespace lrembecki.core.Markers
 {
-    Guid SubscriptionId { get; }
+    public interface IHasSubscriptionId
+    {
+        Guid SubscriptionId { get; }
+    }
 }

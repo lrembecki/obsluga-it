@@ -10,7 +10,7 @@ internal class TripSuggestedFlightEntityTypeConfiguration : IEntityTypeConfigura
 {
     public void Configure(EntityTypeBuilder<TripSuggestedFlightEntity> builder)
     {
-        builder.ToTable("TripSuggestedFlight");
+        builder.ToTable("TrotamundosTripSuggestedFlight");
         builder.HasKey(e => new { e.TripId, e.Order });
 
         builder.HasOne<TripEntity>().WithMany(e => e.SuggestedFlights).HasForeignKey(e => e.TripId);

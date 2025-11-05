@@ -9,7 +9,7 @@ internal class TripPriceIncludeEntityTypeConfiguration : IEntityTypeConfiguratio
 {
     public void Configure(EntityTypeBuilder<TripPriceIncludeEntity> builder)
     {
-        builder.ToTable("TripPriceInclude");
+        builder.ToTable("TrotamundosTripPriceInclude");
         builder.HasKey(x => new { x.TripId, x.Order });
 
         builder.HasOne<TripEntity>().WithMany(e => e.PriceIncludes).HasForeignKey(e => e.TripId);

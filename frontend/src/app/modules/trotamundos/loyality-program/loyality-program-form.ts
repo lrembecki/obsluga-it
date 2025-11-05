@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Required } from 'app/core/directives/required';
 import { Valid } from 'app/core/directives/valid';
+import { cachedComputed } from 'app/core/helpers/signal.helper';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { UploadImageInput } from "app/shared/storage/upload-image-input";
 import { Button } from 'app/shared/ui/button/button';
@@ -38,7 +39,7 @@ import { LoyalityProgramVM } from './loyality-program.vm';
     UploadImageInput
 ],
   template: `
-    @if (model()) {
+    @if (model.session()) {
       <ng-container validate #validate="validate">
         <h1>{{ 'Loyality Program' | translate }}</h1>
         <app-ui-panel>
@@ -56,33 +57,33 @@ import { LoyalityProgramVM } from './loyality-program.vm';
         </app-ui-panel>
 
         <app-text-input
-          [(value)]="model().name"
+          [(value)]="model.session().name"
           [required]="true"
           label="Name"
         />
 
         <app-text-input
-          [disabled]="!!model().id"
-          [(value)]="model().title"
+          [disabled]="!!model.session().id"
+          [(value)]="model.session().title"
           [required]="true"
           label="Title"
         />
 
         <app-textarea-input
-          [(value)]="model().description"
+          [(value)]="model.session().description"
           [required]="true"
           label="Description"
         />
 
-        <app-upload-image-input [required]="true" [(value)]="model().image" />
+  <app-upload-image-input [required]="true" [(value)]="model.session().image" />
 
-        @if (model().id) {
+  @if (model.session().id) {
           <app-ui-panel>
             <ng-template #end>
               <app-button
                 delete
                 [facade]="{
-                  identity: model().id,
+                  identity: model.session().id,
                   facade: _services.loyalityPrograms,
                 }"
                 (deleted)="returnToList()"
@@ -109,19 +110,19 @@ export class LoyalityProgramForm {
   protected readonly loyalityProgramId = computed(
     () => this.routeParams()!['id'] as string,
   );
-  protected readonly model = computed(
+  protected readonly model = cachedComputed(
     () =>
       this._services.loyalityPrograms
         .data()
         .find((e) => e.id === this.loyalityProgramId()) ?? new LoyalityProgramVM(),
+    (entry) => new LoyalityProgramVM(entry)
   );
 
   protected async submit(): Promise<void> {
-    const model = this.model();
-
-    const response = model.id
-      ? await this._services.loyalityPrograms.update(model.id, model)
-      : await this._services.loyalityPrograms.create('', model);
+    const session = this.model.session();
+    const response = session.id
+      ? await this._services.loyalityPrograms.update(session.id, session)
+      : await this._services.loyalityPrograms.create('', session);
 
     if (response.success) {
       this.returnToList();

@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using lrembecki.core.GlobalFilters;
 using lrembecki.core.Helpers;
 using lrembecki.core.Services;
 using lrembecki.infrastructure.Entities;
@@ -50,5 +51,10 @@ public static class ServiceRegistration
         builder.Services.AddScoped<IBlobHelper, BlobHelper>();
         builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+        builder.Services.AddScoped<SubscriptionIdGlobalFilter>();
+        builder.Services.AddScoped<ICollection<IGlobalFilter>>(provider => [
+            provider.GetRequiredService<SubscriptionIdGlobalFilter>()
+        ]);
     }
 }

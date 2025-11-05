@@ -30,7 +30,16 @@
     "HIGHLIGHTS": "Highlights"
   },
   "SECURITY": {
-    "NAME": "Security"
+    "NAME": "Security",
+    "SUBSCRIPTION_ACCOUNTS": {
+      "NAME": "Subscription Accounts",
+      "LIST": "List",
+      "IS_ACTIVE": "Active",
+      "IS_DEFAULT": "Default",
+      "EMAIL": "Email",
+      "SUBSCRIPTION": "Subscription",
+      "PERMISSION_GROUPS": "Permission Groups"
+    }
   },
   "FILES": "Files",
   "SUBSCRIPTIONS": {

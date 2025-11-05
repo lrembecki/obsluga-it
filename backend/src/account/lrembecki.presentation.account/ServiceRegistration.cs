@@ -14,6 +14,7 @@ public static class ServiceRegistration
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IPermissionService, PermissionService>();
         builder.Services.AddScoped<IPermissionGroupService, PermissionGroupService>();
+        builder.Services.AddScoped<IAccountSubscriptionService, AccountSubscriptionService>();
     }
 
     public static void MapAccount(this WebApplication app)
@@ -25,7 +26,7 @@ public static class ServiceRegistration
 
         group.MapCrud<IPermissionService, PermissionDto, PermissionVM>("permissions");
         group.MapCrud<IPermissionGroupService, PermissionGroupDto, PermissionGroupVM>("permission-groups");
-        group.MapCrud<IAccountSubscriptionService, AccountSubscriptionDto, AccountSubscriptionVM>("account-subscriptions");
+        group.MapCrud<IAccountSubscriptionService, AccountSubscriptionDto, AccountSubscriptionVM>("subscription-accounts");
 
         group.MapAccount();
     }

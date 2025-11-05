@@ -11,7 +11,7 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
     {
         base.Configure(builder);
 
-        builder.ToTable("Trip");
+        builder.ToTable("TrotamundosTrip");
         builder.HasKey(x => x.Id);
 
         builder.Property(e => e.Title)
@@ -28,7 +28,7 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
             j => j.HasOne<TripEntity>().WithMany().HasForeignKey("TripId").OnDelete(DeleteBehavior.Restrict),
             j =>
             {
-                j.ToTable("TripAdvantage");
+                j.ToTable("TrotamundosTripAdvantage");
                 j.HasKey("AdvantageId", "TripId");
             });
 
@@ -37,7 +37,7 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
             j => j.HasOne<TripEntity>().WithMany().HasForeignKey("TripId").OnDelete(DeleteBehavior.Restrict),
             j =>
             {
-                j.ToTable("TripHighlight");
+                j.ToTable("TrotamundosTripHighlight");
                 j.HasKey("HighlightId", "TripId");
             });
 

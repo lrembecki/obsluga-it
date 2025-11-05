@@ -4,7 +4,8 @@ namespace lrembecki.core.account.ViewModels;
 
 public record AccountSubscriptionVM(
     Guid Id,
-    Guid AccountId,
+    string Email,
+    string Subscription,
     Guid SubscriptionId,
     bool IsActive,
     bool IsDefault,
@@ -19,7 +20,8 @@ public record AccountSubscriptionVM(
 
         return new AccountSubscriptionVM(
             accountSubscriptionEntity.Id,
-            accountSubscriptionEntity.AccountId,
+            accountSubscriptionEntity.Account.Email,
+            accountSubscriptionEntity.Subscription.Name,
             accountSubscriptionEntity.SubscriptionId,
             accountSubscriptionEntity.IsActive,
             accountSubscriptionEntity.IsDefault,

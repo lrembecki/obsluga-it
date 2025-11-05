@@ -149,7 +149,7 @@ Patterns from example:
 - Use `toSignal(route.params)` for reactive param extraction.
 - Derive `permissionId` via `computed`.
 - Derive `model` via `computed`, falling back to `new ModelVM()`.
-- Re-use facade methods: `create('', model)` and `update(id, model)` returning `ServiceCallResult` (inferred from project models).
+- Re-use facade methods: `create('', model)` and `update(id, model)` returning `ServiceCallResult`.
 - On success: navigate back to list using absolute path to avoid relative pitfalls.
 
 Skeleton:
@@ -295,15 +295,183 @@ Don’t:
 The provider + facade + VM triad keeps components thin, enables easy testing, and allows swapping backend endpoints with minimal surface change. Signals remove manual subscription cleanup and enable declarative derivations. Lazy routes keep bundle size controlled.
 
 ---
-### 24. Quick Start (TL;DR)
-1. Copy `permissions` folder → rename.
-2. Replace names/endpoints.
-3. Adjust VM fields.
-4. Update i18n keys.
-5. Add route lazy import in parent router.
-6. Test CRUD + run lint.
+### 24. Dirty Editing Session with `cachedComputed`
+Use `cachedComputed` (see `src/app/core/helpers/signal.helper.ts`) when a form edits an existing entity and needs a mutable working copy ("dirty session") separate from the pristine backend data until submit.
 
-Use this section for rapid iteration; refer to full sections for nuance.
+Pattern:
+```ts
+protected readonly model = cachedComputed(
+	() => this._services.<facade>.data().find(e => e.id === this.entityId()) ?? new EntityVM(),
+	entry => new EntityVM(entry)
+);
+```
+Access fields via `model.session().field`. (Old pattern `model().field` is deprecated in forms now migrated.)
+
+Call `model.update()` after structural mutations (adding/removing items, replacing arrays/objects). Pure primitive assignments via two‑way binding generally do not need `update()`.
+
+Submit example:
+```ts
+protected async submit() {
+	const session = this.model.session();
+	const response = session.id
+		? await this._services.entities.update(session.id, session)
+		: await this._services.entities.create('', session);
+	if (response.success) this.returnToList();
+}
+```
+
+Template migration quick map:
+| Old | New |
+|-----|-----|
+| `@if (model())` | `@if (model.session())` |
+| `[(value)]="model().name"` | `[(value)]="model.session().name"` |
+| `model().id` | `model.session().id` |
 
 ---
+### 25. Multi-Assignment Pattern (Assign Many Elements)
+Standard approach (e.g. permission group assigning permissions):
+```ts
+protected readonly assignedPermissions = computed(() => allPermissions().filter(p => model.session().permissions.includes(p.id)));
+protected readonly availablePermissions = computed(() => allPermissions().filter(p => !model.session().permissions.includes(p.id)));
+
+addPermission(sel: DropdownInputComponent<string>) {
+	if (!sel.value()) return;
+	model.session().permissions = [...model.session().permissions, sel.value()!];
+	sel.value.set(null!);
+	model.update();
+}
+
+removePermission(record: PermissionVM) {
+	model.session().permissions = model.session().permissions.filter(id => id !== record.id);
+	model.update();
+}
+```
+Guidelines:
+1. Derive `assigned` / `available` via `computed` signals.
+2. Use immutable array operations (`filter`, spread) before `model.update()`.
+3. Hide add panel if `available.length === 0`.
+4. Present a secondary heading for the collection (e.g. `<h2>Permissions</h2>`).
+
+---
+### 26. Migration Steps to `cachedComputed`
+1. Import `cachedComputed`.
+2. Replace `computed(() => ...)` with pattern above.
+3. Update template bindings (`model()` → `model.session()`).
+4. Adjust submit logic to use `session` object.
+5. Add `model.update()` where structural changes occur.
+6. Run lint + tests.
+
+---
+### 27. When NOT to Use `cachedComputed`
+Prefer plain `computed` or direct facade signal when:
+- Read-only presentations.
+- Simple create forms (< 3 fields, no nested arrays) where session indirection adds no value.
+- Proven performance-sensitive hotspots (measure before deviating).
+
+---
+### 28. Future Enhancements (Optional)
+- Add `reset()` to discard dirty edits.
+- Implement diff extraction for audit logs.
+- Optimistic updates with rollback using previous cache snapshot.
+
+---
+### 29. Cheat Sheet
+| Concern | Pattern |
+|---------|---------|
+| Dirty edit state | `cachedComputed` + `session()` |
+| Assign many items | `available/assigned` computed lists + immutable ops |
+| Structural change | Replace array & call `model.update()` |
+| Submit | Use `session` object |
+| Revert (future) | `reset()` (planned) |
+
+All existing forms in `security`, `trotamundos`, and `settings` now follow these patterns.
+
+---
+### 30. DTO ↔ View Model Mapping
+Introduce DTO classes when the API payload shape diverges from the UI-centric View Model (VM) or when you need ID-only representations for collections (optimization & decoupling). Use the Permission Group feature as reference:
+
+Files:
+- `permission-group.vm.ts` – Rich UI model with nested `PermissionVM[]`.
+- `permission-group.dto.ts` – Transport model holding primitive IDs (`permissions: string[]`).
+
+Example VM:
+```ts
+export class PermissionGroupVM {
+	id: string = null!;
+	name: string = null!;
+	permissions: PermissionVM[] = [];
+	constructor(init?: Partial<PermissionGroupVM>) {
+		Object.assign(this, init);
+		this.permissions = init?.permissions?.map(p => new PermissionVM(p)) || [];
+	}
+}
+```
+Example DTO with mapping:
+```ts
+export class PermissionGroupDTO {
+	id: string = null!;
+	name: string = null!;
+	permissions: string[] = [];
+	constructor(init?: Partial<PermissionGroupDTO>) { Object.assign(this, init); }
+	static fromVM(vm: PermissionGroupVM): PermissionGroupDTO {
+		return new PermissionGroupDTO({
+			id: vm.id,
+			name: vm.name,
+			permissions: vm.permissions
+				.sort((a,b) => a.name.localeCompare(b.name))
+				.map(p => p.id),
+		});
+	}
+	static toVM(dto: PermissionGroupDTO, allPermissions: PermissionVM[]): PermissionGroupVM {
+		return new PermissionGroupVM({
+			id: dto.id,
+			name: dto.name,
+			permissions: dto.permissions
+				.map(id => allPermissions.find(p => p.id === id)!)
+				.filter(Boolean)
+				.sort((a,b) => a.name.localeCompare(b.name))
+		});
+	}
+}
+```
+Mapping Guidelines:
+1. Keep transformations pure—never mutate input DTO or VM; return new instances.
+2. Sort collections in one place (DTO→VM or VM→DTO) to avoid duplicate sorting downstream.
+3. Resolve IDs to full objects using a facade-provided cache (`allPermissions` above). Handle missing references gracefully (filter out `undefined`).
+4. Do not place heavy business logic inside DTO/VM; keep them as simple data carriers plus minimal mapping helpers.
+5. Use `fromVM` when preparing payload for create/update; use `toVM` when hydrating data fetched from API.
+
+---
+### 31. Working With DTOs in Forms
+1. Fetch raw DTO array via facade → map to VMs only if UI needs nested objects.
+2. For large lists, keep session editing on a DTO-like structure (IDs only) using `cachedComputed`, then hydrate back to VM after persistence for display lists.
+3. Submit path: `const dto = PermissionGroupDTO.fromVM(model.session()); await facade.update(dto.id, dto);` (or `create('', dto)` if no id).
+4. Avoid re-sorting in both directions; choose one canonical sort point (above uses VM→DTO for stable order).
+
+---
+### 32. Migration Checklist (Adding DTO Layer)
+1. Identify divergence (e.g. UI needs nested objects, API uses IDs).
+2. Create `<entity>.dto.ts` with fields mirroring API.
+3. Add static `fromVM` and `toVM` helpers.
+4. Update facade: store DTOs or VMs? Prefer storing VMs if most components need rich objects; otherwise keep DTOs and expose derived VMs via computed.
+5. Update form: choose editing target (DTO or VM). If editing many IDs, prefer DTO session.
+6. Adjust tests: ensure mapping functions produce expected shapes & sorted order.
+
+---
+### 33. Quick Reference Table
+| Concern | Pattern |
+|---------|--------|
+| Dirty edit state | `cachedComputed` + `session()` |
+| Assign many items | `available/assigned` computed lists + immutable ops |
+| DTO creation | `DTO.fromVM(vm)` |
+| VM hydration | `DTO.toVM(dto, cache)` |
+| Structural change | Replace array & call `model.update()` |
+| Submit | Build DTO from session then call facade |
+
+---
+### 34. When NOT to Introduce DTO Layer
+Skip DTO if API shape already matches VM and there is no performance or separation benefit. Revisit when:
+- Collections grow large and nested objects cause payload bloat.
+- Multiple components need different subsets of fields (opt for DTO + selective VM hydration).
+
 End of guidelines.

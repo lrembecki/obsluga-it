@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Required } from 'app/core/directives/required';
 import { Valid } from 'app/core/directives/valid';
+import { cachedComputed } from 'app/core/helpers/signal.helper';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
 import { ButtonDelete } from 'app/shared/ui/button/button-delete';
@@ -39,7 +40,7 @@ import { injectSettingContacts } from './contact.provider';
     ButtonDelete,
   ],
   template: `
-    @if (model()) {
+    @if (model.session()) {
       <ng-container validate #validate="validate">
         <h1>{{ 'Contacts' | translate }}</h1>
         <app-ui-panel>
@@ -56,33 +57,33 @@ import { injectSettingContacts } from './contact.provider';
           </ng-template>
         </app-ui-panel>
 
-        <app-checkbox-input [(value)]="model()!.isActive" label="Active" />
+  <app-checkbox-input [(value)]="model.session().isActive" label="Active" />
         <app-text-input
-          [disabled]="!!model().id"
-          [(value)]="model().name"
+          [disabled]="!!model.session().id"
+          [(value)]="model.session().name"
           [required]="true"
           label="Name"
         />
         <app-text-input
-          [(value)]="model().email"
+          [(value)]="model.session().email"
           [required]="true"
           label="Email"
           type="email"
         />
         <app-text-input
-          [(value)]="model().phone"
+          [(value)]="model.session().phone"
           [required]="true"
           label="Phone"
         />
-        <app-text-input [(value)]="model().position" label="Position" />
+  <app-text-input [(value)]="model.session().position" label="Position" />
 
-        @if (model().id) {
+  @if (model.session().id) {
           <app-ui-panel>
             <ng-template #end>
               <app-button
                 delete
                 [facade]="{
-                  identity: model().id,
+                  identity: model.session().id,
                   facade: _services.contacts,
                 }"
                 (deleted)="returnToList()"
@@ -109,11 +110,12 @@ export class ContactForm {
   protected readonly contactId = computed(
     () => this.routeParams()!['contactId'] as string,
   );
-  protected readonly model = computed(
+  protected readonly model = cachedComputed(
     () =>
       this._services.contacts
         .data()
         .find((e) => e.id === this.contactId()) ?? new ContactModel(),
+    (entry) => new ContactModel(entry)
   );
 
   protected minContactNumber() {
@@ -123,14 +125,13 @@ export class ContactForm {
   }
 
   protected async submit(): Promise<void> {
-    const model = this.model();
-
-    model.order =
+    const session = this.model.session();
+    session.order =
       Math.max(...this._services.contacts.data().map((e) => e.order), 0) + 1;
 
-    const response = model.id
-      ? await this._services.contacts.update(model.id, model)
-      : await this._services.contacts.create('', model);
+    const response = session.id
+      ? await this._services.contacts.update(session.id, session)
+      : await this._services.contacts.create('', session);
 
     if (response.success) {
       this.returnToList();

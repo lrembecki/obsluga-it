@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
+    <ProjectReference Include="..\..\subscription\lrembecki.core.subscription\lrembecki.core.subscription.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ internal class LoyalityProgramEntityTypeConfiguration : SubscriptionBaseEntityTy
     {
         base.Configure(builder);
 
-        builder.ToTable("LoyalityProgram");
+        builder.ToTable("TrotamundosLoyalityProgram");
         builder.HasKey(a => a.Id);
 
         builder.Property(e => e.Name)

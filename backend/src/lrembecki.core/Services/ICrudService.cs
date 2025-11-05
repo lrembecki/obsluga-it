@@ -1,10 +1,11 @@
-﻿namespace lrembecki.core.Services;
-
-public interface ICrudService<Dto, VM>
+﻿namespace lrembecki.core.Services
 {
-    Task<VM> CreateAsync(Dto model, CancellationToken cancellationToken = default);
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
-    Task<List<VM>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<VM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<VM> UpdateAsync(Guid id, Dto model, CancellationToken cancellationToken = default);
+    public interface ICrudService<Dto, VM>
+    {
+        Task<VM> CreateAsync(Dto model, CancellationToken cancellationToken = default);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+        Task<List<VM>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<VM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<VM> UpdateAsync(Guid id, Dto model, CancellationToken cancellationToken = default);
+    }
 }
