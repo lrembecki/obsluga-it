@@ -1,11 +1,10 @@
 import { Component, computed } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Required } from 'app/core/directives/required';
 import { Valid } from 'app/core/directives/valid';
 import { cachedComputed } from 'app/core/helpers/signal.helper';
-import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
 import { ButtonDelete } from 'app/shared/ui/button/button-delete';
 import { ButtonReturn } from 'app/shared/ui/button/button-return';
@@ -25,8 +24,8 @@ import { TripVM } from './trip.vm';
     UiPanel,
     Button,
     RouterLink,
-    TranslatePipe,
-    ReactiveFormsModule,
+  ReactiveFormsModule,
+  FormsModule,
     TextInputComponent,
     TextareaInputComponent,
     Valid,
@@ -54,6 +53,12 @@ import { TripVM } from './trip.vm';
         </app-ui-panel>
 
         <app-text-input
+          [(value)]="model.session().name"
+          [required]="true"
+          label="Name"
+          maxlength="250"
+        />
+        <app-text-input
           [(value)]="model.session().title"
           [required]="true"
           label="Title"
@@ -68,6 +73,15 @@ import { TripVM } from './trip.vm';
           [required]="true"
           label="Description"
         />
+
+        <div class="toggles">
+          <label>
+            <input type="checkbox" [(ngModel)]="model.session().isActive" /> Active
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="model.session().isDisabled" /> Disabled
+          </label>
+        </div>
 
         @if (model.session().id) {
           <app-ui-panel>

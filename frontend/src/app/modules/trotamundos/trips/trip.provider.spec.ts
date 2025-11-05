@@ -9,12 +9,12 @@ class TestFacade extends TrotamundosTripFacade {
 }
 
 describe('TrotamundosTripFacade', () => {
-    it('sorts by title then subtitle', () => {
+    it('sorts by name then title then subtitle', () => {
         const facade = new TestFacade();
         const unsorted = [
-            new TripVM({ id: '1', title: 'B', subtitle: 'z', description: '' }),
-            new TripVM({ id: '2', title: 'A', subtitle: 'b', description: '' }),
-            new TripVM({ id: '3', title: 'A', subtitle: 'a', description: '' }),
+            new TripVM({ id: '1', name: 'BName', title: 'B', subtitle: 'z', description: '' }),
+            new TripVM({ id: '2', name: 'AName', title: 'A', subtitle: 'b', description: '' }),
+            new TripVM({ id: '3', name: 'AName', title: 'A', subtitle: 'a', description: '' }),
         ];
         const sorted = facade.testWithData(unsorted);
         expect(sorted.map(e => e.id)).toEqual(['3', '2', '1']);

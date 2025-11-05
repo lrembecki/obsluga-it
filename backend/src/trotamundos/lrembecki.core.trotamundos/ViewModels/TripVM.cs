@@ -4,6 +4,9 @@ namespace lrembecki.core.trotamundos.ViewModels;
 
 public record TripVM(
     Guid Id,
+    string? Name,
+    bool IsActive,
+    bool IsDisabled,
     string Title,
     string Subtitle,
     string Description,
@@ -26,6 +29,9 @@ public record TripVM(
 
         return new TripVM(
             entity.Id,
+            entity.Name,
+            entity.IsActive,
+            entity.IsDisabled,
             entity.Title,
             entity.Subtitle,
             entity.Description,

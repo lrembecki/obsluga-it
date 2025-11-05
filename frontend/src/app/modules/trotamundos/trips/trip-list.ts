@@ -26,13 +26,18 @@ import { TripVM } from './trip.vm';
     </app-ui-panel>
     <app-ui-table [data]="_services.trips.data()">
       <app-ui-table-column
-        text="Title"
-        field="title" width="200px"
+        text="Name"
+        field="name" width="180px"
         link
         [renderLink]="renderLink"
       />
-      <app-ui-table-column text="Subtitle" field="subtitle" width="200px" />
-      <app-ui-table-column text="Description" field="description" />
+      <app-ui-table-column
+        text="Title"
+        field="title" 
+      />
+      <app-ui-table-column text="Subtitle" field="subtitle" />
+      <app-ui-table-column text="Active" field="isActive" width="100px" />
+      <app-ui-table-column text="Disabled" field="isDisabled" width="110px" />
     </app-ui-table>
   `,
   styles: ``

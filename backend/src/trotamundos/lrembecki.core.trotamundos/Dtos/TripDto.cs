@@ -2,6 +2,10 @@ namespace lrembecki.core.trotamundos.Dtos;
 
 public record TripDto
 {
+    public string? Name { get; init; }
+    public bool IsActive { get; init; } = true;
+    public bool IsDisabled { get; init; } = false;
+
     public string Title { get; init; } = string.Empty;
     public string Subtitle { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;

@@ -11,6 +11,8 @@ export class TrotamundosTripFacade extends ApiFacade<TripVM[]> {
 
     protected override withData(data: TripVM[]): TripVM[] {
         return [...data].sort((a, b) => {
+            const byName = a.name.localeCompare(b.name);
+            if (byName !== 0) return byName;
             const byTitle = a.title.localeCompare(b.title);
             if (byTitle !== 0) return byTitle;
             return a.subtitle.localeCompare(b.subtitle);

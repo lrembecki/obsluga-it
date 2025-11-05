@@ -5,6 +5,10 @@ namespace lrembecki.core.trotamundos.Entitites;
 
 public class TripEntity : TrotamundosBaseEntity
 {
+    public string? Name { get; private set; }
+    public bool IsActive { get; private set; } = true;
+    public bool IsDisabled { get; private set; } = false;
+
     public string Title { get; private set; } = string.Empty;
     public string Subtitle { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
@@ -32,6 +36,10 @@ public class TripEntity : TrotamundosBaseEntity
 
     public void Update(TripDto model)
     {
+        Name = model.Name;
+        IsActive = model.IsActive;
+        IsDisabled = model.IsDisabled;
+
         Title = model.Title;
         Subtitle = model.Subtitle;
         Description = model.Description;
