@@ -71,7 +71,39 @@ import { TripVM } from './trip.vm';
             <app-checkbox-input [(value)]="model.session().isDisabled" label="Disabled" />
           </ng-template>
         </app-ui-panel>
-        
+
+        <!-- Scheduling fields -->
+        <div class="scheduling">
+          <app-ui-panel>
+            <ng-template #start>
+              <app-text-input
+                [value]="model.session().calendar || undefined"
+                (valueChange)="model.session().calendar = $event ?? null"
+                label="Calendar (optional)"
+                [valid]="!model.session().calendar || model.session().calendar!.length <= 50"
+              />
+
+              <app-date-input 
+                [(value)]="model.session().startDate" 
+                label="Start Date" 
+                [valid]="!model.session().startDate == null || (!!model.session().endDate && +model.session().startDate <= +model.session().endDate)"
+                (valueChange)="model.update()" />
+
+              <app-date-input 
+                [(value)]="model.session().endDate" 
+                label="End Date" 
+                [valid]="!model.session().endDate == null || (!!model.session().startDate && +model.session().endDate >= +model.session().startDate)"
+                (valueChange)="model.update()" />
+            </ng-template>
+          </app-ui-panel>
+          @if (model.session().calendar && (model.session().calendar?.length ?? 0) > 50) {
+            <small class="error">Max 50 characters</small>
+          }
+        @if (!dateRangeValid()) {
+          <div class="error">Start Date must be before or equal to End Date.</div>
+        }
+        </div>
+
         <app-text-input
           [(value)]="model.session().title"
           [required]="true"
@@ -91,39 +123,6 @@ import { TripVM } from './trip.vm';
           (valueChange)="model.update()"
         />
 
-        <!-- Scheduling fields -->
-        <div class="scheduling">
-
-          <app-ui-panel>
-            <ng-template #start>
-              <app-date-input 
-                [(value)]="model.session().startDate" 
-                label="Start Date" 
-                [valid]="!model.session().startDate == null || (!!model.session().endDate && +model.session().startDate <= +model.session().endDate)"
-                (valueChange)="model.update()" />
-              <app-date-input 
-                [(value)]="model.session().endDate" 
-                label="End Date" 
-                [valid]="!model.session().endDate == null || (!!model.session().startDate && +model.session().endDate >= +model.session().startDate)"
-                (valueChange)="model.update()" />
-            </ng-template>
-          </app-ui-panel>
-          
-          
-          <app-text-input
-            [value]="model.session().calendar || undefined"
-            (valueChange)="model.session().calendar = $event ?? null"
-            label="Calendar (optional)"
-            [valid]="!model.session().calendar || model.session().calendar!.length <= 50"
-          />
-          @if (model.session().calendar && (model.session().calendar?.length ?? 0) > 50) {
-            <small class="error">Max 50 characters</small>
-          }
-        </div>
-        @if (!dateRangeValid()) {
-          <div class="error">Start Date must be before or equal to End Date.</div>
-        }
-
         @if (tripId()) {
           <app-ui-panel>
             <ng-template #end>
@@ -139,7 +138,11 @@ import { TripVM } from './trip.vm';
     }
   `,
   styles: `
-
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
   `
 })
 export class TripForm {

@@ -14,7 +14,7 @@ public record TripDto
     public string Description { get; init; } = string.Empty;
 
     public virtual List<AdvantageDto> Advantages { get; init; } = [];
-    public virtual List<HighlightDto> Highlights { get; init; } = [];
+    public virtual List<TripHighlightDto> Highlights { get; init; } = [];
     public virtual List<TripImageDto> Images { get; init; } = [];
     public virtual List<TripPaymentScheduleDto> PaymentSchedules { get; init; } = [];
     public virtual List<TripPriceIncludeDto> PriceIncludes { get; init; } = [];

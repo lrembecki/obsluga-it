@@ -23,7 +23,7 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
         builder.Property(e => e.Description)
             .IsRequired().HasMaxLength(2048);
 
-        builder.HasMany(e => e.Advantages).WithMany().UsingEntity<Dictionary<string, object>>("TripAdvantage",
+        builder.HasMany(e => e.Advantages).WithMany().UsingEntity<Dictionary<string, object>>("TrotamundosTripAdvantage",
             j => j.HasOne<AdvantageEntity>().WithMany().HasForeignKey("AdvantageId").OnDelete(DeleteBehavior.Restrict),
             j => j.HasOne<TripEntity>().WithMany().HasForeignKey("TripId").OnDelete(DeleteBehavior.Restrict),
             j =>
@@ -32,13 +32,13 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
                 j.HasKey("AdvantageId", "TripId");
             });
 
-        builder.HasMany(e => e.Highlights).WithMany().UsingEntity<Dictionary<string, object>>("TripHighlight",
-            j => j.HasOne<HighlightEntity>().WithMany().HasForeignKey("HighlightId").OnDelete(DeleteBehavior.Restrict),
+        builder.HasMany(e => e.Highlights).WithMany().UsingEntity<Dictionary<string, object>>("TrotamundosTripHighlightTrip",
+            j => j.HasOne<TripHighlightEntity>().WithMany().HasForeignKey("TripHighlightId").OnDelete(DeleteBehavior.Restrict),
             j => j.HasOne<TripEntity>().WithMany().HasForeignKey("TripId").OnDelete(DeleteBehavior.Restrict),
             j =>
             {
-                j.ToTable("TrotamundosTripHighlight");
-                j.HasKey("HighlightId", "TripId");
+                j.ToTable("TrotamundosTripHighlightTrip");
+                j.HasKey("TripHighlightId", "TripId");
             });
 
         builder.HasMany(e => e.Images).WithOne().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Restrict);

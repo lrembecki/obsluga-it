@@ -18,7 +18,7 @@ public class TripEntity : TrotamundosBaseEntity
     public string Description { get; private set; } = string.Empty;
 
     public virtual List<AdvantageEntity> Advantages { get; private set; } = [];
-    public virtual List<HighlightEntity> Highlights { get; private set; } = [];
+    public virtual List<TripHighlightEntity> Highlights { get; private set; } = [];
     public virtual List<TripImageEntity> Images { get; private set; } = [];
     public virtual List<TripPaymentScheduleEntity> PaymentSchedules { get; private set; } = [];
     public virtual List<TripPriceIncludeEntity> PriceIncludes { get; private set; } = [];
@@ -58,7 +58,7 @@ public class TripEntity : TrotamundosBaseEntity
 
         Highlights.Clear();
         Highlights = model.Highlights
-            .Select(highlightDto => HighlightEntity.Create(Id, highlightDto))
+            .Select(highlightDto => TripHighlightEntity.Create(Id, highlightDto))
             .ToList();
 
         Images.Clear();
