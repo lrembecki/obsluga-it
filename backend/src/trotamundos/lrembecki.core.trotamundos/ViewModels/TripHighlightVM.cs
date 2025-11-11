@@ -5,7 +5,6 @@ namespace lrembecki.core.trotamundos.ViewModels;
 public record TripHighlightVM(
     int Order,
     Guid HighlightId,
-    HighlightVM Highlight,
     string Value
 )
 {
@@ -16,7 +15,6 @@ public record TripHighlightVM(
         return new TripHighlightVM(
             entity.Order,
             entity.HighlightId,
-            HighlightVM.Map(entity.Highlight),
             entity.Value
         );
     }

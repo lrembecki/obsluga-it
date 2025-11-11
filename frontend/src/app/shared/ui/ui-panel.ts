@@ -14,8 +14,6 @@ import { Component, contentChildren, TemplateRef } from '@angular/core';
       <div class="fill"></div>
     }
 
-    <ng-content />
-
     @if (end().length) {
       <div class="fill"></div>
       <div class="container">
@@ -23,6 +21,14 @@ import { Component, contentChildren, TemplateRef } from '@angular/core';
           <ng-container [ngTemplateOutlet]="item" />
         }
       </div>
+    }
+
+    @if (!start().length && !end().length) {
+      <div class="container">
+
+        <ng-content />
+      </div>
+      <div class="fill"></div>
     }
   `,
   styles: `

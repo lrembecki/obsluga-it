@@ -8,16 +8,14 @@ internal class TripHighlightEntityTypeConfiguration : IEntityTypeConfiguration<T
 {
     public void Configure(EntityTypeBuilder<TripHighlightEntity> builder)
     {
-        builder.HasKey(x => x.TripId);
+        builder.HasKey(x => new { x.TripId, x.Order });
         builder.ToTable("TrotamundosTripHighlight");
 
-        builder.HasOne<TripEntity>().WithMany().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne<TripEntity>().WithMany(e => e.Highlights).HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(e => e.Highlight)
+        builder.HasOne<HighlightEntity>()
             .WithMany()
             .HasForeignKey(e => e.HighlightId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder.Navigation(e => e.Highlight).AutoInclude();
     }
 }

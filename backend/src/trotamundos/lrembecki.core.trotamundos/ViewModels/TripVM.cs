@@ -41,14 +41,14 @@ public record TripVM(
             entity.Title,
             entity.Subtitle,
             entity.Description,
-            entity.Advantages.Select(AdvantageVM.Map).ToList(),
-            entity.Highlights.Select(TripHighlightVM.Map).ToList(),
-            entity.Images.Select(TripImageVM.Map).ToList(),
-            entity.PaymentSchedules.Select(TripPaymentScheduleVM.Map).ToList(),
-            entity.PriceIncludes.Select(TripPriceIncludeVM.Map).ToList(),
-            entity.Requirements.Select(TripRequirementVM.Map).ToList(),
-            entity.Schedules.Select(TripScheduleVM.Map).ToList(),
-            entity.SuggestedFlights.Select(TripSuggestedFlightVM.Map).ToList()
+            [.. entity.Advantages.Select(AdvantageVM.Map)],
+            [.. entity.Highlights.Select(TripHighlightVM.Map)],
+            [.. entity.Images.Select(TripImageVM.Map)],
+            [.. entity.PaymentSchedules.Select(TripPaymentScheduleVM.Map)],
+            [.. entity.PriceIncludes.Select(TripPriceIncludeVM.Map)],
+            [.. entity.Requirements.Select(TripRequirementVM.Map)],
+            [.. entity.Schedules.Select(TripScheduleVM.Map)],
+            [.. entity.SuggestedFlights.Select(TripSuggestedFlightVM.Map)]
         );
     }
 }

@@ -2,6 +2,7 @@ import { EnvironmentProviders, inject, Provider } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiFacade } from "app/core/interfaces/facade.interface";
+import { TrotamundosHighlightFacade } from "../highlights/highlight.provider";
 import { TripVM } from "./trip.vm";
 
 export class TrotamundosTripFacade extends ApiFacade<TripVM[]> {
@@ -11,20 +12,20 @@ export class TrotamundosTripFacade extends ApiFacade<TripVM[]> {
 
     protected override withData(data: TripVM[]): TripVM[] {
         return data
-        .map(e => new TripVM(e))
-        .sort((a, b) => {
-            const byName = a.name.localeCompare(b.name);
-            if (byName !== 0) return byName;
-            const byTitle = a.title.localeCompare(b.title);
-            if (byTitle !== 0) return byTitle;
-            return a.subtitle.localeCompare(b.subtitle);
-        })
-        .slice();
+            .map(e => new TripVM(e))
+            .sort((a, b) => {
+                const byName = a.name.localeCompare(b.name);
+                if (byName !== 0) return byName;
+                const byTitle = a.title.localeCompare(b.title);
+                if (byTitle !== 0) return byTitle;
+                return a.subtitle.localeCompare(b.subtitle);
+            })
+            .slice();
     }
 }
 
 export function provideTrotamundosTrips(): (Provider | EnvironmentProviders)[] {
-    return [TrotamundosTripFacade];
+    return [TrotamundosTripFacade, TrotamundosHighlightFacade];
 }
 
 export function injectTrotamundosTrips(): TrotamundosTripProvider {
@@ -33,6 +34,7 @@ export function injectTrotamundosTrips(): TrotamundosTripProvider {
         router: inject(Router),
         formBuilder: inject(FormBuilder),
         activatedRoute: inject(ActivatedRoute),
+        highlights: inject(TrotamundosHighlightFacade)
     };
 }
 
@@ -41,4 +43,5 @@ export type TrotamundosTripProvider = {
     router: Router,
     formBuilder: FormBuilder,
     activatedRoute: ActivatedRoute,
+    highlights: TrotamundosHighlightFacade
 };

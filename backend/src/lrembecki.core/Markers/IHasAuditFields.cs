@@ -1,10 +1,9 @@
-namespace lrembecki.core.Markers
+namespace lrembecki.core.Markers;
+
+public interface IHasAuditFields
 {
-    public interface IHasAuditFields
-    {
-        DateTime CreatedAt { get; }
-        Guid? CreatedById { get; }
-        DateTime UpdatedAt { get; }
-        Guid? UpdatedById { get; }
-    }
+    DateTime CreatedAt { get; }
+    Guid? CreatedById { get; }
+    DateTime UpdatedAt { get; }
+    Guid? UpdatedById { get; }
 }

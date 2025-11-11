@@ -9,6 +9,7 @@ export class TripVM {
     startDate: Date = null!;
     endDate: Date = null!;
     calendar: string | null = null;  // Up to 50 chars or null
+    highlights: { order: number; highlightId: string; value: string }[] = [];
 
     constructor(init?: Partial<TripVM>) {
         Object.assign(this, init);

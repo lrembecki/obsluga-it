@@ -1,8 +1,52 @@
-import { Component, inject, input, model, output } from '@angular/core';
+import { Component, Directive, effect, inject, input, model, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Valid } from 'app/core/directives/valid';
 import { DatePickerModule } from 'primeng/datepicker';
 import { HostControlDirective } from './host-control.directive';
+
+@Directive({
+  selector: 'app-date-input[lowerThan]'
+})
+export class DateInputLowerThanDirective {
+  public readonly lowerThan = input.required<DateInputComponent | null>();
+  private readonly _input = inject(DateInputComponent, { self: true });
+  private readonly _valid = inject(Valid);
+
+  constructor() {
+    effect(() => {
+      const compareTo = this.lowerThan();
+      const current = this._input.value();
+      const isValid =
+        !compareTo ||
+        !current ||
+        current.getTime() < compareTo.value()!.getTime();
+      this._valid.valid.set(isValid);
+    })
+  }
+}
+
+@Directive({
+  selector: 'app-date-input[greaterThan]'
+})
+export class DateInputGreaterThanDirective {
+  public readonly greaterThan = input.required<DateInputComponent | null>();
+  private readonly _input = inject(DateInputComponent, { self: true });
+  private readonly _valid = inject(Valid);
+
+  constructor() {
+    effect(() => {
+      const compareTo = this.greaterThan();
+      const current = this._input.value();
+      const isValid =
+        !compareTo ||
+        !current ||
+        current.getTime() > compareTo.value()!.getTime();
+      this._valid.valid.set(isValid);
+    })
+  }
+}
+
+
 
 @Component({
   standalone: true,
@@ -44,9 +88,9 @@ export class DateInputComponent {
   public readonly value = model<Date | undefined>();
   public readonly valueChange = output<Date | undefined>();
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-   
+
   protected change(_$event: Date) {
     if (_$event) _$event = new Date(_$event);
 

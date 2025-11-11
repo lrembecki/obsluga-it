@@ -7,7 +7,6 @@ public class TripHighlightEntity
     public Guid TripId { get; private set; }
     public int Order { get; private set; }
     public Guid HighlightId { get; private set; }
-    public HighlightEntity Highlight { get; private set; } = default!;
     public string Value { get; private set; } = string.Empty;
 
     public static TripHighlightEntity Create(Guid tripId, TripHighlightDto model)

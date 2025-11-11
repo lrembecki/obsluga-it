@@ -4,17 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Required } from 'app/core/directives/required';
 import { Valid } from 'app/core/directives/valid';
-import { cachedComputed } from 'app/core/helpers/signal.helper';
 import { Button } from 'app/shared/ui/button/button';
 import { ButtonDelete } from 'app/shared/ui/button/button-delete';
 import { ButtonReturn } from 'app/shared/ui/button/button-return';
 import { ButtonSubmit } from 'app/shared/ui/button/button-submit';
 import { CheckboxInputComponent } from "app/shared/ui/inputs/checkbox-input.component";
-import { DateInputComponent } from "app/shared/ui/inputs/date-input.component";
+import { DateInputComponent, DateInputGreaterThanDirective, DateInputLowerThanDirective } from "app/shared/ui/inputs/date-input.component";
 import { TextInputComponent } from 'app/shared/ui/inputs/text-input.component';
 import { TextareaInputComponent } from 'app/shared/ui/inputs/textarea-input.component';
 import { UiPanel } from 'app/shared/ui/ui-panel';
-import { TripDTO } from './trip.dto';
+import { TripFormHighlights } from "./trip-form.highlights";
+import { TripFormImagesTs } from "./trip-form.images.ts";
+import { TripContextModel, TripDTO, TripHighlightDTO } from './trip.dto';
 import { injectTrotamundosTrips } from './trip.provider';
 import { TripVM } from './trip.vm';
 
@@ -37,8 +38,12 @@ import { TripVM } from './trip.vm';
     ButtonReturn,
     ButtonDelete,
     DateInputComponent,
-    CheckboxInputComponent
-],
+    CheckboxInputComponent,
+    DateInputLowerThanDirective,
+    DateInputGreaterThanDirective,
+    TripFormHighlights,
+    TripFormImagesTs
+  ],
   template: `
     @if (model.session()) {
       <ng-container validate #validate="validate">
@@ -51,6 +56,14 @@ import { TripVM } from './trip.vm';
               (buttonClick)="submit()"
               [isInProgress]="_services.trips.saving()"
             />
+
+            @if (tripId()) {
+              <app-button
+                delete
+                [facade]="{ identity: this.tripId(), facade: _services.trips }"
+                (deleted)="returnToList()"
+              />
+            }
           </ng-template>
           <ng-template #end>
             <app-button routerLink="../list" return />
@@ -73,36 +86,36 @@ import { TripVM } from './trip.vm';
         </app-ui-panel>
 
         <!-- Scheduling fields -->
-        <div class="scheduling">
-          <app-ui-panel>
-            <ng-template #start>
-              <app-text-input
-                [value]="model.session().calendar || undefined"
-                (valueChange)="model.session().calendar = $event ?? null"
-                label="Calendar (optional)"
-                [valid]="!model.session().calendar || model.session().calendar!.length <= 50"
-              />
+        <app-ui-panel>
+          <app-text-input
+            [value]="model.session().calendar || undefined"
+            (valueChange)="model.session().calendar = $event ?? null"
+            label="Calendar (optional)"
+            [valid]="!model.session().calendar || model.session().calendar!.length <= 50"
+          />
 
-              <app-date-input 
-                [(value)]="model.session().startDate" 
-                label="Start Date" 
-                [valid]="!model.session().startDate == null || (!!model.session().endDate && +model.session().startDate <= +model.session().endDate)"
-                (valueChange)="model.update()" />
+          <app-date-input 
+            #schedulingStartDate
+            [(value)]="model.session().startDate" 
+            label="Start Date" 
+            [lowerThan]="schedulingEndDate"
+            (valueChange)="model.update()" />
 
-              <app-date-input 
-                [(value)]="model.session().endDate" 
-                label="End Date" 
-                [valid]="!model.session().endDate == null || (!!model.session().startDate && +model.session().endDate >= +model.session().startDate)"
-                (valueChange)="model.update()" />
-            </ng-template>
-          </app-ui-panel>
-          @if (model.session().calendar && (model.session().calendar?.length ?? 0) > 50) {
-            <small class="error">Max 50 characters</small>
-          }
+          <app-date-input
+            #schedulingEndDate
+            [(value)]="model.session().endDate" 
+            label="End Date" 
+            [greaterThan]="schedulingStartDate"
+            (valueChange)="model.update()" />
+        </app-ui-panel>
+
+        @if (model.session().calendar && (model.session().calendar?.length ?? 0) > 50) {
+          <small class="error">Max 50 characters</small>
+        }
+
         @if (!dateRangeValid()) {
           <div class="error">Start Date must be before or equal to End Date.</div>
         }
-        </div>
 
         <app-text-input
           [(value)]="model.session().title"
@@ -110,30 +123,24 @@ import { TripVM } from './trip.vm';
           (valueChange)="model.update()"
           label="Title"
         />
+
         <app-text-input
           [(value)]="model.session().subtitle"
           [required]="true"
           label="Subtitle"
           (valueChange)="model.update()"
         />
+
         <app-textarea-input
           [(value)]="model.session().description"
           [required]="true"
           label="Description"
           (valueChange)="model.update()"
         />
+        
+      <app-trip-form-highlights [(model)]="model" />
+      <app-trip-form-images [(model)]="model" />
 
-        @if (tripId()) {
-          <app-ui-panel>
-            <ng-template #end>
-              <app-button
-                delete
-                [facade]="{ identity: this.tripId(), facade: _services.trips }"
-                (deleted)="returnToList()"
-              />
-            </ng-template>
-          </app-ui-panel>
-        }
       </ng-container>
     }
   `,
@@ -149,8 +156,11 @@ export class TripForm {
   protected readonly _services = injectTrotamundosTrips();
   protected readonly routeParams = toSignal(this._services.activatedRoute.params);
   protected readonly tripId = computed(() => this.routeParams()?.['id'] as string);
-  protected readonly model = cachedComputed(
-    () => TripDTO.fromVM(this._services.trips.data().find(e => e.id === this.tripId()) ?? new TripVM()),
+  protected readonly model = new TripContextModel(
+    () => TripDTO.fromVM(
+      this._services.trips.data().find(e => e.id === this.tripId()) ?? new TripVM(),
+      this._services.highlights.data()
+    ),
     entry => new TripDTO(entry)
   );
 
@@ -160,6 +170,14 @@ export class TripForm {
     if (!s || !e) return true;
     return new Date(s) <= new Date(e);
   });
+
+  ngOnInit(): void {
+    if (!this.tripId()) {
+      this.model.session().highlights = this._services.highlights.data().slice()
+        .map((h, index) => TripHighlightDTO.create(index + 1, h));
+      this.model.update();
+    }
+  }
 
   protected async submit(): Promise<void> {
     const session = this.model.session();
@@ -174,7 +192,7 @@ export class TripForm {
     if (response.success) this.returnToList();
   }
 
-  protected returnToList() {
+  protected returnToList(): void {
     this._services.router.navigate(['/modules/trotamundos/trips']);
   }
 }

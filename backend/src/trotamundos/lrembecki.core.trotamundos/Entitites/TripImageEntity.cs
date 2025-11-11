@@ -1,4 +1,5 @@
-﻿using lrembecki.core.trotamundos.Dtos;
+﻿using lrembecki.core.storage.Entities;
+using lrembecki.core.trotamundos.Dtos;
 
 namespace lrembecki.core.trotamundos.Entitites;
 
@@ -6,6 +7,7 @@ public class TripImageEntity
 {
     public Guid TripId { get; private set; }
     public Guid ImageId { get; private set; }
+    public StorageEntity Image { get; private set; } = default!;
 
     public int Order { get; private set; }
 
@@ -13,7 +15,8 @@ public class TripImageEntity
     {
         var entity = new TripImageEntity()
         {
-            TripId = tripId
+            TripId = tripId,
+            ImageId = model.ImageId!.Value
         };
 
         entity.Update(model);
@@ -24,6 +27,5 @@ public class TripImageEntity
     public void Update(TripImageDto model)
     {
         Order = model.Order;
-        ImageId = model.ImageId;
     }
 }

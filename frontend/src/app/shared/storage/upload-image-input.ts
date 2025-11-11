@@ -4,21 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Valid } from 'app/core/directives/valid';
 import { HostControlDirective } from 'app/shared/ui/inputs/host-control.directive';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
-import { ImageStorageVM, StorageVM } from './storage.vm';
+import { convertImageFileToStorageVM } from './storage.helper';
+import { StorageVM } from './storage.vm';
 
 @Component({
   selector: 'app-upload-image-input',
   imports: [ReactiveFormsModule, FormsModule, CommonModule, FileUpload],
   template: `
-    <div class="app-upload-image-input-buttons">
-      <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" accept="image/*" (onSelect)="uploadHandler($event)" />
-
-      <span style="flex: auto;"></span>
-
-      @if (value()) {
-        <img [src]="value().binaryData ?? value().blobUrl" [alt]="value().filename" [width]="value().image?.width" [height]="value().image?.height" />
-      }
-    </div>
+    <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" accept="image/*" (onSelect)="uploadHandler($event)" />
   `,
   styles: `
     .app-upload-image-input-buttons {
@@ -53,34 +46,14 @@ export class UploadImageInput {
   public readonly value = model<StorageVM>(null!);
   public readonly valueChange = output<StorageVM>();
 
-  protected uploadHandler(event: FileSelectEvent) {
-    console.log({ event });
+  protected async uploadHandler(event: FileSelectEvent) {
 
-    const file = event.currentFiles[0];
+    const storageVM: StorageVM = new StorageVM({
+      ...this.value() ?? {},
+      ...(await convertImageFileToStorageVM(event.currentFiles[0])),
+    });
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-
-      const image = new Image();
-      image.onload = () => {
-        const storageVM: StorageVM = new StorageVM({
-          ...this.value() ?? {},
-          binaryData: result,
-          filename: file.name,
-          size: file.size,
-          image: new ImageStorageVM({
-            width: image.width,
-            height: image.height
-          })
-        });
-
-        this.value.set(storageVM);
-        this.valueChange.emit(storageVM);
-      };
-      image.src = URL.createObjectURL(file);
-    }
-
-    reader.readAsDataURL(file);
+    this.value.set(storageVM);
+    this.valueChange.emit(storageVM);
   }
 }

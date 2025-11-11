@@ -12,7 +12,7 @@ function _shallowEqual(a: any, b: any): boolean {
     return true;
 }
 
-class ContextModel<T> {
+export class ContextModel<T> {
 
     public readonly computed: Signal<T> = null!;
     public readonly session: Signal<T> = null!;
@@ -85,7 +85,7 @@ class ContextModel<T> {
 }
 
 export function cachedComputed<T>(
-    existing: () => T, 
+    existing: () => T,
     onUpdate: (input: T) => T = (input) => input
 ): ContextModel<T> {
     return new ContextModel<T>(
