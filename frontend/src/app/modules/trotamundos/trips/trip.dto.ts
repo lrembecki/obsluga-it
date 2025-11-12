@@ -105,6 +105,11 @@ export class TripDTO {
                 highlightId: th.highlightId,
                 highlight: highlights.find(h => h.id === th.highlightId) ?? null!,
                 value: th.value
+            })),
+            images: vm.images.map((ti, index) => ({
+                order: index,
+                imageId: ti.imageId,
+                image: ti.image
             }))
         });
     }

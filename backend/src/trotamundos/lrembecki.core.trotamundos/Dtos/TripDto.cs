@@ -1,3 +1,5 @@
+using lrembecki.core.trotamundos.Entitites;
+
 namespace lrembecki.core.trotamundos.Dtos;
 
 public record TripDto
@@ -13,6 +15,7 @@ public record TripDto
     public string Subtitle { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
 
+    public virtual List<TripAgendaDto> Agenda { get; init; } = [];
     public virtual List<AdvantageDto> Advantages { get; init; } = [];
     public virtual List<TripHighlightDto> Highlights { get; init; } = [];
     public virtual List<TripImageDto> Images { get; init; } = [];

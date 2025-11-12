@@ -41,6 +41,8 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
         builder.HasMany(e => e.SuggestedFlights).WithOne().HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Restrict);
 
         // Navigation
+        builder.Navigation(e => e.Agenda).AutoInclude();
         builder.Navigation(e => e.Highlights).AutoInclude();
+        builder.Navigation(e => e.Images).AutoInclude();
     }
 }

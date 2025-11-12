@@ -17,6 +17,7 @@ public class TripEntity : TrotamundosBaseEntity
     public string Subtitle { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
 
+    public virtual List<TripAgendaEntity> Agenda { get; private set; } = [];
     public virtual List<AdvantageEntity> Advantages { get; private set; } = [];
     public virtual List<TripHighlightEntity> Highlights { get; private set; } = [];
     public virtual List<TripImageEntity> Images { get; private set; } = [];
@@ -50,6 +51,11 @@ public class TripEntity : TrotamundosBaseEntity
         Title = model.Title;
         Subtitle = model.Subtitle;
         Description = model.Description;
+
+        Agenda.Clear();
+        Agenda = model.Agenda
+            .Select(agendaDto => TripAgendaEntity.Create(Id, agendaDto))
+            .ToList();
 
         Advantages.Clear();
         Advantages = model.Advantages

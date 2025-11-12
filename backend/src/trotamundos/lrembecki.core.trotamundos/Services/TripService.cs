@@ -28,14 +28,19 @@ internal sealed class TripService(
 
         if (tripEntity != null)
         {
-            tripEntity.Images
-                .Where(e => model.Images
+            var removeImages = tripEntity.Images
+                .Where(e => !model.Images
                     .Where(m => m.ImageId != null!)
                     .Select(m => m.ImageId!.Value)
                     .ToList()
                     .Contains(e.ImageId))
-                .ToList()
-                .ForEach(e => tripEntity.Images.Remove(e));
+                .ToList();
+
+            foreach (var image in removeImages)
+            {
+                tripEntity.Images.Remove(image);
+                await storage.DeleteAsync(image.ImageId, cancellationToken);
+            }
         }
 
         for (int i = 0; i < model.Images.Count; i++)
