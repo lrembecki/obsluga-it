@@ -20,6 +20,7 @@ import { injectTrotamundosTrips } from './trip.provider';
           <app-button text="Add Highlight" (buttonClick)="model().addHighlight(selectedHighlightInput.value())" />
         </app-ui-panel>
       }
+
       <app-ui-table [data]="model().session().highlights">
         <app-ui-table-column text="Title" field="highlight.title" width="200px" />
         <app-ui-table-column text="Content" field="value" header="Value">
@@ -34,7 +35,8 @@ import { injectTrotamundosTrips } from './trip.provider';
         </app-ui-table-column>
       </app-ui-table>
   `,
-  styles: ``
+  styles: `
+  `
 })
 export class TripFormHighlights {
   protected readonly _services = injectTrotamundosTrips();
