@@ -11,6 +11,7 @@ export class TripVM {
     startDate: Date = null!;
     endDate: Date = null!;
     calendar: string | null = null;  // Up to 50 chars or null
+    agenda: { order: number; content: string }[] = [];
     highlights: { order: number; highlightId: string; value: string }[] = [];
     images: { order: number; imageId: string; image: StorageVM }[] = [];
 

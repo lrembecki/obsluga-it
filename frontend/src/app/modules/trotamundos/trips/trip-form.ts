@@ -13,6 +13,7 @@ import { DateInputComponent, DateInputGreaterThanDirective, DateInputLowerThanDi
 import { TextInputComponent } from 'app/shared/ui/inputs/text-input.component';
 import { TextareaInputComponent } from 'app/shared/ui/inputs/textarea-input.component';
 import { UiPanel } from 'app/shared/ui/ui-panel';
+import { TripFormAgenda } from "./trip-form.agenda";
 import { TripFormHighlights } from "./trip-form.highlights";
 import { TripFormImagesTs } from "./trip-form.images.ts";
 import { TripContextModel, TripDTO, TripHighlightDTO } from './trip.dto';
@@ -42,7 +43,8 @@ import { TripVM } from './trip.vm';
     DateInputLowerThanDirective,
     DateInputGreaterThanDirective,
     TripFormHighlights,
-    TripFormImagesTs
+    TripFormImagesTs,
+    TripFormAgenda
   ],
   template: `
     @if (model.session()) {
@@ -138,8 +140,9 @@ import { TripVM } from './trip.vm';
           (valueChange)="model.update()"
         />
         
-      <app-trip-form-highlights [(model)]="model" />
-      <app-trip-form-images [(model)]="model" />
+        <app-trip-form-highlights [(model)]="model" />
+        <app-trip-form-images [(model)]="model" />
+        <app-trip-form-agenda [(model)]="model" />
 
       </ng-container>
     }

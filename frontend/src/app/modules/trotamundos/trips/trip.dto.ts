@@ -29,9 +29,32 @@ export class TripContextModel extends ContextModel<TripDTO> {
 
     public removeImage(order: number): void {
         this.session().images = this.session().images.filter(i => i.order !== order);
+        this.session().images.forEach((img, index) => img.order = index);
+        this.update();
+    }
+
+    public addAgenda(): void {
+        this.session().agenda.push(TripAgendaDTO.create(this.session().agenda.length, ''));
         this.update();
     }
 }
+
+export class TripAgendaDTO {
+    order: number = null!;
+    content: string = null!;
+
+    constructor(init?: Partial<TripAgendaDTO>) {
+        Object.assign(this, init);
+    }
+
+    public static create(order: number, content: string): TripAgendaDTO {
+        return new TripAgendaDTO({
+            order,
+            content
+        });
+    }
+}
+
 
 export class TripHighlightDTO {
     highlightId: string = null!;
@@ -82,6 +105,7 @@ export class TripDTO {
     endDate: Date = null!;
     calendar: string | null = null;
 
+    agenda: Partial<TripAgendaDTO>[] = [];
     highlights: Partial<TripHighlightDTO>[] = [];
     images: Partial<TripImageDTO>[] = [];
 
@@ -100,32 +124,14 @@ export class TripDTO {
             startDate: vm.startDate,
             endDate: vm.endDate,
             calendar: (vm.calendar?.length ?? 0) > 0 ? vm.calendar : null,
+            agenda: vm.agenda.map((ta, index) => TripAgendaDTO.create(index, ta.content)),
             highlights: vm.highlights.map((th, index) => ({
                 order: index,
                 highlightId: th.highlightId,
                 highlight: highlights.find(h => h.id === th.highlightId) ?? null!,
                 value: th.value
             })),
-            images: vm.images.map((ti, index) => ({
-                order: index,
-                imageId: ti.imageId,
-                image: ti.image
-            }))
-        });
-    }
-
-    static toVM(dto: TripDTO, id?: string): TripVM {
-        return new TripVM({
-            id: id ?? null!,
-            name: dto.name,
-            isActive: dto.isActive,
-            isDisabled: dto.isDisabled,
-            title: dto.title,
-            subtitle: dto.subtitle,
-            description: dto.description,
-            startDate: dto.startDate,
-            endDate: dto.endDate,
-            calendar: dto.calendar ?? null,
+            images: vm.images.map((ti, index) => TripImageDTO.create(index, ti.image))
         });
     }
 }

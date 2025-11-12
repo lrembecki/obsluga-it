@@ -25,15 +25,14 @@ internal sealed class TripService(
 
     private async Task SyncImagesAsync(TripDto model, TripEntity tripEntity, CancellationToken cancellationToken)
     {
-
         if (tripEntity != null)
         {
+            var modelImageIds = model.Images
+                .Where(m => m.ImageId != null!)
+                .Select(m => m.ImageId!.Value)
+                .ToList();
             var removeImages = tripEntity.Images
-                .Where(e => !model.Images
-                    .Where(m => m.ImageId != null!)
-                    .Select(m => m.ImageId!.Value)
-                    .ToList()
-                    .Contains(e.ImageId))
+                .Where(e => !modelImageIds.Contains(e.ImageId))
                 .ToList();
 
             foreach (var image in removeImages)

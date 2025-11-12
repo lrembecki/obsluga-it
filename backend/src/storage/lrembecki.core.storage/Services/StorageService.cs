@@ -41,12 +41,7 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
     protected override async Task DeleteEntity(StorageEntity entity, CancellationToken cancellationToken)
     {
         await base.DeleteEntity(entity, cancellationToken);
-
-        try
-        {
-            await blobHelper.RemoveBlobAsync(entity.BlobPath, "storage", cancellationToken);
-        }
-        catch { }
+        await blobHelper.RemoveBlobAsync(entity.BlobPath, "storage", cancellationToken);
     }
 
     private async Task<StorageDto> UploadBlob(Guid id, StorageDto model, string existingBlobPath)

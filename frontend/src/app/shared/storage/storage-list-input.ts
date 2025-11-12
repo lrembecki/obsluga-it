@@ -76,7 +76,7 @@ import { UploadImageInput } from "./upload-image-input";
 export class StorageListInput {
   public readonly data = model<StorageVM[]>([]);
   public readonly imageAdd = output<StorageVM>();
-  public readonly remove = output<StorageVM>();
+  public readonly imageRemove = output<StorageVM>();
 
   public onValueChange(value: StorageVM): void {
     this.imageAdd.emit(value);
@@ -85,6 +85,6 @@ export class StorageListInput {
 
   public removeImage(image: StorageVM): void {
     this.data.set(this.data().filter(i => i !== image));
-    this.remove.emit(image);
+    this.imageRemove.emit(image);
   }
 }
