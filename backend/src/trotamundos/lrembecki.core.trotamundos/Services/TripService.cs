@@ -31,6 +31,7 @@ internal sealed class TripService(
                 .Where(m => m.ImageId != null!)
                 .Select(m => m.ImageId!.Value)
                 .ToList();
+
             var removeImages = tripEntity.Images
                 .Where(e => !modelImageIds.Contains(e.ImageId))
                 .ToList();

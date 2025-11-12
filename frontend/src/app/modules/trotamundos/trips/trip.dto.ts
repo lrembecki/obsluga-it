@@ -37,6 +37,12 @@ export class TripContextModel extends ContextModel<TripDTO> {
         this.session().agenda.push(TripAgendaDTO.create(this.session().agenda.length, ''));
         this.update();
     }
+
+    public removeAgenda(order: number): void {
+        this.session().agenda = this.session().agenda.filter(a => a.order !== order);
+        this.session().agenda.forEach((ag, index) => ag.order = index);
+        this.update();
+    }
 }
 
 export class TripAgendaDTO {
