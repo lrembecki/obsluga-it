@@ -6,22 +6,22 @@ You are an expert software developer working on a large codebase. Your task is t
 - follow the same patterns as existing features
 - ensure proper validation and error handling
 
-create new feature called 'trips' in `trotamundos` module
+create new feature called 'files' in `trotamundos` module
 - use `security/permission-groups` folder as example
 - add lazy loading same way like advantages are added
-- this is webapi endpoint: `api/trotamundos/trips`
+- this is webapi endpoint: `api/trotamundos/files`
 - this is dotnet representation of dto and view model:
 ```cs
-public record TripDto
+public record FileDto
 {
-    public string Title { get; init; } = string.Empty;
-    public string Subtitle { get; init; } = string.Empty;
-    public string Description { get; init; } = string.Empty;
+    public Guid StorageId { get; init; }
+    public StorageDto Storage { get; init; } = default!;
+    public string Group { get; init; } = string.Empty;
 }
-public record TripVM(
+public record FileVM(
     Guid Id,
-    string Title,
-    string Subtitle,
-    string Description,
-)
+    string Group)
+{
+    public StorageVM Storage { get; init; } = default!;
+};
 ```

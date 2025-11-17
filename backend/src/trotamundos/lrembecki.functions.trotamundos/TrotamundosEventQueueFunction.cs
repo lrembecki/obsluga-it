@@ -3,7 +3,7 @@ using lrembecki.core.Events;
 using lrembecki.core.Helpers;
 using lrembecki.core.trotamundos.Entitites;
 using lrembecki.core.trotamundos.Services;
-using lrembecki.core.trotamundos.ViewModels;
+
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using System.Text;
@@ -14,6 +14,7 @@ namespace lrembecki.functions.trotamundos;
 public class TrotamundosEventQueueFunction(
     ILogger<TrotamundosEventQueueFunction> logger,
     ITripService trips,
+    IFileService files,
     IBlobHelper blob)
 {
     [Function(nameof(TrotamundosEventQueueFunction))]
@@ -34,20 +35,27 @@ public class TrotamundosEventQueueFunction(
         await messageActions.CompleteMessageAsync(message);
     }
 
-    private Task Publish(DomainEvent domainEvent, CancellationToken cancellationToken = default)
+    private Task Publish(DomainEvent domainEvent, CancellationToken ct = default)
         => domainEvent.EventType switch
         {
-            nameof(TripEntity) => PublishTrips(domainEvent, cancellationToken),
+            nameof(TripEntity) => PublishTrips(domainEvent, ct),
+            nameof(FileEntity) => PublishFiles(domainEvent, ct),
             _ => throw new NotImplementedException()
         };
 
-    private async Task PublishTrips(DomainEvent domainEvent, CancellationToken cancellationToken = default)
+    private async Task PublishTrips(DomainEvent domainEvent, CancellationToken ct = default)
     {
-        var tripList = await trips.GetAllAsync(cancellationToken);
-        var tripVM = await trips.GetByIdAsync(domainEvent!.ExternalId, cancellationToken);
+        var tripList = await trips.GetAllAsync(ct);
+        var tripVM = await trips.GetByIdAsync(domainEvent!.ExternalId, ct);
 
         await Upload(tripVM, "trips", tripVM.Id.ToString());
         await Upload(tripList, "trips", "index");
+    }
+
+    private async Task PublishFiles(DomainEvent domainEvent, CancellationToken ct = default)
+    {
+        var fileVMs = await files.GetAllAsync(ct);
+        await Upload(fileVMs, "files", "index");
     }
 
     private async Task Upload<T>(T data, string blobPath, string fileName)

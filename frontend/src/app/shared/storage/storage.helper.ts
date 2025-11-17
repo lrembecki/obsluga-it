@@ -31,3 +31,27 @@ export function convertImageFileToStorageVM(file: File): Promise<StorageVM> {
         }
     });
 }
+
+export function convertFileToStorageVM(file: File): Promise<StorageVM> {
+    return new Promise<StorageVM>((resolve, reject) => {
+        try {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const result = reader.result as string;
+
+                const storageVM: StorageVM = new StorageVM({
+                    binaryData: result,
+                    filename: file.name,
+                    size: file.size,
+                });
+
+                resolve(storageVM);
+            }
+
+            reader.readAsDataURL(file);
+        } catch (e) {
+            reject(e)
+        }
+    });
+}

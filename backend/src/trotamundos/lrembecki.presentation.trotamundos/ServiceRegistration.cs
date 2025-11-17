@@ -16,6 +16,7 @@ public static class ServiceRegistration
         builder.Services.AddScoped<IHighlightService, HighlightService>();
         builder.Services.AddScoped<ILoyalityProgramService, LoyalityProgramService>();
         builder.Services.AddScoped<ITripService, TripService>();
+        builder.Services.AddScoped<IFileService, FileService>();
     }
 
     public static void MapTrotamundos(this WebApplication app)
@@ -28,5 +29,6 @@ public static class ServiceRegistration
         group.MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights");
         group.MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs");
         group.MapCrud<ITripService, TripDto, TripVM>("trips");
+        group.MapCrud<IFileService, FileDto, FileVM>("files");
     }
 }

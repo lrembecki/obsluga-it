@@ -6,4 +6,5 @@ export type PermissionType =
   | 'Trotamundos.Loyality-Program'
   | 'Trotamundos.Advantages'
   | 'Trotamundos.Highlights'
-  | 'Trotamundos.Trips';
+  | 'Trotamundos.Trips'
+  | 'Trotamundos.Files';
