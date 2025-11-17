@@ -1,14 +1,18 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure.Messaging.ServiceBus;
+using Azure.Storage.Blobs;
+
 using lrembecki.core.GlobalFilters;
 using lrembecki.core.Helpers;
 using lrembecki.core.Services;
 using lrembecki.infrastructure.Entities;
 using lrembecki.infrastructure.Extensions;
 using lrembecki.infrastructure.Helpers;
-using Microsoft.AspNetCore.Builder;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -16,18 +20,19 @@ namespace lrembecki.infrastructure;
 
 public static class ServiceRegistration
 {
-    public static void AddInfrastructure(this WebApplicationBuilder builder)
+    public static void AddInfrastructure(this IHostApplicationBuilder builder, bool isDevelopment, string appConfiguration, string tenantId)
     {
-        builder.AddAzureAppConfiguration();
+        builder.AddAzureAppConfiguration(isDevelopment, appConfiguration, tenantId);
         builder.AddProjectAuthentication();
 
         builder.Services.AddScoped<ObslugaItDbContext>();
         builder.Services.AddDbContext<ObslugaItDbContext>(_ => _.UseSqlServer(
-            builder.Configuration.GetConnectionString("sql"), 
+            builder.Configuration.GetConnectionString("Sql"), 
             s => s.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
         );
 
-        builder.Services.AddScoped((_) => new BlobServiceClient(builder.Configuration.GetConnectionString("blob")!));
+        builder.Services.AddScoped((_) => new BlobServiceClient(builder.Configuration.GetConnectionString("Blob")!));
+        builder.Services.AddScoped((_) => new ServiceBusClient(builder.Configuration.GetConnectionString("ServiceBus")!));
 
         builder.Services.AddHttpContextAccessor();
 
@@ -51,6 +56,7 @@ public static class ServiceRegistration
         builder.Services.AddScoped<IBlobHelper, BlobHelper>();
         builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+        builder.Services.AddScoped<IPublisher, Publisher>();
 
         builder.Services.AddScoped<SubscriptionIdGlobalFilter>();
         builder.Services.AddScoped<ICollection<IGlobalFilter>>(provider => [

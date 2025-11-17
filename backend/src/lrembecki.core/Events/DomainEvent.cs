@@ -1,4 +1,9 @@
-namespace lrembecki.core.Events
-{
-    public record DomainEvent(Guid Id, string EventType, DateTime OccurredOn);
-}
+namespace lrembecki.core.Events;
+
+public record DomainEvent(
+    Guid MessageId, 
+    string Queue, 
+    string EventType, 
+    Guid ExternalId, 
+    DateTime OccurredOn
+);

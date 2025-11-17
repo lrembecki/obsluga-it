@@ -1,4 +1,5 @@
 ﻿using lrembecki.core.trotamundos.Common;
+using lrembecki.core.trotamundos.DomainEvents;
 using lrembecki.core.trotamundos.Dtos;
 
 namespace lrembecki.core.trotamundos.Entitites;
@@ -35,6 +36,8 @@ public class TripEntity : TrotamundosBaseEntity
         };
 
         trip.Update(model);
+
+        trip.AddDomainEvent(TrotamundosDomainEvent.Create(trip));
 
         return trip;
     }
@@ -97,5 +100,6 @@ public class TripEntity : TrotamundosBaseEntity
             .Select(suggestedFlightDto => TripSuggestedFlightEntity.Create(Id, suggestedFlightDto))
             .ToList();
 
+        AddDomainEvent(TrotamundosDomainEvent.Create(this));
     }
 }

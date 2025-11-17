@@ -12,10 +12,12 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.2" />
+    <PackageReference Include="Aspire.Hosting.Azure.Functions" Version="(9.5-*,9.6]" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\lrembecki.host\lrembecki.host.csproj" />
+    <ProjectReference Include="..\src\trotamundos\lrembecki.functions.trotamundos\lrembecki.functions.trotamundos.csproj" />
   </ItemGroup>
 
 </Project>

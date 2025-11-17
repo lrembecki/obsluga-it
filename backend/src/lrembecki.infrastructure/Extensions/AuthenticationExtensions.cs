@@ -17,7 +17,7 @@ public static class AuthenticationExtensions
     public const string InternalJwtPolicy = "InternalJwtPolicy";
     public const string LocalMockupPolicy = "LocalMockupPolicy";
 
-    public static void AddProjectAuthentication(this WebApplicationBuilder builder)
+    public static void AddProjectAuthentication(this IHostApplicationBuilder builder)
     {
         builder.Services
             .AddAuthentication(options =>

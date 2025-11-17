@@ -1,14 +1,15 @@
-﻿using lrembecki.core.security.Services;
-using lrembecki.core.storage.Services;
+﻿using lrembecki.core.storage.Services;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace lrembecki.presentation.storage;
 
 public static class ServiceRegistration
 {
-    public static void AddStorage(this WebApplicationBuilder builder)
+    public static void AddStorage(this IHostApplicationBuilder builder)
     {
         builder.Services.AddScoped<IStorageService, StorageService>();
     }
