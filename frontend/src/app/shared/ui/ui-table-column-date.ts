@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Directive, input } from '@angular/core';
+import { DateFormat } from 'app/core/defaults/date.default';
 import { UiTableColumnBase } from './ui-table-column-base';
 import { UiTableColumnCellTemplate } from './ui-table-column-cell-template';
 
@@ -7,7 +8,7 @@ import { UiTableColumnCellTemplate } from './ui-table-column-cell-template';
   selector: 'app-ui-table-column[date]',
 })
 export class UiTableColumnDate<T> extends UiTableColumnBase<T> {
-  public readonly format = input<'short' | 'shortDate'>('short');
+  public readonly format = input<DateFormat>('short');
   constructor() {
     super(UiTableColumnDateCellTemplate);
   }
@@ -22,4 +23,4 @@ export class UiTableColumnDate<T> extends UiTableColumnBase<T> {
   template: ` {{ renderedValue() | date: column().directive().format()! }} `,
   styles: ``,
 })
-export class UiTableColumnDateCellTemplate extends UiTableColumnCellTemplate {}
+export class UiTableColumnDateCellTemplate extends UiTableColumnCellTemplate { }

@@ -111,6 +111,7 @@ export class TripDTO {
     endDate: Date = null!;
     calendar: string | null = null;
 
+    advantages: string[] = [];
     agenda: Partial<TripAgendaDTO>[] = [];
     highlights: Partial<TripHighlightDTO>[] = [];
     images: Partial<TripImageDTO>[] = [];
@@ -129,6 +130,7 @@ export class TripDTO {
             description: vm.description,
             startDate: vm.startDate,
             endDate: vm.endDate,
+            advantages: vm.advantages,
             calendar: (vm.calendar?.length ?? 0) > 0 ? vm.calendar : null,
             agenda: vm.agenda.map((ta, index) => TripAgendaDTO.create(index, ta.content)),
             highlights: vm.highlights.map((th, index) => ({

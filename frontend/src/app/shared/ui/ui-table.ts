@@ -182,6 +182,7 @@ export class UiTable {
   public readonly columns = computed(() =>
     this.columnsContent().concat(this.columnsInput()),
   );
+  public readonly trackBy = input<Function | null>(null as any);
 
   public readonly hasFilter = computed(
     () => this.columns().filter((e) => e.filterTemplate()).length > 0,
