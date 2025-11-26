@@ -51,7 +51,7 @@ export class TrotamundosTripColumnsFacade implements Facade<TableColumn<TripVM>[
 }
 
 export function provideTrotamundosTrips(): (Provider | EnvironmentProviders)[] {
-    return [TrotamundosTripFacade, TrotamundosHighlightFacade, TrotamundosTripColumnsFacade];
+    return [TrotamundosTripFacade, TrotamundosHighlightFacade, TrotamundosTripColumnsFacade, TrotamundosAdvantageFacade];
 }
 
 export function injectTrotamundosTrips(): TrotamundosTripProvider {

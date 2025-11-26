@@ -1,17 +1,46 @@
-import { Component, model } from '@angular/core';
+import { Component, computed, effect, model, signal } from '@angular/core';
 import { MultiSelectInputComponent } from "app/shared/ui/inputs/multi-select-input.component";
+import { UiTable } from "app/shared/ui/ui-table";
+import { UiTableColumn } from "app/shared/ui/ui-table-column";
+import { AdvantageVM } from '../advantages/advantage.vm';
 import { TripContextModel } from './trip.dto';
 import { injectTrotamundosTrips } from './trip.provider';
 
 @Component({
   selector: 'app-trip-form-adventages',
-  imports: [MultiSelectInputComponent],
+  imports: [MultiSelectInputComponent, UiTableColumn, UiTable],
   template: `
-    <app-multi-select-input [data]="_services.advantages.data()" textField="title" />
+    <app-multi-select-input #input [data]="this._services.advantages.data()" textField="title" [(value)]="selected" (valueChange)="advantageListChange()" />
+
+    <app-ui-table [data]="selected()" >
+      <app-ui-table-column text="Title" width="200px" field="title" />
+      <app-ui-table-column text="Content" field="content" />
+    </app-ui-table>
   `,
-  styles: ``
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  `
 })
 export class TripFormAdventages {
   protected readonly _services = injectTrotamundosTrips();
+
   public readonly model = model.required<TripContextModel>();
+
+  public readonly available = computed(() => this._services.advantages.data().filter(a => !this.model().session().advantages.includes(a.id)));
+  public readonly selected = signal<AdvantageVM[]>([]);
+
+  constructor() {
+    effect(() => {
+      this.selected.set(this._services.advantages.data().filter(a => this.model().session().advantages.includes(a.id)));
+    })
+  }
+
+  protected advantageListChange(): void {
+    this.model().session().advantages = this.selected().map(a => a.id);
+    this.model().update();
+  }
 }

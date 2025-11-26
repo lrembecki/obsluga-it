@@ -22,7 +22,7 @@ export class ContextModel<T> {
         existing: () => T,
         private readonly _onUpdate: (input: T) => T = (input) => input
     ) {
-        this.computed = computed(existing);
+        this.computed = computed(() => existing());
         this.session = computed(() => this.cache() ?? this.computed());
         this.cache = signal<T | null>(null);
     };

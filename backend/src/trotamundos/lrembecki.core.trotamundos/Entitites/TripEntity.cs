@@ -42,6 +42,16 @@ public class TripEntity : TrotamundosBaseEntity
         return trip;
     }
 
+    public void UpdateAdvantages(List<AdvantageEntity> advantages)
+    {
+        Advantages.Clear();
+
+        if (advantages.Count > 0)
+        {
+            Advantages.AddRange(advantages);
+        }
+    }
+
     public void Update(TripDto model)
     {
         Name = model.Name;
@@ -58,11 +68,6 @@ public class TripEntity : TrotamundosBaseEntity
         Agenda.Clear();
         Agenda = model.Agenda
             .Select(agendaDto => TripAgendaEntity.Create(Id, agendaDto))
-            .ToList();
-
-        Advantages.Clear();
-        Advantages = model.Advantages
-            .Select(advantageDto => AdvantageEntity.Create(Id, advantageDto))
             .ToList();
 
         Highlights.Clear();

@@ -12,7 +12,6 @@ import { injectTrotamundosTrips } from './trip.provider';
   selector: 'app-trip-form-highlights',
   imports: [UiPanel, DropdownInputComponent, Button, UiTable, UiTableColumn, TextInputComponent],
   template: `
-      <h2>Highlight</h2>
       @if (availableHighlights().length) {
         <app-ui-panel>
           <app-dropdown-input #selectedHighlightInput [data]="availableHighlights()"

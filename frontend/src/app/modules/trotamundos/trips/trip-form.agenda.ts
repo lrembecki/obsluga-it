@@ -9,7 +9,6 @@ import { injectTrotamundosTrips } from './trip.provider';
   selector: 'app-trip-form-agenda',
   imports: [UiPanel, Button, TextInputComponent],
   template: `
-      <h2>Agenda</h2>
       <app-ui-panel>
         <app-button text="Add Description" (buttonClick)="model().addAgenda()" />
       </app-ui-panel>

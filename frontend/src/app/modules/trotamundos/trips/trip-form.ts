@@ -12,7 +12,9 @@ import { CheckboxInputComponent } from "app/shared/ui/inputs/checkbox-input.comp
 import { DateInputComponent, DateInputGreaterThanDirective, DateInputLowerThanDirective } from "app/shared/ui/inputs/date-input.component";
 import { TextInputComponent } from 'app/shared/ui/inputs/text-input.component';
 import { TextareaInputComponent } from 'app/shared/ui/inputs/textarea-input.component';
+import { UiHeader } from "app/shared/ui/ui-header";
 import { UiPanel } from 'app/shared/ui/ui-panel';
+import { TripFormAdventages } from "./trip-form.adventages";
 import { TripFormAgenda } from "./trip-form.agenda";
 import { TripFormHighlights } from "./trip-form.highlights";
 import { TripFormImagesTs } from "./trip-form.images.ts";
@@ -44,106 +46,120 @@ import { TripVM } from './trip.vm';
     DateInputGreaterThanDirective,
     TripFormHighlights,
     TripFormImagesTs,
-    TripFormAgenda
+    TripFormAgenda,
+    TripFormAdventages,
+    UiHeader
   ],
   template: `
-    @if (model.session()) {
+
+    @if (model().session()) {
+
       <ng-container validate #validate="validate">
-        <h1>Trips</h1>
-        <app-ui-panel>
-          <ng-template #start>
-            <app-button
-              submit
-              [disabled]="!validate.isValid() || !dateRangeValid()"
-              (buttonClick)="submit()"
-              [isInProgress]="_services.trips.saving()"
-            />
-
-            @if (tripId()) {
+        <app-ui-header text="Trips">
+          <app-ui-panel>
+            <ng-template #start>
               <app-button
-                delete
-                [facade]="{ identity: this.tripId(), facade: _services.trips }"
-                (deleted)="returnToList()"
+                submit
+                [disabled]="!validate.isValid() || !dateRangeValid()"
+                (buttonClick)="submit()"
+                [isInProgress]="_services.trips.saving()"
               />
-            }
-          </ng-template>
-          <ng-template #end>
-            <app-button routerLink="../list" return />
-          </ng-template>
-        </app-ui-panel>
 
-        <app-text-input
-          [(value)]="model.session().name"
-          [required]="true"
-          label="Name"
-          (valueChange)="model.update()"
-          maxlength="250"
-        />
+              @if (tripId()) {
+                <app-button
+                  delete
+                  [facade]="{ identity: this.tripId(), facade: _services.trips }"
+                  (deleted)="returnToList()"
+                />
+              }
+            </ng-template>
+            <ng-template #end>
+              <app-button routerLink="../list" return />
+            </ng-template>
+          </app-ui-panel>
 
-        <app-ui-panel>
-          <ng-template #start>
-            <app-checkbox-input [(value)]="model.session().isActive" label="Active" />
-            <app-checkbox-input [(value)]="model.session().isDisabled" label="Disabled" />
-          </ng-template>
-        </app-ui-panel>
-
-        <!-- Scheduling fields -->
-        <app-ui-panel>
           <app-text-input
-            [value]="model.session().calendar || undefined"
-            (valueChange)="model.session().calendar = $event ?? null"
-            label="Calendar (optional)"
-            [valid]="!model.session().calendar || model.session().calendar!.length <= 50"
+            [(value)]="model().session().name"
+            [required]="true"
+            label="Name"
+            (valueChange)="model().update()"
+            maxlength="250"
           />
 
-          <app-date-input 
-            #schedulingStartDate
-            [(value)]="model.session().startDate" 
-            label="Start Date" 
-            [lowerThan]="schedulingEndDate"
-            (valueChange)="model.update()" />
+          <app-ui-panel>
+            <ng-template #start>
+              <app-checkbox-input [(value)]="model().session().isActive" label="Active" />
+              <app-checkbox-input [(value)]="model().session().isDisabled" label="Disabled" />
+            </ng-template>
+          </app-ui-panel>
 
-          <app-date-input
-            #schedulingEndDate
-            [(value)]="model.session().endDate" 
-            label="End Date" 
-            [greaterThan]="schedulingStartDate"
-            (valueChange)="model.update()" />
-        </app-ui-panel>
+          <!-- Scheduling fields -->
+          <app-ui-panel>
+            <app-text-input
+              [value]="model().session().calendar || undefined"
+              (valueChange)="model().session().calendar = $event ?? null"
+              label="Calendar (optional)"
+              [valid]="!model().session().calendar || model().session().calendar!.length <= 50"
+            />
 
-        @if (model.session().calendar && (model.session().calendar?.length ?? 0) > 50) {
-          <small class="error">Max 50 characters</small>
-        }
+            <app-date-input 
+              #schedulingStartDate
+              [(value)]="model().session().startDate" 
+              label="Start Date" 
+              [lowerThan]="schedulingEndDate"
+              (valueChange)="model().update()" />
 
-        @if (!dateRangeValid()) {
-          <div class="error">Start Date must be before or equal to End Date.</div>
-        }
+            <app-date-input
+              #schedulingEndDate
+              [(value)]="model().session().endDate" 
+              label="End Date" 
+              [greaterThan]="schedulingStartDate"
+              (valueChange)="model().update()" />
+          </app-ui-panel>
 
-        <app-text-input
-          [(value)]="model.session().title"
-          [required]="true"
-          (valueChange)="model.update()"
-          label="Title"
-        />
+          @if (model().session().calendar && (model().session().calendar?.length ?? 0) > 50) {
+            <small class="error">Max 50 characters</small>
+          }
 
-        <app-text-input
-          [(value)]="model.session().subtitle"
-          [required]="true"
-          label="Subtitle"
-          (valueChange)="model.update()"
-        />
+          @if (!dateRangeValid()) {
+            <div class="error">Start Date must be before or equal to End Date.</div>
+          }
 
-        <app-textarea-input
-          [(value)]="model.session().description"
-          [required]="true"
-          label="Description"
-          (valueChange)="model.update()"
-        />
-        
-        <app-trip-form-highlights [(model)]="model" />
-        <app-trip-form-images [(model)]="model" />
-        <app-trip-form-agenda [(model)]="model" />
+          <app-text-input
+            [(value)]="model().session().title"
+            [required]="true"
+            (valueChange)="model().update()"
+            label="Title"
+          />
 
+          <app-text-input
+            [(value)]="model().session().subtitle"
+            [required]="true"
+            label="Subtitle"
+            (valueChange)="model().update()"
+          />
+
+          <app-textarea-input
+            [(value)]="model().session().description"
+            [required]="true"
+            label="Description"
+            (valueChange)="model().update()"
+          />
+          
+          <app-ui-header text="Highlights" />
+          <app-trip-form-highlights [model]="model()" />
+          
+          <app-ui-header text="Images" />
+          <app-trip-form-images [model]="model()" />
+
+
+          <app-ui-header text="Agenda" />
+          <app-trip-form-agenda [model]="model()" />
+
+          <app-ui-header text="Advantages" />
+          <app-trip-form-adventages [model]="model()" />
+
+        </app-ui-header>
       </ng-container>
     }
   `,
@@ -151,39 +167,52 @@ import { TripVM } from './trip.vm';
     :host {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
     }
   `
 })
 export class TripForm {
   protected readonly _services = injectTrotamundosTrips();
   protected readonly routeParams = toSignal(this._services.activatedRoute.params);
-  protected readonly tripId = computed(() => this.routeParams()?.['id'] as string);
-  protected readonly model = new TripContextModel(
-    () => TripDTO.fromVM(
-      this._services.trips.data().find(e => e.id === this.tripId()) ?? new TripVM(),
-      this._services.highlights.data()
-    ),
-    entry => new TripDTO(entry)
-  );
+  protected readonly tripId = computed(() => this.routeParams()!['id'] as string);
+  protected readonly model = computed(() => {
+
+    const data = this._services.trips.data();
+    const tripId = this.tripId();
+    return new TripContextModel(
+      () => {
+        const existing = data.find(e => e.id === tripId);
+
+        return TripDTO.fromVM(
+          existing ?? new TripVM(),
+          this._services.highlights.data()
+        );
+      },
+      entry => new TripDTO(entry)
+    )
+  });
 
   protected readonly dateRangeValid = computed(() => {
-    const s = this.model.session().startDate;
-    const e = this.model.session().endDate;
+    const s = this.model().session().startDate;
+    const e = this.model().session().endDate;
     if (!s || !e) return true;
     return new Date(s) <= new Date(e);
   });
 
   ngOnInit(): void {
     if (!this.tripId()) {
-      this.model.session().highlights = this._services.highlights.data().slice()
+      this.model().session().highlights = this._services.highlights
+        .data().slice()
         .map((h, index) => TripHighlightDTO.create(index + 1, h));
-      this.model.update();
+
+      this.model().session().advantages = this._services.advantages
+        .data().map(e => e.id).slice();
+      this.model().update();
     }
   }
 
   protected async submit(): Promise<void> {
-    const session = this.model.session();
+    const session = this.model().session();
 
     if ((session.calendar?.length ?? 0) > 50) return;
     if (!this.dateRangeValid()) return;

@@ -11,15 +11,26 @@ internal sealed class TripService(
     IUnitOfWork uow, 
     IStorageService storage) : BaseCrudService<TripEntity, TripVM, TripDto>(uow), ITripService
 {
+    private readonly IRepository<AdvantageEntity> _advantages = uow.GetRepository<AdvantageEntity>();
+
     protected override async Task<TripEntity> CreateEntity(Guid id, TripDto model, CancellationToken cancellationToken)
     {
         await SyncImagesAsync(model, null!, cancellationToken);
-        return await base.CreateEntity(id, model, cancellationToken);
+        var entity = await base.CreateEntity(id, model, cancellationToken);
+
+        var advantages = _advantages.GetAll(e => model.Advantages.Contains(e.Id)).ToList();
+        entity.UpdateAdvantages(advantages);
+
+        return entity;
     }
 
     protected override async Task UpdateEntity(TripEntity entity, TripDto model)
     {
         await SyncImagesAsync(model, entity, default!);
+
+        var advantages = _advantages.GetAll(e => model.Advantages.Contains(e.Id)).ToList();
+        entity.UpdateAdvantages(advantages);
+
         await base.UpdateEntity(entity, model);
     }
 

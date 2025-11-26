@@ -6,7 +6,6 @@ import { TripContextModel } from './trip.dto';
   selector: 'app-trip-form-images',
   imports: [StorageListInput],
   template: `
-    <h2>Images</h2>
     <app-storage-list-input [data]="images()" 
       (imageAdd)="model().addImage($event)" 
       (imageRemove)="model().removeImage(images().indexOf($event))" />
