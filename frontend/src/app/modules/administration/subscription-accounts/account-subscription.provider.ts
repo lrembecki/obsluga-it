@@ -1,7 +1,7 @@
 import { EnvironmentProviders, Provider, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiFacade } from 'app/core/interfaces/facade.interface';
+import { ApiFacade } from '@core/interfaces/facade.interface';
 import { SecurityPermissionGroupFacade } from '../permission-groups/permission-group.provider';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
 import { AccountSubscriptionVM } from './account-subscription.vm';
@@ -24,7 +24,11 @@ export class SecuritySubscriptionAccountFacade extends ApiFacade<AccountSubscrip
 }
 
 export function provideSecuritySubscriptionAccounts(): (Provider | EnvironmentProviders)[] {
-  return [SecuritySubscriptionAccountFacade, SecurityPermissionGroupFacade, SecurityPermissionFacade];
+  return [
+    SecuritySubscriptionAccountFacade,
+    SecurityPermissionGroupFacade,
+    SecurityPermissionFacade,
+  ];
 }
 
 export function injectSecuritySubscriptionAccounts(): SecuritySubscriptionAccountProvider {

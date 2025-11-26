@@ -12,7 +12,7 @@
   },
   "plugins": ["@typescript-eslint", "unused-imports"],
   "rules": {
-    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-imports": "error" ,
     "unused-imports/no-unused-vars": [
       "warn",
       {
@@ -22,6 +22,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/no-unused-vars": "off"
+    "@typescript-eslint/no-unused-vars": "error",
+    "import/no-relative-parent-imports": "error"
   }
 }

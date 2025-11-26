@@ -1,8 +1,8 @@
 import { EnvironmentProviders, inject, Provider, signal } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiFacade, Facade } from "app/core/interfaces/facade.interface";
-import { TableColumn } from "app/shared/templates/table/table-template";
+import { ApiFacade, Facade } from "@core/interfaces/facade.interface";
+import { TableColumn } from "@shared/templates/table/table-template";
 import { TrotamundosAdvantageFacade } from "../advantages/advantage.provider";
 import { TrotamundosHighlightFacade } from "../highlights/highlight.provider";
 import { TripVM } from "./trip.vm";
@@ -28,16 +28,33 @@ export class TrotamundosTripFacade extends ApiFacade<TripVM[]> {
 
 export class TrotamundosTripColumnsFacade implements Facade<TableColumn<TripVM>[]> {
 
-    public readonly data = signal<TableColumn<TripVM>[]>(TableColumn.fromArray<TripVM>([
-        { text: 'Name', field: 'name', width: '180px', link: { renderLink: (record) => ['..', record.id] } },
-        { text: 'Title', field: 'title' },
-        { text: 'Subtitle', field: 'subtitle' },
-        { text: 'Start Date', field: 'startDate', date: { format: 'shortDate' }, width: '140px' },
-        { text: 'End Date', field: 'endDate', date: { format: 'shortDate' }, width: '140px' },
-        { text: 'Calendar', field: 'calendar', width: '160px' },
-        { text: 'Active', field: 'isActive', width: '100px' },
-        { text: 'Disabled', field: 'isDisabled', width: '110px' }
-    ]));
+    public readonly data = signal<TableColumn<TripVM>[]>(
+        TableColumn.fromArray<TripVM>([
+            {
+                text: 'Name',
+                field: 'name',
+                width: '180px',
+                link: { renderLink: (record) => ['..', record.id] },
+            },
+            { text: 'Title', field: 'title' },
+            { text: 'Subtitle', field: 'subtitle' },
+            {
+                text: 'Start Date',
+                field: 'startDate',
+                date: { format: 'shortDate' },
+                width: '140px',
+            },
+            {
+                text: 'End Date',
+                field: 'endDate',
+                date: { format: 'shortDate' },
+                width: '140px',
+            },
+            { text: 'Calendar', field: 'calendar', width: '160px' },
+            { text: 'Active', field: 'isActive', width: '100px' },
+            { text: 'Disabled', field: 'isDisabled', width: '110px' },
+        ]),
+    );
     public readonly loading = signal(false);
     public readonly initialized = signal(true);
 
@@ -51,7 +68,12 @@ export class TrotamundosTripColumnsFacade implements Facade<TableColumn<TripVM>[
 }
 
 export function provideTrotamundosTrips(): (Provider | EnvironmentProviders)[] {
-    return [TrotamundosTripFacade, TrotamundosHighlightFacade, TrotamundosTripColumnsFacade, TrotamundosAdvantageFacade];
+    return [
+        TrotamundosTripFacade,
+        TrotamundosHighlightFacade,
+        TrotamundosTripColumnsFacade,
+        TrotamundosAdvantageFacade,
+    ];
 }
 
 export function injectTrotamundosTrips(): TrotamundosTripProvider {
@@ -62,7 +84,7 @@ export function injectTrotamundosTrips(): TrotamundosTripProvider {
         activatedRoute: inject(ActivatedRoute),
         highlights: inject(TrotamundosHighlightFacade),
         columns: inject(TrotamundosTripColumnsFacade),
-        advantages: inject(TrotamundosAdvantageFacade)
+        advantages: inject(TrotamundosAdvantageFacade),
     };
 }
 
@@ -73,5 +95,5 @@ export type TrotamundosTripProvider = {
     activatedRoute: ActivatedRoute,
     highlights: TrotamundosHighlightFacade,
     columns: TrotamundosTripColumnsFacade,
-    advantages: TrotamundosAdvantageFacade
+    advantages: TrotamundosAdvantageFacade,
 };

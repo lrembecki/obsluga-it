@@ -8,8 +8,15 @@ import {
   Type,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, ActivatedRouteSnapshot, DefaultExport, LoadChildren, Route, Routes } from '@angular/router';
-import { provideFeatureTemplate } from 'app/shared/templates/feature-template.service';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  DefaultExport,
+  LoadChildren,
+  Route,
+  Routes,
+} from '@angular/router';
+import { provideFeatureTemplate } from '@shared/templates/feature-template.service';
 import { Observable } from 'rxjs';
 import { PermissionType } from '../defaults/permission.default';
 import { authorizedGuard } from '../guards/authorized-guard';
@@ -20,45 +27,51 @@ export function listRoute<VM, TProvider>(
   // eslint-disable-next-line no-unused-vars
   provideModel: (id: string, services: TProvider) => VM,
   serviceProvider: () => TProvider,
-  loadListComponent: () => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,
-  loadFormComponent: () => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>
+  loadListComponent: () =>
+    | Type<unknown>
+    | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
+    | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,
+  loadFormComponent: () =>
+    | Type<unknown>
+    | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
+    | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,
 ): Route {
   return routeTemplate({
     providers: [providers],
     serviceProvider,
     children: [
-    {
-      path: '',
-      redirectTo: 'list',
-      pathMatch: 'full'
-    },
-    {
-      path: 'list',
-      loadComponent: loadListComponent
-    },
-    {
-      path: 'create',
-      loadComponent: loadFormComponent,
-      resolve: {
-        model: () => signal<VM>(null!)
-      }
-    },
-    {
-      path: ':id',
-      loadComponent: loadFormComponent,
-      resolve: {
-        model: (snapshot: ActivatedRouteSnapshot) => {
-          const services = serviceProvider();
-          const id = snapshot.params['id'] as string;
+      {
+        path: '',
+        redirectTo: 'list',
+        pathMatch: 'full'
+      },
+      {
+        path: 'list',
+        loadComponent: loadListComponent
+      },
+      {
+        path: 'create',
+        loadComponent: loadFormComponent,
+        resolve: {
+          model: () => signal<VM>(null!)
+        }
+      },
+      {
+        path: ':id',
+        loadComponent: loadFormComponent,
+        resolve: {
+          model: (snapshot: ActivatedRouteSnapshot) => {
+            const services = serviceProvider();
+            const id = snapshot.params['id'] as string;
 
             return computed(() => {
 
               return provideModel(id, services);
             });
+          }
         }
       }
-    }
-  ]
+    ]
   });
 }
 

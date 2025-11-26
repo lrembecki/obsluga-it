@@ -1,19 +1,19 @@
 import { Component, computed } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { Required } from 'app/core/directives/required';
-import { Valid } from 'app/core/directives/valid';
-import { cachedComputed } from 'app/core/helpers/signal.helper';
-import { TranslatePipe } from 'app/core/pipes/translate.pipe';
-import { Button, Button as UiButton } from 'app/shared/ui/button/button';
-import { ButtonDelete } from 'app/shared/ui/button/button-delete';
-import { ButtonReturn } from 'app/shared/ui/button/button-return';
-import { ButtonSubmit } from 'app/shared/ui/button/button-submit';
-import { DropdownInputComponent } from "app/shared/ui/inputs/dropdown-input.component";
-import { TextInputComponent } from 'app/shared/ui/inputs/text-input.component';
-import { UiPanel } from 'app/shared/ui/ui-panel';
-import { UiTable } from 'app/shared/ui/ui-table';
-import { UiTableColumn } from 'app/shared/ui/ui-table-column';
+import { Required } from '@core/directives/required';
+import { Valid } from '@core/directives/valid';
+import { cachedComputed } from '@core/helpers/signal.helper';
+import { TranslatePipe } from '@core/pipes/translate.pipe';
+import { Button, Button as UiButton } from '@shared/ui/button/button';
+import { ButtonDelete } from '@shared/ui/button/button-delete';
+import { ButtonReturn } from '@shared/ui/button/button-return';
+import { ButtonSubmit } from '@shared/ui/button/button-submit';
+import { DropdownInputComponent } from "@shared/ui/inputs/dropdown-input.component";
+import { TextInputComponent } from '@shared/ui/inputs/text-input.component';
+import { UiPanel } from '@shared/ui/ui-panel';
+import { UiTable } from '@shared/ui/ui-table';
+import { UiTableColumn } from '@shared/ui/ui-table-column';
 import { PermissionVM } from '../permissions/permission.vm';
 import { PermissionGroupDTO } from './permission-group.dto';
 import { injectSecurityPermissionGroups } from './permission-group.provider';
@@ -73,8 +73,18 @@ import { PermissionGroupVM } from './permission-group.vm';
         @if (availablePermissions().length > 0) {
           <app-ui-panel>
             <ng-template #start>
-              <app-dropdown-input #selectedPermission [data]="availablePermissions()" textField="name" valueField="id" />
-              <app-button [disabled]="!selectedPermission.value()" color="primary" text="Add Permission" (buttonClick)="addPermission(selectedPermission)" />
+              <app-dropdown-input
+                #selectedPermission
+                [data]="availablePermissions()"
+                textField="name"
+                valueField="id"
+              />
+              <app-button
+                [disabled]="!selectedPermission.value()"
+                color="primary"
+                text="Add Permission"
+                (buttonClick)="addPermission(selectedPermission)"
+              />
             </ng-template>
           </app-ui-panel>
         }
@@ -125,19 +135,31 @@ export class PermissionGroupForm {
     () => this.routeParams()!['id'] as string,
   );
 
-  protected readonly model = cachedComputed(() =>
-      PermissionGroupDTO.fromVM(this._services.groups
-        .data()
-        .find((e) => e.id === this.groupId()) ?? new PermissionGroupVM()),
-      entry => new PermissionGroupDTO(entry)
-    );
-  
-  protected readonly assignedPermissions = computed(() => this._services.permissions.data().filter(p => this.model.session().permissions.includes(p.id)));
-  protected readonly availablePermissions = computed(() => this._services.permissions.data().filter(p => !this.model.session().permissions.includes(p.id)));
+  protected readonly model = cachedComputed(
+    () =>
+      PermissionGroupDTO.fromVM(
+        this._services.groups
+          .data()
+          .find((e) => e.id === this.groupId()) ?? new PermissionGroupVM(),
+      ),
+    (entry) => new PermissionGroupDTO(entry),
+  );
+
+  protected readonly assignedPermissions = computed(() =>
+    this._services.permissions
+      .data()
+      .filter((p) => this.model.session().permissions.includes(p.id)),
+  );
+  protected readonly availablePermissions = computed(() =>
+    this._services.permissions
+      .data()
+      .filter((p) => !this.model.session().permissions.includes(p.id)),
+  );
 
   protected addPermission(selectedPermission: DropdownInputComponent<string>): void {
-    if (selectedPermission.value()) {
-      this.model.session().permissions.push(selectedPermission.value()!);
+    const value = selectedPermission.value();
+    if (value) {
+      this.model.session().permissions.push(value);
       selectedPermission.value.set(null!);
       this.model.update();
     }
@@ -146,11 +168,8 @@ export class PermissionGroupForm {
   protected removePermission(permission: PermissionVM): void {
 
     console.log({ removing: permission, from: this.model.session().permissions });
-    const permissions = this.model.session().permissions;
-
-    this.model.session().permissions = [
-      ...permissions.filter((p) => p !== permission.id),
-    ];
+    this.model.session().permissions = this.model.session().permissions
+      .filter((p) => p !== permission.id);
 
     this.model.update();
   }

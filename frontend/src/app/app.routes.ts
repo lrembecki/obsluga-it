@@ -1,6 +1,4 @@
-import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { TagsFacade } from './core/facades/tags.facade';
 import { authorizedGuard } from './core/guards/authorized-guard';
 
 export const routes: Routes = [
@@ -20,12 +18,6 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('app/features/routes').then((e) => e.routes),
-    resolve: {
-      init: async () =>
-        Object.values({
-          tags: inject(TagsFacade),
-        }).map((e) => e.populate()),
-    },
     canActivate: [authorizedGuard([])],
     canActivateChild: [authorizedGuard([])],
   },

@@ -16,16 +16,16 @@ export class ContextModel<T> {
 
     public readonly computed: Signal<T> = null!;
     public readonly session: Signal<T> = null!;
-    public readonly cache: WritableSignal<T | null> = null!
+    public readonly cache: WritableSignal<T | null> = null!;
 
     constructor(
         existing: () => T,
-        private readonly _onUpdate: (input: T) => T = (input) => input
+        private readonly _onUpdate: (input: T) => T = (input) => input,
     ) {
         this.computed = computed(() => existing());
         this.session = computed(() => this.cache() ?? this.computed());
         this.cache = signal<T | null>(null);
-    };
+    }
     // Tracks whether hydrate() has been invoked
     private _hydrated = false;
 
@@ -58,21 +58,33 @@ export class ContextModel<T> {
         this._hydrated = true;
     }
 
+
     /**
-     * Produce a minimal shallow diff between the pristine computed value and current session.
-     * Returns null when there are no changes. For primitive T, returns an object with 'previous'/'current'.
-     * For object T, returns a map of changed keys to { previous, current } pairs.
+     * Produce a minimal shallow diff between the pristine computed value and
+     * current session. Returns null when there are no changes. For primitive
+     * T, returns an object with 'previous'/'current'. For object T, returns a
+     * map of changed keys to { previous, current } pairs.
      */
     public diff(): Record<string, { previous: any; current: any }> | null {
         const dirty = this.cache();
         if (dirty === null) return null; // no edits
         const original = this.computed();
         // Primitive or non-object case
-        if (typeof original !== 'object' || original === null || typeof dirty !== 'object' || dirty === null) {
-            return original === dirty ? null : { value: { previous: original, current: dirty } };
+        if (
+            typeof original !== 'object' ||
+            original === null ||
+            typeof dirty !== 'object' ||
+            dirty === null
+        ) {
+            return original === dirty
+                ? null
+                : { value: { previous: original, current: dirty } };
         }
         const result: Record<string, { previous: any; current: any }> = {};
-        const keys = new Set<string>([...Object.keys(original), ...Object.keys(dirty)]);
+        const keys = new Set<string>([
+            ...Object.keys(original),
+            ...Object.keys(dirty),
+        ]);
         for (const k of keys) {
             const prev = (original as any)[k];
             const curr = (dirty as any)[k];

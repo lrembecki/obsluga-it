@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ContextModel } from 'app/core/helpers/signal.helper';
+import { ContextModel } from '@core/helpers/signal.helper';
 import { HighlightVM } from '../highlights/highlight.vm';
 import { StorageVM } from '../loyality-program/loyality-program.vm';
 import { TripVM } from './trip.vm';
@@ -13,33 +13,42 @@ export class TripContextModel extends ContextModel<TripDTO> {
     }
 
     public addHighlight(highlight: HighlightVM): void {
-        this.session().highlights.push(TripHighlightDTO.create(this.session().highlights.length, highlight));
+        this.session().highlights.push(
+          TripHighlightDTO.create(this.session().highlights.length, highlight),
+        );
         this.update();
     }
 
     public removeHighlight(highlightId: string): void {
-        this.session().highlights = this.session().highlights.filter(h => h.highlightId !== highlightId);
+                this.session().highlights = this.session().highlights
+                    .filter((h) => h.highlightId !== highlightId);
         this.update();
     }
 
     public addImage(image: StorageVM): void {
-        this.session().images.push(TripImageDTO.create(this.session().images.length, image));
+        this.session().images.push(
+          TripImageDTO.create(this.session().images.length, image),
+        );
         this.update();
     }
 
     public removeImage(order: number): void {
-        this.session().images = this.session().images.filter(i => i.order !== order);
+                this.session().images = this.session().images
+                    .filter((i) => i.order !== order);
         this.session().images.forEach((img, index) => img.order = index);
         this.update();
     }
 
     public addAgenda(): void {
-        this.session().agenda.push(TripAgendaDTO.create(this.session().agenda.length, ''));
+                this.session().agenda.push(
+                    TripAgendaDTO.create(this.session().agenda.length, ''),
+                );
         this.update();
     }
 
     public removeAgenda(order: number): void {
-        this.session().agenda = this.session().agenda.filter(a => a.order !== order);
+                this.session().agenda = this.session().agenda
+                    .filter((a) => a.order !== order);
         this.session().agenda.forEach((ag, index) => ag.order = index);
         this.update();
     }
@@ -132,14 +141,19 @@ export class TripDTO {
             endDate: vm.endDate,
             advantages: vm.advantages,
             calendar: (vm.calendar?.length ?? 0) > 0 ? vm.calendar : null,
-            agenda: vm.agenda.map((ta, index) => TripAgendaDTO.create(index, ta.content)),
+            agenda: vm.agenda.map((ta, index) =>
+              TripAgendaDTO.create(index, ta.content),
+            ),
             highlights: vm.highlights.map((th, index) => ({
                 order: index,
                 highlightId: th.highlightId,
-                highlight: highlights.find(h => h.id === th.highlightId) ?? null!,
-                value: th.value
+                highlight:
+                  highlights.find((h) => h.id === th.highlightId) ?? null!,
+                value: th.value,
             })),
-            images: vm.images.map((ti, index) => TripImageDTO.create(index, ti.image))
+            images: vm.images.map((ti, index) =>
+              TripImageDTO.create(index, ti.image),
+            ),
         });
     }
 }
