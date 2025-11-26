@@ -10,7 +10,6 @@ export const routes: Routes = [
             return services.loyalityPrograms.data().find(e => e.id === id)!;
         },
         injectTrotamundosLoyalityPrograms,
-        () => import('./loyality-program-list').then(e => e.LoyalityProgramList),
-        () => import('./loyality-program-form').then(e => e.LoyalityProgramForm)
+        () => import('./loyality-program-list').then(e => e.LoyalityProgramList)
     )
 ];

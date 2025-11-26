@@ -51,8 +51,6 @@ export class TextareaInputComponent {
   public readonly value = model<string | undefined>();
   public readonly valueChange = output<string | undefined>();
 
-  ngOnInit(): void { }
-
   protected change($event: string) {
     this.value.set($event);
     this.valueChange.emit($event);

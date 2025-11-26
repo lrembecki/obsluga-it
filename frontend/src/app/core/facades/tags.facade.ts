@@ -1,7 +1,7 @@
 import { ApiFacade } from '../interfaces/facade.interface';
 import { TagModel } from '../models/tag.model';
 
-export class TagsFacade extends ApiFacade<TagModel[]> {
+export class TagsFacade extends ApiFacade<TagModel> {
   constructor() {
     super([], 'tags');
   }

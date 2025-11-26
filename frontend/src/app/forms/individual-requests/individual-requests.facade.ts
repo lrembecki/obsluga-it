@@ -2,7 +2,7 @@ import { ApiFacade } from 'app/core/interfaces/facade.interface';
 import { IndividualRequestModel } from './individual-requests.model';
 
 export class IndividualRequestsFacade extends ApiFacade<
-  IndividualRequestModel[]
+  IndividualRequestModel
 > {
   constructor() {
     super([], 'requests/individual');

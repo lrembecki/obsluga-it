@@ -4,7 +4,7 @@ import { ApiFacade } from '../../core/interfaces/facade.interface';
 import { GroupFacade } from '../groups/group.facade';
 
 @Injectable({ providedIn: 'root' })
-export class FileFacade extends ApiFacade<FileModel[]> {
+export class FileFacade extends ApiFacade<FileModel> {
   private readonly _groups = inject(FileGroupFacade);
 
   constructor() {

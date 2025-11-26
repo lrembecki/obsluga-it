@@ -10,7 +10,6 @@ export const routes: Routes = [
             return services.highlights.data().find(e => e.id === id)!;
         },
         injectTrotamundosHighlights,
-        () => import('./highlight-list').then(e => e.HighlightList),
-        () => import('./highlight-form').then(e => e.HighlightForm)
+        () => import('./highlight-list').then(e => e.HighlightList)
     )
 ];

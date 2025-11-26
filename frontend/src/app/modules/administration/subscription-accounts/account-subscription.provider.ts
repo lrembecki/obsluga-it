@@ -6,7 +6,7 @@ import { SecurityPermissionGroupFacade } from '../permission-groups/permission-g
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
 import { AccountSubscriptionVM } from './account-subscription.vm';
 
-export class SecuritySubscriptionAccountFacade extends ApiFacade<AccountSubscriptionVM[]> {
+export class SecuritySubscriptionAccountFacade extends ApiFacade<AccountSubscriptionVM> {
   constructor() {
     super([], 'account/subscription-accounts');
   }

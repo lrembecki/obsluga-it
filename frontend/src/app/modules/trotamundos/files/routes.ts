@@ -9,7 +9,6 @@ export const routes: Routes = [
         (id: string, services: TrotamundosFileProvider) =>
             services.files.data().find(e => e.id === id)!,
         injectTrotamundosFiles,
-        () => import('./file-list').then(m => m.FileList),
-        () => import('./file-form').then(m => m.FileForm)
+        () => import('./file-list').then(m => m.FileList)
     )
 ];

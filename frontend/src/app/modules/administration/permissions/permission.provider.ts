@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiFacade } from 'app/core/interfaces/facade.interface';
 import { PermissionVM } from './permission.vm';
 
-export class SecurityPermissionFacade extends ApiFacade<PermissionVM[]> {
+export class SecurityPermissionFacade extends ApiFacade<PermissionVM> {
   constructor() {
     super([], 'account/permissions');
   }

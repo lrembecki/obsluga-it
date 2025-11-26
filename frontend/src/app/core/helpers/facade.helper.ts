@@ -22,7 +22,7 @@ export function filterFacades<T>(provide: T) {
 export function provideFacadeData<T>(
   key: string,
   facades: Record<string, unknown>,
-): Signal<T> {
+): Signal<T[]> {
   return (facades[key] as Facade<T>).data;
 }
 

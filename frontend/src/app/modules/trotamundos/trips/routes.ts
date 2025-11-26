@@ -13,7 +13,6 @@ export const routes: Routes = [
     (id: string, services: TrotamundosTripProvider) =>
       services.trips.data().find((e) => e.id === id)!,
     injectTrotamundosTrips,
-    () => import('./trip-list').then(e => e.TripList),
-    () => import('./trip-form').then(e => e.TripForm)
+    () => import('./trip-list').then(e => e.TripList)
   )
 ];

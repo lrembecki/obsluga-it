@@ -51,8 +51,6 @@ export class TextInputComponent {
   public readonly valueChange = output<string | undefined>();
   public readonly type = input<'text' | 'password' | 'email'>('text');
 
-  ngOnInit(): void {}
-
   protected change($event: string) {
     this.value.set($event);
     this.valueChange.emit($event);

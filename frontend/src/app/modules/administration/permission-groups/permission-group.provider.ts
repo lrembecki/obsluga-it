@@ -5,7 +5,7 @@ import { ApiFacade } from 'app/core/interfaces/facade.interface';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
 import { PermissionGroupVM } from './permission-group.vm';
 
-export class SecurityPermissionGroupFacade extends ApiFacade<PermissionGroupVM[]> {
+export class SecurityPermissionGroupFacade extends ApiFacade<PermissionGroupVM> {
   constructor() {
     super([], 'account/permission-groups');
   }

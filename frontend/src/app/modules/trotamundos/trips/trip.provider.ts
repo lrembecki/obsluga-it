@@ -7,7 +7,7 @@ import { TrotamundosAdvantageFacade } from "../advantages/advantage.provider";
 import { TrotamundosHighlightFacade } from "../highlights/highlight.provider";
 import { TripVM } from "./trip.vm";
 
-export class TrotamundosTripFacade extends ApiFacade<TripVM[]> {
+export class TrotamundosTripFacade extends ApiFacade<TripVM> {
     constructor() {
         super([], 'trotamundos/trips');
     }
@@ -26,7 +26,7 @@ export class TrotamundosTripFacade extends ApiFacade<TripVM[]> {
     }
 }
 
-export class TrotamundosTripColumnsFacade implements Facade<TableColumn<TripVM>[]> {
+export class TrotamundosTripColumnsFacade implements Facade<TableColumn<TripVM>> {
 
     public readonly data = signal<TableColumn<TripVM>[]>(
         TableColumn.fromArray<TripVM>([

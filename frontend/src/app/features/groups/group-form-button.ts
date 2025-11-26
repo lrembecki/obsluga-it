@@ -23,4 +23,4 @@ import { GroupForm } from './group-form';
   `,
   styles: ``,
 })
-export class GroupFormButton {}
+export class GroupFormButton { }

@@ -30,11 +30,7 @@ export function listRoute<VM, TProvider>(
   loadListComponent: () =>
     | Type<unknown>
     | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
-    | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,
-  loadFormComponent: () =>
-    | Type<unknown>
-    | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
-    | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,
+    | Promise<Type<unknown> | DefaultExport<Type<unknown>>>
 ): Route {
   return routeTemplate({
     providers: [providers],
@@ -51,14 +47,14 @@ export function listRoute<VM, TProvider>(
       },
       {
         path: 'create',
-        loadComponent: loadFormComponent,
+        loadComponent: () => import('@shared/forms/form-template').then(c => c.FormTemplate),
         resolve: {
           model: () => signal<VM>(null!)
         }
       },
       {
         path: ':id',
-        loadComponent: loadFormComponent,
+        loadComponent: () => import('@shared/forms/form-template').then(c => c.FormTemplate),
         resolve: {
           model: (snapshot: ActivatedRouteSnapshot) => {
             const services = serviceProvider();

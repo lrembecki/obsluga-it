@@ -47,7 +47,7 @@ internal sealed class TripService(
                 .Where(e => !modelImageIds.Contains(e.ImageId))
                 .ToList();
 
-            foreach (var image in removeImages)
+            foreach (var image in removeImages) 
             {
                 tripEntity.Images.Remove(image);
                 await storage.DeleteAsync(image.ImageId, cancellationToken);

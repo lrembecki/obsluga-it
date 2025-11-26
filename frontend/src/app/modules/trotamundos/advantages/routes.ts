@@ -10,7 +10,6 @@ export const routes: Routes = [
             return services.advantages.data().find(e => e.id === id)!;
         },
         injectTrotamundosAdvantages,
-        () => import('./advantage-list').then(e => e.AdvantageList),
-        () => import('./advantage-form').then(e => e.AdvantageForm)
+        () => import('./advantage-list').then(e => e.AdvantageList)
     )
 ];

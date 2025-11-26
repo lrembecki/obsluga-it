@@ -13,7 +13,6 @@ export const routes: Routes = [
     (id: string, services: SecuritySubscriptionAccountProvider) =>
       services.subscriptions.data().find((e) => e.id === id)!,
     injectSecuritySubscriptionAccounts,
-    () => import('./account-subscription-list').then(m => m.AccountSubscriptionList),
-    () => import('./account-subscription-form').then(m => m.AccountSubscriptionForm)
+    () => import('./account-subscription-list').then(m => m.AccountSubscriptionList)
   )
 ];

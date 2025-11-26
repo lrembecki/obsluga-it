@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiFacade } from 'app/core/interfaces/facade.interface';
 import { FileVM } from './file.vm';
 
-export class TrotamundosFileFacade extends ApiFacade<FileVM[]> {
+export class TrotamundosFileFacade extends ApiFacade<FileVM> {
     constructor() {
         super([], 'trotamundos/files');
     }

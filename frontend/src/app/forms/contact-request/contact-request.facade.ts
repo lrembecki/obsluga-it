@@ -1,7 +1,7 @@
 import { ApiFacade } from 'app/core/interfaces/facade.interface';
 import { ContactRequestModel } from './contact-request.model';
 
-export class ContactRequestFacade extends ApiFacade<ContactRequestModel[]> {
+export class ContactRequestFacade extends ApiFacade<ContactRequestModel> {
   constructor() {
     super([], 'requests/contact');
 

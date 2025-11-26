@@ -12,7 +12,7 @@ export class LocationModel {
   }
 }
 
-export class LocationsFacade extends ApiFacade<LocationModel[]> {
+export class LocationsFacade extends ApiFacade<LocationModel> {
   constructor() {
     super([], 'locations');
   }

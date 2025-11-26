@@ -1,3 +1,4 @@
+
 import {
   computed,
   inject,
@@ -10,7 +11,7 @@ import { ServiceCallResult } from '../models/service-call-result.model';
 import { ApiService } from '../services/api.service';
 
 export interface Facade<T> {
-  data: Signal<T>;
+  data: Signal<T[]>;
   loading: Signal<boolean>;
   initialized: Signal<boolean>;
 
@@ -18,8 +19,8 @@ export interface Facade<T> {
   populate(): Promise<this>;
 }
 
-export class ApiFacade<T> implements Facade<T> {
-  protected readonly _data: WritableSignal<T> = null!;
+export abstract class ApiFacade<T> implements Facade<T> {
+  protected readonly _data: WritableSignal<T[]> = null!;
   protected readonly _initialized = signal(false);
   protected readonly _api = inject(ApiService);
   protected readonly _loading = signal(false);
@@ -40,11 +41,16 @@ export class ApiFacade<T> implements Facade<T> {
   }
 
   constructor(
-    defaultData: T,
+    defaultData: T[],
     endpoint: string,
   ) {
     this._endpoint = endpoint;
-    this._data = signal<T>(defaultData);
+    this._data = signal<T[]>(defaultData);
+  }
+
+
+  getById(id: string): T | null {
+    return this.data().find(e => (e as any).id === id) ?? null;
   }
 
   async initialize(): Promise<void> {
@@ -68,11 +74,11 @@ export class ApiFacade<T> implements Facade<T> {
     }
 
     this._loading.set(true);
-    const response = await this._api.get<T>(this._endpoint, {}, headers);
+    const response = await this._api.get<T[]>(this._endpoint, {}, headers);
     this._loading.set(false);
 
     if (response.success && response.data) {
-      this._data.set(response.data!);
+      this._data.set(response.data);
       this._initialized.set(true);
     }
 
@@ -129,7 +135,7 @@ export class ApiFacade<T> implements Facade<T> {
     return response;
   }
 
-  protected withData(data: T) {
+  protected withData(data: T[]) {
     return data;
   }
 

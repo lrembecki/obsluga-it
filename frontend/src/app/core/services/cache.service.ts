@@ -4,11 +4,11 @@ import { Facade } from '../interfaces/facade.interface';
 
 export class CacheService<T> {
   private readonly _data = signal<CacheItem<T>[]>([]);
-  private readonly facade: Facade<T[]>;
+  private readonly facade: Facade<T>;
   private readonly identityCallback: (record: T) => string;
 
   constructor(
-    facade: Facade<T[]>,
+    facade: Facade<T>,
     identityCallback: (record: T) => string,
   ) {
     this.facade = facade;

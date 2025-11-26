@@ -10,7 +10,6 @@ export const routes: Routes = [
       return services.permissions.data().find(e => e.id === id)!;
     },
     injectSecurityPermissions,
-    () => import('./permission-list').then(e => e.PermissionList),
-    () => import('./permission-form').then(e => e.PermissionForm)
+    () => import('./permission-list').then(e => e.PermissionList)
   )
 ];
