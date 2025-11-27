@@ -10,8 +10,6 @@ import { AccountSubscriptionVM } from './account-subscription.vm';
 export const routes: Routes = [
   listRoute<AccountSubscriptionVM, SecuritySubscriptionAccountProvider>(
     provideSecuritySubscriptionAccounts(),
-    (id: string, services: SecuritySubscriptionAccountProvider) =>
-      services.subscriptions.data().find((e) => e.id === id)!,
     injectSecuritySubscriptionAccounts,
     () => import('./account-subscription-list').then(m => m.AccountSubscriptionList)
   )

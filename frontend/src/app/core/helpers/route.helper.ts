@@ -10,7 +10,6 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   ActivatedRoute,
-  ActivatedRouteSnapshot,
   DefaultExport,
   LoadChildren,
   Route,
@@ -24,8 +23,6 @@ import { authorizedGuard } from '../guards/authorized-guard';
 
 export function listRoute<VM, TProvider>(
   providers: (Provider | EnvironmentProviders)[],
-  // eslint-disable-next-line no-unused-vars
-  provideModel: (id: string, services: TProvider) => VM,
   serviceProvider: () => TProvider,
   loadListComponent: () =>
     | Type<unknown>
@@ -54,18 +51,7 @@ export function listRoute<VM, TProvider>(
       },
       {
         path: ':id',
-        loadComponent: () => import('@shared/forms/form-template').then(c => c.FormTemplate),
-        resolve: {
-          model: (snapshot: ActivatedRouteSnapshot) => {
-            const services = serviceProvider();
-            const id = snapshot.params['id'] as string;
-
-            return computed(() => {
-
-              return provideModel(id, services);
-            });
-          }
-        }
+        loadComponent: () => import('@shared/forms/form-template').then(c => c.FormTemplate)
       }
     ]
   });

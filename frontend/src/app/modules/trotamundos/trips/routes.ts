@@ -10,8 +10,6 @@ import { TripVM } from './trip.vm';
 export const routes: Routes = [
   listRoute<TripVM, TrotamundosTripProvider>(
     provideTrotamundosTrips(),
-    (id: string, services: TrotamundosTripProvider) =>
-      services.trips.data().find((e) => e.id === id)!,
     injectTrotamundosTrips,
     () => import('./trip-list').then(e => e.TripList)
   )

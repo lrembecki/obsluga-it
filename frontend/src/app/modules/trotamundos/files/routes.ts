@@ -6,8 +6,6 @@ import { FileVM } from './file.vm';
 export const routes: Routes = [
     listRoute<FileVM, TrotamundosFileProvider>(
         provideTrotamundosFiles(),
-        (id: string, services: TrotamundosFileProvider) =>
-            services.files.data().find(e => e.id === id)!,
         injectTrotamundosFiles,
         () => import('./file-list').then(m => m.FileList)
     )

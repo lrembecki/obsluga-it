@@ -6,9 +6,6 @@ import { AdvantageVM } from "./advantage.vm";
 export const routes: Routes = [
     listRoute<AdvantageVM, TrotamundosAdvantageProvider>(
         provideTrotamundosAdvantages(),
-        (id: string, services: TrotamundosAdvantageProvider) => {
-            return services.advantages.data().find(e => e.id === id)!;
-        },
         injectTrotamundosAdvantages,
         () => import('./advantage-list').then(e => e.AdvantageList)
     )

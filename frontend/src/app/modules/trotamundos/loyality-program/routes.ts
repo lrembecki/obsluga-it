@@ -6,9 +6,6 @@ import { LoyalityProgramVM } from "./loyality-program.vm";
 export const routes: Routes = [
     listRoute<LoyalityProgramVM, TrotamundosLoyalityProgramProvider>(
         provideTrotamundosLoyalityPrograms(),
-        (id: string, services: TrotamundosLoyalityProgramProvider) => {
-            return services.loyalityPrograms.data().find(e => e.id === id)!;
-        },
         injectTrotamundosLoyalityPrograms,
         () => import('./loyality-program-list').then(e => e.LoyalityProgramList)
     )
