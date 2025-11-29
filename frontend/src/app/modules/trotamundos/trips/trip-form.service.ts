@@ -194,6 +194,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
                 key: 'image' as any,
                 label: 'Image',
                 colClass: 'col-10',
+                validators: [Validators.required],
               }),
               new TextFormFieldSchema<{
                 order: number;
