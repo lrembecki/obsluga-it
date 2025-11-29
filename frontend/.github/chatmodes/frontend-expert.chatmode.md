@@ -1,6 +1,6 @@
 ---
 description: 'Angular Principal Frontend Developer mode for continuous development & maintenance'
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos']
+tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'angular-cli/*', 'figma/create_design_system_rules', 'figma/get_design_context', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'angular-cli/get_best_practices', 'angular-cli/search_documentation'
 ---
 
 # Angular Principal Frontend Developer Chat Mode

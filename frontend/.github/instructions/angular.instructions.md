@@ -9,10 +9,11 @@ This document defines how to add NEW FEATURES (domain slices) to the project, ba
 ### 1. Core Principles
 1. Standalone components only (no NgModules for new code) – use the `imports` array in `@Component`.
 2. Keep features SMALL: co-locate components, providers, routes, and the view model in a single folder.
-3. Favor Signals (`computed`, `toSignal`) for reactive state derivation; avoid manual subscriptions unless required.
+3. Signals-first: use Angular Signals for local and derived state. Prefer `computed`, `toSignal`, and minimal `effect` over manual subscriptions or imperative RxJS in components.
 4. Use Facade pattern to wrap backend API calls; never call `ApiService` directly from components.
 5. Keep UI logic declarative: templates should reflect state pulled from facades/providers.
 6. Prefer immutability (create new objects instead of mutating arrays in-place) inside facades when transforming data.
+7. Use Angular’s new template control flow: `@if`, `@else`, `@for`, and `@switch`. Do not introduce `*ngIf`, `*ngFor`, or `*ngSwitch` in new code. Migrate legacy usages opportunistically.
 
 ---
 ### 2. When to Create a Feature Folder
@@ -172,10 +173,13 @@ Rules:
 - Keep navigation absolute for clarity.
 
 ---
-### 9. Signals & Reactivity
-Use `toSignal` to convert observables (route params, facade streams) into signals.
-Use `computed` for derived values; avoid manual state tracking unless mutation needed.
-Don’t store signals in global providers; they belong to components.
+### 9. Signals & Reactivity (Mandatory)
+- Use `toSignal(...)` to convert observables (route params, facade streams) into signals at the component boundary; avoid subscribing manually in components.
+- Use `computed(...)` for all derived values; avoid redundant local state and imperative recomputation.
+- Use `effect(...)` sparingly for side effects (e.g., logging or non-UI interactions); prefer handling navigation and API calls inside event handlers rather than effects when possible.
+- Do not store signals in global providers; signals belong to components or small, focused local services when justified.
+- Avoid `mutate`; use `set` and `update` for signal writes.
+- Keep transformations pure; prefer structural sharing for arrays/objects.
 
 ---
 ### 10. CRUD Operations Contract
@@ -195,6 +199,12 @@ hostDirectives: [{ directive: Valid, outputs: ['isValidChange'] }]
 Wrap form inputs in validation container `<ng-container validate>` and disable submit if the validation directive reports invalid.
 Mark required fields with `[required]="true"` and rely on `Required` directive.
 
+Template control flow standard:
+- Use `@if (...) { ... } @else { ... }` for conditional blocks.
+- Use `@for (item of items; track item.id) { ... }` for lists; always provide a `track` expression.
+- Use `@switch (expr) { @case ('a') { ... } @default { ... } }` for branching.
+- Do not add new usages of `*ngIf`, `*ngFor`, or `*ngSwitch`. When touching templates, migrate any nearby legacy instances to the new control flow.
+
 ---
 ### 12. Navigation Rules
 - After successful create/update/delete: navigate to the feature root list route.
@@ -210,9 +220,12 @@ Current pattern: direct English strings + `translate` pipe (`{{ 'Permissions' | 
 
 ---
 ### 14. UI & Styling
+- **Follow UI Design System**: All UI decisions must align with `.github/instructions/ui-design.instructions.md` (design tokens, component patterns, accessibility, theming).
 - Reuse shared UI primitives (`app-ui-panel`, buttons, table columns) – do not create ad-hoc markup if an existing component suffices.
 - Keep component `styles: `` ` empty unless absolutely necessary; prefer global SCSS tokens in `styles/_variables.scss`.
 - For layout, wrap action buttons inside the panel component using its start/end template regions.
+- Templates MUST use the new control flow (`@if`, `@for`, `@switch`) for all conditional and loop constructs.
+- When integrating Figma designs, use MCP tools (`mcp_figma_get_design_context`, `mcp_figma_create_design_system_rules`) and follow the design-to-code workflow in the UI Design System guide.
 
 ---
 ### 15. Error Handling & Edge Cases
@@ -323,6 +336,9 @@ protected async submit() {
 Template migration quick map:
 | Old | New |
 |-----|-----|
+| `*ngIf="model()"` | `@if (model()) { ... }` |
+| `*ngFor="let x of xs; trackBy: trackId"` | `@for (x of xs; track x.id) { ... }` |
+| `*ngSwitchCase="val"` | `@switch (expr) { @case (val) { ... } }` |
 | `@if (model())` | `@if (model.session())` |
 | `[(value)]="model().name"` | `[(value)]="model.session().name"` |
 | `model().id` | `model.session().id` |
@@ -367,6 +383,7 @@ Prefer plain `computed` or direct facade signal when:
 - Read-only presentations.
 - Simple create forms (< 3 fields, no nested arrays) where session indirection adds no value.
 - Proven performance-sensitive hotspots (measure before deviating).
+In all cases above, continue to use Signals and new template control flow; do not revert to RxJS subscriptions or structural directives.
 
 ---
 ### 28. Future Enhancements (Optional)
@@ -467,6 +484,11 @@ Mapping Guidelines:
 | VM hydration | `DTO.toVM(dto, cache)` |
 | Structural change | Replace array & call `model.update()` |
 | Submit | Build DTO from session then call facade |
+| Conditional rendering | `@if(...) { ... } @else { ... }` |
+| List rendering | `@for (x of xs; track x.id) { ... }` |
+| Branching | `@switch (expr) { @case (...) { ... } @default { ... } }` |
+| Derived state | `computed(...)` |
+| Observable → Signal | `toSignal(obs)` |
 
 ---
 ### 34. When NOT to Introduce DTO Layer

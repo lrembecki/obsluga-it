@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
+import { DataTable } from 'app/shared/ui/data-table/data-table';
+import { TableColumnConfig } from 'app/shared/ui/data-table/data-table.types';
 import { UiPanel } from 'app/shared/ui/ui-panel';
-import { UiTable } from 'app/shared/ui/ui-table';
-import { UiTableColumn } from 'app/shared/ui/ui-table-column';
-import { UiTableColumnLink } from 'app/shared/ui/ui-table-column-link';
 import { injectTrotamundosHighlights } from './highlight.provider';
 import { HighlightVM } from './highlight.vm';
 
@@ -12,11 +12,10 @@ import { HighlightVM } from './highlight.vm';
   selector: 'app-highlight-list',
   imports: [
     UiPanel,
-    UiTable,
-    UiTableColumn,
+    DataTable,
     RouterLink,
-    UiTableColumnLink,
-    Button
+    Button,
+    TranslatePipe
   ],
   template: `
     <app-ui-panel>
@@ -24,20 +23,35 @@ import { HighlightVM } from './highlight.vm';
         <app-button color="primary" text="Create" routerLink="../create" />
       </ng-template>
     </app-ui-panel>
-    <app-ui-table [data]="_services.highlights.data()">
-      <app-ui-table-column
-        text="Title"
-        field="title"
-        link
-        [renderLink]="renderLink"
-      />
-      <app-ui-table-column text="Icon" field="icon" width="200px" />
-    </app-ui-table>
+    <app-data-table
+      [data]="_services.highlights.data"
+      [columns]="columns"
+      [features]="{ quicksearch: true, sortable: true }"
+      [persistenceKey]="'trotamundos-highlights'"
+      [searchPlaceholder]="'DATA_TABLE.SEARCH_PLACEHOLDER' | translate"
+      [actionsLabel]="'DATA_TABLE.ACTIONS' | translate"
+      [editLabel]="'DATA_TABLE.EDIT' | translate"
+      [saveLabel]="'DATA_TABLE.SAVE' | translate"
+      [cancelLabel]="'DATA_TABLE.CANCEL' | translate"
+      (orderBy)="onOrderBy($event)"
+      (searchQuery)="onSearch($event)"
+    />
   `,
   styles: ``
 })
 export class HighlightList {
   protected readonly _services = injectTrotamundosHighlights();
 
-  protected renderLink = (record: HighlightVM) => ['..', record.id];
+  protected readonly columns: TableColumnConfig<HighlightVM>[] = [
+    { field: 'title', label: 'Title', type: 'text', sortable: true },
+    { field: 'icon', label: 'Icon', type: 'text', width: '200px', sortable: true }
+  ];
+
+  protected onOrderBy(sort: { column: string; direction: 'asc' | 'desc' }) {
+    this._services.highlights.filter({ sort });
+  }
+
+  protected onSearch(query: string) {
+    this._services.highlights.filter({ q: query });
+  }
 }

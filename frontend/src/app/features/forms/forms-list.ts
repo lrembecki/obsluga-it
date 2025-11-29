@@ -1,26 +1,35 @@
 import { Component } from '@angular/core';
 import { isLoadingComputed } from 'app/core/helpers/facade.helper';
-import { ListTemplate } from 'app/shared/templates/list-template';
+import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
-import { UiTableColumn } from 'app/shared/ui/ui-table-column';
-import { UiTableColumnLink } from 'app/shared/ui/ui-table-column-link';
+import { DataTable } from 'app/shared/ui/data-table/data-table';
+import { TableColumnConfig } from 'app/shared/ui/data-table/data-table.types';
+import { UiPanel } from 'app/shared/ui/ui-panel';
 import { injectForms } from './forms.provider';
 import { FormsModel } from './models/forms.model';
 
 @Component({
   selector: 'app-forms-list',
-  imports: [Button, ListTemplate, UiTableColumn, UiTableColumnLink],
+  imports: [Button, UiPanel, DataTable, TranslatePipe],
   template: `
-    <app-list-template [data]="_facades.forms.data()">
-      <app-button text="Add" panel-start #start />
-      <app-ui-table-column
-        text="Name"
-        field="name"
-        link
-        [renderLink]="renderLink"
-      />
-      <app-ui-table-column text="Is Active" />
-    </app-list-template>
+    <app-ui-panel>
+      <ng-template #start>
+        <app-button text="Add" color="primary" />
+      </ng-template>
+    </app-ui-panel>
+    <app-data-table
+      [data]="_facades.forms.data"
+      [columns]="columns"
+      [features]="{ quicksearch: true, sortable: true }"
+      [persistenceKey]="'features-forms'"
+      [searchPlaceholder]="'DATA_TABLE.SEARCH_PLACEHOLDER' | translate"
+      [actionsLabel]="'DATA_TABLE.ACTIONS' | translate"
+      [editLabel]="'DATA_TABLE.EDIT' | translate"
+      [saveLabel]="'DATA_TABLE.SAVE' | translate"
+      [cancelLabel]="'DATA_TABLE.CANCEL' | translate"
+      (orderBy)="onOrderBy($event)"
+      (searchQuery)="onSearch($event)"
+    />
   `,
   styles: ``,
 })
@@ -28,5 +37,16 @@ export class FormsList {
   protected readonly _facades = injectForms();
   protected readonly loading = isLoadingComputed(this._facades);
 
-  protected renderLink = (record: FormsModel) => ['..', record.formId];
+  protected readonly columns: TableColumnConfig<FormsModel>[] = [
+    { field: 'name', label: 'Name', type: 'text', sortable: true },
+    { field: 'isActive', label: 'Is Active', type: 'text', sortable: true }
+  ];
+
+  protected onOrderBy(sort: { column: string; direction: 'asc' | 'desc' }) {
+    this._facades.forms.filter({ sort });
+  }
+
+  protected onSearch(query: string) {
+    this._facades.forms.filter({ q: query });
+  }
 }

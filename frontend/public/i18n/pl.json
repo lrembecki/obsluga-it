@@ -115,5 +115,13 @@
     "NO_UPDATE_MESSAGE": "Używasz najnowszej wersji aplikacji.",
     "UPDATE_CHECK_FAILED": "Nie udało się sprawdzić aktualizacji. Spróbuj ponownie później.",
     "CHECK_FOR_UPDATES": "Sprawdź aktualizacje"
+  },
+  "DATA_TABLE": {
+    "SEARCH_PLACEHOLDER": "Szukaj",
+    "ACTIONS": "Akcje",
+    "EDIT": "Edytuj",
+    "SAVE": "Zapisz",
+    "CANCEL": "Anuluj",
+    "DELETE": "Usuń"
   }
 }

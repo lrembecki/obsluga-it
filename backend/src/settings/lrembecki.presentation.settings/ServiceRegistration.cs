@@ -12,6 +12,7 @@ public static class ServiceRegistration
     public static void AddSettings(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IContactService, ContactService>();
+        builder.Services.AddScoped<IEmailService, EmailService>();
     }
 
     public static void MapSettings(this WebApplication app)
@@ -22,5 +23,6 @@ public static class ServiceRegistration
             .RequireAuthorization("InternalJwtPolicy");
 
         group.MapCrud<IContactService, ContactDto, ContactVM>("contacts");
+        group.MapCrud<IEmailService, EmailDto, EmailVM>("emails");
     }
 }

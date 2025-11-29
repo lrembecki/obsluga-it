@@ -1,5 +1,7 @@
 import { EnvironmentProviders, inject, Provider } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { FormFacadeScope, FormReturnRouteScope, FormSchemaScope } from '@app/shared/forms/form-schema.model';
+import { emailFormSchema } from './email-form.schema';
 import { EmailSettingsFacade } from './email-settings.facade';
 
 export type EmailSettingsProvider = {
@@ -8,7 +10,12 @@ export type EmailSettingsProvider = {
 };
 
 export function provideServices(): (Provider | EnvironmentProviders)[] {
-  return [EmailSettingsFacade];
+  return [
+    EmailSettingsFacade,
+    { provide: FormFacadeScope, useExisting: EmailSettingsFacade },
+    { provide: FormSchemaScope, useValue: emailFormSchema },
+    { provide: FormReturnRouteScope, useValue: null! }
+  ];
 }
 
 export function injectServices(): EmailSettingsProvider {

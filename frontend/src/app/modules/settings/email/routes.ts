@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./email-form').then((e) => e.EmailForm),
+        loadComponent: () => import('app/shared/forms/form-template').then((e) => e.FormTemplate),
       },
     ],
   }),

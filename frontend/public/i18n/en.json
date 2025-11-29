@@ -115,5 +115,13 @@
     "NO_UPDATE_MESSAGE": "You are using the latest version of the application.",
     "UPDATE_CHECK_FAILED": "Failed to check for updates. Please try again later.",
     "CHECK_FOR_UPDATES": "Check for Updates"
+  },
+  "DATA_TABLE": {
+    "SEARCH_PLACEHOLDER": "Search",
+    "ACTIONS": "Actions",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete"
   }
 }

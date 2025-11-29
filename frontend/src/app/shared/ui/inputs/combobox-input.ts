@@ -31,25 +31,27 @@ import { HostControlDirective } from './host-control.directive';
       />
 
       <!-- Display for multiple selection mode -->
-      <div
-        *ngIf="multiple() && selectedItems.length > 0"
-        class="chips-container"
-      >
-        <p-chip
-          *ngFor="let item of selectedItems"
-          [label]="item"
-          [removable]="true"
-          (onRemove)="removeItem(item)"
-        />
-      </div>
+      @if (multiple() && selectedItems.length > 0) {
+        <div class="chips-container">
+          @for (item of selectedItems; track item) {
+            <p-chip
+              [label]="item"
+              [removable]="true"
+              (onRemove)="removeItem(item)"
+            />
+          }
+        </div>
+      }
 
       <!-- Display for single selection mode -->
-      <div *ngIf="!multiple() && selectedValue" class="single-value">
-        <span>{{ selectedValue }}</span>
-        <button type="button" class="clear-button" (click)="clearSelection()">
-          ×
-        </button>
-      </div>
+      @if (!multiple() && selectedValue) {
+        <div class="single-value">
+          <span>{{ selectedValue }}</span>
+          <button type="button" class="clear-button" (click)="clearSelection()">
+            ×
+          </button>
+        </div>
+      }
     </div>
   `,
   styles: `
@@ -132,13 +134,10 @@ export class ComboboxInput implements OnInit {
 
   public filterOptions(event: any) {
     const query = event.query.toLowerCase();
-    if (!query.trim()) {
-      this.filteredOptions = [...this.options()];
-    } else {
-      this.filteredOptions = this.options().filter((option) =>
-        option.toLowerCase().includes(query),
-      );
-    }
+    const cleaned = query.trim();
+    this.filteredOptions = cleaned
+      ? this.options().filter((option) => option.toLowerCase().includes(cleaned))
+      : [...this.options()];
   }
 
   public onSelect(event: any) {
@@ -161,13 +160,10 @@ export class ComboboxInput implements OnInit {
     console.log({ event });
 
     if (event.key === 'Enter') {
-      const currentValue = this.hcd.control.value;
-      if (
-        currentValue &&
-        currentValue.trim() &&
-        !this.options().includes(currentValue.trim())
-      ) {
-        this.addNewOption(currentValue.trim());
+      const currentValue: string | undefined = this.hcd.control.value as string | undefined;
+      const cleaned = currentValue?.trim();
+      if (cleaned && !this.options().includes(cleaned)) {
+        this.addNewOption(cleaned);
       }
     }
   }

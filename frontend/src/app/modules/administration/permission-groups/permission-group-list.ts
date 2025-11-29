@@ -1,42 +1,50 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
+import { DataTable } from 'app/shared/ui/data-table/data-table';
+import { TableColumnConfig } from 'app/shared/ui/data-table/data-table.types';
 import { UiPanel } from 'app/shared/ui/ui-panel';
-import { UiTable } from 'app/shared/ui/ui-table';
-import { UiTableColumn } from 'app/shared/ui/ui-table-column';
-import { UiTableColumnLink } from 'app/shared/ui/ui-table-column-link';
 import { injectSecurityPermissionGroups } from './permission-group.provider';
 import { PermissionGroupVM } from './permission-group.vm';
 
 @Component({
   selector: 'app-permission-group-list',
-  imports: [
-    UiPanel,
-    UiTable,
-    UiTableColumn,
-    RouterLink,
-    UiTableColumnLink,
-    Button
-  ],
+  imports: [UiPanel, DataTable, RouterLink, Button, TranslatePipe],
   template: `
     <app-ui-panel>
       <ng-template #start>
         <app-button color="primary" text="Create" routerLink="../create" />
       </ng-template>
     </app-ui-panel>
-    <app-ui-table [data]="_services.groups.data()">
-      <app-ui-table-column
-        text="Name"
-        field="name" width="300px"
-        link
-        [renderLink]="renderLink"
-      />
-    </app-ui-table>
+    <app-data-table
+      [data]="_services.groups.data"
+      [columns]="columns"
+      [features]="{ quicksearch: true, sortable: true }"
+      [searchPlaceholder]="'DATA_TABLE.SEARCH_PLACEHOLDER' | translate"
+      [actionsLabel]="'DATA_TABLE.ACTIONS' | translate"
+      [editLabel]="'DATA_TABLE.EDIT' | translate"
+      [saveLabel]="'DATA_TABLE.SAVE' | translate"
+      [cancelLabel]="'DATA_TABLE.CANCEL' | translate"
+      [persistenceKey]="'permission-groups'"
+      (orderBy)="onOrderBy($event)"
+      (searchQuery)="onSearch($event)"
+    />
   `,
-  styles: ``
+  styles: ``,
 })
 export class PermissionGroupList {
   protected readonly _services = injectSecurityPermissionGroups();
+  protected readonly columns: TableColumnConfig<PermissionGroupVM>[] = [
+    { field: 'name', label: 'Name', type: 'text', sortable: true },
+  ];
 
-  protected renderLink = (record: PermissionGroupVM) => ['..', record.id];
+  protected onOrderBy(sort: { column: string; direction: 'asc' | 'desc' }) {
+    // Optionally delegate to facade filter
+    this._services.groups.filter({ sort });
+  }
+
+  protected onSearch(query: string) {
+    this._services.groups.filter({ q: query });
+  }
 }

@@ -1,44 +1,58 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
+import { DataTable } from 'app/shared/ui/data-table/data-table';
+import { TableColumnConfig } from 'app/shared/ui/data-table/data-table.types';
 import { UiPanel } from 'app/shared/ui/ui-panel';
-import { UiTable } from 'app/shared/ui/ui-table';
-import { UiTableColumn } from 'app/shared/ui/ui-table-column';
-import { UiTableColumnLink } from 'app/shared/ui/ui-table-column-link';
 import { injectTrotamundosLoyalityPrograms } from './loyality-program.provider';
 import { LoyalityProgramVM } from './loyality-program.vm';
 
 @Component({
-    selector: 'app-loyality-program-list',
-    imports: [
-        UiPanel,
-        UiTable,
-        UiTableColumn,
-        RouterLink,
-        UiTableColumnLink,
-        Button
-    ],
-    template: `
+  selector: 'app-loyality-program-list',
+  imports: [
+    UiPanel,
+    DataTable,
+    RouterLink,
+    Button,
+    TranslatePipe
+  ],
+  template: `
     <app-ui-panel>
       <ng-template #start>
         <app-button color="primary" text="Create" routerLink="../create" />
       </ng-template>
     </app-ui-panel>
-    <app-ui-table [data]="_services.loyalityPrograms.data()">
-      <app-ui-table-column text="Name" field="name"  width="300px"
-        link
-        [renderLink]="renderLink" />
-      <app-ui-table-column
-        text="Title"
-        field="title" width="300px"
-      />
-      <app-ui-table-column text="Description" field="description" />
-    </app-ui-table>
+    <app-data-table
+      [data]="_services.loyalityPrograms.data"
+      [columns]="columns"
+      [features]="{ quicksearch: true, sortable: true }"
+      [persistenceKey]="'trotamundos-loyality-programs'"
+      [searchPlaceholder]="'DATA_TABLE.SEARCH_PLACEHOLDER' | translate"
+      [actionsLabel]="'DATA_TABLE.ACTIONS' | translate"
+      [editLabel]="'DATA_TABLE.EDIT' | translate"
+      [saveLabel]="'DATA_TABLE.SAVE' | translate"
+      [cancelLabel]="'DATA_TABLE.CANCEL' | translate"
+      (orderBy)="onOrderBy($event)"
+      (searchQuery)="onSearch($event)"
+    />
   `,
-    styles: ``
+  styles: ``
 })
 export class LoyalityProgramList {
-    protected readonly _services = injectTrotamundosLoyalityPrograms();
+  protected readonly _services = injectTrotamundosLoyalityPrograms();
 
-    protected renderLink = (record: LoyalityProgramVM) => ['..', record.id];
+  protected readonly columns: TableColumnConfig<LoyalityProgramVM>[] = [
+    { field: 'name', label: 'Name', type: 'text', width: '300px', sortable: true },
+    { field: 'title', label: 'Title', type: 'text', width: '300px', sortable: true },
+    { field: 'description', label: 'Description', type: 'text', sortable: true }
+  ];
+
+  protected onOrderBy(sort: { column: string; direction: 'asc' | 'desc' }) {
+    this._services.loyalityPrograms.filter({ sort });
+  }
+
+  protected onSearch(query: string) {
+    this._services.loyalityPrograms.filter({ q: query });
+  }
 }

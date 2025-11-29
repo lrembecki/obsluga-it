@@ -1,6 +1,6 @@
 export class EmailSettingsModel {
   smtpServer: string = null!;
-  smtpPort!: string;
+  smtpPort!: number;
   smtpUsername: string = null!;
   smtpPassword: string = null!;
   useSsl: boolean = false;
