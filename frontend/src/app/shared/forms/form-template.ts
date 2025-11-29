@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Button } from '../ui/button/button';
 import { ButtonDelete } from '../ui/button/button-delete';
+import { ButtonReturn } from '../ui/button/button-return';
 import { ButtonSubmit } from '../ui/button/button-submit';
 import { UiPanel } from '../ui/ui-panel';
 import { BaseFormComponent } from './base-form.component';
@@ -10,7 +11,14 @@ import { FormRenderer } from './form-renderer';
 
 @Component({
   selector: 'app-form-template',
-  imports: [FormRenderer, UiPanel, Button, ButtonSubmit, ButtonDelete],
+  imports: [
+    FormRenderer,
+    UiPanel,
+    Button,
+    ButtonSubmit,
+    ButtonDelete,
+    ButtonReturn,
+  ],
   template: `
     @if (_service.form()) {
       <app-ui-panel>

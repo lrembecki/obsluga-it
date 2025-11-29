@@ -200,6 +200,16 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
                 imageId: string;
                 image: any;
               }>({
+                key: 'imageId' as any,
+                disabled: true,
+                isVisible: false,
+                colClass: 'col-2',
+              }),
+              new TextFormFieldSchema<{
+                order: number;
+                imageId: string;
+                image: any;
+              }>({
                 key: 'order' as any,
                 label: 'Order',
                 disabled: true,

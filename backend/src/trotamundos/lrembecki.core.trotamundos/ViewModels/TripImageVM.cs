@@ -5,6 +5,7 @@ namespace lrembecki.core.trotamundos.ViewModels;
 
 public record TripImageVM(
     Guid TripId,
+    Guid ImageId,
     StorageVM Image,
     int Order
 )
@@ -18,6 +19,7 @@ public record TripImageVM(
 
         return new TripImageVM(
             entity.TripId,
+            entity.ImageId,
             StorageVM.Map(entity.Image),
             entity.Order
         );
