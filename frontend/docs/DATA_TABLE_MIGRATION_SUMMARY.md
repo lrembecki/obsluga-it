@@ -199,17 +199,39 @@ Some columns referenced nested fields (e.g., `field="storage.filename"`). Curren
 
 ## Legacy Components Still in Use
 
-### Form-Embedded Tables (NOT migrated)
-The following components still use `UiTable` for **nested entity display within forms** (not primary list views):
+### ⚠️ DEPRECATION NOTICE
 
-- `account-subscription-form.ts` — Permission groups assignment table
+The following legacy `UiTable` components are **DEPRECATED** but still in use by form-embedded tables:
+
+**Files still using legacy UiTable:**
+- `permission-group-form.ts` — Permission assignment table
+- `account-subscription-form.ts` — Permission groups assignment table  
 - `locations-form.ts` — Related locations table
 - `trip-form.highlights.ts` — Highlights selection table
 - `trip-form.adventages.ts` — Advantages selection table
 - `contact-request.ts` — Request history table
 - `forms-controls.ts` — Form controls table
-- `list-template.ts` — Generic list wrapper (may deprecate)
-- `table-template.ts` — Generic table wrapper
+- `list-template.ts` — Generic list wrapper (deprecated)
+- `table-template.ts` — Generic table wrapper (deprecated)
+
+**Legacy files to be deleted after migration:**
+```
+src/app/shared/ui/ui-table.ts
+src/app/shared/ui/ui-table-column.ts
+src/app/shared/ui/ui-table-column-base.ts
+src/app/shared/ui/ui-table-column-cell-template.ts
+src/app/shared/ui/ui-table-column-date.ts
+src/app/shared/ui/ui-table-column-dropdown.ts
+src/app/shared/ui/ui-table-column-link.ts
+src/app/shared/ui/ui-table-column-text-input.ts
+```
+
+**DO NOT use UiTable for new code.** All new list views MUST use `DataTable` component.
+
+**Migration Status:**  
+- ✅ All list views migrated to DataTable  
+- ⚠️ Form-embedded tables still using legacy UiTable  
+- 🔜 Pending: Migrate form tables or create specialized `FormTable` component
 
 **Recommendation:** Do NOT delete legacy `UiTable` components until these form usages are migrated or deprecated.
 

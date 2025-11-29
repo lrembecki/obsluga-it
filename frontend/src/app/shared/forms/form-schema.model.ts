@@ -1,12 +1,24 @@
-import { InjectionToken, Type } from "@angular/core";
-import { ApiFacade } from "@app/core/interfaces/facade.interface";
+import { InjectionToken, Type } from '@angular/core';
+import { ApiFacade } from '@app/core/interfaces/facade.interface';
 
-export type FormFieldType = 'text' | 'textarea' | 'select' | 'checkbox' | 'number' | 'date';
+export type FormFieldType =
+  | 'text'
+  | 'textarea'
+  | 'select'
+  | 'checkbox'
+  | 'number'
+  | 'date';
 export type FormSchemaLayout = 'single-column' | 'two-column';
 
-export const FormSchemaScope = new InjectionToken<FormSchema<any>>('FormSchemaScope');
-export const FormFacadeScope = new InjectionToken<ApiFacade<any>>('FormFacadeScope');
-export const FormReturnRouteScope = new InjectionToken<string[]>('FormReturnRouteScope');
+export const FormSchemaScope = new InjectionToken<FormSchema<any>>(
+  'FormSchemaScope',
+);
+export const FormFacadeScope = new InjectionToken<ApiFacade<any>>(
+  'FormFacadeScope',
+);
+export const FormReturnRouteScope = new InjectionToken<string[]>(
+  'FormReturnRouteScope',
+);
 
 export class FormFieldSchema<T> {
   key: keyof T = null!;
@@ -20,10 +32,7 @@ export class FormFieldSchema<T> {
   // eslint-disable-next-line no-unused-vars
   dynamicDisabled?: (formValue: T) => boolean = (_v) => false;
 
-  constructor(
-    type: FormFieldType,
-    init?: Partial<FormFieldSchema<T>>
-  ) {
+  constructor(type: FormFieldType, init?: Partial<FormFieldSchema<T>>) {
     Object.assign(this, init);
     this.type = type;
   }
@@ -36,10 +45,10 @@ export class TextFormFieldSchema<T> extends FormFieldSchema<T> {
   }
 }
 
-export class TextareaFieldSchema<T> extends FormFieldSchema<T> {
+export class TextareaFormFieldSchema<T> extends FormFieldSchema<T> {
   rows: number = 3;
   cols: number = 30;
-  constructor(init?: Partial<TextareaFieldSchema<T>>) {
+  constructor(init?: Partial<TextareaFormFieldSchema<T>>) {
     super('textarea', init);
     Object.assign(this, init);
   }

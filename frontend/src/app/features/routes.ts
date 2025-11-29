@@ -15,36 +15,6 @@ export const routes: Routes = withBreadcrumbs([
     },
     children: [
       {
-        path: 'files',
-        loadChildren: () =>
-          import('app/features/files/routes').then((e) => e.routes),
-        data: {
-          label: 'FILES',
-          permissions: ['Files'],
-        },
-        canActivate: [authorizedGuard([])],
-      },
-      {
-        path: 'images',
-        loadChildren: () =>
-          import('app/features/images/routes').then((e) => e.routes),
-        data: {
-          label: 'IMAGES',
-          permissions: [],
-        },
-        canActivate: [authorizedGuard([])],
-      },
-      {
-        path: 'locations',
-        loadChildren: () =>
-          import('app/features/locations/routes').then((e) => e.routes),
-        data: {
-          label: 'LOCATIONS',
-          permissions: [],
-        },
-        canActivate: [authorizedGuard([])],
-      },
-      {
         path: 'trip-requests',
         loadChildren: () =>
           import('app/features/trip-requests/routes').then((e) => e.routes),

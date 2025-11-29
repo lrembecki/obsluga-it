@@ -8,10 +8,6 @@ export const routes: Routes = [
       import('./features/account/routes').then((e) => e.routes),
   },
   {
-    path: 'forms',
-    loadChildren: () => import('./forms/routes').then((e) => e.routes),
-  },
-  {
     path: 'modules',
     loadChildren: () => import('./modules/routes').then((e) => e.routes),
   },

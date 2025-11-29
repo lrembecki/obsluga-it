@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, Injector, input, runInInjectionContext } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxInput } from './controls/checkbox-input';
@@ -65,17 +65,20 @@ import { FormRulesService } from './services/form-rule.service';
 })
 export class FormRenderer {
   readonly #ruleService = inject(FormRulesService);
+  readonly #injector = inject(Injector);
 
   schema = input.required<FormSchema<unknown>>();
   form = input.required<FormGroup>();
 
   ngOnInit(): void {
-    const formValue = toSignal(this.form().valueChanges, {
-      initialValue: this.form().getRawValue(),
-    });
-    effect(() => {
-      const value = formValue();
-      this.#ruleService.applyRules(this.schema(), this.form(), value);
+    runInInjectionContext(this.#injector, () => {
+      const formValue = toSignal(this.form().valueChanges, {
+        initialValue: this.form().getRawValue(),
+      });
+      effect(() => {
+        const value = formValue();
+        this.#ruleService.applyRules(this.schema(), this.form(), value);
+      });
     });
   }
 }

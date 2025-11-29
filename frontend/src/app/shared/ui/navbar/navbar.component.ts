@@ -5,7 +5,6 @@ import { AuthService } from 'app/core/services/auth.service';
 import { StorageService } from 'app/core/services/storage.service';
 import { TranslationService } from 'app/core/services/translation.service';
 import * as feature from 'app/features/routes';
-import * as forms from 'app/forms/routes';
 import * as administration from 'app/modules/administration/routes';
 import * as settings from 'app/modules/settings/routes';
 import * as trotamundos from 'app/modules/trotamundos/routes';
@@ -45,19 +44,25 @@ export class NavbarComponent {
 
   constructor() {
     effect(async () => {
-      const requestRoutes = await this.getItemGroup(
-        'Forms',
-        forms.routes,
-        'forms/',
-      );
       const featureRoutes = await this.getItemGroup('Features', feature.routes);
-      const settingsRoutes = await this.getItemGroup('Settings', settings.routes, 'modules/settings/');
-      const trotamundosRoutes = await this.getItemGroup('Trotamundos', trotamundos.routes, 'modules/trotamundos/');
-      const administrationRoutes = await this.getItemGroup('Administration', administration.routes, 'modules/administration/');
+      const settingsRoutes = await this.getItemGroup(
+        'Settings',
+        settings.routes,
+        'modules/settings/',
+      );
+      const trotamundosRoutes = await this.getItemGroup(
+        'Trotamundos',
+        trotamundos.routes,
+        'modules/trotamundos/',
+      );
+      const administrationRoutes = await this.getItemGroup(
+        'Administration',
+        administration.routes,
+        'modules/administration/',
+      );
 
       this.items.set([
         ...this.provideIfAny(featureRoutes),
-        ...this.provideIfAny(requestRoutes),
         ...this.provideIfAny(settingsRoutes),
         ...this.provideIfAny(trotamundosRoutes),
         ...this.provideIfAny(administrationRoutes),

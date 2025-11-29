@@ -1,7 +1,8 @@
-
 import {
   computed,
+  EnvironmentProviders,
   inject,
+  Provider,
   signal,
   Signal,
   WritableSignal,
@@ -17,6 +18,12 @@ export interface Facade<T> {
 
   initialize(): Promise<void>;
   populate(): Promise<this>;
+}
+
+export function provideApiFacade(
+  provider: any,
+): (Provider | EnvironmentProviders)[] {
+  return [provider, { provide: ApiFacade, useExisting: provider }];
 }
 
 export abstract class ApiFacade<T> implements Facade<T> {
@@ -40,17 +47,13 @@ export abstract class ApiFacade<T> implements Facade<T> {
     return this._onLoaded.asObservable();
   }
 
-  constructor(
-    defaultData: T[],
-    endpoint: string,
-  ) {
+  constructor(defaultData: T[], endpoint: string) {
     this._endpoint = endpoint;
     this._data = signal<T[]>(defaultData);
   }
 
-
   getById(id: string): T | null {
-    return this.data().find(e => (e as any).id === id) ?? null;
+    return this.data().find((e) => (e as any).id === id) ?? null;
   }
 
   async initialize(): Promise<void> {

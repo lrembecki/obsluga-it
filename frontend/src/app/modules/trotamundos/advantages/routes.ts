@@ -1,12 +1,35 @@
-import { Routes } from "@angular/router";
-import { listRoute } from "app/core/helpers/route.helper";
-import { injectTrotamundosAdvantages, provideTrotamundosAdvantages, TrotamundosAdvantageProvider } from "./advantage.provider";
-import { AdvantageVM } from "./advantage.vm";
+import { Routes } from '@angular/router';
+
+import { provideDataTableService } from '@app/shared/data-table/data-table.service';
+
+import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideFormService } from '@app/shared/forms/form.service';
+import { TrotamundosAdvantageDataTableService } from './advantage-data-table.service';
+import { TrotamundosAdvantageFormService } from './advantage-form.service';
+import { TrotamundosAdvantageFacade } from './advantage.facade';
 
 export const routes: Routes = [
-    listRoute<AdvantageVM, TrotamundosAdvantageProvider>(
-        provideTrotamundosAdvantages(),
-        injectTrotamundosAdvantages,
-        () => import('./advantage-list').then(e => e.AdvantageList)
-    )
+  {
+    path: '',
+    providers: [
+      provideApiFacade(TrotamundosAdvantageFacade),
+      provideDataTableService(TrotamundosAdvantageDataTableService),
+      provideFormService(TrotamundosAdvantageFormService),
+    ],
+    children: [
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('app/shared/data-table/data-table.template').then(
+            (m) => m.DataTableTemplate,
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('app/shared/forms/form-template').then((m) => m.FormTemplate),
+      },
+    ],
+  },
 ];

@@ -1,22 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DataTable } from '@app/shared/data-table/data-table';
+import { DataTableColumnSchema } from '@app/shared/data-table/data-table.types';
 import { TranslatePipe } from 'app/core/pipes/translate.pipe';
 import { Button } from 'app/shared/ui/button/button';
-import { DataTable } from 'app/shared/ui/data-table/data-table';
-import { TableColumnConfig } from 'app/shared/ui/data-table/data-table.types';
 import { UiPanel } from 'app/shared/ui/ui-panel';
 import { injectSecurityPermissions } from './permission.provider';
 import { PermissionVM } from './permission.vm';
 
 @Component({
   selector: 'app-permission-list',
-  imports: [
-    UiPanel,
-    DataTable,
-    RouterLink,
-    Button,
-    TranslatePipe
-  ],
+  imports: [UiPanel, DataTable, RouterLink, Button, TranslatePipe],
   template: `
     <app-ui-panel>
       <ng-template #start>
@@ -24,9 +18,8 @@ import { PermissionVM } from './permission.vm';
       </ng-template>
     </app-ui-panel>
     <app-data-table
-      [data]="_services.permissions.data"
+      [data]="_services.permissions.data()"
       [columns]="columns"
-      [features]="{ quicksearch: true, sortable: true }"
       [persistenceKey]="'permissions'"
       [searchPlaceholder]="'DATA_TABLE.SEARCH_PLACEHOLDER' | translate"
       [actionsLabel]="'DATA_TABLE.ACTIONS' | translate"
@@ -37,19 +30,19 @@ import { PermissionVM } from './permission.vm';
       (searchQuery)="onSearch($event)"
     />
   `,
-  styles: ``
+  styles: ``,
 })
 export class PermissionList {
   protected readonly _services = injectSecurityPermissions();
 
-  protected readonly columns: TableColumnConfig<PermissionVM>[] = [
+  protected readonly columns: DataTableColumnSchema<PermissionVM>[] = [
     {
       field: 'name',
       label: 'Name',
       type: 'text',
       width: '300px',
-      sortable: true
-    }
+      sortable: true,
+    },
   ];
 
   protected onOrderBy(sort: { column: string; direction: 'asc' | 'desc' }) {
