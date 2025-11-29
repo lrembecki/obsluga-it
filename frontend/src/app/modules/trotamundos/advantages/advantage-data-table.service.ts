@@ -1,15 +1,9 @@
-import { effect, inject } from '@angular/core';
 import { DataTableService } from '@app/shared/data-table/data-table.service';
-import { TrotamundosAdvantageFacade } from './advantage.facade';
 import { AdvantageVM } from './advantage.vm';
 
 export class TrotamundosAdvantageDataTableService extends DataTableService<AdvantageVM> {
-  private readonly _facade = inject(TrotamundosAdvantageFacade);
-
   constructor() {
     super();
-
-    effect(() => this._data.set(this._facade.data()));
 
     this._schema.set({
       quicksearch: true,
@@ -27,9 +21,5 @@ export class TrotamundosAdvantageDataTableService extends DataTableService<Advan
       ],
       persistenceKey: 'trotamundos-advantages',
     });
-  }
-
-  override initialize(): Promise<void> {
-    return this._facade.initialize();
   }
 }
