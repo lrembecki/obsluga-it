@@ -47,7 +47,10 @@ internal class BlobHelper(BlobServiceClient serviceClient) : IBlobHelper
         var containerClient = serviceClient.GetBlobContainerClient(container);
         var blobClient = containerClient.GetBlobClient(blobName);
 
-        await blobClient.DeleteAsync(DeleteSnapshotsOption.IncludeSnapshots, cancellationToken: cancellationToken);
+        if ((await blobClient.ExistsAsync(cancellationToken)).Value)
+        {
+            await blobClient.DeleteAsync(DeleteSnapshotsOption.IncludeSnapshots, cancellationToken: cancellationToken);
+        }
     }
 
     private static string CalculateContentType(string filename)

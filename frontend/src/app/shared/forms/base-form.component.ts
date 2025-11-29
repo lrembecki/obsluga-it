@@ -1,11 +1,11 @@
-import { Directive, inject, Signal, signal } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Directive, inject, Signal } from '@angular/core';
 import { FormSchema } from './form-schema.model';
+import { FormService } from './form.service';
 import { FormFactoryService } from './services/form-factory.service';
 
 @Directive()
 export abstract class BaseFormComponent<T> {
-  form = signal<FormGroup | null>(null);
+  readonly _service = inject(FormService<T>);
   abstract schema: Signal<FormSchema<T>>;
   formFactory = inject(FormFactoryService);
 
@@ -13,10 +13,11 @@ export abstract class BaseFormComponent<T> {
   abstract submit(data: T): Promise<void>;
 
   async onSubmit() {
-    if (this.form()!.invalid) {
-      this.form()!.markAllAsTouched();
+    if (this._service.form().invalid) {
+      this._service.form().markAllAsTouched();
+
       return;
     }
-    await this.submit(this.form()!.value);
+    await this.submit(this._service.form().value);
   }
 }

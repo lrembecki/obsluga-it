@@ -7,7 +7,6 @@ import { ButtonSubmit } from '../ui/button/button-submit';
 import { UiPanel } from '../ui/ui-panel';
 import { BaseFormComponent } from './base-form.component';
 import { FormRenderer } from './form-renderer';
-import { FormService } from './form.service';
 
 @Component({
   selector: 'app-form-template',
@@ -19,8 +18,8 @@ import { FormService } from './form.service';
           <app-button
             submit
             [disabled]="_service.form()!.invalid"
-            (buttonClick)="onSubmit()"
             [isInProgress]="_service.facade.saving()"
+            (buttonClick)="onSubmit()"
           />
 
           @if (
@@ -48,7 +47,6 @@ import { FormService } from './form.service';
   styles: ``,
 })
 export class FormTemplate extends BaseFormComponent<any> {
-  readonly _service = inject(FormService<any>);
   readonly schema = computed(() => this._service.schema());
   readonly #returnRoute = computed(() => this._service.returnRoute());
 
@@ -59,13 +57,6 @@ export class FormTemplate extends BaseFormComponent<any> {
   constructor() {
     super();
     effect(() => this._service.id.set(this.routeParams()!['id'] as string));
-    effect(() => this.form.set(this._service.form()));
-  }
-
-  ngOnInit(): void {
-    this._service.facade.initialize().then(() => {
-      this.form.set(this.formFactory.createForm(this.schema()));
-    });
   }
 
   async submit(data: any): Promise<void> {

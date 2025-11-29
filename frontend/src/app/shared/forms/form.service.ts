@@ -17,7 +17,7 @@ export function provideFormService(
 
 export abstract class FormService<T> {
   protected readonly _schema = signal<FormSchema<T>>(null!);
-  protected readonly _returnRoute = signal<string[]>(['..']);
+  protected readonly _returnRoute = signal<string[]>(['../list']);
   protected readonly _formFactory = inject(FormFactoryService);
 
   public readonly schema = this._schema.asReadonly();
@@ -38,8 +38,38 @@ export abstract class FormService<T> {
         this.schema(),
         this.mode(),
       );
+      const model = this.model();
+      // Populate FormArray controls for collection fields before patching values
+      this.schema().fields.forEach((field: any) => {
+        if (field.type === 'collection') {
+          const value = model?.[field.key as string] ?? ([] as any[]);
+          const fa = formGroup.get(field.key as string) as any;
+          if (fa && Array.isArray(value)) {
+            // Clear existing
+            while (fa.length > 0) fa.removeAt(0);
+            // Push item controls
+            value.forEach((item: any) => {
+              if (field.itemFields?.length) {
+                const groupControls: Record<string, any> = {};
+                field.itemFields.forEach((f: any) => {
+                  const ctrl = f.createControl('edit', !!f.disabled);
+                  groupControls[f.key as string] = ctrl;
+                });
+                const fg = new (formGroup.constructor as any)(groupControls);
+                fa.push(fg);
+              } else {
+                fa.push(
+                  new (
+                    formGroup.constructor as any
+                  ).prototype.constructor.control(item),
+                );
+              }
+            });
+          }
+        }
+      });
 
-      formGroup.patchValue(this.model());
+      formGroup.patchValue(model);
 
       return formGroup;
     }
