@@ -13,20 +13,26 @@ import { FormService } from './form.service';
   selector: 'app-form-template',
   imports: [FormRenderer, UiPanel, Button, ButtonSubmit, ButtonDelete],
   template: `
-    @if (form()) {
+    @if (_service.form()) {
       <app-ui-panel>
         <ng-template #start>
           <app-button
             submit
-            [disabled]="form()!.invalid"
+            [disabled]="_service.form()!.invalid"
             (buttonClick)="onSubmit()"
             [isInProgress]="_service.facade.saving()"
           />
 
-          @if (mode === 'edit' && schema().canDelete(form()!.value)) {
+          @if (
+            this._service.mode() === 'edit' &&
+            this._service.schema().canDelete(this._service.form()!.value)
+          ) {
             <app-button
               delete
-              [facade]="{ identity: this.id(), facade: this._service.facade }"
+              [facade]="{
+                identity: this._service.id(),
+                facade: this._service.facade,
+              }"
               (deleted)="returnToList()"
             />
           }
@@ -36,7 +42,7 @@ import { FormService } from './form.service';
         </ng-template>
       </app-ui-panel>
 
-      <app-form-renderer [schema]="schema()" [form]="form()!" />
+      <app-form-renderer [schema]="schema()" [form]="_service.form()!" />
     }
   `,
   styles: ``,
@@ -49,26 +55,11 @@ export class FormTemplate extends BaseFormComponent<any> {
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #router = inject(Router);
   readonly routeParams = toSignal(this.#activatedRoute.params);
-  readonly id = computed(() => this.routeParams()!['id'] as string);
-  readonly model = computed(
-    () => (this._service.facade as any).getById(this.id())!,
-  );
 
   constructor() {
     super();
-
-    effect(() => {
-      if (this.id() === 'create') {
-        this.form.set(this.formFactory.createForm(this.schema()));
-      } else {
-        this.mode = 'edit';
-        this.form.set(this.formFactory.createForm(this.schema(), this.mode));
-        const model = this.model();
-        if (model) {
-          this.patch(model);
-        }
-      }
-    });
+    effect(() => this._service.id.set(this.routeParams()!['id'] as string));
+    effect(() => this.form.set(this._service.form()));
   }
 
   ngOnInit(): void {
@@ -78,14 +69,8 @@ export class FormTemplate extends BaseFormComponent<any> {
   }
 
   async submit(data: any): Promise<void> {
-    const model = structuredClone(this.model()) ?? data;
-    Object.assign(model, data);
-
-    const response = this.id()
-      ? await this._service.facade.update(this.id(), model)
-      : await this._service.facade.create('', model);
-
-    if (response.success) {
+    const response = await this._service.submit(data);
+    if (response) {
       this.returnToList();
     }
   }

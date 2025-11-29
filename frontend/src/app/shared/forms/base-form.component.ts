@@ -7,7 +7,6 @@ import { FormFactoryService } from './services/form-factory.service';
 export abstract class BaseFormComponent<T> {
   form = signal<FormGroup | null>(null);
   abstract schema: Signal<FormSchema<T>>;
-  mode: 'create' | 'edit' = 'create';
   formFactory = inject(FormFactoryService);
 
   // eslint-disable-next-line no-unused-vars
@@ -19,25 +18,5 @@ export abstract class BaseFormComponent<T> {
       return;
     }
     await this.submit(this.form()!.value);
-  }
-
-  patch(data: Partial<T>) {
-    if (!this.form()) return;
-
-    this.form()!.patchValue(data);
-
-    this.setEditMode();
-
-    if ((this as any).onAfterPatch) {
-      (this as any).onAfterPatch(data);
-    }
-  }
-
-  setEditMode() {
-    this.mode = 'edit';
-  }
-
-  setCreateMode() {
-    this.mode = 'create';
   }
 }

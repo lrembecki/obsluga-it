@@ -1,12 +1,20 @@
 import { NgClass } from '@angular/common';
-import { Component, effect, inject, Injector, input, runInInjectionContext } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  Injector,
+  input,
+  runInInjectionContext,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxInput } from './controls/checkbox-input';
-import { SelectInput } from "./controls/select-input";
-import { TextInput } from "./controls/text-input";
-import { TextareaInput } from "./controls/textarea-input";
-import { Error } from "./error";
+import { CustomInput } from './controls/custom-input';
+import { DateInput } from './controls/date-input';
+import { SelectInput } from './controls/select-input';
+import { TextInput } from './controls/text-input';
+import { TextareaInput } from './controls/textarea-input';
 import { FormSchema } from './form-schema.model';
 import { FormRulesService } from './services/form-rule.service';
 
@@ -15,43 +23,40 @@ import { FormRulesService } from './services/form-rule.service';
   imports: [
     TextInput,
     CheckboxInput,
-    Error,
     NgClass,
     ReactiveFormsModule,
     SelectInput,
     TextareaInput,
+    CustomInput,
+    DateInput,
   ],
   template: `
     <form [formGroup]="form()" class="form-grid" [ngClass]="schema().layout">
-
       @for (field of schema().fields; track field.key) {
         <div class="form-field">
-
           @if (field.type === 'text') {
-            <app-text-input
-              [field]="field"
-              [form]="form()" />
+            <app-text-input [field]="field" [form]="form()" />
           }
 
           @if (field.type === 'checkbox') {
-            <app-checkbox-input
-              [field]="field"
-              [form]="form()" />
+            <app-checkbox-input [field]="field" [form]="form()" />
           }
 
           @if (field.type === 'select') {
-            <app-select-input
-              [field]="field"
-              [form]="form()" />
+            <app-select-input [field]="field" [form]="form()" />
+          }
+
+          @if (field.type === 'date') {
+            <app-date-input [field]="field" [form]="form()" />
           }
 
           @if (field.type === 'textarea') {
-            <app-textarea-input
-              [field]="field"
-              [form]="form()" />
+            <app-textarea-input [field]="field" [form]="form()" />
           }
 
-          <app-error [control]="form().get(field.key)!"></app-error>
+          @if (field.type === 'custom') {
+            <app-custom-input [field]="field" [form]="form()" />
+          }
         </div>
       }
     </form>
@@ -61,7 +66,7 @@ import { FormRulesService } from './services/form-rule.service';
       display: grid;
       gap: 1rem;
     }
-  `
+  `,
 })
 export class FormRenderer {
   readonly #ruleService = inject(FormRulesService);

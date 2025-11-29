@@ -1,42 +1,33 @@
-import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { routeFeature, routeList } from '@core/helpers/route.helper';
+import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideDataTableService } from '@app/shared/data-table/data-table.service';
+import { provideFormService } from '@app/shared/forms/form.service';
+import { TrotamundosTripDataTableService } from './trip-data-table.service';
+import { TrotamundosTripFormService } from './trip-form.service';
 import { TrotamundosTripFacade } from './trip.provider';
-import { TripVM } from './trip.vm';
 
-let featureRoute = routeFeature(TrotamundosTripFacade);
-
-routeList(
-  [TrotamundosTripFacade],
-  () => ({
-    facade: inject(TrotamundosTripFacade),
-    columns: [
-      {
-        label: 'Name',
-        field: 'name',
-        width: '180px',
-        link: { renderLink: (record: TripVM) => ['..', record.id] },
-      },
-      { label: 'Title', field: 'title' },
-      { label: 'Subtitle', field: 'subtitle' },
-      {
-        label: 'Start Date',
-        field: 'startDate',
-        width: '140px',
-        render: (row: TripVM) => row.startDate.toLocaleDateString(),
-      },
-      {
-        label: 'End Date',
-        field: 'endDate',
-        width: '140px',
-        render: (row: TripVM) => row.endDate.toLocaleDateString(),
-      },
-      { label: 'Calendar', field: 'calendar', width: '160px' },
-      { label: 'Active', field: 'isActive', width: '100px' },
-      { label: 'Disabled', field: 'isDisabled', width: '110px' },
+export const routes: Routes = [
+  {
+    path: '',
+    providers: [
+      provideApiFacade(TrotamundosTripFacade),
+      provideDataTableService(TrotamundosTripDataTableService),
+      provideFormService(TrotamundosTripFormService),
     ],
-  }),
-  featureRoute,
-);
-
-export const routes: Routes = [featureRoute];
+    children: [
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('app/shared/data-table/data-table.template').then(
+            (m) => m.DataTableTemplate,
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('app/shared/forms/form-template').then((m) => m.FormTemplate),
+      },
+    ],
+  },
+];

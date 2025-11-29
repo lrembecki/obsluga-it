@@ -1,14 +1,14 @@
 import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
+import { DatePickerModule } from 'primeng/datepicker';
 import { FormFieldSchema } from '../form-schema.model';
 
 @Component({
-  selector: 'app-checkbox-input',
-  imports: [ReactiveFormsModule, CheckboxModule],
+  selector: 'app-date-input',
+  imports: [ReactiveFormsModule, DatePickerModule],
   template: `
     <label>{{ field().label }}</label>
-    <p-checkbox binary="true" [formControl]="$any(form().get(field().key))" />
+    <p-datepicker [formControl]="$any(form().get(field().key))" />
   `,
   host: {
     class: 'input-container',
@@ -21,7 +21,7 @@ import { FormFieldSchema } from '../form-schema.model';
     }
   `,
 })
-export class CheckboxInput {
+export class DateInput {
   field = input.required<FormFieldSchema<unknown>>();
   form = input.required<FormGroup>();
 }

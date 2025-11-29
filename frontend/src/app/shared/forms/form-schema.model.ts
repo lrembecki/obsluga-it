@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { InjectionToken, Type } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 
 export type FormFieldType =
@@ -7,7 +9,8 @@ export type FormFieldType =
   | 'select'
   | 'checkbox'
   | 'number'
-  | 'date';
+  | 'date'
+  | 'custom';
 export type FormSchemaLayout = 'single-column' | 'two-column';
 
 export const FormSchemaScope = new InjectionToken<FormSchema<any>>(
@@ -29,8 +32,13 @@ export class FormFieldSchema<T> {
   disabled: boolean = false;
   disabledOnEdit?: boolean = false;
   disabledOnCreate?: boolean = false;
-  // eslint-disable-next-line no-unused-vars
+
   dynamicDisabled?: (formValue: T) => boolean = (_v) => false;
+  createControl: (
+    mode: 'create' | 'edit',
+    disabled: boolean,
+  ) => AbstractControl = (_mode, disabled) =>
+    new FormControl({ value: null, disabled }, this.validators ?? []);
 
   constructor(type: FormFieldType, init?: Partial<FormFieldSchema<T>>) {
     Object.assign(this, init);
@@ -61,6 +69,13 @@ export class CheckboxFormFieldSchema<T> extends FormFieldSchema<T> {
   }
 }
 
+export class DateFormFieldSchema<T> extends FormFieldSchema<T> {
+  constructor(init?: Partial<DateFormFieldSchema<T>>) {
+    super('date', init);
+    Object.assign(this, init);
+  }
+}
+
 export class SelectFormFieldSchema<T> extends FormFieldSchema<T> {
   options: { label: string; value: any }[] = [];
   clearable: boolean = false;
@@ -71,11 +86,19 @@ export class SelectFormFieldSchema<T> extends FormFieldSchema<T> {
   }
 }
 
+export class CustomFormFieldSchema<T> extends FormFieldSchema<T> {
+  template: any = null!;
+  constructor(init?: Partial<CustomFormFieldSchema<T>>) {
+    super('custom', init);
+    Object.assign(this, init);
+  }
+}
+
 export class FormSchema<T> {
   fields: FormFieldSchema<T>[] = [];
   layout: FormSchemaLayout = 'two-column';
   layoutDisabled: boolean = false;
-  // eslint-disable-next-line no-unused-vars
+
   canDelete: (data: any) => boolean = (_data) => false;
 
   constructor(init?: Partial<FormSchema<T>>) {
