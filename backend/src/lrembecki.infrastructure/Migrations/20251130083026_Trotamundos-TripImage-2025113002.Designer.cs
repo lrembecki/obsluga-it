@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure.Entities;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure.Entities;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251130083026_Trotamundos-TripImage-2025113002")]
+    partial class TrotamundosTripImage2025113002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -729,26 +732,19 @@ namespace lrembecki.infrastructure.Migrations
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripImageEntity", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("newid()");
-
-                    b.Property<Guid>("ImageId")
+                    b.Property<Guid>("TripId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TripId")
+                    b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("TripId", "Order");
 
                     b.HasIndex("ImageId")
                         .IsUnique();
-
-                    b.HasIndex("TripId");
 
                     b.ToTable("TrotamundosTripImage", "app");
                 });

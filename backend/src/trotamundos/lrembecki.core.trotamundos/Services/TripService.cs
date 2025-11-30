@@ -3,6 +3,7 @@ using lrembecki.core.storage.Services;
 using lrembecki.core.trotamundos.Dtos;
 using lrembecki.core.trotamundos.Entitites;
 using lrembecki.core.trotamundos.ViewModels;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace lrembecki.core.trotamundos.Services;
 
@@ -12,6 +13,9 @@ internal sealed class TripService(
     IStorageService storage) : BaseCrudService<TripEntity, TripVM, TripDto>(uow), ITripService
 {
     private readonly IRepository<AdvantageEntity> _advantages = uow.GetRepository<AdvantageEntity>();
+
+    protected override Task<TripDto> Validate(TripDto model)
+        => base.Validate(CleanUpModel(model));
 
     protected override async Task<TripEntity> CreateEntity(Guid id, TripDto model, CancellationToken cancellationToken)
     {
@@ -32,6 +36,15 @@ internal sealed class TripService(
         entity.UpdateAdvantages(advantages);
 
         await base.UpdateEntity(entity, model);
+    }
+
+    private TripDto CleanUpModel(TripDto model)
+    {
+        return model with
+        {
+            Images = model.Images.Where(e => e.Image != null).ToList(),
+            Agenda = model.Agenda.Where(e => !string.IsNullOrEmpty(e.Content)).ToList()
+        };
     }
 
     private async Task SyncImagesAsync(TripDto model, TripEntity tripEntity, CancellationToken cancellationToken)
@@ -64,7 +77,7 @@ internal sealed class TripService(
             }
             else
             {
-                var imageVM = await storage.UpdateAsync(image.ImageId.Value, image.Image, cancellationToken);
+                await storage.UpdateAsync(image.ImageId.Value, image.Image, cancellationToken);
             }
         }
     }

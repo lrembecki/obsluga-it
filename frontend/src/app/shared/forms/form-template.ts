@@ -52,7 +52,14 @@ import { FormRenderer } from './form-renderer';
       <app-form-renderer [schema]="schema()" [form]="_service.form()!" />
     }
   `,
-  styles: ``,
+  styles: `
+    ::ng-deep app-form-template {
+      app-ui-panel {
+        position: sticky;
+        top: 0;
+      }
+    }
+  `,
 })
 export class FormTemplate extends BaseFormComponent<any> {
   readonly schema = computed(() => this._service.schema());

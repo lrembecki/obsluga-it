@@ -45,7 +45,6 @@ public class TripImageEntity
     public Guid TripId { get; private set; }
     public Guid ImageId { get; private set; }
     public StorageEntity Image { get; private set; } = default!;
-
     public int Order { get; private set; }
 
     public static TripImageEntity Create(Guid tripId, TripImageDto model)

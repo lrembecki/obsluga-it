@@ -172,28 +172,33 @@ import { TextareaInput } from './textarea-input';
                 }
 
                 <div class="actions">
-                  <button
-                    pButton
-                    [icon]="
-                      layout() === 'horizontal'
-                        ? 'pi pi-arrow-left'
-                        : 'pi pi-arrow-up'
-                    "
-                    [disabled]="i === 0"
-                    (click)="move(i, -1)"
-                    text
-                  ></button>
-                  <button
-                    pButton
-                    [icon]="
-                      layout() === 'horizontal'
-                        ? 'pi pi-arrow-right'
-                        : 'pi pi-arrow-down'
-                    "
-                    [disabled]="i === lastIndex()"
-                    (click)="move(i, 1)"
-                    text
-                  ></button>
+                  @if (i !== 0) {
+                    <button
+                      pButton
+                      [icon]="
+                        layout() === 'horizontal'
+                          ? 'pi pi-arrow-left'
+                          : 'pi pi-arrow-up'
+                      "
+                      [disabled]="i === 0"
+                      (click)="move(i, -1)"
+                      text
+                    ></button>
+                  }
+
+                  @if (i !== lastIndex()) {
+                    <button
+                      pButton
+                      [icon]="
+                        layout() === 'horizontal'
+                          ? 'pi pi-arrow-right'
+                          : 'pi pi-arrow-down'
+                      "
+                      [disabled]="i === lastIndex()"
+                      (click)="move(i, 1)"
+                      text
+                    ></button>
+                  }
                   <button
                     pButton
                     icon="pi pi-trash"

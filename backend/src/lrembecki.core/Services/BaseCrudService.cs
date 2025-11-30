@@ -16,6 +16,8 @@ namespace lrembecki.core.Services
         protected readonly IRepository<TEntity> _repository = uow.GetRepository<TEntity>();
         public async Task<TVM> CreateAsync(TDto model, CancellationToken cancellationToken = default)
         {
+            model = await Validate(model);
+
             var entity = await CreateEntity(Guid.NewGuid(), model, cancellationToken);
             await _repository.AddAsync(entity);
 
@@ -35,6 +37,8 @@ namespace lrembecki.core.Services
             => (TVM)typeof(TVM).GetMethod("Map", BindingFlags.Public | BindingFlags.Static)!.Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
         public async Task<TVM> UpdateAsync(Guid id, TDto model, CancellationToken cancellationToken = default)
         {
+            model = await Validate(model);
+
             var entity = await _repository.RequireByIdAsync(id, cancellationToken);
 
             await UpdateEntity(entity, model);
@@ -103,5 +107,6 @@ namespace lrembecki.core.Services
         {
             await _repository.DeleteAsync(entity);
         }
+        protected virtual Task<TDto> Validate(TDto model) => Task.FromResult(model);
     }
 }

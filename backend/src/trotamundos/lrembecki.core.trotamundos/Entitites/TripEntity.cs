@@ -65,19 +65,12 @@ public class TripEntity : TrotamundosBaseEntity
         Subtitle = model.Subtitle;
         Description = model.Description;
 
-        Agenda.Clear();
-        Agenda = model.Agenda
-            .Select(agendaDto => TripAgendaEntity.Create(Id, agendaDto))
-            .ToList();
+        UpdateAgenda(model);
+        UpdateImages(model);
 
         Highlights.Clear();
         Highlights = model.Highlights
             .Select(highlightDto => TripHighlightEntity.Create(Id, highlightDto))
-            .ToList();
-
-        Images.Clear();
-        Images = model.Images
-            .Select(imageDto => TripImageEntity.Create(Id, imageDto))
             .ToList();
 
         PaymentSchedules.Clear();
@@ -106,5 +99,33 @@ public class TripEntity : TrotamundosBaseEntity
             .ToList();
 
         AddDomainEvent(TrotamundosDomainEvent.Create(this));
+    }
+
+    private void UpdateAgenda(TripDto model)
+    {
+        Agenda.Where(a => model.Agenda.All(dto => dto.Order != a.Order));
+
+        model.Agenda.ForEach(agendaDto =>
+        {
+            var existing = Agenda.Find(e => e.Order == agendaDto.Order)
+                ?? TripAgendaEntity.Create(Id, agendaDto);
+
+            existing.Update(agendaDto);
+        });
+    }
+
+    private void UpdateImages(TripDto model)
+    {
+        Images.Where(image => model.Images.All(dto => dto.ImageId != image.ImageId))
+                    .ToList()
+                    .ForEach(image => Images.Remove(image));
+
+        model.Images.ForEach(imageDto =>
+        {
+            var existing = Images.Find(e => e.ImageId == imageDto.ImageId)
+                ?? TripImageEntity.Create(Id, imageDto);
+
+            existing.Update(imageDto);
+        });
     }
 }
