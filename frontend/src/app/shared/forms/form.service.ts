@@ -27,6 +27,7 @@ export abstract class FormService<T> {
   public readonly model = computed(() =>
     this.facade.data().find((e) => e.id === this.id()),
   );
+  public readonly isLoading = this.facade.loading;
   public readonly mode = computed(() =>
     this.id() === 'create' ? 'create' : 'edit',
   );
@@ -83,9 +84,10 @@ export abstract class FormService<T> {
     const model = structuredClone(this.model()) ?? data;
     Object.assign(model, data);
 
-    const response = this.id()
-      ? await this.facade.update(this.id(), model)
-      : await this.facade.create('', model);
+    const response =
+      this.id() === 'create'
+        ? await this.facade.create('', model)
+        : await this.facade.update(this.id(), model);
 
     return response.success;
   }

@@ -5,6 +5,7 @@ import { Button } from '../ui/button/button';
 import { ButtonDelete } from '../ui/button/button-delete';
 import { ButtonReturn } from '../ui/button/button-return';
 import { ButtonSubmit } from '../ui/button/button-submit';
+import { LoadingComponent } from '../ui/loading/loading.component';
 import { UiPanel } from '../ui/ui-panel';
 import { BaseFormComponent } from './base-form.component';
 import { FormRenderer } from './form-renderer';
@@ -18,9 +19,12 @@ import { FormRenderer } from './form-renderer';
     ButtonSubmit,
     ButtonDelete,
     ButtonReturn,
+    LoadingComponent,
   ],
   template: `
-    @if (_service.form()) {
+    @if (_service.isLoading()) {
+      <app-loading [text]="'Loading form data'" />
+    } @else if (_service.form()) {
       <app-ui-panel>
         <ng-template #start>
           <app-button
@@ -53,11 +57,20 @@ import { FormRenderer } from './form-renderer';
     }
   `,
   styles: `
-    ::ng-deep app-form-template {
-      app-ui-panel {
-        position: sticky;
-        top: 0;
-      }
+    :host {
+      display: block;
+      position: relative;
+      min-height: 200px;
+    }
+
+    app-ui-panel {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--bg);
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
     }
   `,
 })

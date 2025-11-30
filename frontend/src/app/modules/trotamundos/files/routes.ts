@@ -1,25 +1,34 @@
 import { Routes } from '@angular/router';
 
-import {
-  routeFeature,
-  routeForm,
-  routeList,
-} from '@app/core/helpers/route.helper';
-import { FormSchema } from '@app/shared/forms/form-schema.model';
-import { fileListSchema } from './file-list.schema';
+import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideDataTableService } from '@app/shared/data-table/data-table.service';
+import { provideFormService } from '@app/shared/forms/form.service';
+import { TrotamundosFileDataTableService } from './file-data-table.service';
+import { TrotamundosFileFormService } from './file-form.service';
 import { TrotamundosFileFacade } from './file.provider';
-import { FileVM } from './file.vm';
 
-let featureRoute = routeFeature(TrotamundosFileFacade);
-featureRoute = routeList([TrotamundosFileFacade], fileListSchema, featureRoute);
-featureRoute = routeForm(
-  [TrotamundosFileFacade],
-  () =>
-    new FormSchema<FileVM>({
-      layout: 'two-column',
-      fields: [],
-    }),
-  featureRoute,
-);
-
-export const routes: Routes = [featureRoute];
+export const routes: Routes = [
+  {
+    path: '',
+    providers: [
+      provideApiFacade(TrotamundosFileFacade),
+      provideDataTableService(TrotamundosFileDataTableService),
+      provideFormService(TrotamundosFileFormService),
+    ],
+    children: [
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('app/shared/data-table/data-table.template').then(
+            (e) => e.DataTableTemplate,
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('app/shared/forms/form-template').then((e) => e.FormTemplate),
+      },
+    ],
+  },
+];

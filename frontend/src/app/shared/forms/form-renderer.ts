@@ -13,6 +13,7 @@ import { CheckboxInput } from './controls/checkbox-input';
 import { CollectionInput } from './controls/collection-input';
 import { CustomInput } from './controls/custom-input';
 import { DateInput } from './controls/date-input';
+import { FileUploadInput } from './controls/file-upload-input';
 import { ImageInput } from './controls/image-input';
 import { MultiSelectInput } from './controls/multi-select-input';
 import { SelectInput } from './controls/select-input';
@@ -33,6 +34,7 @@ import { FormRulesService } from './services/form-rule.service';
     TextareaInput,
     CustomInput,
     DateInput,
+    FileUploadInput,
     ImageInput,
     CollectionInput,
   ],
@@ -67,6 +69,10 @@ import { FormRulesService } from './services/form-rule.service';
 
             @if (field.type === 'image') {
               <app-image-input [field]="field" [form]="form()" />
+            }
+
+            @if (field.type === 'fileupload') {
+              <app-file-upload-input [field]="field" [form]="form()" />
             }
 
             @if (field.type === 'custom') {

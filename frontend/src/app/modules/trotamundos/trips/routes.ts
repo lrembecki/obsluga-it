@@ -20,14 +20,15 @@ export const routes: Routes = [
       provideFormService(TrotamundosTripFormService),
     ],
     resolve: {
-      _init: () =>
+      _init: () => {
         Promise.allSettled(
           [
             inject(TrotamundosAdvantageFacade),
             inject(TrotamundosTripFacade),
             inject(TrotamundosHighlightFacade),
           ].map((e) => e.initialize()),
-        ),
+        );
+      },
     },
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },

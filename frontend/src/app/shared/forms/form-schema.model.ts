@@ -12,6 +12,7 @@ export type FormFieldType =
   | 'number'
   | 'date'
   | 'image'
+  | 'fileupload'
   | 'custom'
   | 'collection';
 export type FormSchemaLayout = 'single-column' | 'two-column';
@@ -118,6 +119,20 @@ export class ImageFormFieldSchema<T> extends FormFieldSchema<T> {
   showPreview: boolean = true;
   constructor(init?: Partial<ImageFormFieldSchema<T>>) {
     super('image', init);
+    Object.assign(this, init);
+    this.colClass ??= 'col-6';
+  }
+}
+
+export class FileUploadFormFieldSchema<T> extends FormFieldSchema<T> {
+  // Accept file MIME types
+  accept: string = '*/*';
+  // Maximum file size in bytes
+  maxFileSize: number = 10000000; // 10MB default
+  // Choose button label
+  chooseLabel: string = 'Choose File';
+  constructor(init?: Partial<FileUploadFormFieldSchema<T>>) {
+    super('fileupload', init);
     Object.assign(this, init);
     this.colClass ??= 'col-6';
   }

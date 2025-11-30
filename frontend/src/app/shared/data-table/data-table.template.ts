@@ -1,26 +1,38 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Button } from '../ui/button/button.js';
+import { LoadingComponent } from '../ui/loading/loading.component.js';
 import { UiPanel } from '../ui/ui-panel.js';
 import { DataTable } from './data-table.js';
 import { DataTableService } from './data-table.service.js';
 
 @Component({
-  imports: [UiPanel, Button, DataTable],
+  imports: [UiPanel, Button, DataTable, LoadingComponent, RouterLink],
   template: `
-    <app-ui-panel>
-      <ng-template #start>
-        <app-button color="primary" text="Create" routerLink="../create" />
-      </ng-template>
-    </app-ui-panel>
-    <app-data-table
-      [data]="_service.data()"
-      [columns]="_service.columns()"
-      [persistenceKey]="_service.schema().persistenceKey"
-      (orderBy)="onOrderBy($event)"
-      (searchQuery)="onSearch($event)"
-    />
+    @if (_service.facade.loading()) {
+      <app-loading [text]="'Loading data'" />
+    } @else {
+      <app-ui-panel>
+        <ng-template #start>
+          <app-button color="primary" text="Create" routerLink="../create" />
+        </ng-template>
+      </app-ui-panel>
+      <app-data-table
+        [data]="_service.data()"
+        [columns]="_service.columns()"
+        [persistenceKey]="_service.schema().persistenceKey"
+        (orderBy)="onOrderBy($event)"
+        (searchQuery)="onSearch($event)"
+      />
+    }
   `,
-  styles: ``,
+  styles: `
+    :host {
+      display: block;
+      position: relative;
+      min-height: 200px;
+    }
+  `,
 })
 export class DataTableTemplate {
   protected readonly _service = inject(DataTableService);

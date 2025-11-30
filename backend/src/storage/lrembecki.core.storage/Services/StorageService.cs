@@ -53,10 +53,19 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
                 await blobHelper.RemoveBlobAsync(existingBlobPath, "storage", default);
             }
 
+            if (model.Image != null)
+            {
+                model = model with
+                {
+                    BinaryData = model.BinaryData!.Replace("data:image/png;base64,", "")
+                        .Replace("data:image/jpg;base64,", "")
+                        .Replace("data:image/jpeg;base64,", "")
+                };
+            }
+
             model = model with
             {
-                BlobPath = $"{id}/{model.Filename!}",
-                BinaryData = model.BinaryData!.Split(",")[1]
+                BlobPath = $"{id}/{model.Filename!}"
             };
 
             var ms = new MemoryStream(Convert.FromBase64String(model.BinaryData ?? string.Empty));
