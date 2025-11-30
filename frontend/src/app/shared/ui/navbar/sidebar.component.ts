@@ -12,29 +12,61 @@ import * as trotamundos from 'app/modules/trotamundos/routes';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { PanelMenu } from 'primeng/panelmenu';
 import { RippleModule } from 'primeng/ripple';
 
 @Component({
   standalone: true,
-  imports: [MenuModule, BadgeModule, RippleModule, AvatarModule, PanelMenu],
-  selector: 'app-navbar',
-  template: `<p-panelmenu
-    [model]="items()"
-    [multiple]="true"
-    class="flex justify-center"
-    styleClass="w-full md:w-80"
-  />`,
+  imports: [
+    MenuModule,
+    BadgeModule,
+    RippleModule,
+    AvatarModule,
+    PanelMenu,
+    ButtonModule,
+  ],
+  selector: 'app-sidebar',
+  template: `
+    <div class="sidebar-header">
+      <button
+        pButton
+        [icon]="collapsed() ? 'pi pi-angle-right' : 'pi pi-angle-left'"
+        (click)="toggleCollapse()"
+        [text]="true"
+        severity="secondary"
+      ></button>
+    </div>
+    @if (!collapsed()) {
+      <p-panelmenu
+        [model]="items()"
+        [multiple]="true"
+        class="flex justify-center"
+        styleClass="w-full md:w-80"
+      />
+    }
+  `,
   styles: [
     `
+      :host {
+        display: flex;
+        flex-direction: column;
+      }
+      .sidebar-header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.5rem;
+        border-bottom: 1px solid var(--border);
+      }
       .p-panelmenu {
         min-width: 200px;
       }
     `,
   ],
 })
-export class NavbarComponent {
+export class SidebarComponent {
+  collapsed = signal<boolean>(false);
   private readonly _translation = inject(TranslationService);
   private readonly _storage = inject(StorageService);
   private readonly _auth = inject(AuthService);
@@ -43,6 +75,12 @@ export class NavbarComponent {
   items = signal<MenuItem[]>([]);
 
   constructor() {
+    // Load saved collapse state
+    const savedState = localStorage.getItem('sidebar-collapsed');
+    if (savedState !== null) {
+      this.collapsed.set(savedState === 'true');
+    }
+
     effect(async () => {
       const featureRoutes = await this.getItemGroup('Features', feature.routes);
       const settingsRoutes = await this.getItemGroup(
@@ -180,5 +218,10 @@ export class NavbarComponent {
         `${menuItem.routerLink}/`,
       );
     }
+  }
+
+  toggleCollapse(): void {
+    this.collapsed.update((v) => !v);
+    localStorage.setItem('sidebar-collapsed', String(this.collapsed()));
   }
 }

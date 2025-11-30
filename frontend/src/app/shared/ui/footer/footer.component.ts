@@ -17,12 +17,13 @@ import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.comp
   template: `
     <footer class="footer">
       <div class="footer-content">
-        <p>{{ 'FOOTER.ALL_RIGHTS_RESERVED' | translate }}</p>
+        <p>
+          {{ 'FOOTER.ALL_RIGHTS_RESERVED' | translate }} © {{ currentYear }}
+        </p>
       </div>
       <div class="footer-switchers">
         <app-theme-switcher />
         <app-language-switcher />
-
         @if (userData()?.subscriptions?.length) {
           <app-subscription-switcher />
         }
@@ -30,39 +31,80 @@ import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.comp
     </footer>
   `,
   styles: `
+    ::ng-deep app-footer,
+    ::ng-deep app-footer .p-select-label {
+      font-size: 0.75rem !important;
+    }
+
+    :host {
+      display: block;
+    }
+
     .footer {
       display: flex;
-      padding: 1rem;
-      flex-direction: column;
+      padding: 0.5rem 1rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      background-color: var(--bg);
+      color: var(--txt);
+      flex-shrink: 0;
+      gap: 1rem;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
     }
 
     .footer-content {
-      flex: 1;
       display: flex;
-      justify-content: center;
       align-items: center;
-      width: 100%;
-      font-size: 1rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+
+      p {
+        margin: 0;
+        transition: color 0.2s ease;
+      }
     }
 
-    .footer-switchers {
+    ::ng-deep .footer-switchers {
       display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 0.5rem;
+      align-items: center;
+      gap: 0.5rem;
 
-      app-theme-switcher,
-      app-language-switcher {
-        margin-bottom: 0.25rem !important;
+      & {
+        label,
+        .p-dropdown,
+        .p-select,
+        .p-dropdown-label,
+        .p-select-label {
+          font-size: 0.75rem;
+        }
+
+        .p-dropdown,
+        .p-select {
+          min-width: auto;
+        }
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .footer {
-        padding: 0.25rem;
-      }
-      .footer-switchers {
         flex-direction: column;
+        padding: 0.5rem;
+        gap: 0.5rem;
+      }
+
+      .footer-content {
+        order: 2;
+      }
+
+      .footer-switchers {
+        order: 1;
+        flex-wrap: wrap;
+        justify-content: center;
       }
     }
   `,
@@ -70,4 +112,5 @@ import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.comp
 export class FooterComponent {
   private readonly _storage = inject(StorageService);
   protected readonly userData = this._storage.account.data;
+  protected readonly currentYear = new Date().getFullYear();
 }

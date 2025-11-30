@@ -172,33 +172,28 @@ import { TextareaInput } from './textarea-input';
                 }
 
                 <div class="actions">
-                  @if (i !== 0) {
-                    <button
-                      pButton
-                      [icon]="
-                        layout() === 'horizontal'
-                          ? 'pi pi-arrow-left'
-                          : 'pi pi-arrow-up'
-                      "
-                      [disabled]="i === 0"
-                      (click)="move(i, -1)"
-                      text
-                    ></button>
-                  }
-
-                  @if (i !== lastIndex()) {
-                    <button
-                      pButton
-                      [icon]="
-                        layout() === 'horizontal'
-                          ? 'pi pi-arrow-right'
-                          : 'pi pi-arrow-down'
-                      "
-                      [disabled]="i === lastIndex()"
-                      (click)="move(i, 1)"
-                      text
-                    ></button>
-                  }
+                  <button
+                    pButton
+                    [icon]="
+                      layout() === 'horizontal'
+                        ? 'pi pi-arrow-left'
+                        : 'pi pi-arrow-up'
+                    "
+                    [disabled]="i === 0"
+                    (click)="move(i, -1)"
+                    text
+                  ></button>
+                  <button
+                    pButton
+                    [icon]="
+                      layout() === 'horizontal'
+                        ? 'pi pi-arrow-right'
+                        : 'pi pi-arrow-down'
+                    "
+                    [disabled]="i === lastIndex()"
+                    (click)="move(i, 1)"
+                    text
+                  ></button>
                   <button
                     pButton
                     icon="pi pi-trash"
@@ -251,6 +246,8 @@ import { TextareaInput } from './textarea-input';
       display: flex;
       gap: 0.25rem;
       margin-left: auto;
+      margin-top: 1.5rem;
+      margin-bottom: auto;
     }
     .collection.horizontal .actions {
       margin-left: 0;

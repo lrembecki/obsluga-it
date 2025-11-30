@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, signal, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { AppUpdateService } from './core/services/app-update.service';
@@ -8,13 +8,13 @@ import { TranslationService } from './core/services/translation.service';
 import { SignIn } from './features/account/sign-in';
 import { BreadcrumbsComponent } from './shared/ui/breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './shared/ui/footer/footer.component';
-import { NavbarComponent } from './shared/ui/navbar/navbar.component';
+import { SidebarComponent } from './shared/ui/navbar/sidebar.component';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    NavbarComponent,
+    SidebarComponent,
     FooterComponent,
     BreadcrumbsComponent,
     SignIn,
@@ -23,46 +23,69 @@ import { NavbarComponent } from './shared/ui/navbar/navbar.component';
   styles: `
     :host {
       height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-body {
+      flex: 1;
+      display: flex;
+      margin: 0.5rem;
+      gap: 0.5rem;
+      overflow: hidden;
+    }
+
+    .sidebar-container {
+      flex-shrink: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transition:
+        width 0.3s ease,
+        min-width 0.3s ease;
+      border-right: 1px solid var(--border);
+      border-radius: 0.25rem;
+    }
+
+    .sidebar-container.collapsed {
+      width: 3rem;
+      min-width: 3rem;
+    }
+
+    .sidebar-container:not(.collapsed) {
+      width: auto;
+      min-width: 220px;
     }
 
     .app-body-content {
-      & > * {
-        flex: auto;
-      }
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-width: 0;
     }
 
     .content {
       display: flex;
       flex-direction: column;
       flex: auto;
-    }
-
-    :host,
-    .app-body-content {
-      display: flex;
-      flex: auto;
-      flex-direction: column;
-      justify-content: flex-start;
-      width: 100%;
-      overflow-x: hidden;
-    }
-    .app-body {
-      flex: auto;
-      display: flex;
+      padding: 0.5rem;
     }
   `,
   providers: [],
   template: `
     <p-toast />
-    @if (account()) {
-      <app-breadcrumbs />
-    }
 
-    <div class="app-body" style="margin: .5rem;">
+    <div class="app-body">
       @if (account()) {
-        <app-navbar />
+        <div class="sidebar-container" [class.collapsed]="sidebarCollapsed()">
+          <app-sidebar #sidebar />
+        </div>
       }
-      <div class="app-body-content" style="margin-left: .5rem;">
+      <div class="app-body-content">
+        @if (account()) {
+          <app-breadcrumbs />
+        }
         <div class="content">
           @if (account()) {
             <router-outlet />
@@ -79,10 +102,20 @@ export class App {
   protected readonly account = inject(StorageService).account.data;
   private readonly _translation = inject(TranslationService);
   private readonly _auth = inject(AuthService);
+  protected readonly sidebarCollapsed = signal<boolean>(false);
+  private readonly sidebar = viewChild<SidebarComponent>('sidebar');
 
   constructor() {
     // Initialize AppUpdateService to start listening for updates
     inject(AppUpdateService);
+
+    // Sync sidebar collapsed state
+    effect(() => {
+      const sidebarRef = this.sidebar();
+      if (sidebarRef) {
+        this.sidebarCollapsed.set(sidebarRef.collapsed());
+      }
+    });
   }
 
   ngOnInit() {
