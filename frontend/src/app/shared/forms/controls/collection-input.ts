@@ -215,10 +215,6 @@ import { TextareaInput } from './textarea-input';
       flex-direction: column;
       gap: 0.25rem;
     }
-    ::ng-deep .p-accordioncontent {
-      max-height: 70dvh;
-      overflow-y: auto;
-    }
     .collection {
       display: flex;
       flex-direction: column;
