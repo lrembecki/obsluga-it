@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  CUSTOM_ELEMENTS_SCHEMA,
+  input,
+} from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -7,6 +12,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { fieldValue } from '@app/core/helpers/field.helper';
+import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -33,6 +39,7 @@ import { TextareaInput } from './textarea-input';
     ButtonModule,
     InputText,
     TextareaModule,
+    AccordionModule,
     CheckboxModule,
     DatePickerModule,
     TextInput,
@@ -44,114 +51,163 @@ import { TextareaInput } from './textarea-input';
     CustomInput,
   ],
   template: `
-    <h2>{{ collectionField().label }}</h2>
-
-    <div class="collection">
-      @if (length() === 0) {
-        <div class="empty">
-          {{ collectionField().emptyText || 'Brak elementów' }}
-        </div>
-      }
-
-      @for (i of indexes(); track i) {
-        <div class="item">
-          @if (isPrimitive()) {
-            @switch (collectionField().itemType) {
-              @case ('text') {
-                <input
-                  pInputText
-                  [placeholder]="collectionField().placeholder"
-                  [formControl]="itemControl(i)"
-                />
-              }
-              @case ('textarea') {
-                <textarea
-                  pTextarea
-                  class="w-full"
-                  [formControl]="itemControl(i)"
-                ></textarea>
-              }
-              @case ('checkbox') {
-                <p-checkbox binary="true" [formControl]="itemControl(i)" />
-              }
-              @case ('date') {
-                <p-datepicker [formControl]="itemControl(i)" />
-              }
-              @default {
-                <input pInputText [formControl]="itemControl(i)" />
-              }
+    <p-accordion value="0">
+      <p-accordion-panel value="0">
+        <p-accordion-header>
+          <div
+            style="display: flex; align-items: center; gap: 0.5rem; width: 100%; margin-right: 1rem;"
+          >
+            <span>{{ collectionField().label }}</span>
+            <button
+              pButton
+              icon="pi pi-plus"
+              (click)="add(); $event.stopPropagation()"
+              [disabled]="maxReached()"
+              size="small"
+              style="margin-left: auto;"
+            ></button>
+          </div>
+        </p-accordion-header>
+        <p-accordion-content>
+          <div
+            class="collection"
+            [class.horizontal]="layout() === 'horizontal'"
+          >
+            @if (length() === 0) {
+              <div class="empty">
+                {{ collectionField().emptyText || 'Brak elementów' }}
+              </div>
             }
-          } @else {
-            <div class="item-grid">
-              @for (sub of collectionField().itemFields ?? []; track sub.key) {
-                @if (sub.isVisible) {
-                  <div
-                    class="sub-field"
-                    [ngClass]="sub.colClass || collectionField().itemColClass"
-                  >
-                    @if (sub.type === 'text') {
-                      <app-text-input [field]="sub" [form]="itemGroup(i)" />
+
+            @for (i of indexes(); track i) {
+              <div class="item">
+                @if (isPrimitive()) {
+                  @switch (collectionField().itemType) {
+                    @case ('text') {
+                      <input
+                        pInputText
+                        [placeholder]="collectionField().placeholder"
+                        [formControl]="itemControl(i)"
+                      />
                     }
-                    @if (sub.type === 'textarea') {
-                      <app-textarea-input [field]="sub" [form]="itemGroup(i)" />
+                    @case ('textarea') {
+                      <textarea
+                        pTextarea
+                        class="w-full"
+                        [formControl]="itemControl(i)"
+                      ></textarea>
                     }
-                    @if (sub.type === 'select') {
-                      <app-select-input [field]="sub" [form]="itemGroup(i)" />
+                    @case ('checkbox') {
+                      <p-checkbox
+                        binary="true"
+                        [formControl]="itemControl(i)"
+                      />
                     }
-                    @if (sub.type === 'date') {
-                      <app-date-input [field]="sub" [form]="itemGroup(i)" />
+                    @case ('date') {
+                      <p-datepicker [formControl]="itemControl(i)" />
                     }
-                    @if (sub.type === 'checkbox') {
-                      <app-checkbox-input [field]="sub" [form]="itemGroup(i)" />
+                    @default {
+                      <input pInputText [formControl]="itemControl(i)" />
                     }
-                    @if (sub.type === 'image') {
-                      <app-image-input [field]="sub" [form]="itemGroup(i)" />
-                    }
-                    @if (sub.type === 'custom') {
-                      <app-custom-input [field]="sub" [form]="itemGroup(i)" />
+                  }
+                } @else {
+                  <div class="item-grid">
+                    @for (
+                      sub of collectionField().itemFields ?? [];
+                      track sub.key
+                    ) {
+                      @if (sub.isVisible) {
+                        <div
+                          class="sub-field"
+                          [ngClass]="
+                            sub.colClass || collectionField().itemColClass
+                          "
+                        >
+                          @if (sub.type === 'text') {
+                            <app-text-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                          @if (sub.type === 'textarea') {
+                            <app-textarea-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                          @if (sub.type === 'select') {
+                            <app-select-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                          @if (sub.type === 'date') {
+                            <app-date-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                          @if (sub.type === 'checkbox') {
+                            <app-checkbox-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                          @if (sub.type === 'image') {
+                            <app-image-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                          @if (sub.type === 'custom') {
+                            <app-custom-input
+                              [field]="sub"
+                              [form]="itemGroup(i)"
+                            />
+                          }
+                        </div>
+                      }
                     }
                   </div>
                 }
-              }
-            </div>
-          }
 
-          <div class="actions">
-            <button
-              pButton
-              icon="pi pi-arrow-up"
-              [disabled]="i === 0"
-              (click)="move(i, -1)"
-              text
-            ></button>
-            <button
-              pButton
-              icon="pi pi-arrow-down"
-              [disabled]="i === lastIndex()"
-              (click)="move(i, 1)"
-              text
-            ></button>
-            <button
-              pButton
-              icon="pi pi-trash"
-              severity="danger"
-              (click)="remove(i)"
-              text
-            ></button>
+                <div class="actions">
+                  <button
+                    pButton
+                    [icon]="
+                      layout() === 'horizontal'
+                        ? 'pi pi-arrow-left'
+                        : 'pi pi-arrow-up'
+                    "
+                    [disabled]="i === 0"
+                    (click)="move(i, -1)"
+                    text
+                  ></button>
+                  <button
+                    pButton
+                    [icon]="
+                      layout() === 'horizontal'
+                        ? 'pi pi-arrow-right'
+                        : 'pi pi-arrow-down'
+                    "
+                    [disabled]="i === lastIndex()"
+                    (click)="move(i, 1)"
+                    text
+                  ></button>
+                  <button
+                    pButton
+                    icon="pi pi-trash"
+                    severity="danger"
+                    (click)="remove(i)"
+                    text
+                  ></button>
+                </div>
+              </div>
+            }
           </div>
-        </div>
-      }
-
-      <div class="add-row">
-        <button
-          pButton
-          icon="pi pi-plus"
-          [label]="collectionField().addButtonText || 'Dodaj'"
-          (click)="add()"
-          [disabled]="maxReached()"
-        ></button>
-      </div>
-    </div>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
   `,
   styles: `
     :host {
@@ -159,20 +215,42 @@ import { TextareaInput } from './textarea-input';
       flex-direction: column;
       gap: 0.25rem;
     }
+    ::ng-deep .p-accordioncontent {
+      max-height: 70dvh;
+      overflow-y: auto;
+    }
     .collection {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+    }
+    .collection.horizontal {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
     }
     .item {
       display: flex;
       align-items: start;
       gap: 0.5rem;
     }
+    .collection.horizontal .item {
+      flex-direction: column;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      min-width: 14rem;
+    }
     .actions {
       display: flex;
       gap: 0.25rem;
       margin-left: auto;
+    }
+    .collection.horizontal .actions {
+      margin-left: 0;
+      margin-top: 0.5rem;
+      justify-content: flex-end;
     }
     .item-grid {
       flex: auto;
@@ -191,14 +269,16 @@ import { TextareaInput } from './textarea-input';
       font-style: italic;
     }
   `,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CollectionInput {
   field = input.required<FormFieldSchema<unknown>>();
   form = input.required<FormGroup>();
 
   protected collectionField = computed(
-    () => this.field() as CollectionFormFieldSchema<any, any>,
+    () => this.field() as any as CollectionFormFieldSchema<any, any>,
   );
+  layout = computed(() => this.collectionField().layout);
   protected get formArrayCtrl(): FormArray {
     return this.form().get(this.collectionField().key as string) as FormArray;
   }

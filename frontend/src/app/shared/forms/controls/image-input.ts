@@ -20,14 +20,6 @@ import { FormFieldSchema, ImageFormFieldSchema } from '../form-schema.model';
             [src]="img.binaryData || img.blobUrl"
             [alt]="img.filename || 'Image preview'"
           />
-          <button
-            type="button"
-            class="remove-btn"
-            (click)="removeImage()"
-            title="Remove image"
-          >
-            <i class="pi pi-times"></i>
-          </button>
         </div>
       } @else {
         <p-fileupload
@@ -113,14 +105,6 @@ export class ImageInput {
     const control = this.form().get(this.imageField().key as string);
     if (control) {
       control.setValue(storageVM);
-      control.markAsDirty();
-    }
-  }
-
-  protected removeImage(): void {
-    const control = this.form().get(this.imageField().key as string);
-    if (control) {
-      control.setValue(null);
       control.markAsDirty();
     }
   }

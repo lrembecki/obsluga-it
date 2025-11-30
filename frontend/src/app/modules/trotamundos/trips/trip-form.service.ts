@@ -180,6 +180,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
             { order: number; imageId: string; image: any }
           >({
             label: 'Images',
+            layout: 'horizontal',
             key: 'images',
             orderField: 'order',
             addButtonText: 'Add image',

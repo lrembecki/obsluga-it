@@ -143,6 +143,7 @@ export class CollectionFormFieldSchema<
   T,
   I = unknown,
 > extends FormFieldSchema<T> {
+  layout: 'vertical' | 'horizontal' = 'vertical';
   // Primitive item type when collection holds primitives
   itemType?: PrimitiveCollectionItemType;
   // Nested schema when collection holds objects
