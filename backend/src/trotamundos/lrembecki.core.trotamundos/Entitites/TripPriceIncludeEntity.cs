@@ -21,7 +21,7 @@ public class TripPriceIncludeEntity
     public void Update(TripPriceIncludeDto model)
     {
         Order = model.Order;
-        Includes = model.Includes;
+        Includes = model.Includes.GetValueOrDefault(false);
         Content = model.Content;
     }
 }

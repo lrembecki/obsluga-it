@@ -9,7 +9,9 @@ namespace lrembecki.core.Services
         Task<List<T>> GetAsync(Expression<Func<T, bool>>? predicate = null);
         Task<List<VM>> SelectAsync<VM>(Expression<Func<T, VM>> project, Expression<Func<T, bool>>? predicate = null);
         Task<T> AddAsync(T entity);
+        Task<List<T>> AddAsync(List<T> entities);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
+        Task<List<T>> DeleteAsync(List<T> entities);
     };
 }

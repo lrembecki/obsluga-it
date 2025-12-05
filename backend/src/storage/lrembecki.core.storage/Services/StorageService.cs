@@ -57,9 +57,7 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
             {
                 model = model with
                 {
-                    BinaryData = model.BinaryData!.Replace("data:image/png;base64,", "")
-                        .Replace("data:image/jpg;base64,", "")
-                        .Replace("data:image/jpeg;base64,", "")
+                    BinaryData = model.BinaryData.Split(',')[1]
                 };
             }
 

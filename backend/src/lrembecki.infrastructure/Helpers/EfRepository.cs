@@ -50,4 +50,23 @@ internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filte
 
     public Task<List<T>> GetAsync(Expression<Func<T, bool>>? predicate = null)
         => GetAll(predicate).ToListAsync();
+
+    public async Task<List<T>> AddAsync(List<T> entities)
+    {
+        _dbSet.AddRange(entities);
+        await uow.SaveChangesAsync();
+
+        return entities;
+    }
+
+    public async Task<List<T>> DeleteAsync(List<T> entities)
+    {
+        if (entities.Count > 0)
+        {
+            _dbSet.RemoveRange(entities);
+            await uow.SaveChangesAsync();
+        }
+
+        return entities;
+    }
 }

@@ -35,52 +35,70 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
       this._schema.set(
         new FormSchema<TripVM>({
           fields: [
+            // Name: string
             new TextFormFieldSchema<TripVM>({
               label: 'Name',
               key: 'name',
               validators: [Validators.required],
               colClass: 'col-3',
             }),
+
+            // Active: boolean
             new CheckboxFormFieldSchema<TripVM>({
               label: 'Active',
               key: 'isActive',
               colClass: 'col-1',
             }),
+
+            // Disabled: boolean
             new CheckboxFormFieldSchema<TripVM>({
               label: 'Disabled',
               key: 'isDisabled',
               colClass: 'col-1',
             }),
+
+            // Title: string
             new TextFormFieldSchema<TripVM>({
               label: 'Title',
               key: 'title',
               validators: [Validators.required],
               colClass: 'col-3',
             }),
+
+            // Subtitle: string
             new TextFormFieldSchema<TripVM>({
               label: 'Subtitle',
               key: 'subtitle',
               validators: [],
               colClass: 'col-3',
             }),
+
+            // Description: string
             new TextareaFormFieldSchema<TripVM>({
               label: 'Description',
               key: 'description',
               validators: [],
               colClass: 'col-12',
+              rows: 8,
             }),
+
+            // Start Date: Date
             new DateFormFieldSchema<TripVM>({
               label: 'Start Date',
               key: 'startDate',
               validators: [],
               colClass: 'col-3',
             }),
+
+            // End Date: Date
             new DateFormFieldSchema<TripVM>({
               label: 'End Date',
               key: 'endDate',
               validators: [],
               colClass: 'col-3',
             }),
+
+            // Callendar: string
             new TextFormFieldSchema<TripVM>({
               label: 'Calendar',
               key: 'calendar',
@@ -220,6 +238,226 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
                   disabled: true,
                   isVisible: false,
                   colClass: 'col-2',
+                }),
+              ],
+            }),
+
+            // Collection: schedule (order:number, title: string, description: string)
+            new CollectionFormFieldSchema<
+              TripVM,
+              { order: number; title: string; content: string }
+            >({
+              label: 'Schedule',
+              key: 'schedules',
+              orderField: 'order',
+              addButtonText: 'Add schedule item',
+              emptyText: 'No items',
+              itemColClass: 'col-12',
+              itemFields: [
+                new TextFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  content: string;
+                }>({
+                  key: 'order' as any,
+                  label: 'Order',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-1',
+                }),
+                new TextFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  content: string;
+                }>({
+                  key: 'title' as any,
+                  label: 'Title',
+                  colClass: 'col-2',
+                }),
+                new TextareaFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  content: string;
+                }>({
+                  key: 'content' as any,
+                  label: 'Content',
+                  colClass: 'col-10',
+                  rows: 7,
+                }),
+              ],
+            }),
+
+            // Collection: price includes (order: number, content: string, includes: boolean)
+            new CollectionFormFieldSchema<
+              TripVM,
+              { order: number; content: string; includes: boolean }
+            >({
+              label: 'Price Includes',
+              key: 'priceIncludes',
+              orderField: 'order',
+              addButtonText: 'Add item',
+              emptyText: 'No items',
+              itemColClass: 'col-12',
+              itemFields: [
+                new TextFormFieldSchema<{
+                  order: number;
+                  content: string;
+                  includes: boolean;
+                }>({
+                  key: 'order' as any,
+                  label: 'Order',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-1',
+                }),
+                new CheckboxFormFieldSchema<{
+                  order: number;
+                  content: string;
+                  includes: boolean;
+                }>({
+                  key: 'includes' as any,
+                  label: 'Includes',
+                  colClass: 'col-1',
+                }),
+                new TextareaFormFieldSchema<{
+                  order: number;
+                  content: string;
+                  includes: boolean;
+                }>({
+                  key: 'content' as any,
+                  label: 'Content',
+                  colClass: 'col-11',
+                  rows: 2,
+                }),
+              ],
+            }),
+
+            // Collection: payment schedules (order:number, title:string, price:string, description:string)
+            new CollectionFormFieldSchema<
+              TripVM,
+              {
+                order: number;
+                title: string;
+                price: string;
+                description: string;
+              }
+            >({
+              label: 'Payment Schedules',
+              key: 'paymentSchedules',
+              orderField: 'order',
+              addButtonText: 'Add payment schedule',
+              emptyText: 'No payment schedules',
+              itemColClass: 'col-12',
+              itemFields: [
+                new TextFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  price: string;
+                  description: string;
+                }>({
+                  key: 'order' as any,
+                  label: 'Order',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-1',
+                }),
+                new TextFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  price: string;
+                  description: string;
+                }>({
+                  key: 'title' as any,
+                  label: 'Title',
+                  colClass: 'col-3',
+                }),
+                new TextFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  price: string;
+                  description: string;
+                }>({
+                  key: 'price' as any,
+                  label: 'Price',
+                  colClass: 'col-2',
+                }),
+                new TextareaFormFieldSchema<{
+                  order: number;
+                  title: string;
+                  price: string;
+                  description: string;
+                }>({
+                  key: 'description' as any,
+                  label: 'Description',
+                  colClass: 'col-6',
+                  rows: 3,
+                }),
+              ],
+            }),
+
+            // Collection: requirements (order:number, description:string)
+            new CollectionFormFieldSchema<
+              TripVM,
+              { order: number; description: string }
+            >({
+              label: 'Requirements',
+              key: 'requirements',
+              orderField: 'order',
+              addButtonText: 'Add requirement',
+              emptyText: 'No requirements',
+              itemColClass: 'col-12',
+              itemFields: [
+                new TextFormFieldSchema<{
+                  order: number;
+                  description: string;
+                }>({
+                  key: 'order' as any,
+                  label: 'Order',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-1',
+                }),
+                new TextareaFormFieldSchema<{
+                  order: number;
+                  description: string;
+                }>({
+                  key: 'description' as any,
+                  label: 'Description',
+                  colClass: 'col-11',
+                  rows: 2,
+                }),
+              ],
+            }),
+
+            // Collection: suggested flights (order:number, imageId:string)
+            new CollectionFormFieldSchema<
+              TripVM,
+              { order: number; imageId: string }
+            >({
+              label: 'Suggested Flights',
+              key: 'suggestedFlights',
+              orderField: 'order',
+              addButtonText: 'Add suggested flight',
+              emptyText: 'No suggested flights',
+              itemColClass: 'col-12',
+              itemFields: [
+                new TextFormFieldSchema<{
+                  order: number;
+                  imageId: string;
+                }>({
+                  key: 'order' as any,
+                  label: 'Order',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-1',
+                }),
+                new TextFormFieldSchema<{
+                  order: number;
+                  imageId: string;
+                }>({
+                  key: 'imageId' as any,
+                  label: 'Image Id',
+                  colClass: 'col-11',
                 }),
               ],
             }),

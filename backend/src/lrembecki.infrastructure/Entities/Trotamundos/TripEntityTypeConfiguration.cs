@@ -45,5 +45,7 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
         builder.Navigation(e => e.Advantages).AutoInclude();
         builder.Navigation(e => e.Highlights).AutoInclude();
         builder.Navigation(e => e.Images).AutoInclude();
+        builder.Navigation(e => e.Schedules).AutoInclude();
+        builder.Navigation(e => e.PriceIncludes).AutoInclude();
     }
 }

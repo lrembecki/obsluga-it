@@ -13,6 +13,8 @@ internal sealed class TripService(
     IStorageService storage) : BaseCrudService<TripEntity, TripVM, TripDto>(uow), ITripService
 {
     private readonly IRepository<AdvantageEntity> _advantages = uow.GetRepository<AdvantageEntity>();
+    private readonly IRepository<TripImageEntity> _tripImages = uow.GetRepository<TripImageEntity>();
+    private readonly IRepository<TripScheduleEntity> _tripSchedules = uow.GetRepository<TripScheduleEntity>();
 
     protected override Task<TripDto> Validate(TripDto model)
         => base.Validate(CleanUpModel(model));
@@ -36,6 +38,12 @@ internal sealed class TripService(
         entity.UpdateAdvantages(advantages);
 
         await base.UpdateEntity(entity, model);
+
+        await _tripImages.DeleteAsync(entity.Images);
+        await _tripImages.AddAsync(model.Images.Select(e => TripImageEntity.Create(entity.Id, e)).ToList());
+
+        await _tripSchedules.DeleteAsync(entity.Schedules);
+        await _tripSchedules.AddAsync(model.Schedules.Select(e => TripScheduleEntity.Create(entity.Id, e)).ToList());
     }
 
     private TripDto CleanUpModel(TripDto model)
@@ -63,6 +71,8 @@ internal sealed class TripService(
             foreach (var image in removeImages) 
             {
                 tripEntity.Images.Remove(image);
+
+                await _tripImages.DeleteAsync(image);
                 await storage.DeleteAsync(image.ImageId, cancellationToken);
             }
         }
