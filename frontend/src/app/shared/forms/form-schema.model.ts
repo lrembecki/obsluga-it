@@ -41,12 +41,26 @@ export class FormFieldSchema<T> {
   // Optional grid column class for layout: 'col-1' ... 'col-12'
   colClass?: string;
 
+  // Optional static value to pass to the renderer (for read-only or computed displays)
+  value?: any;
+  // Optional renderer function to derive a display value from the current form value
+  // Return any type suitable for the target control (string, number, boolean, Date, object)
+  renderValue?: (formValue: T) => any;
+
   dynamicDisabled?: (formValue: T) => boolean = (_v) => false;
   createControl: (
     mode: 'create' | 'edit',
     disabled: boolean,
-  ) => AbstractControl = (_mode, disabled) =>
-    new FormControl({ value: null, disabled }, this.validators ?? []);
+    formValue?: T,
+  ) => AbstractControl = (_mode, disabled, formValue) => {
+    let initial: any = null;
+    if (this.value !== undefined) {
+      initial = this.value;
+    } else if (this.renderValue) {
+      initial = this.renderValue(formValue as T);
+    }
+    return new FormControl({ value: initial, disabled }, this.validators ?? []);
+  };
 
   constructor(type: FormFieldType, init?: Partial<FormFieldSchema<T>>) {
     Object.assign(this, init);
@@ -85,6 +99,7 @@ export class DateFormFieldSchema<T> extends FormFieldSchema<T> {
     super('date', init);
     Object.assign(this, init);
     this.colClass ??= 'col-3';
+    this.value = false;
   }
 }
 
@@ -106,8 +121,19 @@ export class MultiSelectFormFieldSchema<T> extends FormFieldSchema<T> {
   constructor(init?: Partial<MultiSelectFormFieldSchema<T>>) {
     super('multiselect', init);
     Object.assign(this, init);
-    this.createControl = (_mode, disabled) =>
-      new FormControl({ value: [], disabled }, this.validators ?? []);
+    this.createControl = (_mode, disabled, formValue) => {
+      let computed: any = undefined;
+      if (this.value !== undefined) {
+        computed = this.value;
+      } else if (this.renderValue) {
+        computed = this.renderValue(formValue as T);
+      }
+      const initial = Array.isArray(computed) ? computed : [];
+      return new FormControl(
+        { value: initial, disabled },
+        this.validators ?? [],
+      );
+    };
     this.colClass ??= 'col-3';
   }
 }
