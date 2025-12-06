@@ -24,5 +24,6 @@ public static class ServiceRegistration
 
         group.MapCrud<IContactService, ContactDto, ContactVM>("contacts");
         group.MapCrud<IEmailService, EmailDto, EmailVM>("emails");
+        group.MapCrud<IFtpService, FtpDto, FtpVM>("ftps");
     }
 }
