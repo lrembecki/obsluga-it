@@ -3,7 +3,7 @@ import { Component, computed, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { fieldValue } from '@app/core/helpers/field.helper';
 import { SelectModule } from 'primeng/select';
-import { FormFieldSchema, SelectFormFieldSchema } from '../form-schema.model';
+import { FormFieldSchema, SelectFormFieldSchema } from '@app/shared/forms';
 
 @Component({
   selector: 'app-select-input',

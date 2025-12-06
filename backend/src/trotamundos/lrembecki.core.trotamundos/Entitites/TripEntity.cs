@@ -65,67 +65,6 @@ public class TripEntity : TrotamundosBaseEntity
         Subtitle = model.Subtitle;
         Description = model.Description;
 
-        UpdateAgenda(model);
-        UpdateImages(model);
-
-        Highlights.Clear();
-        Highlights = model.Highlights
-            .Select(highlightDto => TripHighlightEntity.Create(Id, highlightDto))
-            .ToList();
-
-        PaymentSchedules.Clear();
-        PaymentSchedules = model.PaymentSchedules
-            .Select(paymentScheduleDto => TripPaymentScheduleEntity.Create(Id, paymentScheduleDto))
-            .ToList();
-
-        PriceIncludes.Clear();
-        PriceIncludes = model.PriceIncludes
-            .Select(priceIncludeDto => TripPriceIncludeEntity.Create(Id, priceIncludeDto))
-            .ToList();
-
-        Requirements.Clear();
-        Requirements = model.Requirements
-            .Select(requirementDto => TripRequirementEntity.Create(Id, requirementDto))
-            .ToList();
-
-        Schedules.Clear();
-        Schedules = model.Schedules
-            .Select(scheduleDto => TripScheduleEntity.Create(Id, scheduleDto))
-            .ToList();
-
-        SuggestedFlights.Clear();
-        SuggestedFlights = model.SuggestedFlights
-            .Select(suggestedFlightDto => TripSuggestedFlightEntity.Create(Id, suggestedFlightDto))
-            .ToList();
-
         AddDomainEvent(TrotamundosDomainEvent.Create(this));
-    }
-
-    private void UpdateAgenda(TripDto model)
-    {
-        Agenda.Where(a => model.Agenda.All(dto => dto.Order != a.Order));
-
-        model.Agenda.ForEach(agendaDto =>
-        {
-            var existing = Agenda.Find(e => e.Order == agendaDto.Order)
-                ?? TripAgendaEntity.Create(Id, agendaDto);
-
-            existing.Update(agendaDto);
-        });
-    }
-
-    private void UpdateImages(TripDto model)
-    {
-        Images.Where(image => model.Images.All(dto => dto.ImageId != image.ImageId))
-                    .ToList()
-                    .ForEach(image => Images.Remove(image));
-
-        model.Images.ForEach(imageDto =>
-        {
-            var existing = Images.Find(e => e.ImageId == imageDto.ImageId)
-                ?? TripImageEntity.Create(Id, imageDto);
-
-            existing.Update(imageDto);
-        });
     }
 }

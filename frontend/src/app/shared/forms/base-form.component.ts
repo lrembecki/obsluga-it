@@ -1,5 +1,5 @@
 import { Directive, inject, Signal } from '@angular/core';
-import { FormSchema } from './form-schema.model';
+import { FormSchema } from '@app/shared/forms';
 import { FormService } from './form.service';
 import { FormFactoryService } from './services/form-factory.service';
 

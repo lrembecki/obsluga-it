@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormSchema } from '@app/shared/forms';
 import { CheckboxInput } from './controls/checkbox-input';
 import { CollectionInput } from './controls/collection-input';
 import { CustomInput } from './controls/custom-input';
@@ -19,7 +20,6 @@ import { MultiSelectInput } from './controls/multi-select-input';
 import { SelectInput } from './controls/select-input';
 import { TextInput } from './controls/text-input';
 import { TextareaInput } from './controls/textarea-input';
-import { FormSchema } from './form-schema.model';
 import { FormRulesService } from './services/form-rule.service';
 
 @Component({

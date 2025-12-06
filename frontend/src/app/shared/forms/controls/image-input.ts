@@ -4,7 +4,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { convertImageFileToStorageVM } from '@app/shared/storage/storage.helper';
 import { StorageVM } from '@app/shared/storage/storage.vm';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
-import { FormFieldSchema, ImageFormFieldSchema } from '../form-schema.model';
+import { FormFieldSchema, ImageFormFieldSchema } from '@app/shared/forms';
 
 @Component({
   selector: 'app-image-input',

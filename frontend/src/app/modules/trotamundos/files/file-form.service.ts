@@ -4,7 +4,7 @@ import {
   FormSchema,
   TextareaFormFieldSchema,
   TextFormFieldSchema,
-} from '@app/shared/forms/form-schema.model';
+} from '@app/shared/forms';
 import { FormService } from '@app/shared/forms/form.service';
 import { FileVM } from './file.vm';
 

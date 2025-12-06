@@ -1,5 +1,4 @@
-﻿using lrembecki.core.storage.Entities;
-using lrembecki.core.trotamundos.Entitites;
+﻿using lrembecki.core.trotamundos.Entitites;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,6 +13,6 @@ internal class TripSuggestedFlightEntityTypeConfiguration : IEntityTypeConfigura
         builder.HasKey(e => new { e.TripId, e.Order });
 
         builder.HasOne<TripEntity>().WithMany(e => e.SuggestedFlights).HasForeignKey(e => e.TripId);
-        builder.HasOne<StorageEntity>().WithOne().HasForeignKey<TripSuggestedFlightEntity>(e => e.ImageId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(e => e.Image).WithOne().HasForeignKey<TripSuggestedFlightEntity>(e => e.ImageId).OnDelete(DeleteBehavior.Restrict);
     }
 }

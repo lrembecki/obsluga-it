@@ -24,7 +24,7 @@ import {
   FormReturnRouteScope,
   FormSchema,
   FormSchemaScope,
-} from '@app/shared/forms/form-schema.model';
+} from '@app/shared/forms';
 import { provideFeatureTemplate } from '@shared/templates/feature-template.service';
 import { Observable } from 'rxjs';
 import { PermissionType } from '../defaults/permission.default';

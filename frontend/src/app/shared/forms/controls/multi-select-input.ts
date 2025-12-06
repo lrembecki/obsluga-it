@@ -5,7 +5,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import {
   FormFieldSchema,
   MultiSelectFormFieldSchema,
-} from '../form-schema.model';
+} from '@app/shared/forms';
 
 @Component({
   selector: 'app-multi-select-input',

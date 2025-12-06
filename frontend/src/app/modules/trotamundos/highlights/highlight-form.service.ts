@@ -1,8 +1,5 @@
 import { Validators } from '@angular/forms';
-import {
-  FormSchema,
-  TextFormFieldSchema,
-} from '@app/shared/forms/form-schema.model';
+import { FormSchema, TextFormFieldSchema } from '@app/shared/forms';
 import { FormService } from '@app/shared/forms/form.service';
 import { HighlightVM } from './highlight.vm';
 

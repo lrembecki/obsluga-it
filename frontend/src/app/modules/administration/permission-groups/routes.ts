@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { FormSchema } from '@app/shared/forms/form-schema.model';
+import { FormSchema } from '@app/shared/forms';
 import { routeFeatureTemplate } from 'app/core/helpers/route.helper';
 import {
   provideSecurityPermissionGroups,

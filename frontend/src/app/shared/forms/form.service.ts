@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
-import { FormSchema } from './form-schema.model';
+import { FormSchema } from '@app/shared/forms';
 import { FormFactoryService } from './services/form-factory.service';
 
 export function provideFormService(

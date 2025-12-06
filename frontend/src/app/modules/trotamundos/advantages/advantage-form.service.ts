@@ -3,7 +3,7 @@ import {
   FormSchema,
   TextFormFieldSchema,
   TextareaFormFieldSchema,
-} from '@app/shared/forms/form-schema.model';
+} from '@app/shared/forms';
 import { FormService } from '@app/shared/forms/form.service';
 import { AdvantageVM } from './advantage.vm';
 

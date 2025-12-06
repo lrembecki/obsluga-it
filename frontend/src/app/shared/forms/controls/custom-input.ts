@@ -3,7 +3,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { NgComponentOutlet } from '@angular/common';
 import { BaseIcon } from 'primeng/icons/baseicon';
-import { CustomFormFieldSchema, FormFieldSchema } from '../form-schema.model';
+import { CustomFormFieldSchema, FormFieldSchema } from '@app/shared/forms';
 
 @Component({
   selector: 'app-custom-input',

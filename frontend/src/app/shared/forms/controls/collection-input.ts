@@ -21,7 +21,7 @@ import { TextareaModule } from 'primeng/textarea';
 import {
   CollectionFormFieldSchema,
   FormFieldSchema,
-} from '../form-schema.model';
+} from '@app/shared/forms';
 import { CheckboxInput } from './checkbox-input';
 import { CustomInput } from './custom-input';
 import { DateInput } from './date-input';

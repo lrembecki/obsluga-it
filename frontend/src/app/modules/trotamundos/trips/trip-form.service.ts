@@ -11,7 +11,7 @@ import {
   SelectFormFieldSchema,
   TextareaFormFieldSchema,
   TextFormFieldSchema,
-} from '@app/shared/forms/form-schema.model';
+} from '@app/shared/forms';
 import { FormService } from '@app/shared/forms/form.service';
 import { TrotamundosAdvantageFacade } from '../advantages/advantage.facade';
 import { TrotamundosHighlightFacade } from '../highlights/highlight.facade';

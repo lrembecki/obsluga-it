@@ -4,7 +4,7 @@ import {
   CheckboxFormFieldSchema,
   FormSchema,
   TextFormFieldSchema,
-} from '@app/shared/forms/form-schema.model';
+} from '@app/shared/forms';
 import { routeFeatureTemplate } from '@core/helpers/route.helper';
 import { SecurityPermissionGroupFacade } from '../permission-groups/permission-group.provider';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';

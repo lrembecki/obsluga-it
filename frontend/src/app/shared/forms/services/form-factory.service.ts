@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormSchema } from '../form-schema.model';
+import { FormSchema } from '@app/shared/forms';
 
 @Injectable({ providedIn: 'root' })
 export class FormFactoryService {

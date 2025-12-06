@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
-import { FormFieldSchema } from '../form-schema.model';
+import { FormFieldSchema } from '@app/shared/forms';
 
 @Component({
   selector: 'app-checkbox-input',

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
-import { FormFieldSchema } from '../form-schema.model';
+import { FormFieldSchema } from '@app/shared/forms';
 
 @Component({
   selector: 'app-text-input',

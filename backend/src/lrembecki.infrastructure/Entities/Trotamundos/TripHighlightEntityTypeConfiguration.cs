@@ -8,7 +8,7 @@ internal class TripHighlightEntityTypeConfiguration : IEntityTypeConfiguration<T
 {
     public void Configure(EntityTypeBuilder<TripHighlightEntity> builder)
     {
-        builder.HasKey(x => new { x.TripId, x.Order });
+        builder.HasKey(x => new { x.TripId, x.HighlightId });
         builder.ToTable("TrotamundosTripHighlight");
 
         builder.HasOne<TripEntity>().WithMany(e => e.Highlights).HasForeignKey(e => e.TripId).OnDelete(DeleteBehavior.Cascade);
