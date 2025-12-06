@@ -1,6 +1,8 @@
 using Azure.Messaging.ServiceBus;
 using lrembecki.core.Events;
 using lrembecki.core.Helpers;
+using lrembecki.core.settings.Entities;
+using lrembecki.core.settings.Services;
 using lrembecki.core.trotamundos.Entitites;
 using lrembecki.core.trotamundos.Services;
 
@@ -15,6 +17,7 @@ public class TrotamundosEventQueueFunction(
     ILogger<TrotamundosEventQueueFunction> logger,
     ITripService trips,
     IFileService files,
+    IContactService contacts,
     IBlobHelper blob)
 {
     [Function(nameof(TrotamundosEventQueueFunction))]
@@ -40,8 +43,15 @@ public class TrotamundosEventQueueFunction(
         {
             nameof(TripEntity) => PublishTrips(domainEvent, ct),
             nameof(FileEntity) => PublishFiles(domainEvent, ct),
+            nameof(ContactEntity) => PublishContacts(domainEvent, ct),
             _ => throw new NotImplementedException()
         };
+
+    private async Task PublishContacts(DomainEvent domainEvent, CancellationToken ct = default)
+    {
+        var list = await contacts.GetAllAsync(ct);
+        await Upload(list, "contacts", "index");
+    }
 
     private async Task PublishTrips(DomainEvent domainEvent, CancellationToken ct = default)
     {

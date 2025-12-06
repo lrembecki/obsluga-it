@@ -24,7 +24,7 @@ export class TripVM {
     description: string;
   }[] = [];
   requirements: { order: number; description: string }[] = [];
-  suggestedFlights: { order: number; imageId: string }[] = [];
+  suggestedFlights: { order: number; imageId: string; image: StorageVM }[] = [];
 
   constructor(init?: Partial<TripVM>) {
     Object.assign(this, init);

@@ -15,6 +15,7 @@ import {
 import { FormService } from '@app/shared/forms/form.service';
 import { TrotamundosAdvantageFacade } from '../advantages/advantage.facade';
 import { TrotamundosHighlightFacade } from '../highlights/highlight.facade';
+import { StorageVM } from '../loyality-program/loyality-program.vm';
 import { TrotamundosTripFacade } from './trip.provider';
 import { TripVM } from './trip.vm';
 
@@ -432,7 +433,11 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
             // Collection: suggested flights (order:number, imageId:string)
             new CollectionFormFieldSchema<
               TripVM,
-              { order: number; imageId: string }
+              {
+                order: number;
+                imageId: string;
+                image: StorageVM;
+              }
             >({
               label: 'Suggested Flights',
               key: 'suggestedFlights',
@@ -444,6 +449,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
                 new TextFormFieldSchema<{
                   order: number;
                   imageId: string;
+                  image: StorageVM;
                 }>({
                   key: 'order' as any,
                   label: 'Order',
@@ -454,10 +460,22 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
                 new TextFormFieldSchema<{
                   order: number;
                   imageId: string;
+                  image: any;
                 }>({
                   key: 'imageId' as any,
-                  label: 'Image Id',
-                  colClass: 'col-11',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-2',
+                }),
+                new ImageFormFieldSchema<{
+                  order: number;
+                  imageId: string;
+                  image: StorageVM;
+                }>({
+                  key: 'image' as any,
+                  label: 'Image',
+                  colClass: 'col-10',
+                  validators: [Validators.required],
                 }),
               ],
             }),

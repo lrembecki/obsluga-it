@@ -29,20 +29,27 @@ internal sealed class TripService(
     {
         var entity = await base.CreateEntity(id, model, cancellationToken);
 
-        await Task.WhenAll([
-            SyncImagesAsync(model, entity, default!),
-            SyncSuggestedFlightImages(model, entity, default!)
-        ]);
+        await SyncImagesAsync(model, entity, default!);
+        await SyncSuggestedFlightImages(model, entity, default!);
+
+        var advantages = _advantages.GetAll(e => model.Advantages.Contains(e.Id)).ToList();
+        entity.Advantages.AddRange(advantages);
+
+        await _highlights.AddAsync(model.Highlights.Select(e => TripHighlightEntity.Create(entity.Id, e)).ToList());
+        await _paymentSchedules.AddAsync(model.PaymentSchedules.Select(e => TripPaymentScheduleEntity.Create(entity.Id, e)).ToList());
+        await _priceIncludes.AddAsync(model.PriceIncludes.Select(e => TripPriceIncludeEntity.Create(entity.Id, e)).ToList());
+        await _requirements.AddAsync(model.Requirements.Select(e => TripRequirementEntity.Create(entity.Id, e)).ToList());
+        await _suggestedFlights.AddAsync(model.SuggestedFlights.Select(e => TripSuggestedFlightEntity.Create(entity.Id, e)).ToList());
+        await _images.AddAsync(model.Images.Select(e => TripImageEntity.Create(entity.Id, e)).ToList());
+        await _schedules.AddAsync(model.Schedules.Select(e => TripScheduleEntity.Create(entity.Id, e)).ToList());
 
         return entity;
     }
 
     protected override async Task UpdateEntity(TripEntity entity, TripDto model)
     {
-        await Task.WhenAll([
-            SyncImagesAsync(model, entity, default!),
-            SyncSuggestedFlightImages(model, entity, default!)
-        ]);
+        await SyncImagesAsync(model, entity, default!);
+        await SyncSuggestedFlightImages(model, entity, default!);
 
         await base.UpdateEntity(entity, model);
 
