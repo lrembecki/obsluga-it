@@ -2,8 +2,8 @@ import { NgComponentOutlet } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { fieldValue } from '@app/core/helpers/field.helper';
-import { SelectModule } from 'primeng/select';
 import { FormFieldSchema, SelectFormFieldSchema } from '@app/shared/forms';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-select-input',
@@ -19,32 +19,29 @@ import { FormFieldSchema, SelectFormFieldSchema } from '@app/shared/forms';
       [showClear]="selectField().clearable"
       class="w-full md:w-56"
     >
-
-    @if (selectField().itemTemplate) {
-
-      <ng-template #selectedItem let-selectedOption>
-
-        @if (selectedOption) {
-          <div class="flex items-center gap-2">
-            <ng-container [ngComponentOutlet]="selectField().itemTemplate!" 
-                          [ngComponentOutletInputs]="{ item: selectedOption }" />
-          </div>
-        } @else {
+      @if (selectField().itemTemplate) {
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-2">
+              <ng-container
+                [ngComponentOutlet]="selectField().itemTemplate!"
+                [ngComponentOutletInputs]="{ item: selectedOption }"
+              />
+            </div>
+          } @else {
             {{ renderValue(selectedOption, 'label') }}
-        }
+          }
+        </ng-template>
 
-        
-      </ng-template>
-
-
-      <ng-template let-item #item>
-        <div class="flex items-center gap-2">
-          <ng-container [ngComponentOutlet]="selectField().itemTemplate!" 
-                        [ngComponentOutletInputs]="{ item: selectedItem }" />
-        </div>
-      </ng-template>
-      
-    }
+        <ng-template let-item #item>
+          <div class="flex items-center gap-2">
+            <ng-container
+              [ngComponentOutlet]="selectField().itemTemplate!"
+              [ngComponentOutletInputs]="{ item: selectedItem }"
+            />
+          </div>
+        </ng-template>
+      }
     </p-select>
   `,
   host: {
@@ -60,7 +57,9 @@ import { FormFieldSchema, SelectFormFieldSchema } from '@app/shared/forms';
 })
 export class SelectInput {
   field = input.required<FormFieldSchema<unknown>>();
-  protected selectField = computed(() => this.field() as SelectFormFieldSchema<unknown>);
+  protected selectField = computed(
+    () => this.field() as SelectFormFieldSchema<unknown>,
+  );
   form = input.required<FormGroup>();
 
   renderValue = fieldValue;

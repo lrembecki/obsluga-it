@@ -14,5 +14,7 @@ internal class TripSuggestedFlightEntityTypeConfiguration : IEntityTypeConfigura
 
         builder.HasOne<TripEntity>().WithMany(e => e.SuggestedFlights).HasForeignKey(e => e.TripId);
         builder.HasOne(e => e.Image).WithOne().HasForeignKey<TripSuggestedFlightEntity>(e => e.ImageId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation(e => e.Image).AutoInclude();
     }
 }

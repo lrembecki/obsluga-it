@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\lrembecki.obsluga-it.ServiceDefaults\lrembecki.obsluga-it.ServiceDefaults.csproj" />
     <ProjectReference Include="..\..\lrembecki.infrastructure\lrembecki.infrastructure.csproj" />
+    <ProjectReference Include="..\..\settings\lrembecki.presentation.settings\lrembecki.presentation.settings.csproj" />
     <ProjectReference Include="..\..\storage\lrembecki.presentation.storage\lrembecki.presentation.storage.csproj" />
     <ProjectReference Include="..\lrembecki.presentation.trotamundos\lrembecki.presentation.trotamundos.csproj" />
   </ItemGroup>

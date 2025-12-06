@@ -7,6 +7,7 @@ export * from './schemas/custom-form-field.schema';
 export * from './schemas/date-form-field.schema';
 export * from './schemas/fileupload-form-field.schema';
 export * from './schemas/form-schema';
+export * from './schemas/group-form.schema';
 export * from './schemas/image-form-field.schema';
 export * from './schemas/multiselect-form-field.schema';
 export * from './schemas/select-form-field.schema';

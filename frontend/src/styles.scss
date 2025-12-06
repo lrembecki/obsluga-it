@@ -29,6 +29,18 @@ body {
 
 /* Theme CSS Custom Properties */
 
+/* Default theme variables (fallback to light) */
+:root {
+  --txt: #2e2e2e;
+  --muted: #6b7280;
+  --border: #e6e6ea;
+  --ring: #4dabf7;
+  --hover: #eef5ff;
+  --bg: #ffffff;
+  --bg-head: #f8f9fa;
+  --bg-alt: #f8f9fa;
+}
+
 /* Light Theme */
 .app-light {
   --txt: #2e2e2e;
@@ -51,18 +63,6 @@ body {
   --bg: #1e1e2f;
   --bg-head: #252538;
   --bg-alt: #2a2a3e;
-}
-
-/* Default theme variables (fallback to light) */
-:root {
-  --txt: #2e2e2e;
-  --muted: #6b7280;
-  --border: #e6e6ea;
-  --ring: #4dabf7;
-  --hover: #eef5ff;
-  --bg: #ffffff;
-  --bg-head: #f8f9fa;
-  --bg-alt: #f8f9fa;
 }
 
 // Utility classes using SCSS features

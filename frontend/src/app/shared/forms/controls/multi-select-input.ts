@@ -1,11 +1,8 @@
 import { NgComponentOutlet } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormFieldSchema, MultiSelectFormFieldSchema } from '@app/shared/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
-import {
-  FormFieldSchema,
-  MultiSelectFormFieldSchema,
-} from '@app/shared/forms';
 
 @Component({
   selector: 'app-multi-select-input',

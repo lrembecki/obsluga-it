@@ -36,14 +36,6 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
       this._schema.set(
         new FormSchema<TripVM>({
           fields: [
-            // Name: string
-            new TextFormFieldSchema<TripVM>({
-              label: 'Name',
-              key: 'name',
-              validators: [Validators.required],
-              colClass: 'col-3',
-            }),
-
             // Active: boolean
             new CheckboxFormFieldSchema<TripVM>({
               label: 'Active',

@@ -31,6 +31,8 @@ import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.comp
     </footer>
   `,
   styles: `
+    @use 'app/styles/variables' as variables;
+
     ::ng-deep app-footer,
     ::ng-deep app-footer .p-select-label {
       font-size: 0.75rem !important;
@@ -47,7 +49,7 @@ import { ThemeSwitcherComponent } from '../../theme-switcher/theme-switcher.comp
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border);
-      background-color: var(--bg);
+      background-color: var(--bg-alt);
       color: var(--txt);
       flex-shrink: 0;
       gap: 1rem;

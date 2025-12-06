@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextareaModule } from 'primeng/textarea';
 import { FormFieldSchema, TextareaFormFieldSchema } from '@app/shared/forms';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'app-textarea-input',

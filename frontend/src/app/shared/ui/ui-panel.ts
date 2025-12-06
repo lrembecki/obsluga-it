@@ -25,7 +25,6 @@ import { Component, contentChildren, TemplateRef } from '@angular/core';
 
     @if (!start().length && !end().length) {
       <div class="container">
-
         <ng-content />
       </div>
       <div class="fill"></div>
@@ -35,7 +34,13 @@ import { Component, contentChildren, TemplateRef } from '@angular/core';
     :host {
       display: flex;
       justify-content: space-between;
+      background-color: var(--bg-head);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
       margin-bottom: 1rem;
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
     }
 
     .fill {

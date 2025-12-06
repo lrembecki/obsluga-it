@@ -12,23 +12,13 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { fieldValue } from '@app/core/helpers/field.helper';
+import { CollectionFormFieldSchema, FormFieldSchema } from '@app/shared/forms';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
-import { InputText } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
-import {
-  CollectionFormFieldSchema,
-  FormFieldSchema,
-} from '@app/shared/forms';
-import { CheckboxInput } from './checkbox-input';
-import { CustomInput } from './custom-input';
-import { DateInput } from './date-input';
-import { ImageInput } from './image-input';
-import { SelectInput } from './select-input';
-import { TextInput } from './text-input';
-import { TextareaInput } from './textarea-input';
+import { RenderInput } from './render-input';
 
 @Component({
   selector: 'app-collection-input',
@@ -37,18 +27,11 @@ import { TextareaInput } from './textarea-input';
     CommonModule,
     ReactiveFormsModule,
     ButtonModule,
-    InputText,
     TextareaModule,
     AccordionModule,
     CheckboxModule,
     DatePickerModule,
-    TextInput,
-    TextareaInput,
-    SelectInput,
-    DateInput,
-    ImageInput,
-    CheckboxInput,
-    CustomInput,
+    RenderInput,
   ],
   template: `
     <p-accordion value="0">
@@ -81,95 +64,23 @@ import { TextareaInput } from './textarea-input';
 
             @for (i of indexes(); track i) {
               <div class="item">
-                @if (isPrimitive()) {
-                  @switch (collectionField().itemType) {
-                    @case ('text') {
-                      <input
-                        pInputText
-                        [placeholder]="collectionField().placeholder"
-                        [formControl]="itemControl(i)"
-                      />
-                    }
-                    @case ('textarea') {
-                      <textarea
-                        pTextarea
-                        class="w-full"
-                        [formControl]="itemControl(i)"
-                      ></textarea>
-                    }
-                    @case ('checkbox') {
-                      <p-checkbox
-                        binary="true"
-                        [formControl]="itemControl(i)"
-                      />
-                    }
-                    @case ('date') {
-                      <p-datepicker [formControl]="itemControl(i)" />
-                    }
-                    @default {
-                      <input pInputText [formControl]="itemControl(i)" />
+                <div class="item-grid">
+                  @for (
+                    sub of collectionField().itemFields ?? [];
+                    track sub.key
+                  ) {
+                    @if (sub.isVisible) {
+                      <div
+                        class="sub-field"
+                        [ngClass]="
+                          sub.colClass || collectionField().itemColClass
+                        "
+                      >
+                        <app-render-input [field]="sub" [form]="itemGroup(i)" />
+                      </div>
                     }
                   }
-                } @else {
-                  <div class="item-grid">
-                    @for (
-                      sub of collectionField().itemFields ?? [];
-                      track sub.key
-                    ) {
-                      @if (sub.isVisible) {
-                        <div
-                          class="sub-field"
-                          [ngClass]="
-                            sub.colClass || collectionField().itemColClass
-                          "
-                        >
-                          @if (sub.type === 'text') {
-                            <app-text-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                          @if (sub.type === 'textarea') {
-                            <app-textarea-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                          @if (sub.type === 'select') {
-                            <app-select-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                          @if (sub.type === 'date') {
-                            <app-date-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                          @if (sub.type === 'checkbox') {
-                            <app-checkbox-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                          @if (sub.type === 'image') {
-                            <app-image-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                          @if (sub.type === 'custom') {
-                            <app-custom-input
-                              [field]="sub"
-                              [form]="itemGroup(i)"
-                            />
-                          }
-                        </div>
-                      }
-                    }
-                  </div>
-                }
+                </div>
 
                 <div class="actions">
                   <button

@@ -1,9 +1,9 @@
 import { Component, computed, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormFieldSchema } from '@app/shared/forms';
 import { StorageVM } from '@app/shared/storage/storage.vm';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
-import { FormFieldSchema } from '@app/shared/forms';
 
 @Component({
   selector: 'app-file-upload-input',

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
-import { FormFactoryService } from './services/form-factory.service';
+import { createFormFromFieldSchema } from './services/form-factory.service';
 
 export function provideFormService(
   provider: any,
@@ -18,7 +18,6 @@ export function provideFormService(
 export abstract class FormService<T> {
   protected readonly _schema = signal<FormSchema<T>>(null!);
   protected readonly _returnRoute = signal<string[]>(['../list']);
-  protected readonly _formFactory = inject(FormFactoryService);
 
   public readonly schema = this._schema.asReadonly();
   public readonly returnRoute = this._returnRoute.asReadonly();
@@ -33,12 +32,9 @@ export abstract class FormService<T> {
   );
   public readonly form = computed(() => {
     if (this.mode() === 'create') {
-      return this._formFactory.createForm(this.schema());
+      return createFormFromFieldSchema(this.schema());
     } else {
-      const formGroup = this._formFactory.createForm(
-        this.schema(),
-        this.mode(),
-      );
+      const formGroup = createFormFromFieldSchema(this.schema(), this.mode());
       const model = this.model();
       // Populate FormArray controls for collection fields before patching values
       this.schema().fields.forEach((field: any) => {

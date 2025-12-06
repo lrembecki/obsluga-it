@@ -4,12 +4,13 @@ using lrembecki.core.settings.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace lrembecki.presentation.settings;
 
 public static class ServiceRegistration
 {
-    public static void AddSettings(this WebApplicationBuilder builder)
+    public static void AddSettings(this IHostApplicationBuilder builder)
     {
         builder.Services.AddScoped<IContactService, ContactService>();
         builder.Services.AddScoped<IEmailService, EmailService>();

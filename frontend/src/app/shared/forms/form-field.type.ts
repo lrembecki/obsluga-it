@@ -9,4 +9,5 @@ export type FormFieldType =
   | 'image'
   | 'fileupload'
   | 'custom'
-  | 'collection';
+  | 'collection'
+  | 'group';

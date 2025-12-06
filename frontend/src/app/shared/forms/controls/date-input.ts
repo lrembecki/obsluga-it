@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DatePickerModule } from 'primeng/datepicker';
 import { FormFieldSchema } from '@app/shared/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-date-input',

@@ -11,13 +11,12 @@ import {
 import { RouterLink } from '@angular/router';
 import { Button } from '../ui/button/button';
 import { TextInputComponent } from '../ui/inputs/text-input.component';
-import { UiPanel } from '../ui/ui-panel';
 import { DataTableColumnSchema, TableSort } from './data-table.types';
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [NgClass, UiPanel, Button, TextInputComponent, RouterLink],
+  imports: [NgClass, Button, TextInputComponent, RouterLink],
   host: { role: 'grid', class: 'data-table' },
   styles: [
     `
@@ -134,17 +133,6 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
     `,
   ],
   template: `
-    <app-ui-panel>
-      <ng-template #start>
-        @if (isQuicksearch()) {
-          <app-text-input
-            [label]="searchPlaceholder() || 'Search'"
-            [(value)]="query"
-          />
-        }
-      </ng-template>
-    </app-ui-panel>
-
     <table>
       <thead>
         <tr>

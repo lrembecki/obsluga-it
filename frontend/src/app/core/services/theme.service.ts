@@ -4,9 +4,9 @@ import { themes, ThemeType } from '../defaults/theme.default';
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly _theme = signal<ThemeType>(
-    (localStorage.getItem('theme') as ThemeType) ?? 'system'
+    (localStorage.getItem('theme') as ThemeType) ?? 'system',
   );
-  private readonly _data = signal<ThemeType[]>(themes.map((e) => <ThemeType>e));
+  private readonly _data = signal<ThemeType[]>(themes.map((e) => e));
   public readonly theme = this._theme.asReadonly();
   public readonly data = this._data.asReadonly();
 
@@ -17,8 +17,8 @@ export class ThemeService {
       root.classList.remove('app-light', 'app-dark');
 
       if (theme === 'system') {
-        const prefersDark = window.matchMedia(
-          '(prefers-color-scheme: dark)'
+        const prefersDark = globalThis.matchMedia(
+          '(prefers-color-scheme: dark)',
         ).matches;
 
         theme = prefersDark ? 'dark' : 'light';

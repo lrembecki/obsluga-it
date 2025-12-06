@@ -2,8 +2,8 @@ import { Component, computed, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { NgComponentOutlet } from '@angular/common';
-import { BaseIcon } from 'primeng/icons/baseicon';
 import { CustomFormFieldSchema, FormFieldSchema } from '@app/shared/forms';
+import { BaseIcon } from 'primeng/icons/baseicon';
 
 @Component({
   selector: 'app-custom-input',

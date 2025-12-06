@@ -1,13 +1,11 @@
 import { FormArray } from '@angular/forms';
 import { FormFieldSchema } from '../form-field.schema';
+import { FormFieldType } from '../form-field.type';
 
-export type PrimitiveCollectionItemType =
-  | 'text'
-  | 'textarea'
-  | 'select'
-  | 'checkbox'
-  | 'number'
-  | 'date';
+export type PrimitiveCollectionItemType = Omit<
+  FormFieldType,
+  'group' | 'collection'
+>;
 
 export class CollectionFormFieldSchema<
   T,
