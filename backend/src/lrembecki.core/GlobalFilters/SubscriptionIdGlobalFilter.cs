@@ -8,7 +8,6 @@ public class SubscriptionIdGlobalFilter(ISessionAccessor sessionAccessor) : IGlo
 {
     private bool _enabled = true;
     public void Disable() => _enabled = false;
-
     public void Enable() => _enabled = true;
 
     public IQueryable<T> Evaluate<T>(IQueryable<T> query)

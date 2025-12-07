@@ -5,7 +5,7 @@ namespace lrembecki.core.account.ViewModels;
 public record PermissionGroupVM(
     Guid Id,
     string Name,
-    ICollection<PermissionVM> Permissions
+    ICollection<Guid> Permissions
 )
 { 
     public static PermissionGroupVM Map(PermissionGroupEntity permissionGroupEntity)
@@ -16,7 +16,7 @@ public record PermissionGroupVM(
             permissionGroupEntity.Id, 
             permissionGroupEntity.Name,
             permissionGroupEntity.Permissions
-                .Select(PermissionVM.Map)
+                .Select(e => e.Id)
                 .ToList()
         );
     }

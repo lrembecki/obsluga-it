@@ -1,90 +1,51 @@
 import { inject } from '@angular/core';
-import { Validators } from '@angular/forms';
-import {
-  CheckboxFormFieldSchema,
-  FormSchema,
-  TextFormFieldSchema,
-} from '@app/shared/forms';
-import { routeFeatureTemplate } from '@core/helpers/route.helper';
+import { Routes } from '@angular/router';
+import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideDataTableService } from '@app/shared/data-table/data-table.service';
+import { provideFormService } from '@app/shared/forms/form.service';
 import { SecurityPermissionGroupFacade } from '../permission-groups/permission-group.provider';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
+import { AdministrationAccountSubscriptionDataTableService } from './account-subscription-data-table.service';
+import { AdministrationAccountSubscriptionFormService } from './account-subscription-form.service';
 import { SecuritySubscriptionAccountFacade } from './account-subscription.provider';
-import { AccountSubscriptionVM } from './account-subscription.vm';
 
-export const routes = routeFeatureTemplate<AccountSubscriptionVM>(
-  [
-    SecuritySubscriptionAccountFacade,
-    SecurityPermissionGroupFacade,
-    SecurityPermissionFacade,
-  ],
-  () => ({
-    facade: inject(SecuritySubscriptionAccountFacade),
-    persistenceKey: 'account-subscription-data-table',
-    columns: [
-      {
-        field: 'email',
-        label: 'Email',
-        type: 'text',
-        width: '250px',
-        sortable: true,
-      },
-      {
-        field: 'subscription',
-        label: 'Subscription',
-        type: 'text',
-        width: '250px',
-        sortable: true,
-      },
-      {
-        field: 'isDefault',
-        label: 'Default',
-        type: 'text',
-        width: '120px',
-        sortable: true,
-      },
-      {
-        field: 'isActive',
-        label: 'Active',
-        type: 'text',
-        width: '120px',
-        sortable: true,
-      },
-      {
-        field: 'permissionGroups',
-        label: 'Groups',
-        type: 'text',
-        width: '120px',
-        render: (record: AccountSubscriptionVM) =>
-          record.permissionGroups.length.toString(),
-      },
-      { field: 'id', label: 'ID', type: 'text', width: '120px' },
+export const routes: Routes = [
+  {
+    path: '',
+    providers: [
+      provideApiFacade(SecuritySubscriptionAccountFacade),
+      SecurityPermissionGroupFacade,
+      SecurityPermissionFacade,
+      provideDataTableService(
+        AdministrationAccountSubscriptionDataTableService,
+      ),
+      provideFormService(AdministrationAccountSubscriptionFormService),
     ],
-  }),
-  () =>
-    new FormSchema<AccountSubscriptionVM>({
-      fields: [
-        new TextFormFieldSchema({
-          key: 'email',
-          label: 'Email',
-          placeholder: '',
-          validators: [Validators.required, Validators.email],
-        }),
-        new TextFormFieldSchema({
-          key: 'subscription',
-          label: 'Subscription',
-          placeholder: '',
-          validators: [Validators.required],
-        }),
-        new CheckboxFormFieldSchema({
-          key: 'isActive',
-          label: 'Is Active',
-          placeholder: '',
-        }),
-        new CheckboxFormFieldSchema({
-          key: 'isDefault',
-          label: 'Is Default',
-          placeholder: '',
-        }),
-      ],
-    }),
-);
+    resolve: {
+      _init: () => {
+        Promise.allSettled(
+          [
+            inject(SecuritySubscriptionAccountFacade),
+            inject(SecurityPermissionGroupFacade),
+            inject(SecurityPermissionFacade),
+          ].map((e) => e.initialize()),
+        );
+      },
+    },
+    children: [
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
+      {
+        path: 'list',
+        loadComponent: () =>
+          import('app/shared/data-table/data-table.template').then(
+            (m) => m.DataTableTemplate,
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('app/shared/forms/form-template').then((m) => m.FormTemplate),
+      },
+    ],
+  },
+];

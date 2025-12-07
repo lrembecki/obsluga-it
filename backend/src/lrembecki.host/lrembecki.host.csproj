@@ -16,6 +16,7 @@
     <ProjectReference Include="..\security\lrembecki.presentation.security\lrembecki.presentation.security.csproj" />
     <ProjectReference Include="..\settings\lrembecki.presentation.settings\lrembecki.presentation.settings.csproj" />
     <ProjectReference Include="..\events\lrembecki.presentation.events\lrembecki.presentation.events.csproj" />
+    <ProjectReference Include="..\notification\lrembecki.presentation.notification\lrembecki.presentation.notification.csproj" />
   </ItemGroup>
 
 </Project>

@@ -43,6 +43,7 @@
     <ProjectReference Include="..\security\lrembecki.core.security\lrembecki.core.security.csproj" />
     <ProjectReference Include="..\settings\lrembecki.core.settings\lrembecki.core.settings.csproj" />
     <ProjectReference Include="..\events\lrembecki.core.events\lrembecki.core.events.csproj" />
+    <ProjectReference Include="..\notification\lrembecki.core.notification\lrembecki.core.notification.csproj" />
   </ItemGroup>
 
 </Project>

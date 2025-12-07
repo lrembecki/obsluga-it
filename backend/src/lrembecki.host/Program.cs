@@ -6,6 +6,7 @@ using lrembecki.presentation.security;
 using lrembecki.presentation.settings;
 using lrembecki.presentation.storage;
 using lrembecki.presentation.trotamundos;
+using lrembecki.presentation.notification;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,7 @@ builder.AddAccount();
 builder.AddStorage();
 builder.AddSettings();
 builder.AddTrotamundos();
+builder.AddNotification();
 
 builder.AddInfrastructure(
     builder.Environment.IsDevelopment(),
@@ -56,5 +58,6 @@ app.MapStorage();
 app.MapSettings();
 app.MapTrotamundos();
 app.MapSecurity();
+app.MapNotification();
 
 await app.RunAsync();

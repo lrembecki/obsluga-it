@@ -143,7 +143,7 @@ export abstract class ApiFacade<T> implements Facade<T> {
   }
 
   public async filter(filter: Record<string, unknown>): Promise<void> {
-    const model = JSON.parse(JSON.stringify(filter));
+    const model = structuredClone(filter);
 
     if (JSON.stringify(model) !== JSON.stringify(this._filter)) {
       this._filter.set(model);

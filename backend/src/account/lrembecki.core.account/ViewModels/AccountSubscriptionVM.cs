@@ -9,7 +9,7 @@ public record AccountSubscriptionVM(
     Guid SubscriptionId,
     bool IsActive,
     bool IsDefault,
-    ICollection<PermissionGroupVM> PermissionGroups
+    ICollection<Guid> PermissionGroups
 )
 {
     public static AccountSubscriptionVM Map(
@@ -26,7 +26,7 @@ public record AccountSubscriptionVM(
             accountSubscriptionEntity.IsActive,
             accountSubscriptionEntity.IsDefault,
             accountSubscriptionEntity.PermissionGroups
-                .Select(PermissionGroupVM.Map)
+                .Select(e => e.Id)
                 .ToList()
         );
     }

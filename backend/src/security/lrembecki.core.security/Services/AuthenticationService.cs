@@ -47,11 +47,13 @@ internal class AuthenticationService(IUnitOfWork uow, IJwtTokenFactory jwtTokenF
         var data = list.SingleOrDefault(e => (subscriptionId == null && e.AccountSubscription.IsDefault) || e.AccountSubscription.SubscriptionId == subscriptionId)
             ?? throw new ArgumentNullException(nameof(email), "You are not authenticated to access this platform");
 
-        var permissions = data.AccountSubscription.PermissionGroups
-                .SelectMany(pg => pg.Permissions)
-                .Select(p => p.Name)
-                .Distinct()
-                .ToArray();
+        var pIds = data.AccountSubscription.PermissionGroups.ToList();
+        var permissions = uow.GetRepository<PermissionGroupEntity>()
+            .GetAll(e => pIds.Contains(e.Id))
+            .SelectMany(e => e.Permissions)
+            .Select(e => e.Name)
+            .Distinct()
+            .ToArray();
 
         return Task.FromResult(
             new AuthenticationViewModel(
