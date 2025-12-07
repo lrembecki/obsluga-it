@@ -9,6 +9,7 @@ using lrembecki.presentation.settings;
 using lrembecki.infrastructure;
 using lrembecki.core.Helpers;
 using lrembecki.infrastructure.Helpers;
+using lrembecki.functions.trotamundos.Helpers;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
@@ -31,5 +32,10 @@ builder.AddInfrastructure(
 var subscriptionId = Guid.Parse(Environment.GetEnvironmentVariable("SubscriptionId")!);
 
 builder.Services.AddScoped<ISessionAccessor>(_ => new PredefinedSessionAccessor(subscriptionId));
+builder.Services.AddScoped<UploadHelper>();
+builder.Services.AddScoped<lrembecki.functions.trotamundos.Helpers.IPublisher, PublishFactory>();
+builder.Services.AddScoped<TripPublisher>();
+builder.Services.AddScoped<ContactPublisher>();
+builder.Services.AddScoped<FilePublisher>();
 
 await builder.Build().RunAsync();

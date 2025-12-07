@@ -7,6 +7,8 @@ import { DateInput } from './date-input';
 import { FileUploadInput } from './file-upload-input';
 import { ImageInput } from './image-input';
 import { MultiSelectInput } from './multi-select-input';
+import { NumberInput } from './number-input';
+import { PasswordInput } from './password-input';
 import { SelectInput } from './select-input';
 import { TextInput } from './text-input';
 import { TextareaInput } from './textarea-input';
@@ -22,6 +24,8 @@ import { TextareaInput } from './textarea-input';
     TextareaInput,
     ImageInput,
     FileUploadInput,
+    NumberInput,
+    PasswordInput,
     CustomInput,
   ],
   template: `
@@ -47,6 +51,14 @@ import { TextareaInput } from './textarea-input';
 
     @if (field().type === 'textarea') {
       <app-textarea-input [field]="field()" [form]="form()" />
+    }
+
+    @if (field().type === 'number') {
+      <app-number-input [field]="field()" [form]="form()" />
+    }
+
+    @if (field().type === 'password') {
+      <app-password-input [field]="field()" [form]="form()" />
     }
 
     @if (field().type === 'image') {

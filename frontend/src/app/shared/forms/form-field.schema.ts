@@ -17,7 +17,7 @@ export class FormFieldSchema<T> {
   colClass?: string;
 
   // Optional static value to pass to the renderer (for read-only or computed displays)
-  value?: any;
+  value?: any = null!;
   // Optional renderer function to derive a display value from the current form value
   // Return any type suitable for the target control (string, number, boolean, Date, object)
   renderValue?: (formValue: T) => any;

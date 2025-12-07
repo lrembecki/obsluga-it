@@ -10,11 +10,11 @@ export class TrotamundosTripFacade extends ApiFacade<TripVM> {
     return data
       .map((e) => new TripVM(e))
       .sort((a, b) => {
-        const byName = a.name.localeCompare(b.name);
+        const byName = (a.name || '').localeCompare(b.name || '');
         if (byName !== 0) return byName;
         const byTitle = a.title.localeCompare(b.title);
         if (byTitle !== 0) return byTitle;
-        return a.subtitle.localeCompare(b.subtitle);
+        return (a.subtitle || '').localeCompare(b.subtitle || '');
       })
       .slice();
   }

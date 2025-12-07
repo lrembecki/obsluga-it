@@ -24,7 +24,7 @@ public record EmailVM(
             SmtpServer: email.SmtpServer,
             SmtpPort: email.SmtpPort,
             SmtpUsername: email.SmtpUsername,
-            SmtpPassword: email.SmtpPassword,
+            SmtpPassword: null!,
             FromAddress: email.FromAddress,
             FromName: email.FromName,
             ReplyToAddress: email.ReplyToAddress,

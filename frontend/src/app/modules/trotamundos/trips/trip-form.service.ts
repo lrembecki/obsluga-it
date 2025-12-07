@@ -36,11 +36,20 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
       this._schema.set(
         new FormSchema<TripVM>({
           fields: [
+            // Name: string
+            new TextFormFieldSchema<TripVM>({
+              label: 'Name',
+              key: 'name',
+              validators: [Validators.required],
+              colClass: 'col-3',
+            }),
+
             // Active: boolean
             new CheckboxFormFieldSchema<TripVM>({
               label: 'Active',
               key: 'isActive',
               colClass: 'col-1',
+              value: true,
             }),
 
             // Disabled: boolean
@@ -48,6 +57,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
               label: 'Disabled',
               key: 'isDisabled',
               colClass: 'col-1',
+              value: false,
             }),
 
             // Title: string
@@ -81,6 +91,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
               key: 'startDate',
               validators: [],
               colClass: 'col-3',
+              value: null!,
             }),
 
             // End Date: Date
@@ -89,6 +100,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
               key: 'endDate',
               validators: [],
               colClass: 'col-3',
+              value: null!,
             }),
 
             // Callendar: string

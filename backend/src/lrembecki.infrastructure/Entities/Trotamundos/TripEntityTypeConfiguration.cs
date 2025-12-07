@@ -18,10 +18,10 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
             .IsRequired().HasMaxLength(200);
 
         builder.Property(e => e.Subtitle)
-            .IsRequired().HasMaxLength(200);
+            .IsRequired(false).HasMaxLength(200);
 
         builder.Property(e => e.Description)
-            .IsRequired().HasMaxLength(2048);
+            .IsRequired(false).HasMaxLength(2048);
 
         builder.HasMany(e => e.Advantages).WithMany().UsingEntity<Dictionary<string, object>>("TrotamundosTripAdvantage",
             j => j.HasOne<AdvantageEntity>().WithMany().HasForeignKey("AdvantageId").OnDelete(DeleteBehavior.Restrict),

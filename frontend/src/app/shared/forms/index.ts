@@ -10,6 +10,8 @@ export * from './schemas/form-schema';
 export * from './schemas/group-form.schema';
 export * from './schemas/image-form-field.schema';
 export * from './schemas/multiselect-form-field.schema';
+export * from './schemas/number-form-field.schema';
+export * from './schemas/password-form-field.schema';
 export * from './schemas/select-form-field.schema';
 export * from './schemas/text-form-field.schema';
 export * from './schemas/textarea-form-field.schema';

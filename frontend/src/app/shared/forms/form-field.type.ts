@@ -10,4 +10,5 @@ export type FormFieldType =
   | 'fileupload'
   | 'custom'
   | 'collection'
-  | 'group';
+  | 'group'
+  | 'password';

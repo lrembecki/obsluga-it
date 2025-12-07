@@ -5,6 +5,5 @@ export class DateFormFieldSchema<T> extends FormFieldSchema<T> {
     super('date', init);
     Object.assign(this, init);
     this.colClass ??= 'col-3';
-    this.value = false;
   }
 }

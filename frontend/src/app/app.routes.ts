@@ -1,7 +1,11 @@
 import { Routes } from '@angular/router';
-import { authorizedGuard } from './core/guards/authorized-guard';
 
 export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'modules',
+    pathMatch: 'full',
+  },
   {
     path: 'account',
     loadChildren: () =>
@@ -10,11 +14,5 @@ export const routes: Routes = [
   {
     path: 'modules',
     loadChildren: () => import('./modules/routes').then((e) => e.routes),
-  },
-  {
-    path: '',
-    loadChildren: () => import('app/features/routes').then((e) => e.routes),
-    canActivate: [authorizedGuard([])],
-    canActivateChild: [authorizedGuard([])],
   },
 ];
