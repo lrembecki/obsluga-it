@@ -24,9 +24,18 @@ public static class ServiceRegistration
             .WithTags("Account")
             .RequireAuthorization("InternalJwtPolicy");
 
-        group.MapCrud<IPermissionService, PermissionDto, PermissionVM>("permissions");
-        group.MapCrud<IPermissionGroupService, PermissionGroupDto, PermissionGroupVM>("permission-groups");
-        group.MapCrud<IAccountSubscriptionService, AccountSubscriptionDto, AccountSubscriptionVM>("subscription-accounts");
+        group.MapCrud<IPermissionService, PermissionDto, PermissionVM>("permissions", r =>
+        {
+            r.RequireAuthorization(p => p.RequireRole("Security.Permissions"));
+        });
+        group.MapCrud<IPermissionGroupService, PermissionGroupDto, PermissionGroupVM>("permission-groups", r =>
+        {
+            r.RequireAuthorization(p => p.RequireRole("Security.PermissionGroups"));
+        });
+        group.MapCrud<IAccountSubscriptionService, AccountSubscriptionDto, AccountSubscriptionVM>("subscription-accounts", r =>
+        {
+            r.RequireAuthorization(p => p.RequireRole("Security.AccountSubscriptions"));
+        });
 
         group.MapAccount();
     }

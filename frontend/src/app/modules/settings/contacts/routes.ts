@@ -1,54 +1,39 @@
-import { computed, signal } from '@angular/core';
-import { ActivatedRouteSnapshot, Routes } from '@angular/router';
-import { routeTemplate } from 'app/core/helpers/route.helper';
-import { ContactModel } from './contact.model';
-import {
-  injectSettingContacts,
-  provideSettingContacts,
-} from './contact.provider';
+import { inject } from '@angular/core';
+import { Routes } from '@angular/router';
+import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideDataTableService } from '@app/shared/data-table/data-table.service';
+import { provideFormService } from '@app/shared/forms/form.service';
+import { ContactsFacade } from './contact.facade';
+import { SettingsContactDataTableService } from './contact-data-table.service';
+import { SettingsContactFormService } from './contact-form.service';
 
 export const routes: Routes = [
-  routeTemplate({
-    providers: [provideSettingContacts()],
-    serviceProvider: () => injectSettingContacts(),
-    children: [
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full',
+  {
+    path: '',
+    providers: [
+      provideApiFacade(ContactsFacade),
+      provideDataTableService(SettingsContactDataTableService),
+      provideFormService(SettingsContactFormService),
+    ],
+    resolve: {
+      _init: () => {
+        Promise.allSettled([inject(ContactsFacade)].map((e) => e.initialize()));
       },
+    },
+    children: [
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
       {
         path: 'list',
         loadComponent: () =>
-          import('./contact-list').then((e) => e.ContactList),
+          import('app/shared/data-table/data-table.template').then(
+            (m) => m.DataTableTemplate,
+          ),
       },
       {
-        path: 'create',
+        path: ':id',
         loadComponent: () =>
-          import('./contact-form').then((e) => e.ContactForm),
-        resolve: {
-          model: () => signal<ContactModel>(null!),
-        },
-      },
-      {
-        path: ':contactId',
-        loadComponent: () =>
-          import('./contact-form').then((e) => e.ContactForm),
-        resolve: {
-          model: (snapshot: ActivatedRouteSnapshot) => {
-            const services = injectSettingContacts();
-            const contactId = snapshot.params['contactId'] as string;
-
-            return computed(() => {
-              const result = services.contacts
-                .data()
-                .find((e) => e.id === contactId);
-
-              return result;
-            });
-          },
-        },
+          import('app/shared/forms/form-template').then((m) => m.FormTemplate),
       },
     ],
-  }),
+  },
 ];
