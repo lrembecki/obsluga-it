@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { AppUpdateService } from './core/services/app-update.service';
 import { AuthService } from './core/services/auth.service';
+import { NavbarService } from './core/services/navbar.service';
 import { StorageService } from './core/services/storage.service';
 import { TranslationService } from './core/services/translation.service';
 import { SignIn } from './features/account/sign-in';
@@ -72,7 +73,7 @@ import { SidebarComponent } from './shared/ui/navbar/sidebar.component';
       padding: 0.5rem;
     }
   `,
-  providers: [],
+  providers: [NavbarService],
   template: `
     <p-toast />
 
@@ -101,6 +102,7 @@ import { SidebarComponent } from './shared/ui/navbar/sidebar.component';
 export class App {
   protected readonly account = inject(StorageService).account.data;
   private readonly _translation = inject(TranslationService);
+  private readonly _navbar = inject(NavbarService);
   private readonly _auth = inject(AuthService);
   protected readonly sidebarCollapsed = signal<boolean>(false);
   private readonly sidebar = viewChild<SidebarComponent>('sidebar');
@@ -118,8 +120,10 @@ export class App {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this._auth.initialize();
     this._translation.initialize();
+
+    await this._navbar.initialize();
   }
 }

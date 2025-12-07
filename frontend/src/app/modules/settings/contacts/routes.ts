@@ -3,9 +3,9 @@ import { Routes } from '@angular/router';
 import { provideApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 import { provideFormService } from '@app/shared/forms/form.service';
-import { ContactsFacade } from './contact.facade';
 import { SettingsContactDataTableService } from './contact-data-table.service';
 import { SettingsContactFormService } from './contact-form.service';
+import { ContactsFacade } from './contact.facade';
 
 export const routes: Routes = [
   {

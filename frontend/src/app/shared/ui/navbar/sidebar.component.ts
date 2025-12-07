@@ -1,13 +1,10 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { Route, Routes } from '@angular/router';
+import { NavbarService } from '@app/core/services/navbar.service';
 import { AppUpdateService } from 'app/core/services/app-update.service';
 import { AuthService } from 'app/core/services/auth.service';
 import { StorageService } from 'app/core/services/storage.service';
 import { TranslationService } from 'app/core/services/translation.service';
-import * as feature from 'app/features/routes';
-import * as administration from 'app/modules/administration/routes';
-import * as settings from 'app/modules/settings/routes';
-import * as trotamundos from 'app/modules/trotamundos/routes';
 
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
@@ -67,6 +64,7 @@ import { RippleModule } from 'primeng/ripple';
 })
 export class SidebarComponent {
   collapsed = signal<boolean>(false);
+  private readonly _navbar = inject(NavbarService);
   private readonly _translation = inject(TranslationService);
   private readonly _storage = inject(StorageService);
   private readonly _auth = inject(AuthService);
@@ -82,28 +80,17 @@ export class SidebarComponent {
     }
 
     effect(async () => {
-      const featureRoutes = await this.getItemGroup('Features', feature.routes);
-      const settingsRoutes = await this.getItemGroup(
-        'Settings',
-        settings.routes,
-        'modules/settings/',
-      );
-      const trotamundosRoutes = await this.getItemGroup(
-        'Trotamundos',
-        trotamundos.routes,
-        'modules/trotamundos/',
-      );
-      const administrationRoutes = await this.getItemGroup(
-        'Administration',
-        administration.routes,
-        'modules/administration/',
-      );
+      const modules = this._navbar.adata();
 
       this.items.set([
-        ...this.provideIfAny(featureRoutes),
-        ...this.provideIfAny(settingsRoutes),
-        ...this.provideIfAny(trotamundosRoutes),
-        ...this.provideIfAny(administrationRoutes),
+        ...modules.map((m) => ({
+          label: this._translation.instant(m.label),
+          expanded: true,
+          items: m.items.map((i) => ({
+            label: this._translation.instant(i.label),
+            routerLink: [i.path],
+          })),
+        })),
         {
           label: this._storage.account.data()?.user.email,
           expanded: true,
@@ -122,26 +109,6 @@ export class SidebarComponent {
         },
       ]);
     });
-  }
-
-  private provideIfAny<T extends { items: MenuItem[] }>(item: T): T[] {
-    return item.items.length ? [item] : [];
-  }
-
-  private async getItemGroup(
-    label: string,
-    routes: Routes,
-    rootPath: string = '',
-  ) {
-    return {
-      label: this._translation.instant(label),
-      expanded: true,
-      items: [
-        ...(this._storage.account.data()?.user.email
-          ? await this.getItems(routes, rootPath)
-          : []),
-      ],
-    };
   }
 
   private async getItems(

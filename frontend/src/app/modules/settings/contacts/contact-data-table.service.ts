@@ -16,7 +16,12 @@ export class SettingsContactDataTableService extends DataTableService<ContactMod
         { field: 'email', label: 'Email', width: '200px' },
         { field: 'phone', label: 'Phone', width: '200px' },
         { field: 'position', label: 'Position', width: '250px' },
-        { field: 'isActive', label: 'Is Active', width: '120px' },
+        {
+          field: 'isActive',
+          label: 'Is Active',
+          type: 'boolean',
+          width: '120px',
+        },
       ],
       persistenceKey: 'settings-contacts',
     });

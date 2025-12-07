@@ -8,7 +8,9 @@ import {
   signal,
   Signal,
 } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Checkbox } from 'primeng/checkbox';
 import { Button } from '../ui/button/button';
 import { TextInputComponent } from '../ui/inputs/text-input.component';
 import { DataTableColumnSchema, TableSort } from './data-table.types';
@@ -16,7 +18,15 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [NgClass, Button, TextInputComponent, RouterLink],
+  imports: [
+    NgClass,
+    Button,
+    TextInputComponent,
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    Checkbox,
+  ],
   host: { role: 'grid', class: 'data-table' },
   styles: [
     `
@@ -194,6 +204,13 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
                     <a [routerLink]="col.renderLink(row)">
                       {{ renderCell(row, col) }}
                     </a>
+                  } @else if (col.type === 'boolean') {
+                    <p-checkbox
+                      binary="true"
+                      [disabled]="true"
+                      [(ngModel)]="row[col.field]"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
                   } @else {
                     {{ renderCell(row, col) }}
                   }
