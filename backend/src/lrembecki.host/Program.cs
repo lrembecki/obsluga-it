@@ -1,13 +1,12 @@
 using lrembecki.host.Infrastructure;
 using lrembecki.infrastructure;
-
 using lrembecki.presentation.account;
 using lrembecki.presentation.security;
 using lrembecki.presentation.settings;
 using lrembecki.presentation.storage;
 using lrembecki.presentation.trotamundos;
 using lrembecki.presentation.notification;
-using Microsoft.AspNetCore.Mvc;
+using lrembecki.presentation.forms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +31,7 @@ builder.AddStorage();
 builder.AddSettings();
 builder.AddTrotamundos();
 builder.AddNotification();
+builder.AddForms();
 
 builder.AddInfrastructure(
     builder.Environment.IsDevelopment(),
@@ -59,5 +59,6 @@ app.MapSettings();
 app.MapTrotamundos();
 app.MapSecurity();
 app.MapNotification();
+app.MapForms();
 
 await app.RunAsync();

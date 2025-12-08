@@ -44,6 +44,7 @@
     <ProjectReference Include="..\settings\lrembecki.core.settings\lrembecki.core.settings.csproj" />
     <ProjectReference Include="..\events\lrembecki.core.events\lrembecki.core.events.csproj" />
     <ProjectReference Include="..\notification\lrembecki.core.notification\lrembecki.core.notification.csproj" />
+    <ProjectReference Include="..\forms\lrembecki.core.forms\lrembecki.core.forms.csproj" />
   </ItemGroup>
 
 </Project>
