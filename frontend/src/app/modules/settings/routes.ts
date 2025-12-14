@@ -8,4 +8,10 @@ export const routes: Routes = [
   featureRoute('emails', 'Emails', ['Settings.Emails'], () =>
     import('./emails/routes').then((e) => e.routes),
   ),
+  featureRoute(
+    'form-definitions',
+    'Form Definitions',
+    ['Settings.FormDefinitions'],
+    () => import('./form-definitions/routes').then((e) => e.routes),
+  ),
 ];

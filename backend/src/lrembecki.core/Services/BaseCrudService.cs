@@ -34,32 +34,16 @@ namespace lrembecki.core.Services
 
         protected virtual IQueryable<TEntity> GetAll(IQueryable<TEntity> query) => query;
 
-        public async virtual Task<TVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => (TVM)typeof(TVM).GetMethod("Map", BindingFlags.Public | BindingFlags.Static)!.Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
-        public async Task<TVM> UpdateAsync(Guid id, TDto model, CancellationToken cancellationToken = default)
-        {
-            model = await Validate(model);
-
-            var entity = await _repository.RequireByIdAsync(id, cancellationToken);
-
-            await UpdateEntity(entity, model);
-
-            await _repository.UpdateAsync(entity);
-
-            return await GetByIdAsync(entity.Id, cancellationToken);
-        }
-
-        private Expression<Func<TEntity, TVM>> BuildSelectExpression()
+        private MethodInfo GetMapMethod()
         {
             var vmType = typeof(TVM);
             var entityType = typeof(TEntity);
-            // Try to find Map(TEntity) first
-            var mapMethod = vmType.GetMethod("Map", BindingFlags.Static | BindingFlags.Public, [entityType]);
+            
+            var mapMethod = vmType.GetMethod("Map", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, [entityType]);
 
-            // Fallback: find any public static Map method whose single parameter can accept TEntity
             if (mapMethod == null)
             {
-                foreach (var m in vmType.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                foreach (var m in vmType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
                 {
                     if (m.Name != "Map")
                         continue;
@@ -78,7 +62,31 @@ namespace lrembecki.core.Services
             }
 
             if (mapMethod == null)
-                throw new InvalidOperationException($"Type {vmType.Name} must declare a public static Map method that accepts {entityType.Name}.");
+                throw new InvalidOperationException($"Type {vmType.Name} must declare a public or internal static Map method that accepts {entityType.Name}.");
+
+            return mapMethod;
+        }
+
+        public async virtual Task<TVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+            => (TVM)GetMapMethod().Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
+        public async Task<TVM> UpdateAsync(Guid id, TDto model, CancellationToken cancellationToken = default)
+        {
+            model = await Validate(model);
+
+            var entity = await _repository.RequireByIdAsync(id, cancellationToken);
+
+            await UpdateEntity(entity, model);
+
+            await _repository.UpdateAsync(entity);
+
+            return await GetByIdAsync(entity.Id, cancellationToken);
+        }
+
+        private Expression<Func<TEntity, TVM>> BuildSelectExpression()
+        {
+            var vmType = typeof(TVM);
+            var entityType = typeof(TEntity);
+            var mapMethod = GetMapMethod();
 
             var param = Expression.Parameter(entityType, "e");
             var methodParamType = mapMethod.GetParameters()[0].ParameterType;

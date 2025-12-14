@@ -10,7 +10,7 @@ namespace lrembecki.functions.trotamundos;
 
 public class TrotamundosEventQueueFunction(
     ILogger<TrotamundosEventQueueFunction> logger,
-    IPublisher publishFactory)
+    IPublisher publisher)
 {
     [Function(nameof(TrotamundosEventQueueFunction))]
     public async Task Run(
@@ -24,7 +24,7 @@ public class TrotamundosEventQueueFunction(
 
         var domainEvent = message.Body.ToObjectFromJson<DomainEvent>()!;
 
-        await publishFactory.Publish(domainEvent, CancellationToken.None);
+        await publisher.Publish(domainEvent, CancellationToken.None);
 
         // Complete the message
         await messageActions.CompleteMessageAsync(message);

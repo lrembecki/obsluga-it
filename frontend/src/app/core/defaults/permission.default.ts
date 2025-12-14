@@ -1,4 +1,7 @@
-export type SettingsPermissionType = 'Settings.Contacts' | 'Settings.Emails';
+export type SettingsPermissionType =
+  | 'Settings.Contacts'
+  | 'Settings.Emails'
+  | 'Settings.FormDefinitions';
 
 export type AdministrationPermissionType =
   | 'Security.Permissions'

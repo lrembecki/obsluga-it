@@ -7,12 +7,13 @@ namespace lrembecki.functions.trotamundos.Helpers;
 
 internal sealed class PublishFactory(IServiceProvider provider) : IPublisher
 {
+    private readonly Dictionary<string, Type> _dictionary = new()
+    {
+        { nameof(TripEntity), typeof(TripPublisher) },
+        { nameof(FileEntity), typeof(FilePublisher) },
+        { nameof(ContactEntity), typeof(ContactPublisher) }
+    };
+
     public Task Publish(DomainEvent domainEvent, CancellationToken ct)
-        => domainEvent.EventType switch
-        {
-            nameof(TripEntity) => provider.GetRequiredService<TripPublisher>().Publish(domainEvent, ct),
-            nameof(FileEntity) => provider.GetRequiredService<FilePublisher>().Publish(domainEvent, ct),
-            nameof(ContactEntity) => provider.GetRequiredService<ContactPublisher>().Publish(domainEvent, ct),
-            _ => throw new NotImplementedException()
-        };
+        => (provider.GetRequiredService(_dictionary[domainEvent.EventType]) as IPublisher)!.Publish(domainEvent, ct);
 }
