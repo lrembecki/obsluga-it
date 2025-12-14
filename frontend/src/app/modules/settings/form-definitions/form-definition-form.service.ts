@@ -14,17 +14,19 @@ import {
   FormFieldDefinitionVM,
 } from './form-definition.vm';
 
-const fieldTypeOptions: Array<{ label: string; value: FormDefinitionFieldType }> =
-  [
-    { label: 'Text', value: 'text' },
-    { label: 'Email', value: 'email' },
-    { label: 'Number', value: 'number' },
-    { label: 'Date', value: 'date' },
-    { label: 'Textarea', value: 'textarea' },
-    { label: 'Select', value: 'select' },
-    { label: 'Checkbox', value: 'checkbox' },
-    { label: 'Radio', value: 'radio' },
-  ];
+const fieldTypeOptions: Array<{
+  label: string;
+  value: FormDefinitionFieldType;
+}> = [
+  { label: 'Text', value: 'text' },
+  { label: 'Email', value: 'email' },
+  { label: 'Number', value: 'number' },
+  { label: 'Date', value: 'date' },
+  { label: 'Textarea', value: 'textarea' },
+  { label: 'Select', value: 'select' },
+  { label: 'Checkbox', value: 'checkbox' },
+  { label: 'Radio', value: 'radio' },
+];
 
 export class SettingsFormDefinitionFormService extends FormService<FormDefinitionVM> {
   constructor() {
@@ -41,7 +43,10 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
               label: 'Name',
               validators: [Validators.required],
             }),
-            new CollectionFormFieldSchema<FormDefinitionVM, FormFieldDefinitionVM>({
+            new CollectionFormFieldSchema<
+              FormDefinitionVM,
+              FormFieldDefinitionVM
+            >({
               key: 'fields',
               label: 'Fields',
               layout: 'vertical',
