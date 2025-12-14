@@ -13,18 +13,18 @@ public static class CrudEndpointExtensions
         where Tservice : ICrudService<Tdto, Tvm>
     {
         var get = endpoints.MapGet($"/{endpoint}", async (
-            [FromServices] Tservice contactService,
+            [FromServices] Tservice service,
             CancellationToken ct
-        ) => (await contactService.GetAllAsync(ct)).ToServiceCallResult())
+        ) => (await service.GetAllAsync(ct)).ToServiceCallResult())
             .WithTags("Get");
 
         configureEndpoint?.Invoke(get);
 
         var post = endpoints.MapPost($"/{endpoint}", async (
             [FromBody] Tdto model,
-            [FromServices] Tservice contactService,
+            [FromServices] Tservice service,
             CancellationToken ct
-        ) => (await contactService.CreateAsync(model, ct)).ToServiceCallResult())
+        ) => (await service.CreateAsync(model, ct)).ToServiceCallResult())
             .WithTags("Post");
 
         configureEndpoint?.Invoke(post);
@@ -32,18 +32,18 @@ public static class CrudEndpointExtensions
         var put = endpoints.MapPut($"/{endpoint}/{{id:guid}}", async (
             [FromRoute] Guid id,
             [FromBody] Tdto model,
-            [FromServices] Tservice contactService,
+            [FromServices] Tservice service,
             CancellationToken ct
-        ) => (await contactService.UpdateAsync(id, model, ct)).ToServiceCallResult())
+        ) => (await service.UpdateAsync(id, model, ct)).ToServiceCallResult())
             .WithTags("Put");
 
         configureEndpoint?.Invoke(put);
 
         var delete = endpoints.MapDelete($"/{endpoint}/{{id:guid}}", (
             [FromRoute] Guid id,
-            [FromServices] Tservice contactService,
+            [FromServices] Tservice service,
             CancellationToken ct
-        ) => contactService.DeleteAsync(id, ct).ToServiceCallResult())
+        ) => service.DeleteAsync(id, ct).ToServiceCallResult())
             .WithTags("Delete");
 
         configureEndpoint?.Invoke(delete);
