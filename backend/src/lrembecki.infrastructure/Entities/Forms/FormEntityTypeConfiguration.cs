@@ -1,5 +1,7 @@
-﻿using lrembecki.core.forms.Forms;
+﻿using lrembecki.core.forms.FormDefinitions;
+using lrembecki.core.forms.Forms;
 using lrembecki.infrastructure.Entities.Shared;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,26 +13,21 @@ internal class FormEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
     {
         base.Configure(builder);
 
-        builder.ToTable("Forms");
+        builder.ToTable("Form");
         builder.HasKey(e => e.Id);
-        
-        builder.Property(e => e.Name)
-            .IsRequired()
-            .HasMaxLength(200);
+
+        builder.HasOne<FormDefinitionEntity>().WithMany()
+            .HasForeignKey(e => e.FormDefinitionId).IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.OwnsMany(e => e.Fields, fb =>
         {
-            fb.ToTable("FormFields");
-            fb.WithOwner().HasForeignKey("FormId");
-            fb.HasKey("FormId", "Name");
-            fb.Property(f => f.Name)
-                .IsRequired()
-                .HasMaxLength(200);
-            fb.Property(f => f.Value)
-                .IsRequired(false)
-                .HasMaxLength(5000);
+            fb.ToTable("FormField");
+            fb.HasKey(ff => new { ff.FormId, ff.FormDefinitionFieldId });
+
+            fb.Property(ff => ff.Value).HasMaxLength(2000);
         });
 
-        builder.HasIndex(e => e.Name).IsUnique(false);
+        builder.Navigation(e => e.Fields).AutoInclude();
     }
 }

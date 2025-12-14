@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using lrembecki.core.events;
+using Microsoft.EntityFrameworkCore;
 
 namespace lrembecki.infrastructure.Entities;
 
@@ -10,5 +11,7 @@ internal class ObslugaItDbContext(DbContextOptions<ObslugaItDbContext> options) 
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ObslugaItDbContext).Assembly);
         modelBuilder.HasDefaultSchema("app");
+
+        modelBuilder.Ignore<DomainEventEntity>();
     }
 }

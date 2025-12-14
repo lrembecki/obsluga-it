@@ -2,8 +2,8 @@
 
 public record FormVM(
     Guid Id,
-    string Name,
-    Dictionary<string, string> Fields
+    Guid FormDefinitionId,
+    Dictionary<Guid, string> Fields
 )
 {
     public static FormVM Create(FormEntity entity)
@@ -12,8 +12,8 @@ public record FormVM(
 
         return new FormVM(
             entity.Id, 
-            entity.Name, 
-            entity.Fields.ToDictionary(e => e.Name, e => e.Value)
+            entity.FormDefinitionId,
+            entity.Fields.ToDictionary(e => e.FormDefinitionFieldId, e => e.Value)
         );
     }
 }

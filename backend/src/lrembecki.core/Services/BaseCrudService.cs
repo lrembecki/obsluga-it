@@ -13,6 +13,7 @@ namespace lrembecki.core.Services
         where TVM : class
         where TDto : class
     {
+        protected readonly IUnitOfWork _uow = uow;
         protected readonly IRepository<TEntity> _repository = uow.GetRepository<TEntity>();
         public async Task<TVM> CreateAsync(TDto model, CancellationToken cancellationToken = default)
         {
