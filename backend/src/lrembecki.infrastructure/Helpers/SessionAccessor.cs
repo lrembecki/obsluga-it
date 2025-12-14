@@ -8,6 +8,7 @@ namespace lrembecki.infrastructure.Helpers;
 internal class SessionAccessor(IHttpContextAccessor accessor) : ISessionAccessor
 {
     private readonly ClaimsPrincipal? _user = accessor.HttpContext?.User;
+    private Guid? _overrideSubscriptionId = null;
 
     public bool IsAuthenticated => _user?.Identity?.IsAuthenticated == true;
 
@@ -18,6 +19,11 @@ internal class SessionAccessor(IHttpContextAccessor accessor) : ISessionAccessor
     {
         get
         {
+            if (_overrideSubscriptionId.HasValue)
+            {
+                return _overrideSubscriptionId;
+            }
+
             var subscriptionIdRaw = _user?.Claims.FirstOrDefault(c => c.Type is CustomClaimTypes.SubscriptionId)?.Value;
             return Guid.TryParse(subscriptionIdRaw, out var subscriptionId) ? subscriptionId : null;
         }
@@ -31,4 +37,6 @@ internal class SessionAccessor(IHttpContextAccessor accessor) : ISessionAccessor
             return Guid.TryParse(userIdRaw, out var userId) ? userId : null;
         }
     }
+
+    public void OverrideSubscriptionId(Guid? subscriptionId) => _overrideSubscriptionId = subscriptionId;
 }

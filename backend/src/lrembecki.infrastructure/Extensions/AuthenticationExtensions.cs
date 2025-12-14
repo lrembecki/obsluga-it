@@ -6,6 +6,8 @@ using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using lrembecki.core.Events;
+using lrembecki.core.Helpers;
 
 namespace lrembecki.infrastructure.Extensions;
 

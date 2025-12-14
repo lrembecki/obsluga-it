@@ -2,7 +2,7 @@
 using lrembecki.core.Services;
 using lrembecki.core.settings.Services;
 
-namespace lrembecki.functions.trotamundos.Helpers;
+namespace lrembecki.function_app.Helpers;
 
 internal sealed class ContactPublisher(
     IContactService contacts,
@@ -11,6 +11,6 @@ internal sealed class ContactPublisher(
     public async Task Publish(DomainEvent domainEvent, CancellationToken ct = default)
     {
         var list = await contacts.GetAllAsync(ct);
-        await uploadHelper.Upload(list, "contacts", "index");
+        await uploadHelper.Upload(list, domainEvent.SubscriptionId.ToString(), "contacts", "index");
     }
 }

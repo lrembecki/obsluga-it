@@ -10,14 +10,22 @@ internal class FormDefinitionEntity : SubscriptionBaseEntity, IHasId<Guid>
     public List<FormFieldDefinitionEntity> Fields { get; private set; } = [];
 
     public static FormDefinitionEntity Create(Guid id, FormDefinitionDto model)
-        => new FormDefinitionEntity
+    {
+        var entity = new FormDefinitionEntity
         {
             Id = id,
             Name = model.Name
         };
 
+        entity.AddDomainEvent(FormDefinitionsDomainEvent.Create(entity.Id));
+
+        return entity;
+    }
+
     public void Update(FormDefinitionDto model)
     {
         Name = model.Name;
+
+        AddDomainEvent(FormDefinitionsDomainEvent.Create(Id));
     }
 }

@@ -1,19 +1,19 @@
 using Azure.Messaging.ServiceBus;
-
 using lrembecki.core.Events;
 using lrembecki.core.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace lrembecki.functions.trotamundos;
+namespace lrembecki.functions.forms;
 
-public class TrotamundosEventQueueFunction(
-    ILogger<TrotamundosEventQueueFunction> logger,
+public class FormsEventQueueFunction(
+    ILogger<FormsEventQueueFunction> logger,
     IPublisher publisher)
 {
-    [Function(nameof(TrotamundosEventQueueFunction))]
+
+    [Function(nameof(FormsEventQueueFunction))]
     public async Task Run(
-        [ServiceBusTrigger("trotamundos", Connection = "ServiceBus")]
+        [ServiceBusTrigger("forms", Connection = "ServiceBus")]
         ServiceBusReceivedMessage message,
         ServiceBusMessageActions messageActions)
     {

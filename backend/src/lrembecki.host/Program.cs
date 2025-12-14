@@ -1,5 +1,6 @@
 using lrembecki.host.Infrastructure;
 using lrembecki.infrastructure;
+using lrembecki.infrastructure.Extensions;
 using lrembecki.presentation.account;
 using lrembecki.presentation.security;
 using lrembecki.presentation.settings;

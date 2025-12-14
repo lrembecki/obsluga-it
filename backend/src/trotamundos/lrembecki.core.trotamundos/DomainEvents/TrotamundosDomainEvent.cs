@@ -7,9 +7,8 @@ namespace lrembecki.core.trotamundos.DomainEvents;
 public record TrotamundosDomainEvent(
     Guid RecordId, 
     string EventType, 
-    DateTime UtcNow) : DomainEvent(
+    DateTime UtcNow) : PublishDomainEvent(
         Guid.NewGuid(), 
-        "trotamundos", 
         EventType, 
         RecordId, 
         UtcNow

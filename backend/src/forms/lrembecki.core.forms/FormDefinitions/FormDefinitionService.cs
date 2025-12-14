@@ -7,7 +7,6 @@ internal sealed class FormDefinitionService(IUnitOfWork uow)
     : BaseCrudService<FormDefinitionEntity, FormDefinitionVM, FormDefinitionDto>(uow)
     , IFormDefinitionService
 {
-    private IRepository<FormFieldDefinitionEntity> FieldRepository => _uow.GetRepository<FormFieldDefinitionEntity>();
     protected override async Task<FormDefinitionEntity> CreateEntity(Guid id, FormDefinitionDto model, CancellationToken cancellationToken)
     {
         var entity = await base.CreateEntity(id, model, cancellationToken);
@@ -19,11 +18,7 @@ internal sealed class FormDefinitionService(IUnitOfWork uow)
 
     protected override async Task UpdateEntity(FormDefinitionEntity entity, FormDefinitionDto model)
     {
-        var fieldEntities = await FieldRepository
-            .GetAll(e => e.FormDefinitionId == entity.Id)
-            .ToAsyncEnumerable().ToListAsync();
-
-        await FieldRepository.DeleteAsync(fieldEntities);
+        entity.Fields.Clear();
 
         UpdateFields(model, entity);
 

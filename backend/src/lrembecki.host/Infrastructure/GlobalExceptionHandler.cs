@@ -11,7 +11,7 @@ public static class GlobalExceptionHandler
         app.Use(async (context, next) =>
         {
             var uow = context.RequestServices.GetRequiredService<IUnitOfWork>();
-            var publisher = context.RequestServices.GetRequiredService<IPublisher>();
+            var publisher = context.RequestServices.GetRequiredService<INotifier>();
 
             try
             {

@@ -6,4 +6,7 @@ public record DomainEvent(
     string EventType, 
     Guid ExternalId, 
     DateTime OccurredOn
-);
+)
+{
+    public Guid SubscriptionId { get; init; } = Guid.NewGuid();
+}

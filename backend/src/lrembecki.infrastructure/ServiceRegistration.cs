@@ -56,7 +56,7 @@ public static class ServiceRegistration
         builder.Services.AddScoped<IBlobHelper, BlobHelper>();
         builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-        builder.Services.AddScoped<IPublisher, Publisher>();
+        builder.Services.AddScoped<INotifier, Notifier>();
 
         builder.Services.AddScoped<SubscriptionIdGlobalFilter>();
         builder.Services.AddScoped<ICollection<IGlobalFilter>>(provider => [

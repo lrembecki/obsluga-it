@@ -2,7 +2,7 @@
 
 namespace lrembecki.core.Helpers;
 
-public interface IPublisher
+public interface INotifier
 {
     void Notify<T>(T @event) where T : DomainEvent;
     Task PublishAsync();

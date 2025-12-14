@@ -6,5 +6,6 @@
         string? Email { get; }
         Guid? SubscriptionId { get; }
         Guid? UserId { get; }
+        void OverrideSubscriptionId(Guid? subscriptionId);
     }
 }

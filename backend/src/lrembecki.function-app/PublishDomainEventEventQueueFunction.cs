@@ -2,18 +2,20 @@ using Azure.Messaging.ServiceBus;
 
 using lrembecki.core.Events;
 using lrembecki.core.Services;
+using lrembecki.infrastructure.Helpers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
 namespace lrembecki.functions.trotamundos;
 
-public class TrotamundosEventQueueFunction(
-    ILogger<TrotamundosEventQueueFunction> logger,
+public class PublishDomainEventEventQueueFunction(
+    PredefinedSessionAccessor session,
+    ILogger<PublishDomainEventEventQueueFunction> logger,
     IPublisher publisher)
 {
-    [Function(nameof(TrotamundosEventQueueFunction))]
+    [Function(nameof(PublishDomainEventEventQueueFunction))]
     public async Task Run(
-        [ServiceBusTrigger("trotamundos", Connection = "ServiceBus")]
+        [ServiceBusTrigger("publish-entity", Connection = "ServiceBus")]
         ServiceBusReceivedMessage message,
         ServiceBusMessageActions messageActions)
     {
@@ -22,7 +24,10 @@ public class TrotamundosEventQueueFunction(
         logger.LogInformation("Message Content-Type: {contentType}", message.ContentType);
 
         var domainEvent = message.Body.ToObjectFromJson<DomainEvent>()!;
-        await publisher.Publish(domainEvent, CancellationToken.None);
+        using (var context = session.CreateSessionContext(domainEvent.SubscriptionId))
+        {
+            await publisher.Publish(domainEvent, CancellationToken.None);
+        }
 
         // Complete the message
         await messageActions.CompleteMessageAsync(message);

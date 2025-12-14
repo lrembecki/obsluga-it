@@ -1,6 +1,6 @@
 ﻿using lrembecki.core.Events;
 
-namespace lrembecki.functions.trotamundos.Helpers;
+namespace lrembecki.core.Services;
 
 public interface IPublisher
 {

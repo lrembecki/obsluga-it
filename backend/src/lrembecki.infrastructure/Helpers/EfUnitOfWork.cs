@@ -58,13 +58,16 @@ internal class EfUnitOfWork(
 
         var now = serviceProvider.GetRequiredService<IDateProvider>().UtcNow;
         var session = serviceProvider.GetRequiredService<ISessionAccessor>();
-        var publisher = serviceProvider.GetRequiredService<IPublisher>();
+        var notifier = serviceProvider.GetRequiredService<INotifier>();
 
         foreach (var entity in entities)
         {
             if (entity.Entity is BaseEntity baseEntity && baseEntity.DomainEvents.Count > 0)
             {
-                baseEntity.DomainEvents.ToList().ForEach(de => publisher.Notify(de));
+                baseEntity.DomainEvents.ToList().ForEach(de => notifier.Notify(de with
+                {
+                    SubscriptionId = session.SubscriptionId!.Value
+                }));
             }
 
             if (entity.Entity is IHasSubscriptionId subscriptionEntity)

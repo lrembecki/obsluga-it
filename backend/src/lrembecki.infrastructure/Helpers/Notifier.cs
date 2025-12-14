@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace lrembecki.infrastructure.Helpers;
 
-internal class Publisher(ServiceBusClient client) : IPublisher
+internal class Notifier(ServiceBusClient client) : INotifier
 {
     private readonly HashSet<DomainEvent> _events = new();
 

@@ -2,7 +2,7 @@
 using lrembecki.core.Services;
 using lrembecki.core.trotamundos.Services;
 
-namespace lrembecki.functions.trotamundos.Helpers;
+namespace lrembecki.function_app.Helpers;
 
 internal sealed class TripPublisher(ITripService trips, UploadHelper uploadHelper) : IPublisher
 {
@@ -11,7 +11,7 @@ internal sealed class TripPublisher(ITripService trips, UploadHelper uploadHelpe
         var tripList = await trips.GetAllAsync(ct);
         var tripVM = await trips.GetByIdAsync(domainEvent!.ExternalId, ct);
 
-        await uploadHelper.Upload(tripVM, "trips", tripVM.Id.ToString());
-        await uploadHelper.Upload(tripList, "trips", "index");
+        await uploadHelper.Upload(tripVM, domainEvent.SubscriptionId.ToString(), "trips", tripVM.Id.ToString());
+        await uploadHelper.Upload(tripList, domainEvent.SubscriptionId.ToString(), "trips", "index");
     }
 }
