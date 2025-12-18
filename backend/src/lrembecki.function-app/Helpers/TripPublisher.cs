@@ -9,9 +9,16 @@ internal sealed class TripPublisher(ITripService trips, UploadHelper uploadHelpe
     public async Task Publish(DomainEvent domainEvent, CancellationToken ct = default)
     {
         var tripList = await trips.GetAllAsync(ct);
-        var tripVM = await trips.GetByIdAsync(domainEvent!.ExternalId, ct);
-
-        await uploadHelper.Upload(tripVM, domainEvent.SubscriptionId.ToString(), "trips", tripVM.Id.ToString());
         await uploadHelper.Upload(tripList, domainEvent.SubscriptionId.ToString(), "trips", "index");
+
+        var tripVM = await trips.GetByIdAsync(domainEvent!.ExternalId, ct);
+        if (tripVM is not null )
+        {
+            await uploadHelper.Upload(tripVM, domainEvent.SubscriptionId.ToString(), "trips", domainEvent!.ExternalId.ToString());
+        } 
+        else
+        {
+            await uploadHelper.Remove(domainEvent.SubscriptionId.ToString(), "trips", domainEvent.ExternalId.ToString());
+        }
     }
 }

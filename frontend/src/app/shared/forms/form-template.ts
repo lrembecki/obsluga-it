@@ -62,16 +62,6 @@ import { FormRenderer } from './form-renderer';
       position: relative;
       min-height: 200px;
     }
-
-    app-ui-panel {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background-color: var(--bg);
-      padding: 0.5rem 0;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
   `,
 })
 export class FormTemplate extends BaseFormComponent<any> {

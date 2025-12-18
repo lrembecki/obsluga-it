@@ -80,7 +80,7 @@ export class SidebarComponent {
     }
 
     effect(async () => {
-      const modules = this._navbar.adata();
+      const modules = this._navbar.data();
 
       this.items.set([
         ...modules.map((m) => ({

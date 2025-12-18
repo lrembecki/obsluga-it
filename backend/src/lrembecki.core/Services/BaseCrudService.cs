@@ -68,7 +68,7 @@ namespace lrembecki.core.Services
         }
 
         public async virtual Task<TVM> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-            => (TVM)GetMapMethod().Invoke(null, new object[] { await _repository.RequireByIdAsync(id, cancellationToken) })!;
+            => (TVM)GetMapMethod().Invoke(null, new object[] { (await _repository.FindByIdAsync(id, cancellationToken))! })!;
         public async Task<TVM> UpdateAsync(Guid id, TDto model, CancellationToken cancellationToken = default)
         {
             model = await Validate(model);

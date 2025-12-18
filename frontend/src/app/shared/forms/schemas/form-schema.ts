@@ -7,7 +7,7 @@ export class FormSchema<T> {
   layout: FormSchemaLayout = 'two-column';
   layoutDisabled: boolean = false;
 
-  canDelete: (...args: any[]) => boolean = () => false;
+  canDelete: (...args: any[]) => boolean = () => true;
 
   constructor(init?: Partial<FormSchema<T>>) {
     Object.assign(this, init);

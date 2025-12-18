@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class NavbarService {
   private readonly _signal = signal<ModuleItem[]>([]);
-  public readonly adata = this._signal.asReadonly();
+  public readonly data = this._signal.asReadonly();
   private readonly _auth = inject(AuthService);
 
   async initialize(): Promise<void> {
@@ -38,10 +38,6 @@ export class NavbarService {
         }
 
         moduleItem.items.push(pageItem);
-      }
-
-      if (moduleItem.path === 'modules/forms') {
-        continue;
       }
 
       if (moduleItem.items.length === 0) {

@@ -18,4 +18,11 @@ internal class UploadHelper(IBlobHelper blob)
             default
         ).Wait();
     }
+
+    public Task Remove(string container, string blobPath, string fileName)
+        => blob.RemoveBlobAsync(
+            container,
+            $"published/{blobPath}/{fileName}.json",
+            default
+        );
 }

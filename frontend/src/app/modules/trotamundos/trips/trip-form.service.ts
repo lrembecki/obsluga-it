@@ -30,7 +30,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
   constructor() {
     super();
 
-    this._returnRoute.set(['/modules/trotamundos/trips/list']);
+    this._returnRoute.set(['/modules/trotamundos/trips/']);
 
     effect(() => {
       this._schema.set(
