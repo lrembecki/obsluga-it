@@ -6,7 +6,7 @@ public record FormVM(
     Dictionary<Guid, string> Fields
 )
 {
-    public static FormVM Create(FormEntity entity)
+    internal static FormVM Map(FormEntity entity)
     {
         if (entity is null) return null!;
 

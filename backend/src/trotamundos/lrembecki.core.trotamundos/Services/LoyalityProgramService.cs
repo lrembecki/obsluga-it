@@ -9,21 +9,6 @@ namespace lrembecki.core.trotamundos.Services;
 public interface ILoyalityProgramService : ICrudService<LoyalityProgramDto, LoyalityProgramVM>;
 internal sealed class LoyalityProgramService(IUnitOfWork uow, IStorageService storage) : BaseCrudService<LoyalityProgramEntity, LoyalityProgramVM, LoyalityProgramDto>(uow), ILoyalityProgramService
 {
-    public override async Task<List<LoyalityProgramVM>> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        var loyalityProgramVMs = await base.GetAllAsync(cancellationToken);
-        var images = (await storage
-            .GetAllImagesAsync(
-                imageIds: loyalityProgramVMs.Select(e => e.ImageId).ToList(),
-                cancellationToken))
-            .ToDictionary(e => e.Id, e => e);
-
-        return loyalityProgramVMs.Select(lp => lp with
-        {
-            Image = images[lp.ImageId]
-        }).ToList();
-    }
-
     protected override async Task DeleteEntity(LoyalityProgramEntity entity, CancellationToken cancellationToken)
     {
         await base.DeleteEntity(entity, cancellationToken);

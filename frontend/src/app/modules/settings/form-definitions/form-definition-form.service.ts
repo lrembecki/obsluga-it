@@ -54,6 +54,13 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
               emptyText: 'No fields',
               itemFields: [
                 new TextFormFieldSchema<FormFieldDefinitionVM>({
+                  key: 'order' as any,
+                  label: 'Order',
+                  disabled: true,
+                  isVisible: false,
+                  colClass: 'col-2',
+                }),
+                new TextFormFieldSchema<FormFieldDefinitionVM>({
                   key: 'fieldName',
                   label: 'Field Name',
                   validators: [Validators.required],
@@ -70,6 +77,7 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
                   key: 'isRequired',
                   label: 'Required',
                   colClass: 'col-2',
+                  value: true,
                 }),
               ],
             }),

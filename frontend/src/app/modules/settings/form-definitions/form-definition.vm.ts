@@ -9,6 +9,7 @@ export type FormDefinitionFieldType =
   | 'radio';
 
 export class FormFieldDefinitionVM {
+  order: number = 0;
   fieldName: string = null!;
   fieldType: FormDefinitionFieldType = 'text';
   isRequired: boolean = false;

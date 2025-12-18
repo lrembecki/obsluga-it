@@ -20,6 +20,7 @@ export abstract class DataTableService<T> {
   protected readonly _data = signal<T[]>([]);
   protected readonly _schema = signal<DataTableSchema<T>>(null!);
 
+  public readonly canCreate = signal(true);
   public readonly columns = computed(() =>
     this.fetchColumnSchema(this.schema().columns),
   );

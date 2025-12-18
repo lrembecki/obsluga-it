@@ -1,5 +1,4 @@
-﻿using lrembecki.core.storage.Entities;
-using lrembecki.core.trotamundos.Entitites;
+﻿using lrembecki.core.trotamundos.Entitites;
 using lrembecki.infrastructure.Entities.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -24,6 +23,8 @@ internal class LoyalityProgramEntityTypeConfiguration : SubscriptionBaseEntityTy
         builder.Property(e => e.Description)
             .IsRequired().HasMaxLength(2048);
 
-        builder.HasOne<StorageEntity>().WithOne().HasForeignKey<LoyalityProgramEntity>(e => e.ImageId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(e => e.Image).WithOne().HasForeignKey<LoyalityProgramEntity>(e => e.ImageId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation(e => e.Image).AutoInclude();
     }
 }

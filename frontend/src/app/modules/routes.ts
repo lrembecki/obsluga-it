@@ -22,4 +22,11 @@ export const routes: Routes = [
     },
     loadChildren: () => import('./settings/routes').then((m) => m.routes),
   },
-];
+  {
+    path: 'forms',
+    data: {
+      title: 'Forms',
+    },
+    loadChildren: () => import('./forms/routes').then((m) => m.routes),
+  },
+].sort((a, b) => a.data.title.localeCompare(b.data.title));

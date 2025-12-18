@@ -14,7 +14,9 @@ import { DataTableService } from './data-table.service.js';
     } @else {
       <app-ui-panel>
         <ng-template #start>
-          <app-button color="primary" text="Create" routerLink="../create" />
+          @if (_service.canCreate()) {
+            <app-button color="primary" text="Create" routerLink="../create" />
+          }
         </ng-template>
       </app-ui-panel>
       <app-data-table

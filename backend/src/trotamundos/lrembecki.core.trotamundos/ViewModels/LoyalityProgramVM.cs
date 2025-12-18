@@ -6,12 +6,11 @@ namespace lrembecki.core.trotamundos.ViewModels;
 public record LoyalityProgramVM(
     Guid Id,
     Guid ImageId,
+    StorageVM Image,
     string Title,
     string Name,
     string Description)
 {
-    public StorageVM Image { get; init; } = default!;
-
     public static LoyalityProgramVM Map(LoyalityProgramEntity entity)
     {
         if (entity == null)
@@ -22,6 +21,7 @@ public record LoyalityProgramVM(
         return new LoyalityProgramVM(
             entity.Id,
             entity.ImageId,
+            StorageVM.Map(entity.Image),
             entity.Title,
             entity.Name,
             entity.Description

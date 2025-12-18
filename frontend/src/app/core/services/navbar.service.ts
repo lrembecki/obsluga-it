@@ -40,6 +40,10 @@ export class NavbarService {
         moduleItem.items.push(pageItem);
       }
 
+      if (moduleItem.path === 'modules/forms') {
+        continue;
+      }
+
       if (moduleItem.items.length === 0) {
         continue;
       }
@@ -47,7 +51,6 @@ export class NavbarService {
       modules.push(moduleItem);
     }
 
-    console.log({ modules });
     this._signal.set(modules);
   }
 }
