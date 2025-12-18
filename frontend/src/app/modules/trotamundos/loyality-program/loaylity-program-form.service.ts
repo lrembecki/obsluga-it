@@ -1,6 +1,7 @@
 import { Validators } from '@angular/forms';
 import {
   FormSchema,
+  ImageFormFieldSchema,
   TextFormFieldSchema,
   TextareaFormFieldSchema,
 } from '@app/shared/forms';
@@ -29,6 +30,12 @@ export class TrotamundosLoyalityProgramFormService extends FormService<LoyalityP
             key: 'description',
             label: 'Description',
             validators: [Validators.required],
+          }),
+          new ImageFormFieldSchema({
+            key: 'image',
+            label: 'Image',
+            validators: [Validators.required],
+            editable: true,
           }),
         ],
       }),

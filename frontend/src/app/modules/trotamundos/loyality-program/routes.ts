@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { provideApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 
+import { inject } from '@angular/core';
 import { provideFormService } from '@app/shared/forms/form.service';
 import { TrotamundosLoyalityProgramFormService } from './loaylity-program-form.service';
 import { TrotamundosLoyalityProgramDataTableService } from './loyality-program-data-table.service';
@@ -16,6 +17,13 @@ export const routes: Routes = [
       provideDataTableService(TrotamundosLoyalityProgramDataTableService),
       provideFormService(TrotamundosLoyalityProgramFormService),
     ],
+    resolve: {
+      init: async () => {
+        await Promise.all([
+          inject(TrotamundosLoyalityProgramFacade).populate(),
+        ]);
+      },
+    },
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       {

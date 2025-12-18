@@ -21,7 +21,9 @@ import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
             [alt]="img.filename || 'Image preview'"
           />
         </div>
-      } @else {
+      }
+
+      @if (!currentImage || imageField().editable) {
         <p-fileupload
           #fu
           [id]="fieldId"

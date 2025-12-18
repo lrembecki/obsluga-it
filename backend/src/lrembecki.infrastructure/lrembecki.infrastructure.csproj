@@ -45,6 +45,7 @@
     <ProjectReference Include="..\events\lrembecki.core.events\lrembecki.core.events.csproj" />
     <ProjectReference Include="..\notification\lrembecki.core.notification\lrembecki.core.notification.csproj" />
     <ProjectReference Include="..\forms\lrembecki.core.forms\lrembecki.core.forms.csproj" />
+    <ProjectReference Include="..\royal-tips\lrembecki.core.royal-tips\lrembecki.core.royal-tips.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,6 +18,7 @@
     <ProjectReference Include="..\events\lrembecki.presentation.events\lrembecki.presentation.events.csproj" />
     <ProjectReference Include="..\notification\lrembecki.presentation.notification\lrembecki.presentation.notification.csproj" />
     <ProjectReference Include="..\forms\lrembecki.presentation.forms\lrembecki.presentation.forms.csproj" />
+    <ProjectReference Include="..\royal-tips\lrembecki.presentation.royal-tips\lrembecki.presentation.royal-tips.csproj" />
   </ItemGroup>
 
 </Project>

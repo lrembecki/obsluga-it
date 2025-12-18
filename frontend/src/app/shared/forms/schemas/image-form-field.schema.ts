@@ -5,6 +5,7 @@ export class ImageFormFieldSchema<T> extends FormFieldSchema<T> {
   accept: string = 'image/*';
   // Show image preview
   showPreview: boolean = true;
+  editable: boolean = false;
   constructor(init?: Partial<ImageFormFieldSchema<T>>) {
     super('image', init);
     Object.assign(this, init);
