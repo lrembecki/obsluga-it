@@ -23,7 +23,7 @@ internal class FormEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
         builder.OwnsMany(e => e.Fields, fb =>
         {
             fb.ToTable("FormField");
-            fb.HasKey(ff => new { ff.FormId, ff.FormDefinitionFieldId });
+            fb.HasKey(ff => new { ff.FormId, ff.Name });
 
             fb.Property(ff => ff.Value).HasMaxLength(2000);
         });

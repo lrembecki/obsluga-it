@@ -277,7 +277,7 @@ export class DataTable<T extends { id: string }> {
   protected readonly orderedColumns = signal<DataTableColumnSchema<T>[]>([]);
   protected dragSourceIndex = -1;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.orderedColumns.set(this.columns());
     // columns are taken from input; DI handled in template variant
   }
@@ -329,7 +329,7 @@ export class DataTable<T extends { id: string }> {
     return s.direction === 'asc' ? '↑' : '↓';
   }
 
-  protected toggleSort(col: DataTableColumnSchema<T>) {
+  protected toggleSort(col: DataTableColumnSchema<T>): void {
     if (!col.sortable) return;
     const s = this.sort();
     if (!s || s.column !== col.field) {
@@ -349,15 +349,15 @@ export class DataTable<T extends { id: string }> {
   }
 
   // Drag & Drop headers for column reordering
-  protected onHeaderDragStart(index: number) {
+  protected onHeaderDragStart(index: number): void {
     this.dragSourceIndex = index;
   }
 
-  protected onHeaderDragOver(event: DragEvent) {
+  protected onHeaderDragOver(event: DragEvent): void {
     event.preventDefault();
   }
 
-  protected onHeaderDrop(targetIndex: number) {
+  protected onHeaderDrop(targetIndex: number): void {
     if (this.dragSourceIndex < 0 || targetIndex === this.dragSourceIndex)
       return;
     const cols = [...this.orderedColumns()];
@@ -369,7 +369,7 @@ export class DataTable<T extends { id: string }> {
     this.dragSourceIndex = -1;
   }
 
-  protected persistColumnOrder(cols: DataTableColumnSchema<T>[]) {
+  protected persistColumnOrder(cols: DataTableColumnSchema<T>[]): void {
     try {
       const key = `data-table:columns:${this.persistenceKey()}:${this.rowIdField()}`;
       const value = JSON.stringify(
@@ -381,7 +381,7 @@ export class DataTable<T extends { id: string }> {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     try {
       const key = `data-table:columns:${this.persistenceKey()}:${this.rowIdField()}`;
       const raw = localStorage.getItem(key);
@@ -404,30 +404,38 @@ export class DataTable<T extends { id: string }> {
     }
   }
 
-  protected startEdit(row: T) {
+  protected startEdit(row: T): void {
     const idField = this.rowIdField();
     this.editingId.set(String(row[idField]));
     this.editDraft.set({ ...row });
   }
 
-  protected isEditing(row: T) {
+  protected isEditing(row: T): boolean {
     const idField = this.rowIdField();
     return this.editingId() === String(row[idField]);
   }
 
-  protected renderCell(row: T, col: DataTableColumnSchema<T>) {
-    if (col.render) return col.render(row);
-    return String(row[col.field] ?? '');
+  protected renderCell(row: T, col: DataTableColumnSchema<T>): string {
+    if (col.render) {
+      return col.render(row);
+    } else if (col.type === 'date') {
+      const value = this.getRowValue(row, col.field);
+      if (!value) return '';
+      const date = new Date(String(value));
+      return date.toLocaleString();
+    }
+
+    return String(this.getRowValue(row, col.field) ?? '');
   }
 
-  protected saveRow() {
+  protected saveRow(): void {
     const draft = this.editDraft();
     if (!draft) return;
     this.save.emit(draft as T);
     this.cancelEdit();
   }
 
-  protected cancelEdit() {
+  protected cancelEdit(): void {
     this.editingId.set(null);
     this.editDraft.set(null);
   }
@@ -441,10 +449,17 @@ export class DataTable<T extends { id: string }> {
   protected setEditValue(
     col: DataTableColumnSchema<T>,
     value: string | undefined,
-  ) {
+  ): void {
     const draft = this.editDraft();
     if (!draft) return;
     (draft as any)[col.field] = value;
     this.editDraft.set({ ...(draft as any) });
+  }
+
+  private getRowValue(row: T, field: string): unknown {
+    const value = field.split('.').reduce((obj, key) => {
+      return obj && (obj as any)[key] !== undefined ? (obj as any)[key] : null;
+    }, row);
+    return value;
   }
 }

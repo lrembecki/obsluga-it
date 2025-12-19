@@ -3,7 +3,8 @@
 public record FormVM(
     Guid Id,
     Guid FormDefinitionId,
-    Dictionary<Guid, string> Fields
+    DateTime DateTime,
+    Dictionary<string, string> Fields
 )
 {
     internal static FormVM Map(FormEntity entity)
@@ -13,7 +14,8 @@ public record FormVM(
         return new FormVM(
             entity.Id, 
             entity.FormDefinitionId,
-            entity.Fields.ToDictionary(e => e.FormDefinitionFieldId, e => e.Value)
+            entity.CreatedAt,
+            entity.Fields.ToDictionary(e => e.Name, e => e.Value)
         );
     }
 }

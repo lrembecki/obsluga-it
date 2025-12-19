@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure.Entities;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure.Entities;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251219163513_Forms-Fixes-202512191735")]
+    partial class FormsFixes202512191735
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

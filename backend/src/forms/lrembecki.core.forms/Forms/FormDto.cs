@@ -3,5 +3,6 @@
 public record FormDto
 {
     public Guid FormDefinitionId { get; init; }
-    public Dictionary<Guid, string> Fields { get; init; } = [];
+    public DateTime TimeStamp { get; init; } = DateTime.UtcNow;
+    public Dictionary<string, string> Fields { get; init; } = [];
 }

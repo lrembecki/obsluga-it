@@ -31,7 +31,9 @@ import { TranslatePipe } from './core/pipes/translate.pipe';
 import { provideTranslation } from './core/providers/translation.providers';
 import { ApiService } from './core/services/api.service';
 import { AppUpdateService } from './core/services/app-update.service';
+import { NavbarService } from './core/services/navbar.service';
 import { NotificationService } from './core/services/notification.service';
+import { SettingsFormDefinitionFacade } from './modules/settings/form-definitions/form-definition.facade';
 
 let RUNTIME_LOCALE = 'en-US';
 
@@ -63,6 +65,8 @@ export const appConfig: ApplicationConfig = {
     TranslatePipe,
     ApiService,
     TagsFacade,
+    NavbarService,
+    SettingsFormDefinitionFacade,
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',

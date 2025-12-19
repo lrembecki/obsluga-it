@@ -12,4 +12,17 @@ public record FormFieldDefinitionVM(
 
         return new(entity.FieldName, entity.FieldType, entity.IsRequired);
     }
+
+
+    public bool Validate(string value, out string errorMessage)
+    {
+        if (IsRequired && string.IsNullOrEmpty(value))
+        {
+            errorMessage = "Field is required";
+            return false;
+        }
+
+        errorMessage = null!;
+        return true;
+    }
 }

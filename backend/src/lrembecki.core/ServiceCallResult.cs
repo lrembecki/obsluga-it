@@ -12,6 +12,14 @@
                 ErrorMessage = exception.Message
             };
 
+        public static ServiceCallResult<T> CreateFailureResult<T>(Exception exception, T model)
+            => new ServiceCallResult<T>
+            {
+                Success = false,
+                ErrorMessage = exception.Message,
+                Data = model
+            };
+
         public static ServiceCallResult CreateSuccessResult(string? errorMessage = null)
             => new ServiceCallResult
             {

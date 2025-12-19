@@ -7,6 +7,7 @@ import { NavbarService } from './core/services/navbar.service';
 import { StorageService } from './core/services/storage.service';
 import { TranslationService } from './core/services/translation.service';
 import { SignIn } from './features/account/sign-in';
+import { SettingsFormDefinitionFacade } from './modules/settings/form-definitions/form-definition.facade';
 import { BreadcrumbsComponent } from './shared/ui/breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './shared/ui/footer/footer.component';
 import { SidebarComponent } from './shared/ui/navbar/sidebar.component';
@@ -73,7 +74,6 @@ import { SidebarComponent } from './shared/ui/navbar/sidebar.component';
       padding: 0.5rem;
     }
   `,
-  providers: [NavbarService],
   template: `
     <p-toast />
 
@@ -104,6 +104,7 @@ export class App {
   private readonly _translation = inject(TranslationService);
   private readonly _navbar = inject(NavbarService);
   private readonly _auth = inject(AuthService);
+  private readonly _formDefinition = inject(SettingsFormDefinitionFacade);
   protected readonly sidebarCollapsed = signal<boolean>(false);
   private readonly sidebar = viewChild<SidebarComponent>('sidebar');
 
@@ -124,6 +125,7 @@ export class App {
     this._auth.initialize();
     this._translation.initialize();
 
+    await this._formDefinition.initialize();
     await this._navbar.initialize();
   }
 }
