@@ -3,7 +3,6 @@ using lrembecki.core.storage.Services;
 using lrembecki.core.trotamundos.Dtos;
 using lrembecki.core.trotamundos.Entitites;
 using lrembecki.core.trotamundos.ViewModels;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace lrembecki.core.trotamundos.Services;
 
@@ -14,6 +13,7 @@ internal sealed class TripService(
 {
     private readonly IRepository<TripAgendaEntity> _agenda = uow.GetRepository<TripAgendaEntity>();
     private readonly IRepository<AdvantageEntity> _advantages = uow.GetRepository<AdvantageEntity>();
+    private readonly IRepository<LoyalityProgramEntity> _loyalityPrograms = uow.GetRepository<LoyalityProgramEntity>();
     private readonly IRepository<TripImageEntity> _images = uow.GetRepository<TripImageEntity>();
     private readonly IRepository<TripHighlightEntity> _highlights = uow.GetRepository<TripHighlightEntity>();
     private readonly IRepository<TripPaymentScheduleEntity> _paymentSchedules = uow.GetRepository<TripPaymentScheduleEntity>();
@@ -25,7 +25,6 @@ internal sealed class TripService(
 
     protected override Task<TripDto> Validate(TripDto model)
         => base.Validate(CleanUpModel(model));
-
     protected override async Task<TripEntity> CreateEntity(Guid id, TripDto model, CancellationToken cancellationToken)
     {
         var entity = await base.CreateEntity(id, model, cancellationToken);
@@ -35,6 +34,9 @@ internal sealed class TripService(
 
         var advantages = _advantages.GetAll(e => model.Advantages.Contains(e.Id)).ToList();
         entity.Advantages.AddRange(advantages);
+
+        var loyalityPrograms = _loyalityPrograms.GetAll(e => model.LoyalityPrograms.Contains(e.Id)).ToList();
+        entity.LoyalityPrograms.AddRange(loyalityPrograms);
 
         await _highlights.AddAsync(model.Highlights.Select(e => TripHighlightEntity.Create(entity.Id, e)).ToList());
         await _agenda.AddAsync(model.Agenda.Select(e => TripAgendaEntity.Create(entity.Id, e)).ToList());
@@ -47,7 +49,6 @@ internal sealed class TripService(
 
         return entity;
     }
-
     protected override async Task UpdateEntity(TripEntity entity, TripDto model)
     {
         await SyncImagesAsync(model, entity, default!);
@@ -57,8 +58,11 @@ internal sealed class TripService(
 
         var advantages = _advantages.GetAll(e => model.Advantages.Contains(e.Id)).ToList();
         entity.Advantages.Clear();
-        await _advantages.DeleteAsync(entity.Advantages);
         entity.Advantages.AddRange(advantages);
+
+        var loyalityPrograms = _loyalityPrograms.GetAll(e => model.LoyalityPrograms.Contains(e.Id)).ToList();
+        entity.LoyalityPrograms.Clear();
+        entity.LoyalityPrograms.AddRange(loyalityPrograms);
 
         await _agenda.DeleteAsync(entity.Agenda);
         await _agenda.AddAsync(model.Agenda.Select(e => TripAgendaEntity.Create(entity.Id, e)).ToList());
@@ -85,6 +89,34 @@ internal sealed class TripService(
         await _schedules.AddAsync(model.Schedules.Select(e => TripScheduleEntity.Create(entity.Id, e)).ToList());
     }
 
+    protected override async Task DeleteEntity(TripEntity entity, CancellationToken cancellationToken)
+    {
+        foreach (var image in entity.Images)
+        {
+            await storage.DeleteAsync(image.ImageId, cancellationToken);
+        }
+
+        foreach (var image in entity.SuggestedFlights)
+        {
+            await storage.DeleteAsync(image.ImageId, cancellationToken);
+        }
+
+        entity.Advantages.Clear();
+        entity.LoyalityPrograms.Clear();
+
+        // ADD THESE LINES:
+        await _agenda.DeleteAsync(entity.Agenda);
+        await _highlights.DeleteAsync(entity.Highlights);
+        await _paymentSchedules.DeleteAsync(entity.PaymentSchedules);
+        await _priceIncludes.DeleteAsync(entity.PriceIncludes);
+        await _requirements.DeleteAsync(entity.Requirements);
+        await _suggestedFlights.DeleteAsync(entity.SuggestedFlights);
+        await _images.DeleteAsync(entity.Images);
+        await _schedules.DeleteAsync(entity.Schedules);
+
+        await base.DeleteEntity(entity, cancellationToken);
+    }
+
     private TripDto CleanUpModel(TripDto model)
     {
         return model with
@@ -94,7 +126,6 @@ internal sealed class TripService(
             SuggestedFlights = model.SuggestedFlights.Where(e => e.Image != null).ToList()
         };
     }
-
     private async Task SyncSuggestedFlightImages(TripDto model, TripEntity tripEntity, CancellationToken cancellationToken)
     {
         if (tripEntity != null)

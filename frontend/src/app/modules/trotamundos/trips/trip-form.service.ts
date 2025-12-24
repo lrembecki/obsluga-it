@@ -34,6 +34,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
 
     effect(() => {
       const highlights = this._facades.highlights.data();
+      const advantages = this._facades.advantages.data();
 
       this._schema.set(
         new FormSchema<TripVM>({
@@ -43,6 +44,7 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
               highlightId: e.id,
               value: '',
             })),
+            advantages: advantages.map((e) => e.id),
             schedules: [
               { order: 1, title: 'DZIEŃ 1', content: '' },
               { order: 1, title: 'DZIEŃ 2', content: '' },

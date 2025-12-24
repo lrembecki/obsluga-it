@@ -28,6 +28,7 @@ public class TripEntity : TrotamundosBaseEntity
     public virtual List<TripRequirementEntity> Requirements { get; private set; } = [];
     public virtual List<TripScheduleEntity> Schedules { get; private set; } = [];
     public virtual List<TripSuggestedFlightEntity> SuggestedFlights { get; private set; } = [];
+    public virtual List<LoyalityProgramEntity> LoyalityPrograms { get; private set; } = [];
 
     public static TripEntity Create(Guid tripId, TripDto model)
     {
