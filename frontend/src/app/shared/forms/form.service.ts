@@ -5,6 +5,7 @@ import {
   Provider,
   signal,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
 import { createFormFromFieldSchema } from './services/form-factory.service';
@@ -32,45 +33,56 @@ export abstract class FormService<T> {
   );
   public readonly form = computed(() => {
     if (this.mode() === 'create') {
-      return createFormFromFieldSchema(this.schema());
+      const schema = this.schema();
+      const formGroup = createFormFromFieldSchema(schema);
+      const model = this.buildFormControls(formGroup, schema.patchValue);
+      formGroup.patchValue(model);
+
+      console.log({ schema });
+      return formGroup;
     } else {
-      const formGroup = createFormFromFieldSchema(this.schema(), this.mode());
-      const model = this.model();
-      // Populate FormArray controls for collection fields before patching values
-      this.schema().fields.forEach((field: any) => {
-        if (field.type === 'collection') {
-          const value = model?.[field.key as string] ?? ([] as any[]);
-          const fa = formGroup.get(field.key as string) as any;
-          if (fa && Array.isArray(value)) {
-            // Clear existing
-            while (fa.length > 0) fa.removeAt(0);
-            // Push item controls
-            value.forEach((item: any) => {
-              if (field.itemFields?.length) {
-                const groupControls: Record<string, any> = {};
-                field.itemFields.forEach((f: any) => {
-                  const ctrl = f.createControl('edit', !!f.disabled);
-                  groupControls[f.key as string] = ctrl;
-                });
-                const fg = new (formGroup.constructor as any)(groupControls);
-                fa.push(fg);
-              } else {
-                fa.push(
-                  new (
-                    formGroup.constructor as any
-                  ).prototype.constructor.control(item),
-                );
-              }
-            });
-          }
-        }
-      });
+      const schema = this.schema();
+      const formGroup = createFormFromFieldSchema(schema, this.mode());
+      const model = this.buildFormControls(formGroup, this.model());
 
       formGroup.patchValue(model);
 
       return formGroup;
     }
   });
+
+  private buildFormControls(formGroup: FormGroup, model: any) {
+    // Populate FormArray controls for collection fields before patching values
+    this.schema().fields.forEach((field: any) => {
+      if (field.type === 'collection') {
+        const value = model?.[field.key as string] ?? ([] as any[]);
+        const fa = formGroup.get(field.key as string) as any;
+        if (fa && Array.isArray(value)) {
+          // Clear existing
+          while (fa.length > 0) fa.removeAt(0);
+          // Push item controls
+          value.forEach((item: any) => {
+            if (field.itemFields?.length) {
+              const groupControls: Record<string, any> = {};
+              field.itemFields.forEach((f: any) => {
+                const ctrl = f.createControl('edit', !!f.disabled);
+                groupControls[f.key as string] = ctrl;
+              });
+              const fg = new (formGroup.constructor as any)(groupControls);
+              fa.push(fg);
+            } else {
+              fa.push(
+                new (
+                  formGroup.constructor as any
+                ).prototype.constructor.control(item),
+              );
+            }
+          });
+        }
+      }
+    });
+    return model;
+  }
 
   initialize(): Promise<void> {
     return this.facade.initialize();

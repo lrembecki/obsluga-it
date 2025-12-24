@@ -33,8 +33,30 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
     this._returnRoute.set(['/modules/trotamundos/trips/']);
 
     effect(() => {
+      const highlights = this._facades.highlights.data();
+
       this._schema.set(
         new FormSchema<TripVM>({
+          patchValue: {
+            highlights: highlights.map((e, index) => ({
+              order: index + 1,
+              highlightId: e.id,
+              value: '',
+            })),
+            schedules: [
+              { order: 1, title: 'DZIEŃ 1', content: '' },
+              { order: 1, title: 'DZIEŃ 2', content: '' },
+              { order: 1, title: 'DZIEŃ 3', content: '' },
+              { order: 1, title: 'DZIEŃ 4', content: '' },
+            ],
+            paymentSchedules: [
+              { order: 1, title: '1', price: '', description: '' },
+              { order: 1, title: '2', price: '', description: '' },
+              { order: 1, title: '3', price: '', description: '' },
+            ],
+            requirements: [],
+            suggestedFlights: [],
+          },
           fields: [
             // Name: string
             new TextFormFieldSchema<TripVM>({
