@@ -1,3 +1,4 @@
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import {
   provideHttpClient,
   withInterceptors,
@@ -52,6 +53,9 @@ export const appConfig: ApplicationConfig = {
           cssLayer: false,
         },
       },
+      translation: {
+        dateFormat: 'yy-mm-dd',
+      },
     }),
     provideMsal(),
     provideTranslation(),
@@ -78,6 +82,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: LOCALE_ID,
       useFactory: () => RUNTIME_LOCALE,
+    },
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { dateFormat: 'yyyy-MM-dd' },
     },
   ],
 };

@@ -19,11 +19,11 @@ export class FormsDataTableService extends DataTableService<{
     sortable: true,
     columns: [
       {
-        field: 'id',
-        label: 'ID',
+        field: 'dateTime',
+        label: 'Date & Time',
+        type: 'date-time',
         renderLink: (record: { id: string }) => ['/modules/forms/', record.id],
       },
-      { field: 'dateTime', label: 'Date & Time', type: 'date' },
       ...(this.selectedDefinition()?.fields.map((item) => ({
         field: `fields.${item.fieldName}`,
         label: item.fieldName,

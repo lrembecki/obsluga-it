@@ -435,6 +435,10 @@ export class TrotamundosTripFormService extends FormService<TripVM> {
             }),
 
             // Collection: suggested flights (order:number, imageId:string)
+            new TextareaFormFieldSchema<TripVM>({
+              label: 'Suggested Flight Notes',
+              key: 'suggestedFlightNotes',
+            }),
             new CollectionFormFieldSchema<
               TripVM,
               {

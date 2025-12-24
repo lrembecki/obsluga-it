@@ -24,20 +24,22 @@ export class SettingsFormDefinitionFacade extends ApiFacade<FormDefinitionVM> {
   override async populate(): Promise<this> {
     const result = await super.populate();
 
-    this._navbar.customModules.set([
-      new ModuleItem({
-        label: 'Forms',
-        items: [
-          ...this.data().map(
-            (def) =>
-              new PageItem({
-                label: def.name || 'Unnamed',
-                path: 'modules/forms/' + def.id,
-              }),
-          ),
-        ],
-      }),
-    ]);
+    if (this.data().length > 0) {
+      this._navbar.customModules.set([
+        new ModuleItem({
+          label: 'Forms',
+          items: [
+            ...this.data().map(
+              (def) =>
+                new PageItem({
+                  label: def.name || 'Unnamed',
+                  path: 'modules/forms/' + def.id,
+                }),
+            ),
+          ],
+        }),
+      ]);
+    }
 
     return result;
   }

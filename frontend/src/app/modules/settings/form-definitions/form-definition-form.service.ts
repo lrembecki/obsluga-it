@@ -22,6 +22,7 @@ const fieldTypeOptions: Array<{
   { label: 'Email', value: 'email' },
   { label: 'Number', value: 'number' },
   { label: 'Date', value: 'date' },
+  { label: 'DateTime', value: 'date-time' },
   { label: 'Textarea', value: 'textarea' },
   { label: 'Select', value: 'select' },
   { label: 'Checkbox', value: 'checkbox' },

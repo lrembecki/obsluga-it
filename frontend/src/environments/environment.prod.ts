@@ -10,8 +10,8 @@ export const environment = {
     clientId: 'd56545db-3026-46f3-9912-470603e99135',
     authority:
       'https://platformproduction.b2clogin.com/platformproduction.onmicrosoft.com/B2C_1_susi',
-    redirectUri: 'https://web-obsluga-it-prd-01.azurewebsites.net/',
-    postLogoutRedirectUri: 'https://web-obsluga-it-prd-01.azurewebsites.net/',
+    redirectUri: window.location.origin,
+    postLogoutRedirectUri: window.location.origin,
     knownAuthorities: ['platformproduction.b2clogin.com'],
     scopes: {
       default: [
@@ -23,7 +23,7 @@ export const environment = {
     protectedResources: {
       productionApi:
         'https://api-obsluga-it-prd-01.azurewebsites.net/api/authenticate',
-      localApi: 'https://api-obsluga-it-prd-01.azurewebsites.net/api/authenticate',
+      localApi: 'https://localhost:7043/api/authenticate',
     },
   },
 };

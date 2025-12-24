@@ -13,19 +13,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-var requestSize = 100L * 1024 * 1024;
+//var requestSize = 100L * 1024 * 1024;
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxRequestBodySize = requestSize; 
-});
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.Limits.MaxRequestBodySize = requestSize; 
+//});
 
-builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
-{
-    options.MultipartBodyLengthLimit = requestSize;
-    options.ValueLengthLimit = int.MaxValue;
-    options.MultipartHeadersLengthLimit = int.MaxValue;
-});
+//builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+//{
+//    options.MultipartBodyLengthLimit = requestSize;
+//    options.ValueLengthLimit = int.MaxValue;
+//    options.MultipartHeadersLengthLimit = int.MaxValue;
+//});
 
 builder.AddAccount();
 builder.AddStorage();

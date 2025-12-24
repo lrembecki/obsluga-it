@@ -2,7 +2,7 @@
 
 namespace lrembecki.infrastructure.Helpers;
 
-public class PredefinedSessionAccessor(Guid subscriptionid) : ISessionAccessor
+public class PredefinedSessionAccessor : ISessionAccessor
 {
     private Guid? _overrideSubscriptionId = null!;
 
@@ -10,7 +10,7 @@ public class PredefinedSessionAccessor(Guid subscriptionid) : ISessionAccessor
 
     public string? Email => "automated@lrembecki.pl";
 
-    public Guid? SubscriptionId => _overrideSubscriptionId ?? subscriptionid;
+    public Guid? SubscriptionId => _overrideSubscriptionId;
 
     public Guid? UserId => Guid.NewGuid();
 

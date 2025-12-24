@@ -31,10 +31,7 @@ builder.AddInfrastructure(
     appConfiguration: Environment.GetEnvironmentVariable("AppConfiguration")!, 
     tenantId: Environment.GetEnvironmentVariable("TenantId")!);
 
-var subscriptionId = Guid.Parse(Environment.GetEnvironmentVariable("SubscriptionId")!);
-
-builder.Services.AddScoped(_ => new PredefinedSessionAccessor(subscriptionId));
-builder.Services.AddScoped<ISessionAccessor>(_ => _.GetRequiredService<PredefinedSessionAccessor>());
+builder.Services.AddScoped<ISessionAccessor, PredefinedSessionAccessor>();
 builder.Services.AddScoped<UploadHelper>();
 builder.Services.AddScoped<lrembecki.core.Services.IPublisher, PublishFactory>();
 builder.Services.AddScoped<TripPublisher>();

@@ -17,6 +17,7 @@ public class TripEntity : TrotamundosBaseEntity
     public string Title { get; private set; } = string.Empty;
     public string Subtitle { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
+    public string SuggestedFlightNotes { get; private set; } = string.Empty;
 
     public virtual List<TripAgendaEntity> Agenda { get; private set; } = [];
     public virtual List<AdvantageEntity> Advantages { get; private set; } = [];
@@ -64,6 +65,7 @@ public class TripEntity : TrotamundosBaseEntity
         Title = model.Title;
         Subtitle = model.Subtitle;
         Description = model.Description;
+        SuggestedFlightNotes = model.SuggestedFlightNotes;
 
         AddDomainEvent(TrotamundosDomainEvent.Create(this));
     }

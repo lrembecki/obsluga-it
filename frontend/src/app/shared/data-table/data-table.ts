@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   computed,
@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@app/core/pipes/date-pipe';
 import { Checkbox } from 'primeng/checkbox';
 import { Button } from '../ui/button/button';
 import { TextInputComponent } from '../ui/inputs/text-input.component';
@@ -26,6 +27,8 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
     FormsModule,
     ReactiveFormsModule,
     Checkbox,
+    DatePipe,
+    NgTemplateOutlet,
   ],
   host: { role: 'grid', class: 'data-table' },
   styles: [
@@ -178,6 +181,25 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
         </tr>
       </thead>
       <tbody>
+        <ng-template #renderCellTemplate let-row="row" let-col="col">
+          @if (col.type === 'boolean') {
+            <p-checkbox
+              binary="true"
+              [disabled]="true"
+              [(ngModel)]="row[col.field]"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          } @else if (col.type === 'date') {
+            @let value = getRowValue(row, col.field);
+            {{ value | date: 'shortDate' }}
+          } @else if (col.type === 'date-time') {
+            @let value = getRowValue(row, col.field);
+            {{ value | date: 'short' }}
+          } @else {
+            {{ renderCell(row, col) }}
+          }
+        </ng-template>
+
         @for (row of visibleData(); track row[rowIdField()]) {
           <tr>
             @for (col of orderedColumns(); track col.label) {
@@ -202,17 +224,20 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
                 } @else {
                   @if (col.renderLink) {
                     <a [routerLink]="col.renderLink(row)">
-                      {{ renderCell(row, col) }}
+                      <ng-container
+                        *ngTemplateOutlet="
+                          renderCellTemplate;
+                          context: { row: row, col: col }
+                        "
+                      />
                     </a>
-                  } @else if (col.type === 'boolean') {
-                    <p-checkbox
-                      binary="true"
-                      [disabled]="true"
-                      [(ngModel)]="row[col.field]"
-                      [ngModelOptions]="{ standalone: true }"
-                    />
                   } @else {
-                    {{ renderCell(row, col) }}
+                    <ng-container
+                      *ngTemplateOutlet="
+                        renderCellTemplate;
+                        context: { row: row, col: col }
+                      "
+                    />
                   }
                 }
               </td>
@@ -418,11 +443,6 @@ export class DataTable<T extends { id: string }> {
   protected renderCell(row: T, col: DataTableColumnSchema<T>): string {
     if (col.render) {
       return col.render(row);
-    } else if (col.type === 'date') {
-      const value = this.getRowValue(row, col.field);
-      if (!value) return '';
-      const date = new Date(String(value));
-      return date.toLocaleString();
     }
 
     return String(this.getRowValue(row, col.field) ?? '');
@@ -456,7 +476,7 @@ export class DataTable<T extends { id: string }> {
     this.editDraft.set({ ...(draft as any) });
   }
 
-  private getRowValue(row: T, field: string): unknown {
+  protected getRowValue(row: T, field: string): any {
     const value = field.split('.').reduce((obj, key) => {
       return obj && (obj as any)[key] !== undefined ? (obj as any)[key] : null;
     }, row);

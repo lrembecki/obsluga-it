@@ -16,6 +16,6 @@ internal class TripRequirementEntityTypeConfiguration : IEntityTypeConfiguration
 
         builder.Property(e => e.Description)
             .IsRequired()
-            .HasMaxLength(200);
+            .HasMaxLength(2048);
     }
 }

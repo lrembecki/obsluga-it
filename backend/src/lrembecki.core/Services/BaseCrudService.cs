@@ -21,11 +21,15 @@ namespace lrembecki.core.Services
 
             var entity = await CreateEntity(Guid.NewGuid(), model, cancellationToken);
             await _repository.AddAsync(entity);
+            await _uow.SaveChangesAsync(cancellationToken);
 
             return await GetByIdAsync(entity.Id, cancellationToken);
         }
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
-            => await DeleteEntity(await _repository.RequireByIdAsync(id, cancellationToken), cancellationToken);
+        {
+            await DeleteEntity(await _repository.RequireByIdAsync(id, cancellationToken), cancellationToken);
+            await _uow.SaveChangesAsync(cancellationToken);
+        }
         public virtual Task<List<TVM>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var query = GetAll(_repository.GetAll());
@@ -78,6 +82,7 @@ namespace lrembecki.core.Services
             await UpdateEntity(entity, model);
 
             await _repository.UpdateAsync(entity);
+            await _uow.SaveChangesAsync(cancellationToken);
 
             return await GetByIdAsync(entity.Id, cancellationToken);
         }
@@ -115,6 +120,7 @@ namespace lrembecki.core.Services
         protected virtual async Task DeleteEntity(TEntity entity, CancellationToken cancellationToken)
         {
             await _repository.DeleteAsync(entity);
+            await _uow.SaveChangesAsync(cancellationToken);
         }
         protected virtual Task<TDto> Validate(TDto model) => Task.FromResult(model);
     }

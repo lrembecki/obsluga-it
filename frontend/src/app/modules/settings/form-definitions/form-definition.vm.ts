@@ -3,6 +3,7 @@ export type FormDefinitionFieldType =
   | 'email'
   | 'number'
   | 'date'
+  | 'date-time'
   | 'textarea'
   | 'select'
   | 'checkbox'

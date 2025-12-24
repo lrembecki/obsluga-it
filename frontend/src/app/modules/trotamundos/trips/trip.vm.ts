@@ -8,6 +8,7 @@ export class TripVM {
   title: string = null!;
   subtitle: string = null!;
   description: string = null!;
+  suggestedFlightNotes: string = null!;
   startDate: Date = null!;
   endDate: Date = null!;
   calendar: string | null = null; // Up to 50 chars or null

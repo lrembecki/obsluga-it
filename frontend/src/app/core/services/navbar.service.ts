@@ -47,6 +47,10 @@ export class NavbarService {
         moduleItem.items.push(pageItem);
       }
 
+      if (moduleItem.items.length === 0) {
+        continue;
+      }
+
       modules.push(moduleItem);
     }
 

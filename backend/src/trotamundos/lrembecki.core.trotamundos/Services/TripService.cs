@@ -12,6 +12,7 @@ internal sealed class TripService(
     IUnitOfWork uow, 
     IStorageService storage) : BaseCrudService<TripEntity, TripVM, TripDto>(uow), ITripService
 {
+    private readonly IRepository<TripAgendaEntity> _agenda = uow.GetRepository<TripAgendaEntity>();
     private readonly IRepository<AdvantageEntity> _advantages = uow.GetRepository<AdvantageEntity>();
     private readonly IRepository<TripImageEntity> _images = uow.GetRepository<TripImageEntity>();
     private readonly IRepository<TripHighlightEntity> _highlights = uow.GetRepository<TripHighlightEntity>();
@@ -36,6 +37,7 @@ internal sealed class TripService(
         entity.Advantages.AddRange(advantages);
 
         await _highlights.AddAsync(model.Highlights.Select(e => TripHighlightEntity.Create(entity.Id, e)).ToList());
+        await _agenda.AddAsync(model.Agenda.Select(e => TripAgendaEntity.Create(entity.Id, e)).ToList());
         await _paymentSchedules.AddAsync(model.PaymentSchedules.Select(e => TripPaymentScheduleEntity.Create(entity.Id, e)).ToList());
         await _priceIncludes.AddAsync(model.PriceIncludes.Select(e => TripPriceIncludeEntity.Create(entity.Id, e)).ToList());
         await _requirements.AddAsync(model.Requirements.Select(e => TripRequirementEntity.Create(entity.Id, e)).ToList());
@@ -57,6 +59,9 @@ internal sealed class TripService(
         entity.Advantages.Clear();
         await _advantages.DeleteAsync(entity.Advantages);
         entity.Advantages.AddRange(advantages);
+
+        await _agenda.DeleteAsync(entity.Agenda);
+        await _agenda.AddAsync(model.Agenda.Select(e => TripAgendaEntity.Create(entity.Id, e)).ToList());
 
         await _highlights.DeleteAsync(entity.Highlights);
         await _highlights.AddAsync(model.Highlights.Select(e => TripHighlightEntity.Create(entity.Id, e)).ToList());

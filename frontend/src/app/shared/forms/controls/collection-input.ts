@@ -4,6 +4,7 @@ import {
   computed,
   CUSTOM_ELEMENTS_SCHEMA,
   input,
+  OnInit,
 } from '@angular/core';
 import {
   FormArray,
@@ -180,7 +181,7 @@ import { RenderInput } from './render-input';
   `,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class CollectionInput {
+export class CollectionInput implements OnInit {
   field = input.required<FormFieldSchema<unknown>>();
   form = input.required<FormGroup>();
 
@@ -196,6 +197,12 @@ export class CollectionInput {
     () =>
       !!this.collectionField().itemType && !this.collectionField().itemFields,
   );
+
+  ngOnInit(): void {
+    // Initial sort if order field key is provided
+    this.sortByOrderFieldKey();
+    this.recalculateOrder();
+  }
 
   length(): number {
     return this.formArrayCtrl?.length ?? 0;
@@ -225,6 +232,8 @@ export class CollectionInput {
       arr.push(this.buildItemGroup());
     }
 
+    // Sort by provided order field key, then renumber
+    this.sortByOrderFieldKey();
     this.recalculateOrder();
   }
 
@@ -232,6 +241,8 @@ export class CollectionInput {
     const min = this.collectionField().minItems ?? 0;
     if (this.length() <= min) return;
     this.formArrayCtrl.removeAt(index);
+    // Keep array sorted by order field key after removal
+    this.sortByOrderFieldKey();
     this.recalculateOrder();
   }
 
@@ -243,6 +254,7 @@ export class CollectionInput {
     const ctrl = arr.at(index);
     arr.removeAt(index);
     arr.insert(newIndex, ctrl);
+    // Manual move should update numbering to reflect new order
     this.recalculateOrder();
   }
 
@@ -261,7 +273,9 @@ export class CollectionInput {
   }
 
   private recalculateOrder(): void {
-    const orderKey = this.collectionField().orderField as string | undefined;
+    const orderKey = (this.collectionField() as any).orderField as
+      | string
+      | undefined;
     if (!orderKey || this.isPrimitive()) return;
 
     const arr = this.formArrayCtrl;
@@ -270,6 +284,53 @@ export class CollectionInput {
       const ctrl = grp.get(orderKey);
       if (ctrl) ctrl.setValue(i + 1, { emitEvent: false });
     }
+  }
+
+  private sortByOrderFieldKey(): void {
+    const orderKey =
+      ((this.collectionField() as any).orderFieldKey as string | undefined) ??
+      ((this.collectionField() as any).orderField as string | undefined);
+    if (!orderKey || this.isPrimitive()) return;
+
+    const arr = this.formArrayCtrl;
+    const controlsWithOrder = Array.from({ length: arr.length }, (_, i) => {
+      const grp = arr.at(i) as FormGroup;
+      const val = grp.get(orderKey)?.value;
+      return { ctrl: grp, order: val, idx: i };
+    });
+
+    // Sort ascending; undefined orders go to the end, stable by original index
+    controlsWithOrder.sort((a, b) => {
+      const av = a.order;
+      const bv = b.order;
+      if (av == null && bv == null) return a.idx - b.idx;
+      if (av == null) return 1;
+      if (bv == null) return -1;
+      const an = typeof av === 'number' ? av : Number(av);
+      const bn = typeof bv === 'number' ? bv : Number(bv);
+      if (!Number.isNaN(an) && !Number.isNaN(bn))
+        return an - bn || a.idx - b.idx;
+      // Fallback to string compare
+      const as = String(av);
+      const bs = String(bv);
+      const cmp = as.localeCompare(bs);
+      return cmp !== 0 ? cmp : a.idx - b.idx;
+    });
+
+    // If already sorted, skip reordering
+    let alreadySorted = true;
+    for (let i = 0; i < controlsWithOrder.length; i++) {
+      if (arr.at(i) !== controlsWithOrder[i].ctrl) {
+        alreadySorted = false;
+        break;
+      }
+    }
+    if (alreadySorted) return;
+
+    // Rebuild FormArray order
+    const sorted = controlsWithOrder.map((x) => x.ctrl);
+    arr.clear();
+    for (const ctrl of sorted) arr.push(ctrl);
   }
 
   protected renderValue = fieldValue;

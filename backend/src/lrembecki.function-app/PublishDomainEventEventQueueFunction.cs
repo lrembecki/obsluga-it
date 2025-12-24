@@ -6,12 +6,13 @@ using Microsoft.Extensions.Logging;
 using lrembecki.core.Events;
 using lrembecki.core.Services;
 using lrembecki.infrastructure.Helpers;
+using lrembecki.core.Helpers;
 
 
 namespace lrembecki.functions.trotamundos;
 
 public class PublishDomainEventEventQueueFunction(
-    PredefinedSessionAccessor session,
+    ISessionAccessor session,
     ILogger<PublishDomainEventEventQueueFunction> logger,
     IPublisher publisher)
 {

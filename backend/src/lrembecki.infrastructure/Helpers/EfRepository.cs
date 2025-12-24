@@ -15,21 +15,18 @@ internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filte
     public async Task<T> AddAsync(T entity)
     {
         _dbSet.Add(entity);
-        await uow.SaveChangesAsync();
         return entity;
     }
 
     public async Task<T> UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
-        await uow.SaveChangesAsync();
         return entity;
     }
 
     public async Task<T> DeleteAsync(T entity)
     {
         _dbSet.Remove(entity);
-        await uow.SaveChangesAsync();
         return entity;
     }
 
@@ -54,7 +51,6 @@ internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filte
     public async Task<List<T>> AddAsync(List<T> entities)
     {
         _dbSet.AddRange(entities);
-        await uow.SaveChangesAsync();
 
         return entities;
     }
@@ -64,7 +60,6 @@ internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filte
         if (entities.Count > 0)
         {
             _dbSet.RemoveRange(entities);
-            await uow.SaveChangesAsync();
         }
 
         return entities;

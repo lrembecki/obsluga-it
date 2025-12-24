@@ -30,7 +30,14 @@ export interface DataTableSchema<T> {
 export interface DataTableColumnSchema<T> {
   field: keyof T & string;
   label: string;
-  type?: 'text' | 'number' | 'date' | 'dropdown' | 'boolean' | 'custom';
+  type?:
+    | 'text'
+    | 'number'
+    | 'date'
+    | 'dropdown'
+    | 'boolean'
+    | 'custom'
+    | 'date-time';
   editable?: boolean;
   sortable?: boolean;
   width?: string;

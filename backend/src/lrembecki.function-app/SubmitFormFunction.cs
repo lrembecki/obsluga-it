@@ -6,32 +6,14 @@ using lrembecki.infrastructure.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
 
 namespace lrembecki.function_app;
 
 public class SubmitFormFunction(
     PredefinedSessionAccessor session,
-    ILogger<SubmitFormFunction> logger,
     IFormDefinitionService formDefinitions,
     IFormService forms)
 {
-    private record SubmitFormInputModel(FormDefinitionVM FormDefinition)
-    {
-        public static async Task<SubmitFormInputModel> Create(HttpRequest req, IFormDefinitionService formDefinitions)
-        {
-            if (!req.RouteValues.ContainsKey("formDefinitionId"))
-                throw new Exception("Form definition not provided");
-
-            if (!Guid.TryParse(req.RouteValues["formDefinitionId"]!.ToString(), out Guid formDefinitionId))
-                throw new Exception("Invalid form definition");
-
-            var formDefinition = await formDefinitions.GetByIdAsync(formDefinitionId);
-            if (formDefinition is null) throw new Exception("Form definition not found");
-
-            return new SubmitFormInputModel(formDefinition);
-        }
-    }
 
     [Function("SubmitFormFunction")]
     public async Task<IActionResult> Run(
@@ -82,7 +64,7 @@ public class SubmitFormFunction(
                 Fields = fields
             };
 
-            return new OkObjectResult(await forms.CreateAsync(form));
+            return new OkObjectResult((await forms.CreateAsync(form)).ToServiceCallResult());
         }
     }
 }

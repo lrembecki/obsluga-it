@@ -14,6 +14,7 @@ public record TripDto
     public string Title { get; init; } = string.Empty;
     public string Subtitle { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
+    public string SuggestedFlightNotes { get; init; } = string.Empty;
 
     public virtual List<TripAgendaDto> Agenda { get; init; } = [];
     public virtual List<Guid> Advantages { get; init; } = [];
