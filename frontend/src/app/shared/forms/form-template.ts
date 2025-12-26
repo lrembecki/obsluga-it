@@ -40,11 +40,8 @@ import { FormRenderer } from './form-renderer';
           ) {
             <app-button
               delete
-              [facade]="{
-                identity: this._service.id(),
-                facade: this._service.facade,
-              }"
-              (deleted)="returnToList()"
+              [isInProgress]="_service.facade.deleting()"
+              (deleted)="remove()"
             />
           }
         </ng-template>
@@ -84,7 +81,14 @@ export class FormTemplate extends BaseFormComponent<any> {
     }
   }
 
+  protected async remove(): Promise<void> {
+    await this._service.facade.delete(this._service.id());
+    this.returnToList();
+  }
+
   protected returnToList() {
+    const value = this.#returnRoute();
+    console.log('Navigating to:', value);
     this.#router.navigate(this.#returnRoute());
   }
 }

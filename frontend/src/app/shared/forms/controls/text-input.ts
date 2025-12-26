@@ -12,6 +12,9 @@ import { InputText } from 'primeng/inputtext';
       pInputText
       [placeholder]="field().placeholder"
       [formControl]="$any(form().get(field().key))"
+      [disabled]="field().disabled"
+      [ariaDisabled]="field().disabled"
+      [readOnly]="field().disabled"
     />
   `,
   host: {

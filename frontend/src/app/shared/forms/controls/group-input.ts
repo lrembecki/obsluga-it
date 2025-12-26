@@ -19,9 +19,12 @@ import { RenderInput } from './render-input';
               @if (field.isVisible) {
                 <div class="form-field">
                   @if (field.type === 'collection') {
-                    <app-collection-input [field]="field" [form]="form()" />
+                    <app-collection-input
+                      [field]="field"
+                      [form]="groupControl()"
+                    />
                   } @else {
-                    <app-render-input [field]="field" [form]="form()" />
+                    <app-render-input [field]="field" [form]="groupControl()" />
                   }
                 </div>
               }
@@ -40,7 +43,8 @@ export class GroupInput {
   );
   form = input.required<FormGroup>();
 
-  groupControl = computed(
-    () => this.form().get(this.field().key) as any as FormGroup,
-  );
+  groupControl = computed(() => {
+    const formGroup = this.form().get(this.field().key) as any as FormGroup;
+    return formGroup;
+  });
 }

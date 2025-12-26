@@ -1,7 +1,7 @@
 using lrembecki.core.forms.FormDefinitions;
 using Microsoft.AspNetCore.Http;
 
-namespace lrembecki.function_app;
+namespace lrembecki.function_app.Helpers;
 
 internal record SubmitFormInputModel(FormDefinitionVM FormDefinition)
 {

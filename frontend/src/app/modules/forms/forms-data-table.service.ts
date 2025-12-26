@@ -22,7 +22,9 @@ export class FormsDataTableService extends DataTableService<{
         field: 'dateTime',
         label: 'Date & Time',
         type: 'date-time',
-        renderLink: (record: { id: string }) => ['/modules/forms/', record.id],
+        renderLink: (record: { id: string }) => [
+          `/modules/forms/${this.selectedDefinition()!.id}/${record.id}`,
+        ],
       },
       ...(this.selectedDefinition()?.fields.map((item) => ({
         field: `fields.${item.fieldName}`,

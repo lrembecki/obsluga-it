@@ -30,23 +30,9 @@ export class ButtonDelete {
       this._translation.instant('Are you sure you want to delete this object?'),
     );
 
-    if (this.facade()) {
-      this._confirm.confirmed.subscribe(async () => {
-        this._button.isInProgress.set(true);
-
-        const response = await this.facade().facade.delete(
-          this.facade().identity,
-        );
-
-        this._button.isInProgress.set(false);
-
-        if (response.success) {
-          this.deleted.emit();
-        }
-      });
-    } else {
+    this._confirm.confirmed.subscribe(async () => {
       this.deleted.emit();
-    }
+    });
 
     this._button.color.set('danger');
     this._button.text.set(this._translation.instant('Delete'));

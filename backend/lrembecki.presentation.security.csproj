@@ -3,6 +3,7 @@
     <ProjectReference Include="..\lrembecki.core.security\lrembecki.core.security.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Azure.ServiceBus" Version="13.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
   </ItemGroup>
   <PropertyGroup>

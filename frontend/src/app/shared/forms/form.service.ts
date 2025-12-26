@@ -38,7 +38,6 @@ export abstract class FormService<T> {
       const model = this.buildFormControls(formGroup, schema.patchValue);
       formGroup.patchValue(model);
 
-      console.log({ schema });
       return formGroup;
     } else {
       const schema = this.schema();

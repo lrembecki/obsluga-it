@@ -1,6 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormFieldSchema } from '@app/shared/forms';
+import { DateFormFieldSchema, FormFieldSchema } from '@app/shared/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
@@ -8,7 +8,11 @@ import { DatePickerModule } from 'primeng/datepicker';
   imports: [ReactiveFormsModule, DatePickerModule],
   template: `
     <label>{{ field().label }}</label>
-    <p-datepicker [formControl]="$any(form().get(field().key))" />
+    <p-datepicker
+      [formControl]="$any(form().get(field().key))"
+      [disabled]="field().disabled"
+      [showTime]="dateField().withTime"
+    />
   `,
   host: {
     class: 'input-container',
@@ -24,4 +28,5 @@ import { DatePickerModule } from 'primeng/datepicker';
 export class DateInput {
   field = input.required<FormFieldSchema<unknown>>();
   form = input.required<FormGroup>();
+  dateField = computed(() => this.field() as DateFormFieldSchema<unknown>);
 }
