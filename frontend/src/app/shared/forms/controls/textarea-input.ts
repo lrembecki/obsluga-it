@@ -16,6 +16,8 @@ import { TextareaModule } from 'primeng/textarea';
       pTextarea
       [formControl]="$any(form().get(textareaField().key))"
       style="margin-bottom: .5rem;"
+      [readOnly]="textareaField().disabled"
+      [disabled]="textareaField().disabled"
     ></textarea>
   `,
   host: {
