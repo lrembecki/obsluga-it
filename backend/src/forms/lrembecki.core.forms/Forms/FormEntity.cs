@@ -1,4 +1,5 @@
 ﻿using lrembecki.core.Entities;
+using lrembecki.core.Events;
 using lrembecki.core.Markers;
 
 namespace lrembecki.core.forms.Forms;
@@ -10,10 +11,16 @@ public class FormEntity : SubscriptionBaseEntity, IHasId<Guid>
     public List<FormFieldEntity> Fields { get; set; } = [];
 
     public static FormEntity Create(Guid id, FormDto model)
-        => new()
+    {
+        var entity = new FormEntity()
         {
             Id = id,
             FormDefinitionId = model.FormDefinitionId,
             Fields = model.Fields.Select(f => FormFieldEntity.Create(id, f.Key, f.Value)).ToList()
         };
+
+        entity.AddDomainEvent(new NotifyDomainEvent(Guid.NewGuid(), nameof(FormEntity), entity.Id, DateTime.UtcNow));
+
+        return entity;
+    }
 }

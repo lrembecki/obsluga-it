@@ -21,17 +21,18 @@ public class SubmitFormFunction(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", "get", Route = "submit-form/{subscriptionId}/{formDefinitionId}")] 
         HttpRequest req)
     {
-        if (!req.RouteValues.ContainsKey("SubscriptionId")) throw new Exception("Subscription not provided");
-
-        if (!Guid.TryParse(req.RouteValues["SubscriptionId"]!.ToString(), out Guid subscriptionId))
-            throw new Exception("Invalid subscription");
-
-
         SubmitFormInputModel input = null!;
-        using var scope = session.CreateSessionContext(subscriptionId);
 
         try
         {
+            if (!req.RouteValues.ContainsKey("SubscriptionId"))
+                throw new Exception("Subscription not provided");
+
+            if (!Guid.TryParse(req.RouteValues["SubscriptionId"]!.ToString(), out Guid subscriptionId))
+                throw new Exception("Invalid subscription");
+
+            using var scope = session.CreateSessionContext(subscriptionId);
+
             input = await SubmitFormInputModel.Create(req, formDefinitions);
         } 
         catch (Exception ex)
