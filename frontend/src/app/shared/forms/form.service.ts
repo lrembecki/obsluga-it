@@ -8,6 +8,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
+import { Subscription } from 'rxjs';
 import { createFormFromFieldSchema } from './services/form-factory.service';
 
 export function provideFormService(
@@ -19,6 +20,7 @@ export function provideFormService(
 export abstract class FormService<T> {
   protected readonly _schema = signal<FormSchema<T>>(null!);
   protected readonly _returnRoute = signal<string[]>(['../list']);
+  private readonly _onChangeSubscriptions = new Map<string, Subscription>();
 
   public readonly schema = this._schema.asReadonly();
   public readonly returnRoute = this._returnRoute.asReadonly();
@@ -32,12 +34,13 @@ export abstract class FormService<T> {
     this.id() === 'create' ? 'create' : 'edit',
   );
   public readonly form = computed(() => {
+    this.cleanupOnChangeSubscriptions();
     if (this.mode() === 'create') {
       const schema = this.schema();
       const formGroup = createFormFromFieldSchema(schema);
       const model = this.buildFormControls(formGroup, schema.patchValue);
       formGroup.patchValue(model);
-
+      this.registerOnChangeHandlers(schema, formGroup);
       return formGroup;
     } else {
       const schema = this.schema();
@@ -45,7 +48,7 @@ export abstract class FormService<T> {
       const model = this.buildFormControls(formGroup, this.model());
 
       formGroup.patchValue(model);
-
+      this.registerOnChangeHandlers(schema, formGroup);
       return formGroup;
     }
   });
@@ -77,6 +80,28 @@ export abstract class FormService<T> {
       }
     });
     return model;
+  }
+
+  private registerOnChangeHandlers(
+    schema: FormSchema<T>,
+    formGroup: FormGroup,
+  ): void {
+    schema.fields.forEach((field) => {
+      if (!field.onChange) return;
+      const control = formGroup.get(field.key as string);
+      if (!control) return;
+
+      const subscription = control.valueChanges.subscribe(() =>
+        field.onChange!(control, formGroup),
+      );
+      this._onChangeSubscriptions.set(field.key as string, subscription);
+      field.onChange(control, formGroup);
+    });
+  }
+
+  private cleanupOnChangeSubscriptions(): void {
+    this._onChangeSubscriptions.forEach((sub) => sub.unsubscribe());
+    this._onChangeSubscriptions.clear();
   }
 
   initialize(): Promise<void> {

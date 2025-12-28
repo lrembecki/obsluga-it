@@ -23,6 +23,8 @@ import { RenderInput } from './render-input';
                       [field]="field"
                       [form]="groupControl()"
                     />
+                  } @else if (field.type === 'group') {
+                    <app-group-input [field]="field" [form]="groupControl()" />
                   } @else {
                     <app-render-input [field]="field" [form]="groupControl()" />
                   }

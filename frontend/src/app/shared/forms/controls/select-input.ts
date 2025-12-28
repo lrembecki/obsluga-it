@@ -11,13 +11,16 @@ import { SelectModule } from 'primeng/select';
   template: `
     <label>{{ selectField().label }}</label>
     <p-select
-      [options]="selectField().options"
+      [options]="options()"
       [formControl]="$any(form().get(selectField().key))"
       optionLabel="label"
       optionValue="value"
       [placeholder]="selectField().placeholder"
       [showClear]="selectField().clearable"
       class="w-full md:w-56"
+      (ngModelChange)="
+        selectField().onChange!($any(form().get(selectField().key)), form())
+      "
     >
       @if (selectField().itemTemplate) {
         <ng-template #selectedItem let-selectedOption>
@@ -59,6 +62,11 @@ export class SelectInput {
   field = input.required<FormFieldSchema<unknown>>();
   protected selectField = computed(
     () => this.field() as SelectFormFieldSchema<unknown>,
+  );
+  options = computed(() =>
+    this.selectField().renderOptions
+      ? this.selectField().renderOptions(this.form().getRawValue())
+      : this.selectField().options,
   );
   form = input.required<FormGroup>();
 

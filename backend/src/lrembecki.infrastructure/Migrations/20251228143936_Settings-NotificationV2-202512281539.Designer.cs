@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure.Entities;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure.Entities;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251228143936_Settings-NotificationV2-202512281539")]
+    partial class SettingsNotificationV2202512281539
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1117,12 +1120,17 @@ namespace lrembecki.infrastructure.Migrations
                                 .HasMaxLength(150)
                                 .HasColumnType("nvarchar(150)");
 
+                            b1.Property<Guid>("FormDefinitionEntityId")
+                                .HasColumnType("uniqueidentifier");
+
                             b1.HasKey("FormDefinitionId", "FormDefinitionFieldName", "EmailTemplateFieldName");
+
+                            b1.HasIndex("FormDefinitionEntityId");
 
                             b1.ToTable("FormDefinitionEmailNotificationMapping", "app");
 
                             b1.WithOwner()
-                                .HasForeignKey("FormDefinitionId");
+                                .HasForeignKey("FormDefinitionEntityId");
                         });
 
                     b.OwnsMany("lrembecki.core.forms.FormDefinitions.FormFieldDefinitionEntity", "Fields", b1 =>
@@ -1139,15 +1147,20 @@ namespace lrembecki.infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
+                            b1.Property<Guid>("FormDefinitionEntityId")
+                                .HasColumnType("uniqueidentifier");
+
                             b1.Property<bool>("IsRequired")
                                 .HasColumnType("bit");
 
                             b1.HasKey("FormDefinitionId", "FieldName");
 
+                            b1.HasIndex("FormDefinitionEntityId");
+
                             b1.ToTable("FormDefinitionField", "app");
 
                             b1.WithOwner()
-                                .HasForeignKey("FormDefinitionId");
+                                .HasForeignKey("FormDefinitionEntityId");
                         });
 
                     b.Navigation("EmailNotificationFieldMapping");

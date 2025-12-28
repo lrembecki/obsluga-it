@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { FormFieldType } from './form-field.type';
 
 export class FormFieldSchema<T> {
@@ -36,6 +36,9 @@ export class FormFieldSchema<T> {
     }
     return new FormControl({ value: initial, disabled }, this.validators ?? []);
   };
+
+  onChange?: (control: AbstractControl, formGroup: FormGroup) => void =
+    () => {};
 
   constructor(type: FormFieldType, init?: Partial<FormFieldSchema<T>>) {
     Object.assign(this, init);

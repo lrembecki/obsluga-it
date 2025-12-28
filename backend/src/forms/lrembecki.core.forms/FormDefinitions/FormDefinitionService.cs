@@ -1,4 +1,5 @@
 ﻿using lrembecki.core.Services;
+using lrembecki.core.settings.Entities;
 
 namespace lrembecki.core.forms.FormDefinitions;
 
@@ -7,29 +8,32 @@ internal sealed class FormDefinitionService(IUnitOfWork uow)
     : BaseCrudService<FormDefinitionEntity, FormDefinitionVM, FormDefinitionDto>(uow)
     , IFormDefinitionService
 {
+    private IRepository<NotificationEntity> _notifications => _uow.GetRepository<NotificationEntity>();
+
     protected override async Task<FormDefinitionEntity> CreateEntity(Guid id, FormDefinitionDto model, CancellationToken cancellationToken)
     {
-        var entity = await base.CreateEntity(id, model, cancellationToken);
-
-        UpdateFields(model, entity);
-
-        return entity;
+        model = await UpdateNotification(null, model);
+        return await base.CreateEntity(id, model, cancellationToken);
     }
-
     protected override async Task UpdateEntity(FormDefinitionEntity entity, FormDefinitionDto model)
     {
-        entity.Fields.Clear();
-
-        UpdateFields(model, entity);
-
+        model = await UpdateNotification(entity, model);
         await base.UpdateEntity(entity, model);
     }
 
-    private static void UpdateFields(FormDefinitionDto model, FormDefinitionEntity entity)
+    private async Task<FormDefinitionDto> UpdateNotification(FormDefinitionEntity? entity, FormDefinitionDto model)
     {
-        foreach (var field in model.Fields)
+        if (model.Notification is not null)
         {
-            entity.Fields.Add(FormFieldDefinitionEntity.Create(entity.Id, field));
+            model = model with
+            {
+                NotificationId = (await (entity?.NotificationId != null
+                    ? _notifications.UpdateAsync(entity.Notification!)
+                    : _notifications.AddAsync(NotificationEntity.Create(Guid.NewGuid(), model.Notification))
+                )).Id
+            };
         }
+
+        return model;
     }
 }

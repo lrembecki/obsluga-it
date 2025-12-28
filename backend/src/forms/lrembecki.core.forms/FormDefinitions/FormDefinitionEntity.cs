@@ -9,9 +9,12 @@ internal class FormDefinitionEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
-    public List<FormFieldDefinitionEntity> Fields { get; private set; } = [];
+
     public Guid? NotificationId { get; private set; }
     public NotificationEntity? Notification { get; private set; } = null!;
+
+    public List<FormFieldDefinitionEntity> Fields { get; private set; } = [];
+    public List<FormDefinitionEmailNotificationFieldMappingEntity> EmailNotificationFieldMapping { get; private set; } = [];
 
     public static FormDefinitionEntity Create(Guid id, FormDefinitionDto model)
     {
@@ -29,9 +32,13 @@ internal class FormDefinitionEntity : SubscriptionBaseEntity, IHasId<Guid>
     public void Update(FormDefinitionDto model)
     {
         Name = model.Name;
+        NotificationId = model.NotificationId;
 
-        Notification ??= NotificationEntity.Create(Id, model.Notification);
-        Notification.Update(model.Notification);
+        Fields.Clear();
+        model.Fields.ForEach(m => Fields.Add(FormFieldDefinitionEntity.Create(Id, m)));
+
+        EmailNotificationFieldMapping.Clear();
+        model.EmailNotificationFieldMapping.ForEach(m => EmailNotificationFieldMapping.Add(FormDefinitionEmailNotificationFieldMappingEntity.Create(Id, m)));
 
         AddDomainEvent(FormDefinitionsDomainEvent.Create(Id));
     }

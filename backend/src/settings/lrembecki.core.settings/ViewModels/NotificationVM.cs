@@ -7,7 +7,7 @@ public record NotificationVM(
     EmailNotificationVM Email
 )
 {
-    internal static NotificationVM Map(NotificationEntity entity)
+    internal static NotificationVM? Map(NotificationEntity? entity)
     {
         if (entity == null) return null!;
 

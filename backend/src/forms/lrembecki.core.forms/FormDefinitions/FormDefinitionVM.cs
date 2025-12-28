@@ -7,7 +7,9 @@ public record FormDefinitionVM(
     Guid Id,
     string Name,
     List<FormFieldDefinitionVM> Fields,
-    NotificationVM Notification
+    List<FormDefinitionEmailNotificationFieldMappingVM> EmailNotificationFieldMapping,
+    Guid? NotificationId,
+    NotificationVM? Notification
 )
 {
     internal static FormDefinitionVM Map(FormDefinitionEntity entity)
@@ -17,7 +19,9 @@ public record FormDefinitionVM(
         return new(
             entity.Id,
             entity.Name,
-            entity.Fields.Select(f => new FormFieldDefinitionVM(f.FieldName, f.FieldType, f.IsRequired)).ToList(),
+            [.. entity.Fields.Select(f => new FormFieldDefinitionVM(f.FieldName, f.FieldType, f.IsRequired))],
+            [.. entity.EmailNotificationFieldMapping.Select(FormDefinitionEmailNotificationFieldMappingVM.Map)],
+            entity.NotificationId,
             NotificationVM.Map(entity.Notification)
         );
     }

@@ -1,6 +1,4 @@
-﻿using lrembecki.core.Entities;
-
-namespace lrembecki.core.forms.FormDefinitions;
+﻿namespace lrembecki.core.forms.FormDefinitions;
 
 internal class FormFieldDefinitionEntity
 {
