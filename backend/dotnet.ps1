@@ -111,6 +111,15 @@ switch ($Option) {
         restorePackages
         updateDatabase -Name $Name
     }
+    "update-migration" {
+        restorePackages
+        removeMigration
+        if (-not $Name) {
+            Write-Host "Error: Migration name is required for update-migration"
+            exit 1
+        }
+        addMigration -Name $Name
+    }
     "remove-migration" {
         restorePackages
         removeMigration
@@ -127,6 +136,7 @@ switch ($Option) {
         Write-Host ""
         Write-Host "Available options:"
         Write-Host "  add-migration <name>       - Add a new migration"
+        Write-Host "  update-migration <name>    - Remove last migration and recreate as new"
         Write-Host "  update-database [name]     - Update database to latest or specific migration"
         Write-Host "  remove-migration           - Remove the last migration"
         Write-Host "  list-migrations            - List all migrations"

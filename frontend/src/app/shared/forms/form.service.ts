@@ -5,7 +5,7 @@ import {
   Provider,
   signal,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
 import { createFormFromFieldSchema } from './services/form-factory.service';
@@ -70,11 +70,7 @@ export abstract class FormService<T> {
               const fg = new (formGroup.constructor as any)(groupControls);
               fa.push(fg);
             } else {
-              fa.push(
-                new (
-                  formGroup.constructor as any
-                ).prototype.constructor.control(item),
-              );
+              fa.push(new FormControl(item));
             }
           });
         }

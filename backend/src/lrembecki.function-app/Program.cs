@@ -11,6 +11,8 @@ using lrembecki.core.Helpers;
 using lrembecki.infrastructure.Helpers;
 using lrembecki.function_app.Helpers;
 using lrembecki.presentation.forms;
+using lrembecki.function_app.Helpers.Publishers;
+using lrembecki.function_app.Helpers.Notifiers;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
@@ -33,6 +35,10 @@ builder.AddInfrastructure(
 
 builder.Services.AddScoped<ISessionAccessor, PredefinedSessionAccessor>();
 builder.Services.AddScoped<UploadHelper>();
+
+builder.Services.AddScoped<lrembecki.core.Services.IEmailNotifier, NotifyFactory>();
+builder.Services.AddScoped<FormNotifier>();
+
 builder.Services.AddScoped<lrembecki.core.Services.IPublisher, PublishFactory>();
 builder.Services.AddScoped<TripPublisher>();
 builder.Services.AddScoped<ContactPublisher>();

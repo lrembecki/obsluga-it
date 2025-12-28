@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
+    <ProjectReference Include="..\..\settings\lrembecki.core.settings\lrembecki.core.settings.csproj" />
     <ProjectReference Include="..\..\storage\lrembecki.core.storage\lrembecki.core.storage.csproj" />
   </ItemGroup>
 

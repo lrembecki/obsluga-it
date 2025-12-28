@@ -1,11 +1,13 @@
 ﻿using lrembecki.core.Exceptions;
+using lrembecki.core.settings.ViewModels;
 
 namespace lrembecki.core.forms.FormDefinitions;
 
 public record FormDefinitionVM(
     Guid Id,
     string Name,
-    List<FormFieldDefinitionVM> Fields
+    List<FormFieldDefinitionVM> Fields,
+    NotificationVM Notification
 )
 {
     internal static FormDefinitionVM Map(FormDefinitionEntity entity)
@@ -15,7 +17,8 @@ public record FormDefinitionVM(
         return new(
             entity.Id,
             entity.Name,
-            entity.Fields.Select(f => new FormFieldDefinitionVM(f.FieldName, f.FieldType, f.IsRequired)).ToList()
+            entity.Fields.Select(f => new FormFieldDefinitionVM(f.FieldName, f.FieldType, f.IsRequired)).ToList(),
+            NotificationVM.Map(entity.Notification)
         );
     }
 

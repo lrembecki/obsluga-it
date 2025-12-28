@@ -28,4 +28,8 @@
     <ProjectReference Include="..\trotamundos\lrembecki.presentation.trotamundos\lrembecki.presentation.trotamundos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
 </Project>

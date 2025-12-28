@@ -1,12 +1,11 @@
 ﻿using lrembecki.core.Events;
 using lrembecki.core.forms.FormDefinitions;
-using lrembecki.core.forms.Forms;
 using lrembecki.core.Services;
 using lrembecki.core.settings.Entities;
 using lrembecki.core.trotamundos.Entitites;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace lrembecki.function_app.Helpers;
+namespace lrembecki.function_app.Helpers.Publishers;
 
 internal sealed class PublishFactory(IServiceProvider provider) : IPublisher
 {

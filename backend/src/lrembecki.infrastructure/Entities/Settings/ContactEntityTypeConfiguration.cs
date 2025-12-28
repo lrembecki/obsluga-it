@@ -1,6 +1,6 @@
 ﻿using lrembecki.core.settings.Entities;
 using lrembecki.infrastructure.Entities.Shared;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace lrembecki.infrastructure.Entities.Settings;
@@ -10,6 +10,8 @@ internal class ContactEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
     public override void Configure(EntityTypeBuilder<ContactEntity> builder)
     {
         base.Configure(builder);
+
+        builder.ToTable("Contact");
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Name)

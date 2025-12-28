@@ -15,4 +15,5 @@ export * from './schemas/password-form-field.schema';
 export * from './schemas/select-form-field.schema';
 export * from './schemas/text-form-field.schema';
 export * from './schemas/textarea-form-field.schema';
+export * from './schemas/string-collection-form-field.schema';
 export * from './tokens';

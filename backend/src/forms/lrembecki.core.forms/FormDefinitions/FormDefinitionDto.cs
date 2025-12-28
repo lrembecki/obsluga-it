@@ -1,7 +1,10 @@
-﻿namespace lrembecki.core.forms.FormDefinitions;
+﻿using lrembecki.core.settings.Dtos;
+
+namespace lrembecki.core.forms.FormDefinitions;
 
 public record FormDefinitionDto
 {
     public string Name { get; init; } = string.Empty;
     public List<FormFieldDefinitionDto> Fields { get; init; } = [];
+    public NotificationDto Notification { get; init; } = null!;
 }

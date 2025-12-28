@@ -42,6 +42,6 @@ export interface DataTableColumnSchema<T> {
   sortable?: boolean;
   width?: string;
   render?: (row: T) => string;
-  renderLink?: (row: T) => string[];
+  renderLink?: (row: T) => string[] | { url: string };
   options?: Array<{ label: string; value: unknown }>;
 }

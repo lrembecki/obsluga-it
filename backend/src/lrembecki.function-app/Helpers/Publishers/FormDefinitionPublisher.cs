@@ -2,7 +2,7 @@
 using lrembecki.core.forms.FormDefinitions;
 using lrembecki.core.Services;
 
-namespace lrembecki.function_app.Helpers;
+namespace lrembecki.function_app.Helpers.Publishers;
 
 internal sealed class FormDefinitionPublisher(
     IFormDefinitionService formDefinitions,

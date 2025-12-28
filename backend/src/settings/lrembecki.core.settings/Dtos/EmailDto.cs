@@ -11,4 +11,5 @@ public record EmailDto
     public string FromName { get; set; } = string.Empty;
     public string ReplyToAddress { get; set; } = string.Empty;
     public string ReplyToName { get; set; } = string.Empty;
+    public EmailTemplateDto Template { get; set; } = null!;
 }

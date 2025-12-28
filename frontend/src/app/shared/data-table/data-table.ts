@@ -9,11 +9,11 @@ import {
   Signal,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { DatePipe } from '@app/core/pipes/date-pipe';
 import { Checkbox } from 'primeng/checkbox';
 import { Button } from '../ui/button/button';
 import { TextInputComponent } from '../ui/inputs/text-input.component';
+import { DataTableRenderLink } from './data-table-render-link';
 import { DataTableColumnSchema, TableSort } from './data-table.types';
 
 @Component({
@@ -23,12 +23,12 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
     NgClass,
     Button,
     TextInputComponent,
-    RouterLink,
     FormsModule,
     ReactiveFormsModule,
     Checkbox,
     DatePipe,
     NgTemplateOutlet,
+    DataTableRenderLink,
   ],
   host: { role: 'grid', class: 'data-table' },
   styles: [
@@ -223,14 +223,14 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
                   }
                 } @else {
                   @if (col.renderLink) {
-                    <a [routerLink]="col.renderLink(row)">
+                    <app-data-table-render-link [column]="col" [row]="row">
                       <ng-container
                         *ngTemplateOutlet="
                           renderCellTemplate;
                           context: { row: row, col: col }
                         "
                       />
-                    </a>
+                    </app-data-table-render-link>
                   } @else {
                     <ng-container
                       *ngTemplateOutlet="

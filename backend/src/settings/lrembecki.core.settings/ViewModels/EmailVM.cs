@@ -14,7 +14,7 @@ public record EmailVM(
     string ReplyToAddress,
     string ReplyToName)
 {
-    public static EmailVM Map(EmailEntity email)
+    internal static EmailVM Map(EmailEntity email)
     {
         if (email == null) return null!;
 

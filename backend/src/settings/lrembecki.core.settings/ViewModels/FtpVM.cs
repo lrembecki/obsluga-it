@@ -13,7 +13,7 @@ public record FtpVM(
     string RemotePath,
     bool UseSsl)
 {
-    public static FtpVM Map(EmailEntity email)
+    internal static FtpVM Map(EmailEntity email)
     {
         if (email == null) return null!;
         return new(

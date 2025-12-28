@@ -18,6 +18,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { RenderInput } from './render-input';
 
@@ -32,6 +33,7 @@ import { RenderInput } from './render-input';
     AccordionModule,
     CheckboxModule,
     DatePickerModule,
+    InputTextModule,
     RenderInput,
   ],
   template: `
@@ -66,6 +68,34 @@ import { RenderInput } from './render-input';
             @for (i of indexes(); track i) {
               <div class="item">
                 <div class="item-grid">
+                  @if (isPrimitive()) {
+                    @switch (collectionField().itemType) {
+                      @case ('text') {
+                        <input
+                          pInputText
+                          [formControl]="itemControl(i)"
+                          [placeholder]="collectionField().placeholder || ''"
+                          style="width: 100%"
+                        />
+                      }
+                      @case ('textarea') {
+                        <textarea
+                          pTextarea
+                          [formControl]="itemControl(i)"
+                          [placeholder]="collectionField().placeholder || ''"
+                          rows="3"
+                          style="width: 100%"
+                        ></textarea>
+                      }
+                      @default {
+                        <input
+                          pInputText
+                          [formControl]="itemControl(i)"
+                          style="width: 100%"
+                        />
+                      }
+                    }
+                  }
                   @for (
                     sub of collectionField().itemFields ?? [];
                     track sub.key

@@ -9,7 +9,7 @@ export const routes: Routes = [
   {
     path: 'account',
     loadChildren: () =>
-      import('./features/account/routes').then((e) => e.routes),
+      import('./modules/account/routes').then((e) => e.routes),
   },
   {
     path: 'modules',

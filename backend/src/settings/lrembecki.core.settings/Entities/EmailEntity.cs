@@ -4,7 +4,7 @@ using lrembecki.core.settings.Dtos;
 
 namespace lrembecki.core.settings.Entities;
 
-public class EmailEntity : SubscriptionBaseEntity, IHasId<Guid>, IHasActive
+internal class EmailEntity : SubscriptionBaseEntity, IHasId<Guid>, IHasActive
 {
     public Guid Id { get; private set; }
     public bool IsActive { get; private set; }

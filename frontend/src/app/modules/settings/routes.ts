@@ -9,6 +9,12 @@ export const routes: Routes = [
     import('./emails/routes').then((e) => e.routes),
   ),
   featureRoute(
+    'email-templates',
+    'Email Templates',
+    ['Settings.EmailTemplates'],
+    () => import('./email-templates/routes').then((e) => e.routes),
+  ),
+  featureRoute(
     'form-definitions',
     'Form Definitions',
     ['Settings.FormDefinitions'],

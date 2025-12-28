@@ -1,0 +1,23 @@
+﻿using lrembecki.core.settings.Entities;
+
+namespace lrembecki.core.settings.ViewModels;
+
+public record  EmailNotificationVM(
+    Guid EmailId,
+    EmailVM Email,
+    Guid EmailTemplateId,
+    EmailTemplateVM EmailTemplate
+)
+{
+    internal static EmailNotificationVM Map(EmailNotificationEntity entity)
+    {
+        if (entity == null) return null!;
+
+        return new EmailNotificationVM(
+            entity.EmailId,
+            EmailVM.Map(entity.Email),
+            entity.EmailTemplateId,
+            EmailTemplateVM.Map(entity.EmailTemplate)
+        );
+    }
+}

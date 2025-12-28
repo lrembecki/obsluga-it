@@ -5,7 +5,7 @@ using lrembecki.core.settings.ViewModels;
 
 namespace lrembecki.core.settings.Services;
 
-public sealed class EmailService(IUnitOfWork uow) : BaseCrudService<EmailEntity, EmailVM, EmailDto>(uow), IEmailService 
+internal sealed class EmailService(IUnitOfWork uow) : BaseCrudService<EmailEntity, EmailVM, EmailDto>(uow), IEmailService 
 {
     protected override async Task UpdateEntity(EmailEntity entity, EmailDto model)
     {

@@ -6,7 +6,7 @@ import { AuthService } from './core/services/auth.service';
 import { NavbarService } from './core/services/navbar.service';
 import { StorageService } from './core/services/storage.service';
 import { TranslationService } from './core/services/translation.service';
-import { SignIn } from './features/account/sign-in';
+import { SignIn } from './modules/account/sign-in';
 import { SettingsFormDefinitionFacade } from './modules/settings/form-definitions/form-definition.facade';
 import { BreadcrumbsComponent } from './shared/ui/breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './shared/ui/footer/footer.component';

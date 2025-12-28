@@ -2,7 +2,7 @@
 using lrembecki.core.Services;
 using lrembecki.core.settings.Services;
 
-namespace lrembecki.function_app.Helpers;
+namespace lrembecki.function_app.Helpers.Publishers;
 
 internal sealed class ContactPublisher(
     IContactService contacts,

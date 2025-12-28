@@ -2,7 +2,7 @@
 using lrembecki.core.Services;
 using lrembecki.core.trotamundos.Services;
 
-namespace lrembecki.function_app.Helpers;
+namespace lrembecki.function_app.Helpers.Publishers;
 
 internal sealed class TripPublisher(ITripService trips, UploadHelper uploadHelper) : IPublisher
 {

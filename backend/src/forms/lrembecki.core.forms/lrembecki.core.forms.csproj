@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
+    <ProjectReference Include="..\..\settings\lrembecki.core.settings\lrembecki.core.settings.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -26,6 +27,10 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>lrembecki.function-app</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Notifications\" />
   </ItemGroup>
 
 </Project>
