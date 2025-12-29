@@ -18,8 +18,9 @@ internal sealed class FormNotifier(
     public async Task Notify(DomainEvent domainEvent, CancellationToken ct = default)
     {
         var form = await forms.GetByIdAsync(domainEvent.ExternalId, ct);
-        var definition = await formDefinitions.GetByIdAsync(form.FormDefinitionId, ct);
+        if (form is null) return;
 
+        var definition = await formDefinitions.GetByIdAsync(form.FormDefinitionId, ct);
         var settingsVMs = await emails.GetAllAsync(ct);
 
         var settings = definition.Notification!.Email.Email;

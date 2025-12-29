@@ -15,9 +15,12 @@ internal sealed class EmailSender(ILogger<EmailSender> logger) : IEmailSender
     public record Input(string[] To, string[] CC, string[] BCC, string Subject, string Body);
     public async Task SendEmailAsync(EmailWithPasswordVM email, Input input)
     {
-        using var smtp = new SmtpClient(email.SmtpServer, email.SmtpPort);
+        using var smtp = new SmtpClient(email.SmtpServer);
+
         smtp.EnableSsl = true;
+        smtp.UseDefaultCredentials = false;
         smtp.Credentials = new System.Net.NetworkCredential(email.SmtpUsername, email.SmtpPassword);
+
         var mail = new MailMessage
         {
             From = new MailAddress(email.FromAddress, email.FromName),
