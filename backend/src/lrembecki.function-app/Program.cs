@@ -34,6 +34,7 @@ builder.AddInfrastructure(
     tenantId: Environment.GetEnvironmentVariable("TenantId")!);
 
 builder.Services.AddScoped<ISessionAccessor, PredefinedSessionAccessor>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<UploadHelper>();
 
 builder.Services.AddScoped<lrembecki.core.Services.IEmailNotifier, NotifyFactory>();

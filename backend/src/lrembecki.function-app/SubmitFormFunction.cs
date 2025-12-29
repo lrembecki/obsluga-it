@@ -2,6 +2,7 @@ using lrembecki.core;
 using lrembecki.core.Exceptions;
 using lrembecki.core.forms.FormDefinitions;
 using lrembecki.core.forms.Forms;
+using lrembecki.core.Helpers;
 using lrembecki.function_app.Helpers;
 using lrembecki.infrastructure.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ using Microsoft.Azure.Functions.Worker;
 namespace lrembecki.function_app;
 
 public class SubmitFormFunction(
-    PredefinedSessionAccessor session,
+    ISessionAccessor session,
     IFormDefinitionService formDefinitions,
     IFormService forms)
 {
@@ -22,51 +23,62 @@ public class SubmitFormFunction(
         HttpRequest req)
     {
         SubmitFormInputModel input = null!;
+        Guid subscriptionId;
 
         try
         {
             if (!req.RouteValues.ContainsKey("SubscriptionId"))
                 throw new Exception("Subscription not provided");
 
-            if (!Guid.TryParse(req.RouteValues["SubscriptionId"]!.ToString(), out Guid subscriptionId))
+            if (!Guid.TryParse(req.RouteValues["SubscriptionId"]!.ToString(), out subscriptionId))
                 throw new Exception("Invalid subscription");
-
-            using var scope = session.CreateSessionContext(subscriptionId);
-
-            input = await SubmitFormInputModel.Create(req, formDefinitions);
         } 
         catch (Exception ex)
         {
             return new UnauthorizedObjectResult(ex.Message);
         }
 
-        if (req.Method == HttpMethods.Get)
+        using (var scope = session.CreateSessionContext(subscriptionId))
         {
-            return new OkObjectResult(input.FormDefinition.ToServiceCallResult());
-        }
-        else
-        {
-            var model = (await req.ReadFromJsonAsync<Dictionary<string, string>>())!;
+            input = await SubmitFormInputModel.Create(req, formDefinitions);
 
-            try
+            if (req.Method == HttpMethods.Get)
             {
-                input.FormDefinition.Validate(model);
+                return new OkObjectResult(input.FormDefinition.ToServiceCallResult());
             }
-            catch (ValidationException ex)
+            else
             {
-                return new BadRequestObjectResult(ex.ToFailServiceCallResult());
+                Dictionary<string, string> model = null!;
+
+                try
+                {
+                    model = (await req.ReadFromJsonAsync<Dictionary<string, string>>())!;
+                    input.FormDefinition.Validate(model);
+                }
+                catch (ValidationException ex)
+                {
+                    return new BadRequestObjectResult(ex.ToFailServiceCallResult());
+                }
+                catch (Exception ex)
+                {
+                    return new BadRequestObjectResult(ServiceCallResult.CreateExceptionResult(ex));
+                }
+
+                var fields = input.FormDefinition.Fields.Where(e => model.ContainsKey(e.FieldName))
+                    .ToDictionary(e => e.FieldName, e => model[e.FieldName]);
+
+                var form = new FormDto
+                {
+                    FormDefinitionId = input.FormDefinition.Id,
+                    Fields = fields
+                };
+
+                var result = (await forms.CreateAsync(form)).ToServiceCallResult();
+
+                return new OkObjectResult(result);
             }
-
-            var fields = input.FormDefinition.Fields.Where(e => model.ContainsKey(e.FieldName))
-                .ToDictionary(e => e.FieldName, e => model[e.FieldName]);
-
-            var form = new FormDto
-            {
-                FormDefinitionId = input.FormDefinition.Id,
-                Fields = fields
-            };
-
-            return new OkObjectResult((await forms.CreateAsync(form)).ToServiceCallResult());
         }
+
+            
     }
 }

@@ -26,7 +26,7 @@ public static class ServiceRegistration
 
         group.MapCrud<IContactService, ContactDto, ContactVM>("contacts");
         group.MapCrud<IEmailTemplateService, EmailTemplateDto, EmailTemplateVM>("email-templates");
-        group.MapCrud<IEmailService, EmailDto, EmailVM>("emails");
+        group.MapCrud<IEmailService, EmailDto, EmailWithPasswordVM>("emails");
         group.MapCrud<IFtpService, FtpDto, FtpVM>("ftps");
     }
 }

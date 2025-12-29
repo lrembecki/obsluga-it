@@ -2,7 +2,7 @@ using lrembecki.core.settings.Entities;
 
 namespace lrembecki.core.settings.ViewModels;
 
-public record EmailVM(
+public record EmailWithPasswordVM(
     Guid Id,
     bool IsActive,
     string SmtpServer,
@@ -14,7 +14,7 @@ public record EmailVM(
     string ReplyToAddress,
     string ReplyToName)
 {
-    internal static EmailVM Map(EmailEntity email)
+    internal static EmailWithPasswordVM Map(EmailEntity email)
     {
         if (email == null) return null!;
 
@@ -24,7 +24,7 @@ public record EmailVM(
             SmtpServer: email.SmtpServer,
             SmtpPort: email.SmtpPort,
             SmtpUsername: email.SmtpUsername,
-            SmtpPassword: null!,
+            SmtpPassword: email.SmtpPassword!,
             FromAddress: email.FromAddress,
             FromName: email.FromName,
             ReplyToAddress: email.ReplyToAddress,

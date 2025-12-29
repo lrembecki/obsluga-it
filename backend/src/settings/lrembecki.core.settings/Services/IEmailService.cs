@@ -4,4 +4,4 @@ using lrembecki.core.settings.ViewModels;
 
 namespace lrembecki.core.settings.Services;
 
-public interface IEmailService : ICrudService<EmailDto, EmailVM>;
+public interface IEmailService : ICrudService<EmailDto, EmailWithPasswordVM>;

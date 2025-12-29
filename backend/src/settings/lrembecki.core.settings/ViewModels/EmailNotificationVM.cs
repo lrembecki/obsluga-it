@@ -4,7 +4,7 @@ namespace lrembecki.core.settings.ViewModels;
 
 public record  EmailNotificationVM(
     Guid EmailId,
-    EmailVM Email,
+    EmailWithPasswordVM Email,
     Guid EmailTemplateId,
     EmailTemplateVM EmailTemplate
 )
@@ -15,7 +15,7 @@ public record  EmailNotificationVM(
 
         return new EmailNotificationVM(
             entity.EmailId,
-            EmailVM.Map(entity.Email),
+            EmailWithPasswordVM.Map(entity.Email),
             entity.EmailTemplateId,
             EmailTemplateVM.Map(entity.EmailTemplate)
         );

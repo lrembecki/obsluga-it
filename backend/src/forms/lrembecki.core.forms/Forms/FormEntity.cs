@@ -19,7 +19,7 @@ public class FormEntity : SubscriptionBaseEntity, IHasId<Guid>
             Fields = model.Fields.Select(f => FormFieldEntity.Create(id, f.Key, f.Value)).ToList()
         };
 
-        entity.AddDomainEvent(new NotifyDomainEvent(Guid.NewGuid(), nameof(FormEntity), entity.Id, DateTime.UtcNow));
+        entity.AddDomainEvent(NotifyDomainEvent.Create(entity, id));
 
         return entity;
     }

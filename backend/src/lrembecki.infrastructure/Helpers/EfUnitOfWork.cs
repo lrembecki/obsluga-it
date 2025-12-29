@@ -45,11 +45,18 @@ internal class EfUnitOfWork(
         }
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateMetadata();
 
-        return dbContext.SaveChangesAsync(cancellationToken);
+        var result = await dbContext.SaveChangesAsync(cancellationToken);
+
+        if (_dbContextTransaction is null)
+        {
+            await serviceProvider.GetRequiredService<INotifier>().PublishAsync();
+        }
+
+        return result;
     }
 
     private void UpdateMetadata()

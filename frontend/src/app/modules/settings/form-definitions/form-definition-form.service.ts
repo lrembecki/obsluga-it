@@ -120,9 +120,14 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
                 new SelectFormFieldSchema<any>({
                   key: 'emailTemplateFieldName',
                   label: 'Email Template Field Name',
-                  options: (this._selectedEmailTemplate?.fields || []).map(
-                    (f) => ({ label: f, value: f }),
-                  ),
+                  options: (this._selectedEmailTemplate?.fields || [])
+                    .map((f) => ({ label: f, value: f }))
+                    .concat([
+                      { label: '@MAIL_TO', value: '@MAIL_TO' },
+                      { label: '@MAIL_BCC', value: '@MAIL_BCC' },
+                      { label: '@MAIL_SUBJECT', value: '@MAIL_SUBJECT' },
+                      { label: '@MAIL_CC', value: '@MAIL_CC' },
+                    ]),
                   validators: [Validators.required],
                   colClass: 'col-6',
                 }),

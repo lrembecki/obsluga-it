@@ -5,7 +5,7 @@ using lrembecki.core.settings.ViewModels;
 
 namespace lrembecki.core.settings.Services;
 
-internal sealed class EmailService(IUnitOfWork uow) : BaseCrudService<EmailEntity, EmailVM, EmailDto>(uow), IEmailService 
+internal sealed class EmailService(IUnitOfWork uow) : BaseCrudService<EmailEntity, EmailWithPasswordVM, EmailDto>(uow), IEmailService 
 {
     protected override async Task UpdateEntity(EmailEntity entity, EmailDto model)
     {
@@ -17,5 +17,11 @@ internal sealed class EmailService(IUnitOfWork uow) : BaseCrudService<EmailEntit
             };
         }
         await base.UpdateEntity(entity, model);
+    }
+
+    public override async Task<List<EmailWithPasswordVM>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        var result = await  base.GetAllAsync(cancellationToken);
+        return result.Select(e => e with { SmtpPassword = null! }).ToList();
     }
 }
