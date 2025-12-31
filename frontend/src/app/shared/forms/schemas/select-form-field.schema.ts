@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
-import { Type } from '@angular/core';
+import { Signal, Type } from '@angular/core';
 import { FormFieldSchema } from '../form-field.schema';
 
 export class SelectFormFieldSchema<T> extends FormFieldSchema<T> {
   options: { label: string; value: any }[] = [];
-  renderOptions: (item: T) => Array<{ label: string; value: any }> = null!;
+  renderOptions: Signal<Array<{ label: string; value: any }>> = null!;
   multiple: boolean = false;
   clearable: boolean = false;
   itemTemplate?: Type<any> = null!;

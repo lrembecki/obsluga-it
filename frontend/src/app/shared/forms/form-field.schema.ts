@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { FormFieldType } from './form-field.type';
+import { FormSchema } from './schemas/form-schema';
 
 export class FormFieldSchema<T> {
+  root: FormSchema<T> = null!;
   key: keyof T = null!;
   label: string = null!;
   type: FormFieldType = null!;

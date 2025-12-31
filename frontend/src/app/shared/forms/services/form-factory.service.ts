@@ -7,7 +7,7 @@ export function createFormFromFieldSchema<T>(
 ): FormGroup {
   const controls: any = {};
 
-  schema.fields.forEach((field) => {
+  (schema?.fields || []).forEach((field) => {
     const isDisabled =
       field.disabled ||
       (field.disabledOnEdit && mode === 'edit') ||

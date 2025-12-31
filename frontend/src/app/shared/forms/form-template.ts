@@ -58,6 +58,10 @@ import { FormRenderer } from './form-renderer';
       display: block;
       position: relative;
       min-height: 200px;
+
+      &:last-child {
+        margin-bottom: 5rem;
+      }
     }
   `,
 })

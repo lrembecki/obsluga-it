@@ -1,5 +1,5 @@
-import { effect, inject } from '@angular/core';
-import { FormArray, Validators } from '@angular/forms';
+import { computed, effect, inject, signal } from '@angular/core';
+import { Validators } from '@angular/forms';
 import {
   CheckboxFormFieldSchema,
   CollectionFormFieldSchema,
@@ -39,8 +39,58 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
     emails: inject(SettingsEmailFacade),
   };
 
-  private _selectedEmailTemplate: EmailTemplateVM | null = null;
-  private _fields: FormFieldDefinitionVM[] = [];
+  private readonly signals = {
+    selectedEmailTemlpate: signal<EmailTemplateVM | null>(null),
+    fields: signal<FormFieldDefinitionVM[]>([]),
+  };
+
+  private readonly options = {
+    fields: computed(() =>
+      this.signals.fields().map((f) => ({
+        label: f.fieldName,
+        value: f.fieldName,
+      })),
+    ),
+    emails: computed(() =>
+      this.facades.emails.data().map((e) => ({
+        label: `${e.smtpServer} (${e.fromAddress})`,
+        value: e.id,
+      })),
+    ),
+    emailTemplates: computed(() =>
+      this.facades.emailTemplates
+        .data()
+        .map((et) => ({ label: et.name, value: et.id })),
+    ),
+    emailTemplateFields: computed(() =>
+      (this.signals.selectedEmailTemlpate()?.fields || [])
+        .map((f) => ({ label: f, value: f }))
+        .concat([
+          { label: '@MAIL_TO', value: '@MAIL_TO' },
+          { label: '@MAIL_BCC', value: '@MAIL_BCC' },
+          { label: '@MAIL_SUBJECT', value: '@MAIL_SUBJECT' },
+          { label: '@MAIL_CC', value: '@MAIL_CC' },
+        ]),
+    ),
+  };
+
+  private onChange(model: FormDefinitionVM) {
+    if (model) {
+      this.signals.fields.set(model.fields || []);
+      this.signals.selectedEmailTemlpate.set(null);
+
+      if (model.notification?.email?.emailTemplateId) {
+        const selectedTemplate =
+          this.facades.emailTemplates
+            .data()
+            .find(
+              (et) => et.id === model.notification?.email?.emailTemplateId,
+            ) ?? null;
+
+        this.signals.selectedEmailTemlpate.set(selectedTemplate);
+      }
+    }
+  }
 
   constructor() {
     super();
@@ -49,20 +99,15 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
 
     effect(() => {
       const model = this.model();
-      if (model?.notification?.email?.emailTemplateId) {
-        const selectedTemplate =
-          this.facades.emailTemplates
-            .data()
-            .find(
-              (et) => et.id === model.notification?.email?.emailTemplateId,
-            ) ?? null;
-        this._selectedEmailTemplate = selectedTemplate;
-      }
-
-      this._fields = model?.fields || [];
+      this.onChange(model);
 
       this._schema.set(
         new FormSchema<FormDefinitionVM>({
+          onChange: (formGroup) => {
+            const formDefinition = formGroup.getRawValue() as FormDefinitionVM;
+            console.log({ formDefinition });
+            this.onChange(formDefinition);
+          },
           fields: [
             new TextFormFieldSchema<FormDefinitionVM>({
               key: 'name',
@@ -78,13 +123,10 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
               layout: 'vertical',
               itemColClass: 'col-3',
               emptyText: 'No fields',
-              onChange: (control) => {
-                const currentFields =
-                  control instanceof FormArray
-                    ? (control.getRawValue() as FormFieldDefinitionVM[])
-                    : (control?.value as FormFieldDefinitionVM[]);
-                this._fields = currentFields ?? [];
-              },
+              onChange: (control) =>
+                this.onChange(
+                  control?.parent?.getRawValue() as FormDefinitionVM,
+                ),
               itemFields: [
                 new TextFormFieldSchema<FormFieldDefinitionVM>({
                   key: 'order' as any,
@@ -120,24 +162,14 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
                 new SelectFormFieldSchema<any>({
                   key: 'emailTemplateFieldName',
                   label: 'Email Template Field Name',
-                  options: (this._selectedEmailTemplate?.fields || [])
-                    .map((f) => ({ label: f, value: f }))
-                    .concat([
-                      { label: '@MAIL_TO', value: '@MAIL_TO' },
-                      { label: '@MAIL_BCC', value: '@MAIL_BCC' },
-                      { label: '@MAIL_SUBJECT', value: '@MAIL_SUBJECT' },
-                      { label: '@MAIL_CC', value: '@MAIL_CC' },
-                    ]),
+                  renderOptions: this.options.emailTemplateFields,
                   validators: [Validators.required],
                   colClass: 'col-6',
                 }),
                 new SelectFormFieldSchema<any>({
                   key: 'formDefinitionFieldName',
                   label: 'Form Definition Field Name',
-                  options: (this._fields || []).map((f) => ({
-                    label: f.fieldName,
-                    value: f.fieldName,
-                  })),
+                  renderOptions: this.options.fields,
                   validators: [Validators.required],
                   colClass: 'col-6',
                 }),
@@ -154,29 +186,18 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
                     new SelectFormFieldSchema<any>({
                       key: 'emailId',
                       label: 'Notification Email',
-                      renderOptions: () =>
-                        this.facades.emails.data().map((e) => ({
-                          label: `${e.smtpServer} (${e.fromAddress})`,
-                          value: e.id,
-                        })),
+                      renderOptions: this.options.emails,
                       colClass: 'col-6',
                     }),
                     new SelectFormFieldSchema<any>({
                       key: 'emailTemplateId',
                       label: 'Email Template',
-                      renderOptions: () =>
-                        this.facades.emailTemplates
-                          .data()
-                          .map((et) => ({ label: et.name, value: et.id })),
+                      renderOptions: this.options.emailTemplates,
                       colClass: 'col-6',
-                      onChange: (control) => {
-                        const templateId = control?.value as string;
-                        const selectedTemplate =
-                          this.facades.emailTemplates
-                            .data()
-                            .find((et) => et.id === templateId) ?? null;
-                        this._selectedEmailTemplate = selectedTemplate;
-                      },
+                      onChange: (control) =>
+                        this.onChange(
+                          control.parent?.parent?.getRawValue() as FormDefinitionVM,
+                        ),
                     }),
                   ],
                 }),

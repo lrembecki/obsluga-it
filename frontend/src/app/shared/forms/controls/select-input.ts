@@ -65,7 +65,7 @@ export class SelectInput {
   );
   options = computed(() =>
     this.selectField().renderOptions
-      ? this.selectField().renderOptions(this.form().getRawValue())
+      ? this.selectField().renderOptions()
       : this.selectField().options,
   );
   form = input.required<FormGroup>();

@@ -14,6 +14,7 @@ export class FormFieldDefinitionVM {
   fieldName: string = null!;
   fieldType: FormDefinitionFieldType = 'text';
   isRequired: boolean = false;
+  root: FormDefinitionVM = null!;
 
   constructor(init?: Partial<FormFieldDefinitionVM>) {
     Object.assign(this, init);

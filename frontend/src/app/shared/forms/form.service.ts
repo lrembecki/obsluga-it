@@ -2,10 +2,11 @@ import {
   computed,
   EnvironmentProviders,
   inject,
+  linkedSignal,
   Provider,
   signal,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
@@ -36,14 +37,14 @@ export abstract class FormService<T> {
   public readonly returnRoute = this._returnRoute.asReadonly();
   public readonly facade = inject(ApiFacade);
   public readonly id = signal<string>('create');
-  public readonly model = computed(() =>
+  public readonly model = linkedSignal(() =>
     this.facade.data().find((e) => e.id === this.id()),
   );
   public readonly isLoading = this.facade.loading;
   public readonly mode = computed(() =>
     this.id() === 'create' ? 'create' : 'edit',
   );
-  public readonly form = computed(() => {
+  public readonly form = linkedSignal(() => {
     this.cleanupOnChangeSubscriptions();
     if (this.mode() === 'create') {
       const schema = this.schema();
@@ -62,7 +63,6 @@ export abstract class FormService<T> {
       return formGroup;
     }
   });
-
   private buildFormControls(formGroup: FormGroup, model: any) {
     // Populate FormArray controls for collection fields before patching values
     this.schema().fields.forEach((field: any) => {
@@ -101,12 +101,29 @@ export abstract class FormService<T> {
       const control = formGroup.get(field.key as string);
       if (!control) return;
 
+      const root = this.getRootFormGroup(control);
+      if (!root) return;
+
+      const triggerOnChange = () => {
+        field.onChange!(control, formGroup);
+        field.root.onChange(root);
+      };
+
       const subscription = control.valueChanges.subscribe(() =>
-        field.onChange!(control, formGroup),
+        queueMicrotask(triggerOnChange),
       );
       this._onChangeSubscriptions.set(field.key as string, subscription);
-      field.onChange(control, formGroup);
+
+      queueMicrotask(triggerOnChange);
     });
+  }
+
+  private getRootFormGroup(control: AbstractControl): FormGroup | null {
+    let parent = control.parent;
+    while (parent?.parent) {
+      parent = parent.parent;
+    }
+    return parent as FormGroup | null;
   }
 
   private cleanupOnChangeSubscriptions(): void {
