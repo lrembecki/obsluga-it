@@ -49,7 +49,7 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
 
     effect(() => {
       const model = this.model();
-      if (model.notification?.email?.emailTemplateId) {
+      if (model?.notification?.email?.emailTemplateId) {
         const selectedTemplate =
           this.facades.emailTemplates
             .data()
@@ -59,7 +59,7 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
         this._selectedEmailTemplate = selectedTemplate;
       }
 
-      this._fields = model.fields || [];
+      this._fields = model?.fields || [];
 
       this._schema.set(
         new FormSchema<FormDefinitionVM>({
