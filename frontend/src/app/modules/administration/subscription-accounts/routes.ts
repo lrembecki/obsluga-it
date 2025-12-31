@@ -14,8 +14,6 @@ export const routes: Routes = [
     path: '',
     providers: [
       provideApiFacade(SecuritySubscriptionAccountFacade),
-      SecurityPermissionGroupFacade,
-      SecurityPermissionFacade,
       provideDataTableService(
         AdministrationAccountSubscriptionDataTableService,
       ),

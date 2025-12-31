@@ -28,15 +28,13 @@ export class SettingsFormDefinitionFacade extends ApiFacade<FormDefinitionVM> {
       this._navbar.customModules.set([
         new ModuleItem({
           label: 'Forms',
-          items: [
-            ...this.data().map(
-              (def) =>
-                new PageItem({
-                  label: def.name || 'Unnamed',
-                  path: 'modules/forms/' + def.id,
-                }),
-            ),
-          ],
+          items: this.data().map(
+            (def) =>
+              new PageItem({
+                label: def.name || 'Unnamed',
+                path: 'modules/forms/' + def.id,
+              }),
+          ),
         }),
       ]);
     }

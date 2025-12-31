@@ -3,8 +3,12 @@ import { StorageVM } from '@app/shared/storage/storage.vm';
 export class EmailTemplateVM {
   id: string = null!;
   name: string = '';
+  subject: string = '';
   templateHtml: StorageVM = new StorageVM();
   fields: string[] = [];
+  contacts_to: string[] = [];
+  contacts_cc: string[] = [];
+  contacts_bcc: string[] = [];
 
   constructor(init?: Partial<EmailTemplateVM>) {
     Object.assign(this, init);

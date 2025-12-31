@@ -12,6 +12,11 @@ internal class EmailTemplateEntity : SubscriptionBaseEntity, IHasId<Guid>
     public Guid TemplateHtmlId { get; private set; }
     public StorageEntity TemplateHtml { get; private set; } = null!;
     public List<EmailTemplateFieldEntity> Fields { get; private set; } = [];
+    
+    public string Subject { get; private set; } = string.Empty;
+    public List<ContactEntity> Contacts_to { get; private set; } = [];
+    public List<ContactEntity> Contacts_bcc { get; private set; } = [];
+    public List<ContactEntity> Contacts_cc { get; private set; } = [];
 
     public static EmailTemplateEntity Create(Guid id, EmailTemplateDto model)
     {
@@ -29,6 +34,7 @@ internal class EmailTemplateEntity : SubscriptionBaseEntity, IHasId<Guid>
     {
         Name = model.Name;
         TemplateHtmlId = model.TemplateHtmlId;
+        Subject = model.Subject;
 
         Fields.Clear();
         Fields = model.Fields

@@ -3,9 +3,16 @@ import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { provideApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 import { provideFormService } from '@app/shared/forms/form.service';
+import { SettingsFormDefinitionFacade } from '../settings/form-definitions/form-definition.facade';
 import { FormsDataTableService } from './forms-data-table.service';
 import { FormsFormService } from './forms-form.service';
 import { FormsFacade } from './forms.facade';
+
+export const facades = {
+  forms: await import('app/modules/forms/forms.facade').then(
+    (e) => e.FormsFacade,
+  ),
+};
 
 export const routes: Routes = [
   {
@@ -16,7 +23,15 @@ export const routes: Routes = [
       provideFormService(FormsFormService),
     ],
     resolve: {
-      _: () => inject(FormsFacade).populate(),
+      _: async () => {
+        const facades = {
+          formDefinitions: inject(SettingsFormDefinitionFacade),
+          forms: inject(FormsFacade),
+        };
+        await Promise.allSettled(
+          Object.values(facades).map((e) => e.initialize()),
+        );
+      },
     },
     children: [
       {

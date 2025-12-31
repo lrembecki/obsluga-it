@@ -155,9 +155,10 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
                       key: 'emailId',
                       label: 'Notification Email',
                       renderOptions: () =>
-                        this.facades.emails
-                          .data()
-                          .map((e) => ({ label: e.fromAddress, value: e.id })),
+                        this.facades.emails.data().map((e) => ({
+                          label: `${e.smtpServer} (${e.fromAddress})`,
+                          value: e.id,
+                        })),
                       colClass: 'col-6',
                     }),
                     new SelectFormFieldSchema<any>({

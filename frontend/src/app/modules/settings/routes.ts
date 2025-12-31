@@ -1,6 +1,21 @@
 import { Routes } from '@angular/router';
 import { featureRoute } from 'app/core/helpers/route.helper';
 
+export const facades = {
+  contacts: await import('./contacts/contact.facade').then(
+    (e) => e.ContactsFacade,
+  ),
+  emailTemplates: await import('./email-templates/email-template.facade').then(
+    (e) => e.SettingsEmailTemplateFacade,
+  ),
+  emails: await import('./emails/email.facade').then(
+    (e) => e.SettingsEmailFacade,
+  ),
+  formDefinitions: await import(
+    './form-definitions/form-definition.facade'
+  ).then((e) => e.SettingsFormDefinitionFacade),
+};
+
 export const routes: Routes = [
   featureRoute('contacts', 'Contacts', ['Settings.Contacts'], () =>
     import('./contacts/routes').then((e) => e.routes),

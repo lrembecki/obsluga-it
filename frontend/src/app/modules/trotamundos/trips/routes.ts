@@ -7,14 +7,12 @@ import { TrotamundosAdvantageFacade } from '../advantages/advantage.facade';
 import { TrotamundosHighlightFacade } from '../highlights/highlight.facade';
 import { TrotamundosTripDataTableService } from './trip-data-table.service';
 import { TrotamundosTripFormService } from './trip-form.service';
-import { TrotamundosTripFacade } from './trip.provider';
+import { TrotamundosTripFacade } from './trip.facade';
 
 export const routes: Routes = [
   {
     path: '',
     providers: [
-      TrotamundosAdvantageFacade,
-      TrotamundosHighlightFacade,
       provideApiFacade(TrotamundosTripFacade),
       provideDataTableService(TrotamundosTripDataTableService),
       provideFormService(TrotamundosTripFormService),

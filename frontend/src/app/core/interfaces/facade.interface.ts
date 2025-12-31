@@ -23,7 +23,7 @@ export interface Facade<T> {
 export function provideApiFacade(
   provider: any,
 ): (Provider | EnvironmentProviders)[] {
-  return [provider, { provide: ApiFacade, useExisting: provider }];
+  return [{ provide: ApiFacade, useExisting: provider }];
 }
 
 export abstract class ApiFacade<T> implements Facade<T> {

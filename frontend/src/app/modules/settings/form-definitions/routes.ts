@@ -13,11 +13,8 @@ export const routes: Routes = [
   {
     path: '',
     providers: [
-      SettingsEmailFacade,
-      SettingsEmailTemplateFacade,
       provideApiFacade(SettingsFormDefinitionFacade),
       provideDataTableService(SettingsFormDefinitionDataTableService),
-      provideFormService(SettingsFormDefinitionFormService),
     ],
     resolve: {
       _init: () => {
@@ -41,6 +38,7 @@ export const routes: Routes = [
       },
       {
         path: ':id',
+        providers: [provideFormService(SettingsFormDefinitionFormService)],
         loadComponent: () =>
           import('app/shared/forms/form-template').then((m) => m.FormTemplate),
       },

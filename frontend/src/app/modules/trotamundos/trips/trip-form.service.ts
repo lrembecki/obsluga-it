@@ -16,7 +16,7 @@ import { FormService } from '@app/shared/forms/form.service';
 import { TrotamundosAdvantageFacade } from '../advantages/advantage.facade';
 import { TrotamundosHighlightFacade } from '../highlights/highlight.facade';
 import { StorageVM } from '../loyality-program/loyality-program.vm';
-import { TrotamundosTripFacade } from './trip.provider';
+import { TrotamundosTripFacade } from './trip.facade';
 import { TripVM } from './trip.vm';
 
 export class TrotamundosTripFormService extends FormService<TripVM> {

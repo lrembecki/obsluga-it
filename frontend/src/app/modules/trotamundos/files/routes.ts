@@ -5,7 +5,7 @@ import { provideDataTableService } from '@app/shared/data-table/data-table.servi
 import { provideFormService } from '@app/shared/forms/form.service';
 import { TrotamundosFileDataTableService } from './file-data-table.service';
 import { TrotamundosFileFormService } from './file-form.service';
-import { TrotamundosFileFacade } from './file.provider';
+import { TrotamundosFileFacade } from './file.facade';
 
 export const routes: Routes = [
   {

@@ -1,6 +1,24 @@
 import { Routes } from '@angular/router';
 import { featureRoute } from 'app/core/helpers/route.helper';
 
+export const facades = {
+  advantages: await import('./advantages/advantage.facade').then(
+    (e) => e.TrotamundosAdvantageFacade,
+  ),
+  files: await import('./files/file.facade').then(
+    (e) => e.TrotamundosFileFacade,
+  ),
+  highlights: await import('./highlights/highlight.facade').then(
+    (e) => e.TrotamundosHighlightFacade,
+  ),
+  loyalityProgram: await import(
+    './loyality-program/loyality-program.facade'
+  ).then((e) => e.TrotamundosLoyalityProgramFacade),
+  trips: await import('./trips/trip.facade').then(
+    (e) => e.TrotamundosTripFacade,
+  ),
+};
+
 export const routes: Routes = [
   featureRoute('advantages', 'Advantages', ['Trotamundos.Advantages'], () =>
     import('./advantages/routes').then((e) => e.routes),

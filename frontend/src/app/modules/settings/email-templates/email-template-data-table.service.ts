@@ -1,6 +1,5 @@
 import { DataTableService } from '@app/shared/data-table/data-table.service';
 import { EmailTemplateVM } from './email-template.vm';
-
 export class SettingsEmailTemplateDataTableService extends DataTableService<EmailTemplateVM> {
   constructor() {
     super();

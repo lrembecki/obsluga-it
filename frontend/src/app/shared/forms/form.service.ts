@@ -6,6 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Route } from '@angular/router';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
 import { Subscription } from 'rxjs';
@@ -15,6 +16,15 @@ export function provideFormService(
   provider: any,
 ): (Provider | EnvironmentProviders)[] {
   return [provider, { provide: FormService, useExisting: provider }];
+}
+
+export function createFormRoute(provider: any): Route {
+  return {
+    providers: [provideFormService(provider)],
+    path: ':id',
+    loadComponent: () =>
+      import('app/shared/forms/form-template').then((m) => m.FormTemplate),
+  };
 }
 
 export abstract class FormService<T> {
