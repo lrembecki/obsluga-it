@@ -1,5 +1,6 @@
 export class FormVM {
   id: string = null!;
+  formDefinitionId: string = null!;
   name: string = null!;
   dateTime: Date = null!;
 

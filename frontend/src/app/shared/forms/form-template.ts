@@ -24,19 +24,19 @@ import { FormRenderer } from './form-renderer';
   template: `
     @if (_service.isLoading()) {
       <app-loading [text]="'Loading form data'" />
-    } @else if (_service.form()) {
+    } @else if (form()) {
       <app-ui-panel>
         <ng-template #start>
           <app-button
             submit
-            [disabled]="_service.form()!.invalid"
+            [disabled]="form()!.invalid"
             [isInProgress]="_service.facade.saving()"
             (buttonClick)="onSubmit()"
           />
 
           @if (
             this._service.mode() === 'edit' &&
-            this._service.schema().canDelete(this._service.form()!.value)
+            this._service.schema().canDelete(this.form()!.value)
           ) {
             <app-button
               delete
@@ -50,7 +50,7 @@ import { FormRenderer } from './form-renderer';
         </ng-template>
       </app-ui-panel>
 
-      <app-form-renderer [schema]="schema()" [form]="_service.form()!" />
+      <app-form-renderer [schema]="schema()" [form]="form()!" />
     }
   `,
   styles: `
@@ -79,10 +79,22 @@ export class FormTemplate extends BaseFormComponent<any> {
   }
 
   async submit(data: any): Promise<void> {
-    const response = await this._service.submit(data);
+    const response = await this.executeSubmit(data);
     if (response) {
       this.returnToList();
     }
+  }
+
+  protected async executeSubmit(data: any): Promise<boolean> {
+    const model = structuredClone(this._service.model()) ?? data;
+    Object.assign(model, data);
+
+    const response =
+      this._service.id() === 'create'
+        ? await this._service.facade.create('', model)
+        : await this._service.facade.update(this._service.id(), model);
+
+    return response.success;
   }
 
   protected async remove(): Promise<void> {

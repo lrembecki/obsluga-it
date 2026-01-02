@@ -2,6 +2,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   computed,
+  effect,
   input,
   model,
   output,
@@ -149,7 +150,7 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
     <table>
       <thead>
         <tr>
-          @for (col of orderedColumns(); track col.label) {
+          @for (col of orderedColumns(); track col.label + col.field) {
             <th
               [ngClass]="{ sortable: col.sortable }"
               draggable="{{ isReorderable() ? 'true' : 'false' }}"
@@ -302,9 +303,8 @@ export class DataTable<T extends { id: string }> {
   protected readonly orderedColumns = signal<DataTableColumnSchema<T>[]>([]);
   protected dragSourceIndex = -1;
 
-  ngOnInit(): void {
-    this.orderedColumns.set(this.columns());
-    // columns are taken from input; DI handled in template variant
+  constructor() {
+    effect(() => this.orderedColumns.set(this.columns()));
   }
 
   protected readonly visibleData = computed<T[]>(() => {

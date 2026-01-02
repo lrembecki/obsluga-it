@@ -3,7 +3,7 @@ import { FormFieldSchema } from '@app/shared/forms';
 
 export function createFormFromFieldSchema<T>(
   schema: { fields: FormFieldSchema<T>[] },
-  mode: 'create' | 'edit' = 'create',
+  mode: 'create' | 'edit',
 ): FormGroup {
   const controls: any = {};
 

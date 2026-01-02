@@ -1,5 +1,6 @@
 ﻿using lrembecki.core.forms.FormDefinitions;
 using lrembecki.core.forms.Forms;
+using lrembecki.core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ public static class RegisterServices
     {
         builder.Services.AddScoped<IFormDefinitionService, FormDefinitionService>();
         builder.Services.AddScoped<IFormService, FormService>();
+        builder.Services.AddScoped<IFilterEvaluator<FormEntity, FormFilter>, FormFilterEvaluator>();
     }
 
     public static void MapForms(this WebApplication app)
@@ -21,7 +23,7 @@ public static class RegisterServices
             .WithTags("Forms")
             .RequireAuthorization("InternalJwtPolicy");
 
-        group.MapCrud<IFormService, FormDto, FormVM>("forms");
+        group.MapCrud<IFormService, FormDto, FormVM, FormFilter>("forms");
         group.MapCrud<IFormDefinitionService, FormDefinitionDto, FormDefinitionVM>("form-definitions");
     }
 }

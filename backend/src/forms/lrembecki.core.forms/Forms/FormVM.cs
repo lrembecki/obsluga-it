@@ -3,7 +3,7 @@
 public record FormVM(
     Guid Id,
     Guid FormDefinitionId,
-    DateTime DateTime,
+    DateTime CreatedAt,
     Dictionary<string, string> Fields
 )
 {

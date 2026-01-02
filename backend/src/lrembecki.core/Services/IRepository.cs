@@ -13,5 +13,6 @@ namespace lrembecki.core.Services
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
         Task<List<T>> DeleteAsync(List<T> entities);
+        IQueryable<T> GetAll<TFilter>(TFilter filter);
     };
 }

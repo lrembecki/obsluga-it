@@ -29,6 +29,7 @@ export function provideApiFacade(
 export abstract class ApiFacade<T> implements Facade<T> {
   protected readonly _data: WritableSignal<T[]> = null!;
   protected readonly _initialized = signal(false);
+  protected readonly _requiresInitialization = signal(true);
   protected readonly _api = inject(ApiService);
   protected readonly _loading = signal(false);
   protected readonly _saving = signal(false);
@@ -57,7 +58,7 @@ export abstract class ApiFacade<T> implements Facade<T> {
   }
 
   async initialize(): Promise<void> {
-    if (this._initialized()) return;
+    if (this._requiresInitialization() && this._initialized()) return;
 
     await this.populate();
   }
@@ -71,10 +72,13 @@ export abstract class ApiFacade<T> implements Facade<T> {
     }
 
     const headers: Record<string, string> = {};
+    const filter = this._filter();
 
-    if (Object.values(this._filter()).length) {
-      headers['filter'] = JSON.stringify(this._filter());
+    if (Object.values(filter).length) {
+      headers['filter'] = JSON.stringify(filter);
     }
+
+    console.log({ headers, filter });
 
     this._loading.set(true);
     const response = await this._api.get<T[]>(this._endpoint, {}, headers);
@@ -142,11 +146,21 @@ export abstract class ApiFacade<T> implements Facade<T> {
     return data;
   }
 
-  public async filter(filter: Record<string, unknown>): Promise<void> {
-    const model = structuredClone(filter);
+  public async sort(sort: {
+    column: string;
+    direction: 'asc' | 'desc';
+  }): Promise<void> {
+    await this.filter({
+      ...this._filter(),
+      sort,
+    });
+  }
 
-    if (JSON.stringify(model) !== JSON.stringify(this._filter)) {
-      this._filter.set(model);
+  public async filter(filter: Record<string, unknown>): Promise<void> {
+    const a = JSON.stringify(filter);
+    const b = JSON.stringify(this._filter());
+    if (a !== b) {
+      this._filter.set(filter);
       await this.populate();
     }
   }

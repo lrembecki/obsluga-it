@@ -1,4 +1,4 @@
-import { computed, effect, inject, signal } from '@angular/core';
+import { effect, inject } from '@angular/core';
 import {
   DateFormFieldSchema,
   FormFieldSchema,
@@ -8,29 +8,28 @@ import {
   TextFormFieldSchema,
 } from '@app/shared/forms';
 import { FormService } from '@app/shared/forms/form.service';
-import { SettingsFormDefinitionFacade } from '@modules/settings/form-definitions/form-definition.facade';
 import { FormFieldDefinitionVM } from '../settings/form-definitions/form-definition.vm';
-import { FormsFacade } from './forms.facade';
+import { FormSessionService } from './forms.session';
 
 export class FormsFormService extends FormService<{
   id: string;
   name: string;
 }> {
-  private readonly facades = {
-    definitions: inject(SettingsFormDefinitionFacade),
-    forms: inject(FormsFacade),
-  };
-  public readonly formDefinitionId = signal<string>(null!);
-  private readonly selectedDefinition = computed(() => {
-    const id = this.formDefinitionId();
-    return this.facades.definitions.data().find((def) => def.id === id);
-  });
+  private readonly _session = inject(FormSessionService);
 
   constructor() {
     super();
 
     effect(() => {
-      this._returnRoute.set(['/modules/forms/', this.formDefinitionId()]);
+      const formDefinitionId = this._session.formDefinitionId();
+      const formDefinition = this._session.formDefinition();
+
+      this._returnRoute.set(['/modules/forms/', formDefinitionId!]);
+
+      if (!formDefinition) {
+        return;
+      }
+
       this._schema.set(
         new FormSchema<any>({
           fields: [
@@ -43,7 +42,7 @@ export class FormsFormService extends FormService<{
             new GroupFormFieldSchema({
               key: 'fields',
               label: 'Form Fields',
-              nestedFields: this.selectedDefinition()!.fields.map(
+              nestedFields: formDefinition.fields.map(
                 this.createFieldSchema.bind(this),
               ),
             }),

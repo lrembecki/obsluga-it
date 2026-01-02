@@ -30,6 +30,12 @@ namespace lrembecki.core.Services
             await DeleteEntity(await _repository.RequireByIdAsync(id, cancellationToken), cancellationToken);
             await _uow.SaveChangesAsync(cancellationToken);
         }
+        public virtual Task<List<TVM>> GetAllAsync<TFilter>(TFilter filter, CancellationToken cancellationToken = default)
+        {
+            var query = GetAll(_repository.GetAll(filter));
+            var queryVM = query.Select(BuildSelectExpression());
+            return Task.FromResult(queryVM.ToList());
+        }
         public virtual Task<List<TVM>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var query = GetAll(_repository.GetAll());

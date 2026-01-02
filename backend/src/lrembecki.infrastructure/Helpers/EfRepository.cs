@@ -1,13 +1,12 @@
 ﻿using lrembecki.core.GlobalFilters;
-using lrembecki.core.Markers;
 using lrembecki.core.Services;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
 
 namespace lrembecki.infrastructure.Helpers;
 
-internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filters) : IRepository<T>
+internal class EfRepository<T>(IUnitOfWork uow, IServiceProvider serviceProvider, ICollection<IGlobalFilter> filters) : IRepository<T>
     where T : class
 {
     protected readonly DbSet<T> _dbSet = (uow as EfUnitOfWork)!.DbContext.Set<T>();
@@ -30,14 +29,29 @@ internal class EfRepository<T>(IUnitOfWork uow, ICollection<IGlobalFilter> filte
         return entity;
     }
 
-    public IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate = null)
+    private IQueryable<T> GetQueryable()
     {
-        IQueryable<T> query = (predicate is not null ? _dbSet.Where(predicate) : _dbSet);
+        IQueryable<T> query = _dbSet;
 
         foreach (var filter in filters)
         {
             query = filter.Evaluate(query);
         }
+
+        return query;
+    }
+
+    public IQueryable<T> GetAll<TFilter>(TFilter filter)
+    {
+        IQueryable<T> query = GetQueryable();
+        var filterEvaluator = serviceProvider.GetRequiredService<IFilterEvaluator<T, TFilter>>();
+        query = filterEvaluator.Evaluate(query, filter);
+        return query;
+    }
+
+    public IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate = null)
+    {
+        IQueryable<T> query = (predicate is not null ? GetQueryable().Where(predicate) : GetQueryable());
 
         return query;
     }

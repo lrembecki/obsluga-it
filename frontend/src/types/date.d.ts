@@ -29,5 +29,7 @@ declare global {
     normalizeUtcDateToLocalCalendar(
       value: Date | string | null | undefined,
     ): Date | null;
+
+    readDate(value: Date | null | undefined): Date | null;
   }
 }

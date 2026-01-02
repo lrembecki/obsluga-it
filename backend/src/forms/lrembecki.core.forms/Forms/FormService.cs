@@ -4,7 +4,7 @@ namespace lrembecki.core.forms.Forms;
 
 
 public interface IFormService : ICrudService<FormDto, FormVM>;
-public sealed class FormService(IUnitOfWork uow) 
+internal sealed class FormService(IUnitOfWork uow) 
     : BaseCrudService<FormEntity, FormVM, FormDto>(uow)
     , IFormService
 {

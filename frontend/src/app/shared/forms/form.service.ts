@@ -11,7 +11,6 @@ import { Route } from '@angular/router';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
 import { Subscription } from 'rxjs';
-import { createFormFromFieldSchema } from './services/form-factory.service';
 
 export function provideFormService(
   provider: any,
@@ -31,7 +30,7 @@ export function createFormRoute(provider: any): Route {
 export abstract class FormService<T> {
   protected readonly _schema = signal<FormSchema<T>>(null!);
   protected readonly _returnRoute = signal<string[]>(['../list']);
-  private readonly _onChangeSubscriptions = new Map<string, Subscription>();
+  public readonly _onChangeSubscriptions = new Map<string, Subscription>();
 
   public readonly schema = this._schema.asReadonly();
   public readonly returnRoute = this._returnRoute.asReadonly();
@@ -44,26 +43,7 @@ export abstract class FormService<T> {
   public readonly mode = computed(() =>
     this.id() === 'create' ? 'create' : 'edit',
   );
-  public readonly form = linkedSignal(() => {
-    this.cleanupOnChangeSubscriptions();
-    if (this.mode() === 'create') {
-      const schema = this.schema();
-      const formGroup = createFormFromFieldSchema(schema);
-      const model = this.buildFormControls(formGroup, schema.patchValue);
-      formGroup.patchValue(model);
-      this.registerOnChangeHandlers(schema, formGroup);
-      return formGroup;
-    } else {
-      const schema = this.schema();
-      const formGroup = createFormFromFieldSchema(schema, this.mode());
-      const model = this.buildFormControls(formGroup, this.model());
-
-      formGroup.patchValue(model);
-      this.registerOnChangeHandlers(schema, formGroup);
-      return formGroup;
-    }
-  });
-  private buildFormControls(formGroup: FormGroup, model: any) {
+  public buildFormControls(formGroup: FormGroup, model: any) {
     // Populate FormArray controls for collection fields before patching values
     this.schema().fields.forEach((field: any) => {
       if (field.type === 'collection') {
@@ -92,7 +72,7 @@ export abstract class FormService<T> {
     return model;
   }
 
-  private registerOnChangeHandlers(
+  public registerOnChangeHandlers(
     schema: FormSchema<T>,
     formGroup: FormGroup,
   ): void {
@@ -118,7 +98,7 @@ export abstract class FormService<T> {
     });
   }
 
-  private getRootFormGroup(control: AbstractControl): FormGroup | null {
+  public getRootFormGroup(control: AbstractControl): FormGroup | null {
     let parent = control.parent;
     while (parent?.parent) {
       parent = parent.parent;
@@ -126,24 +106,12 @@ export abstract class FormService<T> {
     return parent as FormGroup | null;
   }
 
-  private cleanupOnChangeSubscriptions(): void {
+  public cleanupOnChangeSubscriptions(): void {
     this._onChangeSubscriptions.forEach((sub) => sub.unsubscribe());
     this._onChangeSubscriptions.clear();
   }
 
   initialize(): Promise<void> {
     return this.facade.initialize();
-  }
-
-  async submit(data: any): Promise<boolean> {
-    const model = structuredClone(this.model()) ?? data;
-    Object.assign(model, data);
-
-    const response =
-      this.id() === 'create'
-        ? await this.facade.create('', model)
-        : await this.facade.update(this.id(), model);
-
-    return response.success;
   }
 }

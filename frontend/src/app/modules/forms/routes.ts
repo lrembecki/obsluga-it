@@ -7,42 +7,31 @@ import { SettingsFormDefinitionFacade } from '../settings/form-definitions/form-
 import { FormsDataTableService } from './forms-data-table.service';
 import { FormsFormService } from './forms-form.service';
 import { FormsFacade } from './forms.facade';
-
-export const facades = {
-  forms: await import('app/modules/forms/forms.facade').then(
-    (e) => e.FormsFacade,
-  ),
-};
+import { FormSessionService } from './forms.session';
 
 export const routes: Routes = [
   {
     path: '',
-    providers: [
-      provideApiFacade(FormsFacade),
-      provideDataTableService(FormsDataTableService),
-      provideFormService(FormsFormService),
-    ],
-    resolve: {
-      _: async () => {
-        const facades = {
-          formDefinitions: inject(SettingsFormDefinitionFacade),
-          forms: inject(FormsFacade),
-        };
-        await Promise.allSettled(
-          Object.values(facades).map((e) => e.initialize()),
-        );
-      },
-    },
+    providers: [provideApiFacade(FormsFacade), FormSessionService, FormsFacade],
     children: [
       {
         path: ':formDefinitionId',
         resolve: {
-          _: (state: ActivatedRouteSnapshot) => {
-            inject(FormsFormService).formDefinitionId.set(
-              state.params['formDefinitionId'],
-            );
-            inject(FormsDataTableService).formDefinitionId.set(
-              state.params['formDefinitionId'],
+          _: async (state: ActivatedRouteSnapshot) => {
+            const service = inject(FormSessionService);
+            const formDefinitionId = state.params['formDefinitionId'];
+
+            service.formDefinitionId.set(formDefinitionId);
+
+            const facades = {
+              formDefinitions: inject(SettingsFormDefinitionFacade),
+              forms: inject(FormsFacade),
+            };
+
+            facades.forms.filter({ formDefinitionId });
+
+            await Promise.allSettled(
+              Object.values(facades).map((e) => e.initialize()),
             );
           },
         },
@@ -57,6 +46,7 @@ export const routes: Routes = [
             data: {
               label: 'Form Entries',
             },
+            providers: [provideDataTableService(FormsDataTableService)],
             loadComponent: () =>
               import('app/shared/data-table/data-table.template').then(
                 (m) => m.DataTableTemplate,
@@ -64,6 +54,7 @@ export const routes: Routes = [
           },
           {
             path: ':id',
+            providers: [provideFormService(FormsFormService)],
             loadComponent: () =>
               import('app/shared/forms/form-template').then(
                 (m) => m.FormTemplate,

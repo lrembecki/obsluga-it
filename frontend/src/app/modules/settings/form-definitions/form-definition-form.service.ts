@@ -42,6 +42,7 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
   private readonly signals = {
     selectedEmailTemlpate: signal<EmailTemplateVM | null>(null),
     fields: signal<FormFieldDefinitionVM[]>([]),
+    model: signal<FormDefinitionVM | null>(null),
   };
 
   private readonly options = {
@@ -75,6 +76,8 @@ export class SettingsFormDefinitionFormService extends FormService<FormDefinitio
   };
 
   private onChange(model: FormDefinitionVM) {
+    this.signals.model.set(model);
+
     if (model) {
       this.signals.fields.set(model.fields || []);
       this.signals.selectedEmailTemlpate.set(null);

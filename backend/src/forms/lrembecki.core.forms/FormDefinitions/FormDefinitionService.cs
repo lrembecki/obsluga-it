@@ -25,6 +25,8 @@ internal sealed class FormDefinitionService(IUnitOfWork uow)
     {
         if (model.Notification is not null)
         {
+            entity?.Notification?.Update(model.Notification);
+
             model = model with
             {
                 NotificationId = (await (entity?.NotificationId != null

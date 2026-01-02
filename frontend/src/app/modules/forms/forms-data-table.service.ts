@@ -1,45 +1,66 @@
-import { computed, effect, inject, signal } from '@angular/core';
+import { effect, inject, linkedSignal } from '@angular/core';
 import { DataTableService } from '@app/shared/data-table/data-table.service';
-import { DataTableSchema } from '@app/shared/data-table/data-table.types';
-import { SettingsFormDefinitionFacade } from '@modules/settings/form-definitions/form-definition.facade';
+
+import { FormFilterVM } from './form-filter.vm';
+import { FormSessionService } from './forms.session';
 
 export class FormsDataTableService extends DataTableService<{
   id: string;
   name: string;
+  [key: string]: any;
 }> {
-  private readonly _definitions = inject(SettingsFormDefinitionFacade);
-  public readonly formDefinitionId = signal<string>(null!);
-  private readonly selectedDefinition = computed(() => {
-    const id = this.formDefinitionId();
-    return this._definitions.data().find((def) => def.id === id);
+  private readonly _session = inject(FormSessionService);
+  private readonly _filter = linkedSignal<FormFilterVM>(() => {
+    const formDefinitionId = this._session.formDefinitionId();
+    return new FormFilterVM({
+      formDefinitionId: formDefinitionId!,
+    });
   });
-
-  private readonly schemaComputed = computed<DataTableSchema<any>>(() => ({
-    quicksearch: true,
-    sortable: true,
-    columns: [
-      {
-        field: 'dateTime',
-        label: 'Date & Time',
-        type: 'date-time',
-        renderLink: (record: { id: string }) => [
-          `/modules/forms/${this.selectedDefinition()!.id}/${record.id}`,
-        ],
-      },
-      ...(this.selectedDefinition()?.fields.map((item) => ({
-        field: `fields.${item.fieldName}`,
-        label: item.fieldName,
-      })) || []),
-    ],
-  }));
 
   constructor() {
     super();
 
     this.canCreate.set(false);
 
+    const rawFilterData = sessionStorage.getItem(
+      `forms-data-table-${this._session.formDefinitionId()}-filter`,
+    );
+    if (rawFilterData) {
+      const filterData = JSON.parse(rawFilterData);
+      this._filter.set(new FormFilterVM(filterData));
+    }
+
     effect(() => {
-      this._schema.set(this.schemaComputed());
+      const formDefinitionId = this._session.formDefinitionId();
+      const formDefinition = this._session.formDefinition();
+
+      this._schema.set(null!);
+
+      if (!formDefinition) {
+        return;
+      }
+
+      this._schema.set({
+        quicksearch: true,
+        sortable: true,
+        persistenceKey: `forms-data-table-${formDefinitionId}`,
+        filter: this._filterSchema(),
+        columns: [
+          {
+            field: 'createdAt',
+            label: 'Date & Time',
+            type: 'date-time',
+            renderLink: (record: { id: string }) => [
+              `/modules/forms/${formDefinitionId}/${record.id}`,
+            ],
+            sortable: true,
+          },
+          ...formDefinition.fields.map((item) => ({
+            field: `fields.${item.fieldName}`,
+            label: item.fieldName,
+          })),
+        ],
+      });
     });
   }
 }

@@ -2,6 +2,7 @@
 
 import { InjectionToken } from '@angular/core';
 import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { FormSchema } from '../forms';
 
 // DI tokens to allow configuring DataTable via dependency injection
 export const DataTableSchemaScope = new InjectionToken<DataTableSchema<any>>(
@@ -19,6 +20,7 @@ export interface TableSort {
 }
 
 export interface DataTableSchema<T> {
+  filter?: FormSchema<any>;
   editable?: boolean;
   quicksearch?: boolean;
   sortable?: boolean;

@@ -7,7 +7,10 @@ export class GroupFormFieldSchema<T, Y> extends FormFieldSchema<T> {
     super('group', init);
     Object.assign(this, init);
     this.createControl = (_mode, disabled) => {
-      const fg = createFormFromFieldSchema({ fields: this.nestedFields || [] });
+      const fg = createFormFromFieldSchema(
+        { fields: this.nestedFields || [] },
+        _mode,
+      );
       if (disabled) fg.disable({ emitEvent: false });
       return fg;
     };

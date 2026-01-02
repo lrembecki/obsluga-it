@@ -4,7 +4,6 @@ const facades = {
   administration: await import('app/modules/administration/routes').then(
     (e) => e.facades,
   ),
-  forms: await import('app/modules/forms/routes').then((e) => e.facades),
   settings: await import('app/modules/settings/routes').then((e) => e.facades),
   trotamundos: await import('app/modules/trotamundos/routes').then(
     (e) => e.facades,

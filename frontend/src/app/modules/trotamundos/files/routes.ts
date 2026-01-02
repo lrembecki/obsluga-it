@@ -19,6 +19,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       {
         path: 'list',
+        providers: [provideDataTableService(TrotamundosFileDataTableService)],
         loadComponent: () =>
           import('app/shared/data-table/data-table.template').then(
             (e) => e.DataTableTemplate,
@@ -26,6 +27,7 @@ export const routes: Routes = [
       },
       {
         path: ':id',
+        providers: [provideFormService(TrotamundosFileFormService)],
         loadComponent: () =>
           import('app/shared/forms/form-template').then((e) => e.FormTemplate),
       },

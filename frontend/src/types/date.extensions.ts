@@ -26,3 +26,8 @@ Date.normalizeUtcDateToLocalCalendar = function (
   // calendar day.
   return new Date(value.getTime() - offsetMinutes * 60000);
 };
+
+Date.readDate = function (value: Date): Date | null {
+  if (!value) return null;
+  return new Date(value);
+};
