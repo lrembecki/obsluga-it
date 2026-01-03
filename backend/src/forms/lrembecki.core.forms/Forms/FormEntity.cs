@@ -1,10 +1,10 @@
-﻿using lrembecki.core.Entities;
-using lrembecki.core.Events;
+﻿using lrembecki.core.Events;
 using lrembecki.core.Markers;
+using lrembecki.core.shared.Subscriptions;
 
 namespace lrembecki.core.forms.Forms;
 
-public class FormEntity : SubscriptionBaseEntity, IHasId<Guid>
+internal class FormEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public Guid FormDefinitionId { get; private set; }

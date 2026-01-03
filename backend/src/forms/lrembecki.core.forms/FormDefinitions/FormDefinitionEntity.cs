@@ -1,9 +1,8 @@
-﻿using lrembecki.core.Entities;
-using lrembecki.core.Markers;
-using lrembecki.core.settings.Entities;
+﻿using lrembecki.core.Markers;
+using lrembecki.core.settings.Notifications;
+using lrembecki.core.shared.Subscriptions;
 
 namespace lrembecki.core.forms.FormDefinitions;
-
 
 internal class FormDefinitionEntity : SubscriptionBaseEntity, IHasId<Guid>
 {

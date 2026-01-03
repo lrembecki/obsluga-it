@@ -1,65 +1,63 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace lrembecki.infrastructure.Migrations
+namespace lrembecki.infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class TrotamundosTripImage2025113002 : Migration
 {
     /// <inheritdoc />
-    public partial class TrotamundosTripImage2025113002 : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_TrotamundosTripImage",
-                schema: "app",
-                table: "TrotamundosTripImage");
+        migrationBuilder.DropPrimaryKey(
+            name: "PK_TrotamundosTripImage",
+            schema: "app",
+            table: "TrotamundosTripImage");
 
-            migrationBuilder.DropIndex(
-                name: "IX_TrotamundosTripImage_TripId",
-                schema: "app",
-                table: "TrotamundosTripImage");
+        migrationBuilder.DropIndex(
+            name: "IX_TrotamundosTripImage_TripId",
+            schema: "app",
+            table: "TrotamundosTripImage");
 
-            migrationBuilder.DropColumn(
-                name: "Id",
-                schema: "app",
-                table: "TrotamundosTripImage");
+        migrationBuilder.DropColumn(
+            name: "Id",
+            schema: "app",
+            table: "TrotamundosTripImage");
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_TrotamundosTripImage",
-                schema: "app",
-                table: "TrotamundosTripImage",
-                columns: new[] { "TripId", "Order" });
-        }
+        migrationBuilder.AddPrimaryKey(
+            name: "PK_TrotamundosTripImage",
+            schema: "app",
+            table: "TrotamundosTripImage",
+            columns: new[] { "TripId", "Order" });
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_TrotamundosTripImage",
-                schema: "app",
-                table: "TrotamundosTripImage");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropPrimaryKey(
+            name: "PK_TrotamundosTripImage",
+            schema: "app",
+            table: "TrotamundosTripImage");
 
-            migrationBuilder.AddColumn<Guid>(
-                name: "Id",
-                schema: "app",
-                table: "TrotamundosTripImage",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValueSql: "newid()");
+        migrationBuilder.AddColumn<Guid>(
+            name: "Id",
+            schema: "app",
+            table: "TrotamundosTripImage",
+            type: "uniqueidentifier",
+            nullable: false,
+            defaultValueSql: "newid()");
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_TrotamundosTripImage",
-                schema: "app",
-                table: "TrotamundosTripImage",
-                column: "Id");
+        migrationBuilder.AddPrimaryKey(
+            name: "PK_TrotamundosTripImage",
+            schema: "app",
+            table: "TrotamundosTripImage",
+            column: "Id");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_TrotamundosTripImage_TripId",
-                schema: "app",
-                table: "TrotamundosTripImage",
-                column: "TripId");
-        }
+        migrationBuilder.CreateIndex(
+            name: "IX_TrotamundosTripImage_TripId",
+            schema: "app",
+            table: "TrotamundosTripImage",
+            column: "TripId");
     }
 }

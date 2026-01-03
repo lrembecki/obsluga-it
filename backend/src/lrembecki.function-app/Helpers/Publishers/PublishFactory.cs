@@ -2,7 +2,8 @@
 using lrembecki.core.forms.FormDefinitions;
 using lrembecki.core.Services;
 using lrembecki.core.settings.Entities;
-using lrembecki.core.trotamundos.Entitites;
+using lrembecki.core.trotamundos.Files;
+using lrembecki.core.trotamundos.Trips;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace lrembecki.function_app.Helpers.Publishers;

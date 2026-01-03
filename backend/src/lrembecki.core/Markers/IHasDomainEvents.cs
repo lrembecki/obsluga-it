@@ -1,11 +1,10 @@
 using lrembecki.core.Events;
 
-namespace lrembecki.core.Markers
+namespace lrembecki.core.Markers;
+
+public interface IHasDomainEvents
 {
-    public interface IHasDomainEvents
-    {
-        IReadOnlyCollection<DomainEvent> DomainEvents { get; }
-        void AddDomainEvent(DomainEvent domainEvent);
-        void ClearDomainEvents();
-    }
+    IReadOnlyCollection<DomainEvent> DomainEvents { get; }
+    void AddDomainEvent(DomainEvent domainEvent);
+    void ClearDomainEvents();
 }

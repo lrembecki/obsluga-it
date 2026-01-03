@@ -9,16 +9,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.obsluga-it.ServiceDefaults\lrembecki.obsluga-it.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\account\lrembecki.presentation.account\lrembecki.presentation.account.csproj" />
+    <ProjectReference Include="..\account\lrembecki.infrastructure.account\lrembecki.infrastructure.account.csproj" />
+    <ProjectReference Include="..\forms\lrembecki.infrastructure.forms\lrembecki.infrastructure.forms.csproj" />
     <ProjectReference Include="..\lrembecki.infrastructure\lrembecki.infrastructure.csproj" />
-    <ProjectReference Include="..\storage\lrembecki.presentation.storage\lrembecki.presentation.storage.csproj" />
-    <ProjectReference Include="..\trotamundos\lrembecki.presentation.trotamundos\lrembecki.presentation.trotamundos.csproj" />
-    <ProjectReference Include="..\security\lrembecki.presentation.security\lrembecki.presentation.security.csproj" />
-    <ProjectReference Include="..\settings\lrembecki.presentation.settings\lrembecki.presentation.settings.csproj" />
-    <ProjectReference Include="..\events\lrembecki.presentation.events\lrembecki.presentation.events.csproj" />
-    <ProjectReference Include="..\notification\lrembecki.presentation.notification\lrembecki.presentation.notification.csproj" />
-    <ProjectReference Include="..\forms\lrembecki.presentation.forms\lrembecki.presentation.forms.csproj" />
-    <ProjectReference Include="..\royal-tips\lrembecki.presentation.royal-tips\lrembecki.presentation.royal-tips.csproj" />
+    <ProjectReference Include="..\security\lrembecki.infrastructure.security\lrembecki.infrastructure.security.csproj" />
+    <ProjectReference Include="..\storage\lrembecki.infrastructure.storage\lrembecki.infrastructure.storage.csproj" />
+    <ProjectReference Include="..\settings\lrembecki.infrastructure.settings\lrembecki.infrastructure.settings.csproj" />
+    <ProjectReference Include="..\trotamundos\lrembecki.infrastructure.trotamundos\lrembecki.infrastructure.trotamundos.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@ using lrembecki.core.Services;
 using lrembecki.core.settings.Dtos;
 using lrembecki.core.settings.Entities;
 using lrembecki.core.settings.ViewModels;
-using lrembecki.core.storage.Services;
+using lrembecki.core.storage;
 
 namespace lrembecki.core.settings.Services;
 
@@ -12,7 +12,7 @@ internal sealed class EmailTemplateService(
     IStorageService storage
 ) : BaseCrudService<EmailTemplateEntity, EmailTemplateVM, EmailTemplateDto>(uow), IEmailTemplateService
 {
-    private IRepository<ContactEntity> _contacts => uow.GetRepository<ContactEntity>();
+    private IRepository<ContactEntity> _contacts => _uow.GetRepository<ContactEntity>();
 
     protected override async Task<EmailTemplateEntity> CreateEntity(Guid id, EmailTemplateDto model, CancellationToken ct)
     {
@@ -32,7 +32,7 @@ internal sealed class EmailTemplateService(
     {
         entity.Contacts_to.Clear();
         entity.Contacts_to.AddRange([.. _contacts.GetAll(e => model.Contacts_to.Contains(e.Id))]);
-        
+    
         entity.Contacts_cc.Clear();
         entity.Contacts_cc.AddRange([.. _contacts.GetAll(e => model.Contacts_cc.Contains(e.Id))]);
 

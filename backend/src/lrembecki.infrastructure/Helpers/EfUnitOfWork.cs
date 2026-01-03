@@ -1,8 +1,7 @@
-﻿using lrembecki.core.Entities;
-using lrembecki.core.Helpers;
+﻿using lrembecki.core.Helpers;
 using lrembecki.core.Markers;
 using lrembecki.core.Services;
-using lrembecki.infrastructure.Entities;
+using lrembecki.core.shared;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;

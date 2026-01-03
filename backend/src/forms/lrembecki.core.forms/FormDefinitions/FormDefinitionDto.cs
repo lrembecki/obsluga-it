@@ -1,4 +1,4 @@
-﻿using lrembecki.core.settings.Dtos;
+﻿using lrembecki.core.settings.Notifications;
 
 namespace lrembecki.core.forms.FormDefinitions;
 

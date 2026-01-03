@@ -5,957 +5,955 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using lrembecki.infrastructure.Entities;
 
 #nullable disable
 
-namespace lrembecki.infrastructure.Migrations
+namespace lrembecki.infrastructure.Migrations;
+
+[DbContext(typeof(ObslugaItDbContext))]
+[Migration("20251103152624_Settings-Contacts-V2")]
+partial class SettingsContactsV2
 {
-    [DbContext(typeof(ObslugaItDbContext))]
-    [Migration("20251103152624_Settings-Contacts-V2")]
-    partial class SettingsContactsV2
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasDefaultSchema("app")
-                .HasAnnotation("ProductVersion", "8.0.21")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+        modelBuilder
+            .HasDefaultSchema("app")
+            .HasAnnotation("ProductVersion", "8.0.21")
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AccountPermissionGroup", b =>
-                {
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("AccountPermissionGroup", b =>
+            {
+                b.Property<Guid>("AccountId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PermissionGroupId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("PermissionGroupId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("AccountId", "PermissionGroupId");
+                b.HasKey("AccountId", "PermissionGroupId");
 
-                    b.HasIndex("PermissionGroupId");
+                b.HasIndex("PermissionGroupId");
 
-                    b.ToTable("AccountPermissionGroup", "app");
-                });
+                b.ToTable("AccountPermissionGroup", "app");
+            });
 
-            modelBuilder.Entity("AccountSubscriptionPermissionGroup", b =>
-                {
-                    b.Property<Guid>("AccountSubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("AccountSubscriptionPermissionGroup", b =>
+            {
+                b.Property<Guid>("AccountSubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PermissionGroupId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("PermissionGroupId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("AccountSubscriptionId", "PermissionGroupId");
+                b.HasKey("AccountSubscriptionId", "PermissionGroupId");
 
-                    b.HasIndex("PermissionGroupId");
+                b.HasIndex("PermissionGroupId");
 
-                    b.ToTable("AccountSubscriptionPermissionGroup", "app");
-                });
+                b.ToTable("AccountSubscriptionPermissionGroup", "app");
+            });
 
-            modelBuilder.Entity("PermissionGroupPermission", b =>
-                {
-                    b.Property<Guid>("PermissionGrupId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("PermissionGroupPermission", b =>
+            {
+                b.Property<Guid>("PermissionGrupId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PermissionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("PermissionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("PermissionGrupId", "PermissionId");
+                b.HasKey("PermissionGrupId", "PermissionId");
 
-                    b.HasIndex("PermissionId");
+                b.HasIndex("PermissionId");
 
-                    b.ToTable("PermissionGroupPermission", "app");
-                });
+                b.ToTable("PermissionGroupPermission", "app");
+            });
 
-            modelBuilder.Entity("TripAdvantage", b =>
-                {
-                    b.Property<Guid>("AdvantageId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("TripAdvantage", b =>
+            {
+                b.Property<Guid>("AdvantageId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("AdvantageId", "TripId");
+                b.HasKey("AdvantageId", "TripId");
 
-                    b.HasIndex("TripId");
+                b.HasIndex("TripId");
 
-                    b.ToTable("TripAdvantage", "app");
-                });
+                b.ToTable("TripAdvantage", "app");
+            });
 
-            modelBuilder.Entity("TripHighlight", b =>
-                {
-                    b.Property<Guid>("HighlightId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("TripHighlight", b =>
+            {
+                b.Property<Guid>("HighlightId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("HighlightId", "TripId");
+                b.HasKey("HighlightId", "TripId");
 
-                    b.HasIndex("TripId");
+                b.HasIndex("TripId");
 
-                    b.ToTable("TripHighlight", "app");
-                });
+                b.ToTable("TripHighlight", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.account.Entities.AccountEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.account.Entities.AccountEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsActive")
+                    .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                b.HasIndex("Email")
+                    .IsUnique();
 
-                    b.ToTable("Account", "app");
-                });
+                b.ToTable("Account", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.account.Entities.AccountSubscriptionEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.account.Entities.AccountSubscriptionEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("AccountId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsActive")
+                    .HasColumnType("bit");
 
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDefault")
+                    .HasColumnType("bit");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                b.HasIndex("AccountId");
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("AccountSubscription", "app");
-                });
+                b.ToTable("AccountSubscription", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.account.Entities.PermissionEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.account.Entities.PermissionEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                b.HasIndex("Name")
+                    .IsUnique();
 
-                    b.ToTable("Permission", "app");
-                });
+                b.ToTable("Permission", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.account.Entities.PermissionGroupEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.account.Entities.PermissionGroupEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                b.HasIndex("Name")
+                    .IsUnique();
 
-                    b.ToTable("PermissionGroup", "app");
-                });
+                b.ToTable("PermissionGroup", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.settings.Entities.ContactEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.settings.Entities.ContactEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Email")
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsActive")
+                    .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Phone")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                b.Property<string>("Phone")
+                    .HasMaxLength(15)
+                    .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Position")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("ContactEntity", "app");
-                });
+                b.ToTable("ContactEntity", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.storage.Entities.FileStorageEntity", b =>
-                {
-                    b.Property<Guid>("StorageId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.storage.Entities.FileStorageEntity", b =>
+            {
+                b.Property<Guid>("StorageId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(5000)
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("DisplayName")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("StorageId");
+                b.HasKey("StorageId");
 
-                    b.ToTable("FileStorage", "app");
-                });
+                b.ToTable("FileStorage", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.storage.Entities.ImageStorageEntity", b =>
-                {
-                    b.Property<Guid>("StorageId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.storage.Entities.ImageStorageEntity", b =>
+            {
+                b.Property<Guid>("StorageId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("DisplayName")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<long>("Height")
-                        .HasColumnType("bigint");
+                b.Property<long>("Height")
+                    .HasColumnType("bigint");
 
-                    b.Property<long>("Width")
-                        .HasColumnType("bigint");
+                b.Property<long>("Width")
+                    .HasColumnType("bigint");
 
-                    b.HasKey("StorageId");
+                b.HasKey("StorageId");
 
-                    b.ToTable("ImageStorage", "app");
-                });
+                b.ToTable("ImageStorage", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.storage.Entities.StorageEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.storage.Entities.StorageEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BlobPath")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("BlobPath")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("BlobUrl")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("BlobUrl")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Filename")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("Filename")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
+                b.Property<long>("Size")
+                    .HasColumnType("bigint");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Storage", "app");
-                });
+                b.ToTable("Storage", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.subscription.Entities.SubscriptionEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.subscription.Entities.SubscriptionEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                b.HasIndex("Name")
+                    .IsUnique();
 
-                    b.ToTable("Subscription", "app");
-                });
+                b.ToTable("Subscription", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.AdvantageEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.AdvantageEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("Content")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Advantage", "app");
-                });
+                b.ToTable("Advantage", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.HighlightEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.HighlightEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("Icon")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Highlight", "app");
-                });
+                b.ToTable("Highlight", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(2048)
+                    .HasColumnType("nvarchar(2048)");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ImageId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnType("nvarchar(500)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique();
+                b.HasIndex("ImageId")
+                    .IsUnique();
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("LoyalityProgram", "app");
-                });
+                b.ToTable("LoyalityProgram", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("CreatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(2048)
+                    .HasColumnType("nvarchar(2048)");
 
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("SubscriptionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Subtitle")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Subtitle")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid?>("UpdatedById")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("SubscriptionId");
+                b.HasIndex("SubscriptionId");
 
-                    b.ToTable("Trip", "app");
-                });
+                b.ToTable("Trip", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripImageEntity", b =>
-                {
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripImageEntity", b =>
+            {
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                b.Property<int>("Order")
+                    .HasColumnType("int");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ImageId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("TripId", "Order");
+                b.HasKey("TripId", "Order");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique();
+                b.HasIndex("ImageId")
+                    .IsUnique();
 
-                    b.ToTable("TripImage", "app");
-                });
+                b.ToTable("TripImage", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPaymentScheduleEntity", b =>
-                {
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPaymentScheduleEntity", b =>
+            {
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                b.Property<int>("Order")
+                    .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(2048)
+                    .HasColumnType("nvarchar(2048)");
 
-                    b.Property<string>("Price")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("Price")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("TripId", "Order");
+                b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripPaymentSchedule", "app");
-                });
+                b.ToTable("TripPaymentSchedule", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPriceIncludeEntity", b =>
-                {
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPriceIncludeEntity", b =>
+            {
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                b.Property<int>("Order")
+                    .HasColumnType("int");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                b.Property<string>("Content")
+                    .IsRequired()
+                    .HasMaxLength(2048)
+                    .HasColumnType("nvarchar(2048)");
 
-                    b.Property<bool>("Includes")
-                        .HasColumnType("bit");
+                b.Property<bool>("Includes")
+                    .HasColumnType("bit");
 
-                    b.HasKey("TripId", "Order");
+                b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripPriceInclude", "app");
-                });
+                b.ToTable("TripPriceInclude", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripRequirementEntity", b =>
-                {
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripRequirementEntity", b =>
+            {
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                b.Property<int>("Order")
+                    .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("TripId", "Order");
+                b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripRequirement", "app");
-                });
+                b.ToTable("TripRequirement", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripScheduleEntity", b =>
-                {
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripScheduleEntity", b =>
+            {
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                b.Property<int>("Order")
+                    .HasColumnType("int");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                b.Property<string>("Content")
+                    .IsRequired()
+                    .HasMaxLength(2048)
+                    .HasColumnType("nvarchar(2048)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("TripId", "Order");
+                b.HasKey("TripId", "Order");
 
-                    b.ToTable("TripSchedule", "app");
-                });
+                b.ToTable("TripSchedule", "app");
+            });
 
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", b =>
-                {
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", b =>
+            {
+                b.Property<Guid>("TripId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
+                b.Property<int>("Order")
+                    .HasColumnType("int");
 
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ImageId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("TripId", "Order");
+                b.HasKey("TripId", "Order");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique();
+                b.HasIndex("ImageId")
+                    .IsUnique();
 
-                    b.ToTable("TripSuggestedFlight", "app");
-                });
+                b.ToTable("TripSuggestedFlight", "app");
+            });
 
-            modelBuilder.Entity("AccountPermissionGroup", b =>
-                {
-                    b.HasOne("lrembecki.core.account.Entities.AccountEntity", null)
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        modelBuilder.Entity("AccountPermissionGroup", b =>
+            {
+                b.HasOne("lrembecki.core.account.Entities.AccountEntity", null)
+                    .WithMany()
+                    .HasForeignKey("AccountId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("lrembecki.core.account.Entities.PermissionGroupEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                b.HasOne("lrembecki.core.account.Entities.PermissionGroupEntity", null)
+                    .WithMany()
+                    .HasForeignKey("PermissionGroupId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 
-            modelBuilder.Entity("AccountSubscriptionPermissionGroup", b =>
-                {
-                    b.HasOne("lrembecki.core.account.Entities.AccountSubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("AccountSubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        modelBuilder.Entity("AccountSubscriptionPermissionGroup", b =>
+            {
+                b.HasOne("lrembecki.core.account.Entities.AccountSubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("AccountSubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("lrembecki.core.account.Entities.PermissionGroupEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                b.HasOne("lrembecki.core.account.Entities.PermissionGroupEntity", null)
+                    .WithMany()
+                    .HasForeignKey("PermissionGroupId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 
-            modelBuilder.Entity("PermissionGroupPermission", b =>
-                {
-                    b.HasOne("lrembecki.core.account.Entities.PermissionGroupEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionGrupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        modelBuilder.Entity("PermissionGroupPermission", b =>
+            {
+                b.HasOne("lrembecki.core.account.Entities.PermissionGroupEntity", null)
+                    .WithMany()
+                    .HasForeignKey("PermissionGrupId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("lrembecki.core.account.Entities.PermissionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                b.HasOne("lrembecki.core.account.Entities.PermissionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("PermissionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 
-            modelBuilder.Entity("TripAdvantage", b =>
-                {
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.AdvantageEntity", null)
-                        .WithMany()
-                        .HasForeignKey("AdvantageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+        modelBuilder.Entity("TripAdvantage", b =>
+            {
+                b.HasOne("lrembecki.core.trotamundos.Entitites.AdvantageEntity", null)
+                    .WithMany()
+                    .HasForeignKey("AdvantageId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
 
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany()
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
 
-            modelBuilder.Entity("TripHighlight", b =>
-                {
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.HighlightEntity", null)
-                        .WithMany()
-                        .HasForeignKey("HighlightId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+        modelBuilder.Entity("TripHighlight", b =>
+            {
+                b.HasOne("lrembecki.core.trotamundos.Entitites.HighlightEntity", null)
+                    .WithMany()
+                    .HasForeignKey("HighlightId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
 
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany()
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
 
-            modelBuilder.Entity("lrembecki.core.account.Entities.AccountSubscriptionEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.account.Entities.AccountEntity", null)
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.settings.Entities.ContactEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.storage.Entities.FileStorageEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
-                        .WithOne("File")
-                        .HasForeignKey("lrembecki.core.storage.Entities.FileStorageEntity", "StorageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.storage.Entities.ImageStorageEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
-                        .WithOne("Image")
-                        .HasForeignKey("lrembecki.core.storage.Entities.ImageStorageEntity", "StorageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.storage.Entities.StorageEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.AdvantageEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.HighlightEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
-                        .WithOne()
-                        .HasForeignKey("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", "ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripImageEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
-                        .WithOne()
-                        .HasForeignKey("lrembecki.core.trotamundos.Entitites.TripImageEntity", "ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany("Images")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPaymentScheduleEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany("PaymentSchedules")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPriceIncludeEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany("PriceIncludes")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripRequirementEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany("Requirements")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripScheduleEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany("Schedules")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
-                        .WithOne()
-                        .HasForeignKey("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", "ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
-                        .WithMany("SuggestedFlights")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.storage.Entities.StorageEntity", b =>
-                {
-                    b.Navigation("File")
-                        .IsRequired();
-
-                    b.Navigation("Image")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
-                {
-                    b.Navigation("Images");
-
-                    b.Navigation("PaymentSchedules");
-
-                    b.Navigation("PriceIncludes");
-
-                    b.Navigation("Requirements");
-
-                    b.Navigation("Schedules");
-
-                    b.Navigation("SuggestedFlights");
-                });
+        modelBuilder.Entity("lrembecki.core.account.Entities.AccountSubscriptionEntity", b =>
+            {
+                b.HasOne("lrembecki.core.account.Entities.AccountEntity", null)
+                    .WithMany()
+                    .HasForeignKey("AccountId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.settings.Entities.ContactEntity", b =>
+            {
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.storage.Entities.FileStorageEntity", b =>
+            {
+                b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
+                    .WithOne("File")
+                    .HasForeignKey("lrembecki.core.storage.Entities.FileStorageEntity", "StorageId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.storage.Entities.ImageStorageEntity", b =>
+            {
+                b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
+                    .WithOne("Image")
+                    .HasForeignKey("lrembecki.core.storage.Entities.ImageStorageEntity", "StorageId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.storage.Entities.StorageEntity", b =>
+            {
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.AdvantageEntity", b =>
+            {
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.HighlightEntity", b =>
+            {
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", b =>
+            {
+                b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
+                    .WithOne()
+                    .HasForeignKey("lrembecki.core.trotamundos.Entitites.LoyalityProgramEntity", "ImageId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
+            {
+                b.HasOne("lrembecki.core.subscription.Entities.SubscriptionEntity", null)
+                    .WithMany()
+                    .HasForeignKey("SubscriptionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripImageEntity", b =>
+            {
+                b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
+                    .WithOne()
+                    .HasForeignKey("lrembecki.core.trotamundos.Entitites.TripImageEntity", "ImageId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany("Images")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPaymentScheduleEntity", b =>
+            {
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany("PaymentSchedules")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripPriceIncludeEntity", b =>
+            {
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany("PriceIncludes")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripRequirementEntity", b =>
+            {
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany("Requirements")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripScheduleEntity", b =>
+            {
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany("Schedules")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", b =>
+            {
+                b.HasOne("lrembecki.core.storage.Entities.StorageEntity", null)
+                    .WithOne()
+                    .HasForeignKey("lrembecki.core.trotamundos.Entitites.TripSuggestedFlightEntity", "ImageId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+
+                b.HasOne("lrembecki.core.trotamundos.Entitites.TripEntity", null)
+                    .WithMany("SuggestedFlights")
+                    .HasForeignKey("TripId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.storage.Entities.StorageEntity", b =>
+            {
+                b.Navigation("File")
+                    .IsRequired();
+
+                b.Navigation("Image")
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("lrembecki.core.trotamundos.Entitites.TripEntity", b =>
+            {
+                b.Navigation("Images");
+
+                b.Navigation("PaymentSchedules");
+
+                b.Navigation("PriceIncludes");
+
+                b.Navigation("Requirements");
+
+                b.Navigation("Schedules");
+
+                b.Navigation("SuggestedFlights");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

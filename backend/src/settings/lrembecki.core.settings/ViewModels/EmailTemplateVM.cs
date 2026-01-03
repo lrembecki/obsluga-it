@@ -1,5 +1,5 @@
 ﻿using lrembecki.core.settings.Entities;
-using lrembecki.core.storage.ViewModels;
+using lrembecki.core.storage;
 
 namespace lrembecki.core.settings.ViewModels;
 

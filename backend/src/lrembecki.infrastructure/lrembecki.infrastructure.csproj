@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Security\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="8.4.0" />
@@ -36,16 +32,20 @@
 
   <ItemGroup>
     <ProjectReference Include="..\account\lrembecki.core.account\lrembecki.core.account.csproj" />
+    <ProjectReference Include="..\account\lrembecki.infrastructure.account\lrembecki.infrastructure.account.csproj" />
+    <ProjectReference Include="..\forms\lrembecki.infrastructure.forms\lrembecki.infrastructure.forms.csproj" />
     <ProjectReference Include="..\lrembecki.core\lrembecki.core.csproj" />
+    <ProjectReference Include="..\shared\lrembecki.infrastructure.shared\lrembecki.infrastructure.shared.csproj" />
     <ProjectReference Include="..\storage\lrembecki.core.storage\lrembecki.core.storage.csproj" />
-    <ProjectReference Include="..\subscription\lrembecki.core.subscription\lrembecki.core.subscription.csproj" />
     <ProjectReference Include="..\trotamundos\lrembecki.core.trotamundos\lrembecki.core.trotamundos.csproj" />
     <ProjectReference Include="..\security\lrembecki.core.security\lrembecki.core.security.csproj" />
     <ProjectReference Include="..\settings\lrembecki.core.settings\lrembecki.core.settings.csproj" />
-    <ProjectReference Include="..\events\lrembecki.core.events\lrembecki.core.events.csproj" />
-    <ProjectReference Include="..\notification\lrembecki.core.notification\lrembecki.core.notification.csproj" />
     <ProjectReference Include="..\forms\lrembecki.core.forms\lrembecki.core.forms.csproj" />
-    <ProjectReference Include="..\royal-tips\lrembecki.core.royal-tips\lrembecki.core.royal-tips.csproj" />
+    <ProjectReference Include="..\shared\lrembecki.core.shared\lrembecki.core.shared.csproj" />
+    <ProjectReference Include="..\security\lrembecki.infrastructure.security\lrembecki.infrastructure.security.csproj" />
+    <ProjectReference Include="..\storage\lrembecki.infrastructure.storage\lrembecki.infrastructure.storage.csproj" />
+    <ProjectReference Include="..\settings\lrembecki.infrastructure.settings\lrembecki.infrastructure.settings.csproj" />
+    <ProjectReference Include="..\trotamundos\lrembecki.infrastructure.trotamundos\lrembecki.infrastructure.trotamundos.csproj" />
   </ItemGroup>
 
 </Project>

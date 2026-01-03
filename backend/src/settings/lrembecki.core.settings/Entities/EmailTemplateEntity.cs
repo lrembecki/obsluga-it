@@ -1,7 +1,7 @@
-﻿using lrembecki.core.Entities;
-using lrembecki.core.Markers;
+﻿using lrembecki.core.Markers;
 using lrembecki.core.settings.Dtos;
-using lrembecki.core.storage.Entities;
+using lrembecki.core.storage;
+using lrembecki.core.shared.Subscriptions;
 
 namespace lrembecki.core.settings.Entities;
 
@@ -12,7 +12,7 @@ internal class EmailTemplateEntity : SubscriptionBaseEntity, IHasId<Guid>
     public Guid TemplateHtmlId { get; private set; }
     public StorageEntity TemplateHtml { get; private set; } = null!;
     public List<EmailTemplateFieldEntity> Fields { get; private set; } = [];
-    
+
     public string Subject { get; private set; } = string.Empty;
     public List<ContactEntity> Contacts_to { get; private set; } = [];
     public List<ContactEntity> Contacts_bcc { get; private set; } = [];
@@ -26,7 +26,7 @@ internal class EmailTemplateEntity : SubscriptionBaseEntity, IHasId<Guid>
         };
 
         entity.Update(model);
-        
+    
         return entity;
     }
 

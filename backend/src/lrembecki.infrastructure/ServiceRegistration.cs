@@ -4,7 +4,6 @@ using Azure.Storage.Blobs;
 using lrembecki.core.GlobalFilters;
 using lrembecki.core.Helpers;
 using lrembecki.core.Services;
-using lrembecki.infrastructure.Entities;
 using lrembecki.infrastructure.Extensions;
 using lrembecki.infrastructure.Helpers;
 
@@ -24,6 +23,14 @@ public static class ServiceRegistration
     {
         builder.AddAzureAppConfiguration(isDevelopment, appConfiguration, tenantId);
         builder.AddProjectAuthentication();
+
+        builder.Services.AddAccount();
+        builder.Services.AddForms();
+        builder.Services.AddSecurity();
+        builder.Services.AddStorage();
+        builder.Services.AddSettings();
+        builder.Services.AddTrotamundos();
+        // Add service registrations from other modules here
 
         builder.Services.AddScoped<ObslugaItDbContext>();
         builder.Services.AddDbContext<ObslugaItDbContext>(_ => _.UseSqlServer(

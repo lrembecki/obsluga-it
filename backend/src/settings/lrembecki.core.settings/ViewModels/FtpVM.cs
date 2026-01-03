@@ -3,7 +3,7 @@ using lrembecki.core.settings.Entities;
 namespace lrembecki.core.settings.ViewModels;
 
 public record FtpVM(
-    
+
     Guid Id,
     bool IsActive,
     string Server,

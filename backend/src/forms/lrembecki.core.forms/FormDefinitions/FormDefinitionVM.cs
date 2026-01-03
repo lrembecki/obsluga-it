@@ -1,5 +1,5 @@
 ﻿using lrembecki.core.Exceptions;
-using lrembecki.core.settings.ViewModels;
+using lrembecki.core.settings.Notifications;
 
 namespace lrembecki.core.forms.FormDefinitions;
 

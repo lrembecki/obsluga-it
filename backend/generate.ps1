@@ -9,6 +9,65 @@ param(
     [string]$ProjectPath
 )
 
+function print {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Name,
+        [Parameter(Mandatory=$true)]
+        [string]$Message
+    )
+
+    Write-Host "[$Name] $Message"
+}
+
+function formatName {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Name
+    )
+    return $Name.Substring(0,1).ToUpper() + $Name.Substring(1)
+}
+
+function replaceContentInFile {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$FilePath,
+
+        [Parameter(Mandatory=$true)]
+        [string]$FindContent,
+
+        [Parameter(Mandatory=$true)]
+        [string]$ReplaceContent,
+
+        [Parameter(Mandatory=$false)]
+        [boolean]$KeepFindContent = $false
+    )
+
+    if (-not (Test-Path $FilePath)) {
+        print -Name "replaceContentInFile" -Message "File not found: $FilePath"
+        return
+    }
+
+    $content = Get-Content -Path $FilePath -Raw
+
+    $replace = "$ReplaceContent";
+
+    if ($KeepFindContent -eq $true) {
+        $replace = "$ReplaceContent`r`n$FindContent"
+    }
+    print -Name "replaceContentInFile" -Message $ReplaceContent
+
+    if ($content -notmatch [regex]::Escape($FindContent)) {
+        print -Name "replaceContentInFile" -Message "Search text not found: $FindContent"
+    } elseif ($content -match [regex]::Escape($FindContent)) {
+        print -Name "replaceContentInFile" -Message "Implementation already exists: $ReplaceContent"
+    } else {
+        $content = $content -replace [regex]::Escape($FindContent), $replace
+        Set-Content -Path $FilePath -Value $content -Encoding UTF8
+        print -Name "replaceContentInFile" -Message "Replaced content in file: $FilePath"
+    }
+}
+
 function includeMicrosoftAspNetCoreAppFrameworkReference {
     param(
         [Parameter(Mandatory=$true)]
@@ -108,6 +167,90 @@ function addInternalsVisibleTo {
     Write-Host "Added InternalsVisibleTo attribute to $ProjectPath for $FriendAssemblyName"
 }
 
+function generateInfrastructure {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Name
+    )
+
+    Set-Location src
+    Set-Location $Name
+
+    # infrastructure
+    Write-Host "Generating infrastructure library: lrembecki.infrastructure.$Name"
+    dotnet new classlib -n lrembecki.infrastructure.$Name
+    Set-Location lrembecki.infrastructure.$Name
+        dotnet add reference ..\..\shared\lrembecki.infrastructure.shared\lrembecki.infrastructure.shared.csproj
+        dotnet add reference ..\lrembecki.core.$Name\lrembecki.core.$Name.csproj
+
+        # template bootstrap
+        $formatedName = $Name.Substring(0,1).ToUpper() + $Name.Substring(1)
+        $formatedEndpoint = $Name.ToLower()
+        $bootstrapFilePath = "Bootstrap.cs"
+        $bootstrapContent = @"
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+public static class Bootstrap$formatedName
+{
+    public static IServiceCollection Add$formatedName(this IServiceCollection services)
+    {
+        return services;
+    }
+
+    public static WebApplication Map$formatedName(this WebApplication app)
+    {
+        var group = app.MapGroup("/api/$formatedEndpoint")
+            .WithTags("$formatedName")
+            .RequireAuthorization("InternalJwtPolicy");
+
+        return app;
+    }
+
+    public static ModelBuilder ApplyConfigurationFrom$formatedName(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(Bootstrap$formatedName).Assembly);
+        return modelBuilder;
+    }
+}
+"@
+
+        Set-Content -Path $bootstrapFilePath -Value $bootstrapContent -Encoding UTF8
+        Delete-Item "Class1.cs"
+    Set-Location .. # $Name directory
+    Set-Location .. # src directory
+    Set-Location lrembecki.infrastructure
+        dotnet add reference ..\$Name\lrembecki.infrastructure.$Name
+    Set-Location .. # src directory
+    Set-Location lrembecki.host
+        dotnet add reference ..\$Name\lrembecki.infrastructure.$Name
+    Set-Location .. # src directory
+    Set-Location .. # backend directory
+
+    addInternalsVisibleTo -ProjectPath "src/$Name/lrembecki.core.$Name/lrembecki.core.$Name.csproj" -FriendAssemblyName "lrembecki.infrastructure.$Name"
+    
+    $formatedEndpoint = formatName -Name $Name
+
+    $serviceRegistrationPath = "src/lrembecki.infrastructure/ServiceRegistration.cs"
+    $serviceMarker = "// Add service registrations from other modules here"
+    $serviceLine = "builder.Services.Add$formatedEndpoint();"
+    replaceContentInFile -FilePath $serviceRegistrationPath -FindContent $serviceMarker -ReplaceContent $serviceLine -KeepFindContent $true
+
+    $programCsPath = "src/lrembecki.host/Program.cs"
+    $endpointMarker = "// Add endpoint mappings from other modules here"
+    $endpointLine = "app.Map$formatedEndpoint();"
+    replaceContentInFile -FilePath $programCsPath -FindContent $endpointMarker -ReplaceContent $endpointLine -KeepFindContent $true
+
+    $dbContextFilePath = "src/lrembecki.infrastructure/LrembeckiDbContext.cs"
+    $dbContextmarker = "// Add other module configurations here"
+    $dbContextLine = "modelBuilder.ApplyConfigurationFrom$formatedEndpoint();"
+    replaceContentInFile -FilePath $dbContextFilePath -FindContent $dbContextmarker -ReplaceContent $dbContextLine -KeepFindContent $true
+
+    dotnet sln add src\$Name\lrembecki.infrastructure.$Name
+}
+
 function generateFeature {
     param(
         [Parameter(Mandatory=$true)]
@@ -176,6 +319,15 @@ function generateFeature {
 switch ($Option) {
     "feature" {
         generateFeature -Name $Name
+    }
+    "link-to-host" {
+        linkInfrastructureToHost -Name $Name
+    }
+    "register-service" {
+        registerServicesToInfrastructure -Name $Name
+    }
+    "add-infrastructure" {
+        generateInfrastructure -Name $Name
     }
     "add-reference" {
         addAspNetCoreAppFrameworkReference -ProjectPath $ProjectPath

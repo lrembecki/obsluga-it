@@ -1,6 +1,6 @@
 ﻿using lrembecki.core.Events;
 using lrembecki.core.Services;
-using lrembecki.core.trotamundos.Services;
+using lrembecki.core.trotamundos.Files;
 
 namespace lrembecki.function_app.Helpers.Publishers;
 

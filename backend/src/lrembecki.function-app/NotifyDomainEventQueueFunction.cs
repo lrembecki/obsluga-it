@@ -2,12 +2,9 @@ using Azure.Messaging.ServiceBus;
 using lrembecki.core.Events;
 using lrembecki.core.Helpers;
 using lrembecki.core.Services;
-using lrembecki.functions.trotamundos;
 using lrembecki.infrastructure.Helpers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace lrembecki.function_app;
 

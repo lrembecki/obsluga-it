@@ -1,5 +1,5 @@
 ﻿using lrembecki.core.Services;
-using lrembecki.core.settings.Entities;
+using lrembecki.core.settings.Notifications;
 
 namespace lrembecki.core.forms.FormDefinitions;
 

@@ -32,7 +32,7 @@ internal class Notifier(ServiceBusClient client) : INotifier
             };
 
             await sender.SendMessageAsync(message);
-            
+        
             _events.Remove(e);
         });
 

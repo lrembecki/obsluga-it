@@ -1,4 +1,4 @@
-﻿using lrembecki.core.storage.Dtos;
+﻿using lrembecki.core.storage;
 
 namespace lrembecki.core.settings.Dtos;
 

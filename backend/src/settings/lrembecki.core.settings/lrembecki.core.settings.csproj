@@ -1,32 +1,36 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
     <ProjectReference Include="..\..\storage\lrembecki.core.storage\lrembecki.core.storage.csproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>lrembecki.infrastructure</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>lrembecki.core.forms</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>lrembecki.presentation.settings</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>lrembecki.infrastructure.forms</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>lrembecki.infrastructure.settings</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>

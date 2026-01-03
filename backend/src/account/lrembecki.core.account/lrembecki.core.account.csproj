@@ -8,19 +8,13 @@
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>lrembecki.presentation.account</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>lrembecki.infrastructure</_Parameter1>
+      <_Parameter1>lrembecki.infrastructure.account</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
-    <ProjectReference Include="..\..\subscription\lrembecki.core.subscription\lrembecki.core.subscription.csproj" />
+    <ProjectReference Include="..\..\shared\lrembecki.core.shared\lrembecki.core.shared.csproj" />
   </ItemGroup>
 
 </Project>

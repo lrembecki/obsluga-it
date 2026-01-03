@@ -8,7 +8,7 @@ import { DataTableFormService } from './data-table-filter-form.service';
   selector: 'app-data-table-form-renderer',
   imports: [FormRenderer],
   template: `
-    <app-form-renderer [schema]="schema()" [form]="_service.form()!" />
+    <!-- <app-form-renderer [schema]="schema()" [form]="_service.form()!" /> -->
   `,
   styles: ``,
   providers: [provideFormService(DataTableFormService)],

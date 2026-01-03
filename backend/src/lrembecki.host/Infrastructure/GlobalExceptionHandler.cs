@@ -20,7 +20,7 @@ public static class GlobalExceptionHandler
                 await next();
 
                 await uow.CommitTransactionAsync();
-                
+            
                 await publisher.PublishAsync();
             }
             catch (Exception ex)
