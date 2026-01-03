@@ -1,4 +1,5 @@
-﻿using lrembecki.core.settings.Entities;
+﻿using lrembecki.core.settings.Emails;
+using lrembecki.core.settings.EmailTemplates;
 
 namespace lrembecki.core.settings.Notifications;
 

@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { featureRoute } from 'app/core/helpers/route.helper';
 
 export const facades = {
+  companies: await import('./companies/company.facade').then(
+    (e) => e.SettingsCompanyFacade,
+  ),
   contacts: await import('./contacts/contact.facade').then(
     (e) => e.ContactsFacade,
   ),
@@ -17,6 +20,9 @@ export const facades = {
 };
 
 export const routes: Routes = [
+  featureRoute('companies', 'Companies', ['Settings.Companies'], () =>
+    import('./companies/routes').then((e) => e.routes),
+  ),
   featureRoute('contacts', 'Contacts', ['Settings.Contacts'], () =>
     import('./contacts/routes').then((e) => e.routes),
   ),

@@ -47,6 +47,10 @@
     "NAME": "Subskrypcje",
     "LIST": "Lista"
   },
+  "COMPANIES": {
+    "NAME": "Firmy",
+    "LIST": "Lista"
+  },
   "SIGN_IN_TITLE": "Zaloguj się",
   "SIGN_IN_SUBTITLE": "Dostęp do konta",
   "SIGN_IN_DESCRIPTION": "Proszę zalogować się, aby przejść do pulpitu.",

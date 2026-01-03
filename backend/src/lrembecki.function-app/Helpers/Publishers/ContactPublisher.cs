@@ -1,6 +1,6 @@
 ﻿using lrembecki.core.Events;
 using lrembecki.core.Services;
-using lrembecki.core.settings.Services;
+using lrembecki.core.settings.Contacts;
 
 namespace lrembecki.function_app.Helpers.Publishers;
 

@@ -8,7 +8,8 @@ export type AdministrationPermissionType =
   | 'Security.Permissions'
   | 'Security.AccountSubscriptions'
   | 'Security.Accounts'
-  | 'Security.PermissionGroups';
+  | 'Security.PermissionGroups'
+  | 'Settings.Companies';
 
 export type TrotamundosPermissionType =
   | 'Trotamundos.Loyality-Program'

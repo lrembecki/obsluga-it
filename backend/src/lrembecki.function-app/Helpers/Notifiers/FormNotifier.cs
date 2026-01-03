@@ -4,8 +4,9 @@ using lrembecki.core.forms.FormDefinitions;
 using lrembecki.core.forms.Forms;
 using lrembecki.core.Helpers;
 using lrembecki.core.Services;
-using lrembecki.core.settings.Services;
 using lrembecki.core;
+using lrembecki.core.settings.Contacts;
+using lrembecki.core.settings.Emails;
 
 namespace lrembecki.function_app.Helpers.Notifiers;
 
@@ -55,7 +56,7 @@ internal sealed class FormNotifier(
         }
     }
 
-    private static List<string> GetRecipientList(List<core.settings.ViewModels.ContactVM> contactsVMs, Dictionary<string, IGrouping<string, string>> mapping, string mappingKey, List<Guid> contactIds)
+    private static List<string> GetRecipientList(List<ContactVM> contactsVMs, Dictionary<string, IGrouping<string, string>> mapping, string mappingKey, List<Guid> contactIds)
     {
         var to = contactIds
             .Select(e => contactsVMs.Find(y => y.Id == e))

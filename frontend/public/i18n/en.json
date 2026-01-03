@@ -47,6 +47,10 @@
     "NAME": "Subscriptions",
     "LIST": "List"
   },
+  "COMPANIES": {
+    "NAME": "Companies",
+    "LIST": "List"
+  },
   "SIGN_IN_TITLE": "Sign In",
   "SIGN_IN_SUBTITLE": "Access your account",
   "SIGN_IN_DESCRIPTION": "Please sign in to continue to your dashboard.",

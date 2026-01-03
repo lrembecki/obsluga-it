@@ -1,4 +1,4 @@
-using lrembecki.core.settings.Entities;
+using lrembecki.core.settings.EmailTemplates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

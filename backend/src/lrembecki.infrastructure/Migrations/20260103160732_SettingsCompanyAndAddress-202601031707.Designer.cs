@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260103160732_SettingsCompanyAndAddress-202601031707")]
+    partial class SettingsCompanyAndAddress202601031707
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,36 +54,6 @@ namespace lrembecki.infrastructure.Migrations
                     b.HasIndex("PermissionGroupId");
 
                     b.ToTable("AccountSubscriptionPermissionGroup", "app");
-                });
-
-            modelBuilder.Entity("CompanyEmailContact", b =>
-                {
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ContactId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CompanyId", "ContactId");
-
-                    b.HasIndex("ContactId");
-
-                    b.ToTable("CompanyEmailContact", "app");
-                });
-
-            modelBuilder.Entity("CompanyPhoneContact", b =>
-                {
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ContactId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CompanyId", "ContactId");
-
-                    b.HasIndex("ContactId");
-
-                    b.ToTable("CompanyPhoneContact", "app");
                 });
 
             modelBuilder.Entity("EmailTemplate_Contacts_Bcc", b =>
@@ -1208,36 +1181,6 @@ namespace lrembecki.infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("PermissionGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CompanyEmailContact", b =>
-                {
-                    b.HasOne("lrembecki.core.settings.Companies.CompanyEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.settings.Contacts.ContactEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CompanyPhoneContact", b =>
-                {
-                    b.HasOne("lrembecki.core.settings.Companies.CompanyEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.settings.Contacts.ContactEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

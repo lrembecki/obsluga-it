@@ -1,4 +1,4 @@
-using lrembecki.core.settings.Entities;
+using lrembecki.core.settings.Emails;
 using lrembecki.infrastructure.shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

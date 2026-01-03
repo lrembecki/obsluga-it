@@ -1,4 +1,4 @@
-﻿using lrembecki.core.settings.ViewModels;
+﻿using lrembecki.core.settings.Emails;
 using Microsoft.Extensions.Logging;
 
 using System.Net.Mail;
