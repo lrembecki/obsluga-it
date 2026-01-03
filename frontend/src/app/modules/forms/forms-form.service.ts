@@ -34,7 +34,7 @@ export class FormsFormService extends FormService<{
         new FormSchema<any>({
           fields: [
             new DateFormFieldSchema({
-              key: 'dateTime',
+              key: 'createdAt',
               label: 'Date & Time',
               disabled: true,
               withTime: true,
