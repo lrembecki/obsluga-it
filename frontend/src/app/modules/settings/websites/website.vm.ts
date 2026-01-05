@@ -16,6 +16,7 @@ export class WebsiteMetaVM {
 export class WebsiteVM {
   id: string = null!;
   title: string = null!;
+  url: string = null!;
   companyId: string = null!;
   meta: WebsiteMetaVM = new WebsiteMetaVM();
 

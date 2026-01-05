@@ -8,6 +8,7 @@ internal class WebsiteEntity : SubscriptionBaseEntity, IHasId<Guid>
 {
     public Guid Id { get; private set; }
     public string Title { get; private set; } = string.Empty;
+    public string Url { get; private set; } = string.Empty;
     public WebsiteMetaEntity Meta { get; private set; } = null!;
     public Guid CompanyId { get; private set; }
     public CompanyEntity Company { get; private set; } = null!;
@@ -29,9 +30,14 @@ internal class WebsiteEntity : SubscriptionBaseEntity, IHasId<Guid>
 
     public void Update(WebsiteDto model)
     {
+        // Properties
         Title = model.Title;
+        Url = model.Url;
+
+        // References
         CompanyId = model.CompanyId;
 
+        // Meta
         Meta ??= WebsiteMetaEntity.Create(Id, model.Meta);
         Meta.Update(model.Meta);
     }

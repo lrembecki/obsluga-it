@@ -3,6 +3,7 @@
 public record WebsiteVM(
     Guid Id,
     string Title,
+    string Url,
     Guid CompanyId,
     WebsiteMetaVM Meta
 )
@@ -14,6 +15,7 @@ public record WebsiteVM(
         return new WebsiteVM(
             entity.Id,
             entity.Title,
+            entity.Url,
             entity.CompanyId,
             WebsiteMetaVM.Map(entity.Meta)
         );

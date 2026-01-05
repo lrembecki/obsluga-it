@@ -40,6 +40,12 @@ export class SettingsWebsiteFormService extends FormService<WebsiteVM> {
               validators: [Validators.required],
               colClass: 'col-6',
             }),
+            new TextFormFieldSchema<WebsiteVM>({
+              label: 'Url',
+              key: 'url',
+              validators: [Validators.required],
+              colClass: 'col-6',
+            }),
             new SelectFormFieldSchema<WebsiteVM>({
               label: 'Company',
               key: 'companyId',
