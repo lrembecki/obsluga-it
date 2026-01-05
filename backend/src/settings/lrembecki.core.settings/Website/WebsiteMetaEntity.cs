@@ -27,6 +27,6 @@ internal class WebsiteMetaEntity
         Title = model.Title;
         Description = model.Description;
         Keywords = model.Keywords;
-        ImageId = model.ImageId;
+        ImageId = model.ImageId!.Value;
     }
 }

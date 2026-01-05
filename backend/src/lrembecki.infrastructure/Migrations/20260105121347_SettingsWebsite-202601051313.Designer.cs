@@ -12,8 +12,8 @@ using lrembecki.infrastructure;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    [Migration("20260105082650_SettingsWebsite-202601050926")]
-    partial class SettingsWebsite202601050926
+    [Migration("20260105121347_SettingsWebsite-202601051313")]
+    partial class SettingsWebsite202601051313
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -664,6 +664,9 @@ namespace lrembecki.infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -686,9 +689,39 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("SubscriptionId");
 
                     b.ToTable("Website", "app");
+                });
+
+            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteMetaEntity", b =>
+                {
+                    b.Property<Guid>("WebsiteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Keywords")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.HasKey("WebsiteId");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique();
+
+                    b.ToTable("WebsiteMeta", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.shared.Subscriptions.SubscriptionEntity", b =>
@@ -1630,53 +1663,36 @@ namespace lrembecki.infrastructure.Migrations
 
             modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteEntity", b =>
                 {
+                    b.HasOne("lrembecki.core.settings.Companies.CompanyEntity", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("lrembecki.core.shared.Subscriptions.SubscriptionEntity", null)
                         .WithMany()
                         .HasForeignKey("SubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("lrembecki.core.settings.Website.WebsiteMetaEntity", "Meta", b1 =>
-                        {
-                            b1.Property<Guid>("WebsiteId")
-                                .HasColumnType("uniqueidentifier");
+                    b.Navigation("Company");
+                });
 
-                            b1.Property<string>("Description")
-                                .HasMaxLength(1000)
-                                .HasColumnType("nvarchar(1000)");
-
-                            b1.Property<Guid>("ImageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Keywords")
-                                .HasMaxLength(500)
-                                .HasColumnType("nvarchar(500)");
-
-                            b1.Property<string>("Title")
-                                .HasMaxLength(1000)
-                                .HasColumnType("nvarchar(1000)");
-
-                            b1.HasKey("WebsiteId");
-
-                            b1.HasIndex("ImageId")
-                                .IsUnique();
-
-                            b1.ToTable("WebsiteMeta", "app");
-
-                            b1.HasOne("lrembecki.core.storage.StorageEntity", "Image")
-                                .WithOne()
-                                .HasForeignKey("lrembecki.core.settings.Website.WebsiteEntity.Meta#lrembecki.core.settings.Website.WebsiteMetaEntity", "ImageId")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired();
-
-                            b1.WithOwner()
-                                .HasForeignKey("WebsiteId");
-
-                            b1.Navigation("Image");
-                        });
-
-                    b.Navigation("Meta")
+            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteMetaEntity", b =>
+                {
+                    b.HasOne("lrembecki.core.storage.StorageEntity", "Image")
+                        .WithOne()
+                        .HasForeignKey("lrembecki.core.settings.Website.WebsiteMetaEntity", "ImageId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("lrembecki.core.settings.Website.WebsiteEntity", null)
+                        .WithOne("Meta")
+                        .HasForeignKey("lrembecki.core.settings.Website.WebsiteMetaEntity", "WebsiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("lrembecki.core.storage.FileStorageEntity", b =>
@@ -1868,6 +1884,12 @@ namespace lrembecki.infrastructure.Migrations
             modelBuilder.Entity("lrembecki.core.settings.EmailTemplates.EmailTemplateEntity", b =>
                 {
                     b.Navigation("Fields");
+                });
+
+            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteEntity", b =>
+                {
+                    b.Navigation("Meta")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("lrembecki.core.storage.StorageEntity", b =>

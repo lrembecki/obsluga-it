@@ -30,6 +30,7 @@ internal class WebsiteEntity : SubscriptionBaseEntity, IHasId<Guid>
     public void Update(WebsiteDto model)
     {
         Title = model.Title;
+        CompanyId = model.CompanyId;
 
         Meta ??= WebsiteMetaEntity.Create(Id, model.Meta);
         Meta.Update(model.Meta);

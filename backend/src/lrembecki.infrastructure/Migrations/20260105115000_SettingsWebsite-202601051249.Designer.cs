@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260105115000_SettingsWebsite-202601051249")]
+    partial class SettingsWebsite202601051249
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -653,72 +656,6 @@ namespace lrembecki.infrastructure.Migrations
                     b.HasIndex("SubscriptionId");
 
                     b.ToTable("Notification", "app");
-                });
-
-            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SubscriptionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UpdatedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("SubscriptionId");
-
-                    b.ToTable("Website", "app");
-                });
-
-            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteMetaEntity", b =>
-                {
-                    b.Property<Guid>("WebsiteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<Guid>("ImageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Keywords")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.HasKey("WebsiteId");
-
-                    b.HasIndex("ImageId")
-                        .IsUnique();
-
-                    b.ToTable("WebsiteMeta", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.shared.Subscriptions.SubscriptionEntity", b =>
@@ -1658,40 +1595,6 @@ namespace lrembecki.infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.settings.Companies.CompanyEntity", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.shared.Subscriptions.SubscriptionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteMetaEntity", b =>
-                {
-                    b.HasOne("lrembecki.core.storage.StorageEntity", "Image")
-                        .WithOne()
-                        .HasForeignKey("lrembecki.core.settings.Website.WebsiteMetaEntity", "ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("lrembecki.core.settings.Website.WebsiteEntity", null)
-                        .WithOne("Meta")
-                        .HasForeignKey("lrembecki.core.settings.Website.WebsiteMetaEntity", "WebsiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Image");
-                });
-
             modelBuilder.Entity("lrembecki.core.storage.FileStorageEntity", b =>
                 {
                     b.HasOne("lrembecki.core.storage.StorageEntity", null)
@@ -1881,12 +1784,6 @@ namespace lrembecki.infrastructure.Migrations
             modelBuilder.Entity("lrembecki.core.settings.EmailTemplates.EmailTemplateEntity", b =>
                 {
                     b.Navigation("Fields");
-                });
-
-            modelBuilder.Entity("lrembecki.core.settings.Website.WebsiteEntity", b =>
-                {
-                    b.Navigation("Meta")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("lrembecki.core.storage.StorageEntity", b =>

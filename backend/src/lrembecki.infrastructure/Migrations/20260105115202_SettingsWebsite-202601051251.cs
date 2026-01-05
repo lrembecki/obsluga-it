@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace lrembecki.infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class SettingsWebsite202601050926 : Migration
+    public partial class SettingsWebsite202601051251 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,7 @@ namespace lrembecki.infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -27,6 +28,13 @@ namespace lrembecki.infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Website", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Website_Company_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "app",
+                        principalTable: "Company",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Website_Subscription_SubscriptionId",
                         column: x => x.SubscriptionId,
@@ -65,6 +73,12 @@ namespace lrembecki.infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Website_CompanyId",
+                schema: "app",
+                table: "Website",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Website_SubscriptionId",

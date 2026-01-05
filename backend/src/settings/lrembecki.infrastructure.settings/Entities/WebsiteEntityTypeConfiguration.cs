@@ -23,20 +23,6 @@ internal class WebsiteEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
             .HasForeignKey(e => e.CompanyId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.OwnsOne(e => e.Meta, metaBuilder =>
-        {
-            metaBuilder.ToTable("WebsiteMeta");
-            metaBuilder.WithOwner().HasForeignKey(e => e.WebsiteId);
-
-            metaBuilder.Property(e => e.Keywords).IsRequired(false).HasMaxLength(500);
-            metaBuilder.Property(e => e.Description).IsRequired(false).HasMaxLength(1000);
-            metaBuilder.Property(e => e.Title).IsRequired(false).HasMaxLength(1000);
-
-            metaBuilder.HasOne(e => e.Image).WithOne()
-                .HasForeignKey<WebsiteMetaEntity>(e => e.ImageId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
         builder.Navigation(e => e.Meta).AutoInclude();
     }
 }
