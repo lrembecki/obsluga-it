@@ -1,6 +1,7 @@
 ﻿using lrembecki.core.settings.Companies;
 using lrembecki.core.settings.Contacts;
 using lrembecki.infrastructure.shared;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,6 +12,7 @@ internal class CompanyEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
     public override void Configure(EntityTypeBuilder<CompanyEntity> builder)
     {
         base.Configure(builder);
+
         builder.ToTable("Company");
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Name)

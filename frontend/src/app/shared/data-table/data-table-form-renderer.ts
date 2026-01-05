@@ -1,12 +1,10 @@
 import { Component, computed } from '@angular/core';
 import { BaseFormComponent } from '../forms/base-form.component';
-import { FormRenderer } from '../forms/form-renderer';
 import { provideFormService } from '../forms/form.service';
 import { DataTableFormService } from './data-table-filter-form.service';
 
 @Component({
   selector: 'app-data-table-form-renderer',
-  imports: [FormRenderer],
   template: `
     <!-- <app-form-renderer [schema]="schema()" [form]="_service.form()!" /> -->
   `,

@@ -8,6 +8,9 @@ export const facades = {
   contacts: await import('./contacts/contact.facade').then(
     (e) => e.ContactsFacade,
   ),
+  websites: await import('./websites/website.facade').then(
+    (e) => e.SettingsWebsiteFacade,
+  ),
   emailTemplates: await import('./email-templates/email-template.facade').then(
     (e) => e.SettingsEmailTemplateFacade,
   ),
@@ -25,6 +28,9 @@ export const routes: Routes = [
   ),
   featureRoute('contacts', 'Contacts', ['Settings.Contacts'], () =>
     import('./contacts/routes').then((e) => e.routes),
+  ),
+  featureRoute('websites', 'Websites', ['Settings.Websites'], () =>
+    import('./websites/routes').then((e) => e.routes),
   ),
   featureRoute('emails', 'Emails', ['Settings.Emails'], () =>
     import('./emails/routes').then((e) => e.routes),

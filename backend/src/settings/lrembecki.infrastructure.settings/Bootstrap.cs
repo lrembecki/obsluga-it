@@ -4,6 +4,7 @@ using lrembecki.core.settings.Contacts;
 using lrembecki.core.settings.Emails;
 using lrembecki.core.settings.EmailTemplates;
 using lrembecki.core.settings.Ftps;
+using lrembecki.core.settings.Website;
 using lrembecki.infrastructure.shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,7 @@ public static class BootstrapSettings
         services.AddScoped<IContactService, ContactService>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+        services.AddScoped<IWebsiteService, WebsiteService>();
 
         return services;
     }
@@ -34,6 +36,7 @@ public static class BootstrapSettings
         group.MapCrud<IEmailTemplateService, EmailTemplateDto, EmailTemplateVM>("email-templates");
         group.MapCrud<IEmailService, EmailDto, EmailWithPasswordVM>("emails");
         group.MapCrud<IFtpService, FtpDto, FtpVM>("ftps");
+        group.MapCrud<IWebsiteService, WebsiteDto, WebsiteVM>("websites");
 
         return app;
     }

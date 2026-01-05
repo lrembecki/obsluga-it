@@ -2,7 +2,8 @@ export type SettingsPermissionType =
   | 'Settings.Contacts'
   | 'Settings.Emails'
   | 'Settings.FormDefinitions'
-  | 'Settings.EmailTemplates';
+  | 'Settings.EmailTemplates'
+  | 'Settings.Websites';
 
 export type AdministrationPermissionType =
   | 'Security.Permissions'

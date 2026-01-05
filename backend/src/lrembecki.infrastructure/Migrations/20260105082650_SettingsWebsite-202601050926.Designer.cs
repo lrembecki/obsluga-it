@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260105082650_SettingsWebsite-202601050926")]
+    partial class SettingsWebsite202601050926
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1662,7 +1665,7 @@ namespace lrembecki.infrastructure.Migrations
 
                             b1.HasOne("lrembecki.core.storage.StorageEntity", "Image")
                                 .WithOne()
-                                .HasForeignKey("lrembecki.core.settings.Website.WebsiteEntity.Meta#lrembecki.core.settings.Website.WebsiteEntity.Meta#lrembecki.core.settings.Website.WebsiteMetaEntity", "ImageId")
+                                .HasForeignKey("lrembecki.core.settings.Website.WebsiteEntity.Meta#lrembecki.core.settings.Website.WebsiteMetaEntity", "ImageId")
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired();
 
