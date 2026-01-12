@@ -1,7 +1,4 @@
-﻿using lrembecki.core.storage;
-using lrembecki.core.trotamundos.Common;
-
-namespace lrembecki.core.trotamundos.Pages.AboutUs;
+﻿namespace lrembecki.core.trotamundos.Pages.AboutUs;
 
 internal class AboutUsItemEntity
 {

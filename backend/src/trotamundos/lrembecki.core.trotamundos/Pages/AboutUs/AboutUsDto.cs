@@ -9,4 +9,5 @@ public record AboutUsDto
     public Guid ImageId { get; init; }
     public StorageDto Image { get; init; } = null!;
     public List<AboutUsItemDto> Items { get; init; } = [];
+    public List<AboutUsPersonDto> Persons { get; init; } = [];
 }

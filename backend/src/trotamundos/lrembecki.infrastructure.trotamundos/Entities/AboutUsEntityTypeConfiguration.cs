@@ -33,5 +33,6 @@ internal class AboutUsEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
 
         builder.Navigation(e => e.Image).AutoInclude();
         builder.Navigation(e => e.Items).AutoInclude();
+        builder.Navigation(e => e.Persons).AutoInclude();
     }
 }

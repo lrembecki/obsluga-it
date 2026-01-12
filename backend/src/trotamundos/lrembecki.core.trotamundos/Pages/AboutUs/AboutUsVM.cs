@@ -7,7 +7,8 @@ public record AboutUsVM(
     string Description,
     Guid ImageId,
     StorageVM Image,
-    List<AboutUsItemVM> Items
+    List<AboutUsItemVM> Items,
+    List<AboutUsPersonVM> Persons
 )
 {
     internal static AboutUsVM Map(AboutUsEntity entity)
@@ -19,7 +20,8 @@ public record AboutUsVM(
             entity.Description,
             entity.ImageId,
             StorageVM.Map(entity.Image),
-            [.. entity.Items.Select(AboutUsItemVM.Map)]
+            [.. entity.Items.Select(AboutUsItemVM.Map)],
+            [.. entity.Persons.Select(AboutUsPersonVM.Map)]
         );
     }
 
@@ -28,6 +30,7 @@ public record AboutUsVM(
         string.Empty,
         new Guid(),
         null!,
+        [],
         []
     );
 
