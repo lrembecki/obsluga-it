@@ -1,7 +1,7 @@
-import { ApiFacade } from '@core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@core/interfaces/facade.interface';
 import { EmailVM } from './email.vm';
 
-export class SettingsEmailFacade extends ApiFacade<EmailVM> {
+export class SettingsEmailFacade extends ArrayApiFacade<EmailVM> {
   constructor() {
     super([], 'settings/emails');
   }

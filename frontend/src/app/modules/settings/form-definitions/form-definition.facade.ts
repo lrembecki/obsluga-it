@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import {
   ModuleItem,
   NavbarService,
@@ -7,7 +7,7 @@ import {
 } from '@app/core/services/navbar.service';
 import { FormDefinitionVM } from './form-definition.vm';
 
-export class SettingsFormDefinitionFacade extends ApiFacade<FormDefinitionVM> {
+export class SettingsFormDefinitionFacade extends ArrayApiFacade<FormDefinitionVM> {
   private readonly _navbar = inject(NavbarService);
 
   constructor() {

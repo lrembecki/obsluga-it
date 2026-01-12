@@ -1,7 +1,7 @@
-import { ApiFacade } from '@core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@core/interfaces/facade.interface';
 import { CompanyVM } from './company.vm';
 
-export class SettingsCompanyFacade extends ApiFacade<CompanyVM> {
+export class SettingsCompanyFacade extends ArrayApiFacade<CompanyVM> {
   constructor() {
     super([], 'settings/companies');
   }

@@ -684,6 +684,10 @@ namespace lrembecki.infrastructure.Migrations
                     b.Property<Guid?>("UpdatedById")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
@@ -1015,6 +1019,76 @@ namespace lrembecki.infrastructure.Migrations
                     b.HasIndex("TripEntityId");
 
                     b.ToTable("TrotamundosLoyalityProgram", "app");
+                });
+
+            modelBuilder.Entity("lrembecki.core.trotamundos.Pages.AboutUs.AboutUsEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("TrotamundosPagesAboutUs", "app");
+                });
+
+            modelBuilder.Entity("lrembecki.core.trotamundos.Pages.AboutUs.AboutUsItemEntity", b =>
+                {
+                    b.Property<Guid>("AboutUsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("AboutUsId", "Order");
+
+                    b.ToTable("TrotamundosPagesAboutUsItem", "app");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Trips.TripAgendaEntity", b =>
@@ -1775,6 +1849,32 @@ namespace lrembecki.infrastructure.Migrations
                     b.Navigation("Image");
                 });
 
+            modelBuilder.Entity("lrembecki.core.trotamundos.Pages.AboutUs.AboutUsEntity", b =>
+                {
+                    b.HasOne("lrembecki.core.storage.StorageEntity", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("lrembecki.core.shared.Subscriptions.SubscriptionEntity", null)
+                        .WithMany()
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("lrembecki.core.trotamundos.Pages.AboutUs.AboutUsItemEntity", b =>
+                {
+                    b.HasOne("lrembecki.core.trotamundos.Pages.AboutUs.AboutUsEntity", null)
+                        .WithMany("Items")
+                        .HasForeignKey("AboutUsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("lrembecki.core.trotamundos.Trips.TripAgendaEntity", b =>
                 {
                     b.HasOne("lrembecki.core.trotamundos.Trips.TripEntity", null)
@@ -1896,6 +1996,11 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.Navigation("Image")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("lrembecki.core.trotamundos.Pages.AboutUs.AboutUsEntity", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("lrembecki.core.trotamundos.Trips.TripEntity", b =>

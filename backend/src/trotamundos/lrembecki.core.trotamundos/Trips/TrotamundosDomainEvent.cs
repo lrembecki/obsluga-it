@@ -14,7 +14,7 @@ public record TrotamundosDomainEvent(
         UtcNow
 )
 {
-    public static DomainEvent Create<T>(T entity) where T : BaseEntity, IHasId<Guid>
+    new public static DomainEvent Create<T>(T entity) where T : BaseEntity, IHasId<Guid>
         => new TrotamundosDomainEvent(
             entity.Id, 
             typeof(T).Name, 

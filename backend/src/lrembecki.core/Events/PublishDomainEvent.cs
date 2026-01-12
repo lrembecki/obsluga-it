@@ -1,3 +1,5 @@
+using lrembecki.core.Markers;
+
 namespace lrembecki.core.Events;
 
 public record PublishDomainEvent(
@@ -11,4 +13,17 @@ public record PublishDomainEvent(
     EventType, 
     ExternalId, 
     OccurredOn
-);
+)
+{
+    public static PublishDomainEvent Create<T>(
+        T entity
+    ) where T : IHasId<Guid>
+    {
+        return new PublishDomainEvent(
+            Guid.NewGuid(),
+            typeof(T).Name,
+            entity.Id,
+            DateTime.UtcNow
+        );
+    }
+}

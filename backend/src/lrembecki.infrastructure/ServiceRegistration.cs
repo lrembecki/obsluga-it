@@ -57,6 +57,7 @@ public static class ServiceRegistration
                 o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
             });
 
+        builder.Services.AddScoped<ISender, Sender>();
         builder.Services.AddSingleton<IJwtTokenFactory, JwtTokenFactory>();
         builder.Services.AddScoped<ISessionAccessor, SessionAccessor>();
         builder.Services.AddScoped<IDateProvider, DateProvider>();

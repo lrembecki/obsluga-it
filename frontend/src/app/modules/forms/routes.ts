@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Routes } from '@angular/router';
-import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 import { provideFormService } from '@app/shared/forms/form.service';
 import { SettingsFormDefinitionFacade } from '../settings/form-definitions/form-definition.facade';
@@ -12,7 +12,11 @@ import { FormSessionService } from './forms.session';
 export const routes: Routes = [
   {
     path: '',
-    providers: [provideApiFacade(FormsFacade), FormSessionService, FormsFacade],
+    providers: [
+      provideArrayApiFacade(FormsFacade),
+      FormSessionService,
+      FormsFacade,
+    ],
     children: [
       {
         path: ':formDefinitionId',

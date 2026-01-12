@@ -5,10 +5,10 @@ import {
   FormSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { ContactModel } from './contact.model';
 
-export class SettingsContactFormService extends FormService<ContactModel> {
+export class SettingsContactFormService extends ArrayFormService<ContactModel> {
   constructor() {
     super();
 

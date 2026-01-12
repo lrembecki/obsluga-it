@@ -1,21 +1,26 @@
-import {
-  computed,
-  EnvironmentProviders,
-  inject,
-  linkedSignal,
-  Provider,
-  signal,
-} from '@angular/core';
+import { EnvironmentProviders, inject, Provider, signal } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Route } from '@angular/router';
-import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { facadeScope } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '@app/shared/forms';
 import { Subscription } from 'rxjs';
+import {
+  ArrayFormTemplateModelProvider,
+  FormTemplateModelProvider,
+} from './form-model.provider';
 
 export function provideFormService(
   provider: any,
 ): (Provider | EnvironmentProviders)[] {
-  return [provider, { provide: FormService, useExisting: provider }];
+  return [
+    provider,
+    { provide: ArrayFormService, useExisting: provider },
+    {
+      provide: FormTemplateModelProvider,
+      useExisting: ArrayFormTemplateModelProvider,
+    },
+    ArrayFormTemplateModelProvider,
+  ];
 }
 
 export function createFormRoute(provider: any): Route {
@@ -27,25 +32,21 @@ export function createFormRoute(provider: any): Route {
   };
 }
 
-export abstract class FormService<T> {
+export abstract class ArrayFormService<T> {
+  private readonly _modelProvider = inject(FormTemplateModelProvider<T>);
   protected readonly _schema = signal<FormSchema<T>>(null!);
   protected readonly _returnRoute = signal<string[]>(['../list']);
   public readonly _onChangeSubscriptions = new Map<string, Subscription>();
 
   public readonly schema = this._schema.asReadonly();
   public readonly returnRoute = this._returnRoute.asReadonly();
-  public readonly facade = inject(ApiFacade);
-  public readonly id = signal<string>('create');
-  public readonly model = linkedSignal(() =>
-    this.facade.data().find((e) => e.id === this.id()),
-  );
+  public readonly facade = inject(facadeScope);
+  public readonly model = this._modelProvider.model.asReadonly();
+  public readonly mode = this._modelProvider.model.asReadonly();
   public readonly isLoading = this.facade.loading;
-  public readonly mode = computed(() =>
-    this.id() === 'create' ? 'create' : 'edit',
-  );
   public buildFormControls(formGroup: FormGroup, model: any) {
     // Populate FormArray controls for collection fields before patching values
-    this.schema().fields.forEach((field: any) => {
+    (this.schema()?.fields || []).forEach((field: any) => {
       if (field.type === 'collection') {
         const value = model?.[field.key as string] ?? ([] as any[]);
         const fa = formGroup.get(field.key as string) as any;

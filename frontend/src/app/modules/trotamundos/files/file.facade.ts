@@ -1,7 +1,7 @@
-import { ApiFacade } from 'app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from 'app/core/interfaces/facade.interface';
 import { FileVM } from './file.vm';
 
-export class TrotamundosFileFacade extends ApiFacade<FileVM> {
+export class TrotamundosFileFacade extends ArrayApiFacade<FileVM> {
   constructor() {
     super([], 'trotamundos/files');
   }

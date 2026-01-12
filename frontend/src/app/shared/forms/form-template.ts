@@ -8,6 +8,7 @@ import { ButtonSubmit } from '../ui/button/button-submit';
 import { LoadingComponent } from '../ui/loading/loading.component';
 import { UiPanel } from '../ui/ui-panel';
 import { BaseFormComponent } from './base-form.component';
+import { FormTemplateModelProvider } from './form-model.provider';
 import { FormRenderer } from './form-renderer';
 
 @Component({
@@ -66,6 +67,7 @@ import { FormRenderer } from './form-renderer';
   `,
 })
 export class FormTemplate extends BaseFormComponent<any> {
+  private readonly _modelProvider = inject(FormTemplateModelProvider);
   readonly schema = computed(() => this._service.schema());
   readonly #returnRoute = computed(() => this._service.returnRoute());
 
@@ -75,7 +77,9 @@ export class FormTemplate extends BaseFormComponent<any> {
 
   constructor() {
     super();
-    effect(() => this._service.id.set(this.routeParams()!['id'] as string));
+    effect(() =>
+      this._modelProvider.id.set(this.routeParams()!['id'] as string),
+    );
   }
 
   async submit(data: any): Promise<void> {
@@ -90,15 +94,18 @@ export class FormTemplate extends BaseFormComponent<any> {
     Object.assign(model, data);
 
     const response =
-      this._service.id() === 'create'
+      this._modelProvider.mode() === 'create'
         ? await this._service.facade.create('', model)
-        : await this._service.facade.update(this._service.id(), model);
+        : await this._service.facade.update(
+            this._modelProvider.id() ?? '',
+            model,
+          );
 
     return response.success;
   }
 
   protected async remove(): Promise<void> {
-    await this._service.facade.delete(this._service.id());
+    await this._service.facade.delete(this._modelProvider.id());
     this.returnToList();
   }
 

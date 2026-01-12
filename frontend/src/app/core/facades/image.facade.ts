@@ -1,10 +1,10 @@
 import { Injectable, effect, inject } from '@angular/core';
-import { ApiFacade } from '../interfaces/facade.interface';
+import { ArrayApiFacade } from '../interfaces/facade.interface';
 import { ImageModel } from '../models/image.model';
 import { ImageCacheService } from '../services/image-cache.service';
 
 @Injectable({ providedIn: 'root' })
-export class ImageFacade extends ApiFacade<ImageModel> {
+export class ImageFacade extends ArrayApiFacade<ImageModel> {
   private readonly _imageCache = inject(ImageCacheService);
 
   constructor() {

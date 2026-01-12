@@ -1,17 +1,19 @@
 import { EnvironmentProviders, Provider, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiFacade } from '@core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@core/interfaces/facade.interface';
 import { SecurityPermissionGroupFacade } from '../permission-groups/permission-group.provider';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
 import { AccountSubscriptionVM } from './account-subscription.vm';
 
-export class SecuritySubscriptionAccountFacade extends ApiFacade<AccountSubscriptionVM> {
+export class SecuritySubscriptionAccountFacade extends ArrayApiFacade<AccountSubscriptionVM> {
   constructor() {
     super([], 'account/subscription-accounts');
   }
 
-  protected override withData(data: AccountSubscriptionVM[]): AccountSubscriptionVM[] {
+  protected override withData(
+    data: AccountSubscriptionVM[],
+  ): AccountSubscriptionVM[] {
     // Sort: default first, then active, then by email then subscription label for stability
     return [...data].sort((a, b) => {
       if (a.isDefault !== b.isDefault) return a.isDefault ? -1 : 1;
@@ -23,7 +25,10 @@ export class SecuritySubscriptionAccountFacade extends ApiFacade<AccountSubscrip
   }
 }
 
-export function provideSecuritySubscriptionAccounts(): (Provider | EnvironmentProviders)[] {
+export function provideSecuritySubscriptionAccounts(): (
+  | Provider
+  | EnvironmentProviders
+)[] {
   return [
     SecuritySubscriptionAccountFacade,
     SecurityPermissionGroupFacade,

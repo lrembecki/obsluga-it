@@ -1,16 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { computed, signal } from '@angular/core';
-import { Facade } from '../interfaces/facade.interface';
+import { ArrayFacade } from '../interfaces/facade.interface';
 
 export class CacheService<T> {
   private readonly _data = signal<CacheItem<T>[]>([]);
-  private readonly facade: Facade<T>;
+  private readonly facade: ArrayFacade<T>;
   private readonly identityCallback: (record: T) => string;
 
-  constructor(
-    facade: Facade<T>,
-    identityCallback: (record: T) => string,
-  ) {
+  constructor(facade: ArrayFacade<T>, identityCallback: (record: T) => string) {
     this.facade = facade;
     this.identityCallback = identityCallback;
   }
@@ -21,7 +18,7 @@ export class CacheService<T> {
         new CacheItem<T>({
           isDeleted: false,
           identity: this.identityCallback(e),
-          item: JSON.parse(JSON.stringify(e)),
+          item: structuredClone(e),
         }),
     );
     const data = this._data();

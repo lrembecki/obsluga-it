@@ -1,7 +1,7 @@
-import { ApiFacade } from 'app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from 'app/core/interfaces/facade.interface';
 import { HighlightVM } from './highlight.vm';
 
-export class TrotamundosHighlightFacade extends ApiFacade<HighlightVM> {
+export class TrotamundosHighlightFacade extends ArrayApiFacade<HighlightVM> {
   constructor() {
     super([], 'trotamundos/highlights');
   }

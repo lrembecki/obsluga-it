@@ -6,11 +6,11 @@ import {
   MultiSelectFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { SecurityPermissionGroupFacade } from '../permission-groups/permission-group.provider';
 import { AccountSubscriptionVM } from './account-subscription.vm';
 
-export class AdministrationAccountSubscriptionFormService extends FormService<AccountSubscriptionVM> {
+export class AdministrationAccountSubscriptionFormService extends ArrayFormService<AccountSubscriptionVM> {
   private readonly _facades = {
     permissionGroups: inject(SecurityPermissionGroupFacade),
   };

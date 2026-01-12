@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import {
   computed,
   EnvironmentProviders,
   inject,
+  InjectionToken,
   Provider,
   signal,
   Signal,
@@ -11,23 +13,58 @@ import { Subject } from 'rxjs';
 import { ServiceCallResult } from '../models/service-call-result.model';
 import { ApiService } from '../services/api.service';
 
-export interface Facade<T> {
-  data: Signal<T[]>;
+export interface IDataFacade<T> {
+  data: Signal<T>;
+}
+export interface IArrayFacade<T> extends IDataFacade<T[]> {}
+export interface IPopulateFacade {
   loading: Signal<boolean>;
   initialized: Signal<boolean>;
-
   initialize(): Promise<void>;
   populate(): Promise<this>;
 }
+export interface IEditableFacade {
+  saving: Signal<boolean>;
+  deleting: Signal<boolean>;
 
-export function provideApiFacade(
-  provider: any,
-): (Provider | EnvironmentProviders)[] {
-  return [{ provide: ApiFacade, useExisting: provider }];
+  update(endpoint: string, model: unknown): Promise<ServiceCallResult<unknown>>;
+  create(endpoint: string, model: unknown): Promise<ServiceCallResult<unknown>>;
+  delete(endpoint: string): Promise<ServiceCallResult<unknown>>;
 }
 
-export abstract class ApiFacade<T> implements Facade<T> {
-  protected readonly _data: WritableSignal<T[]> = null!;
+export interface Facade extends IPopulateFacade, IEditableFacade {}
+export interface ArrayFacade<T> extends IArrayFacade<T>, Facade {}
+export interface ObjectFacade<T> extends IDataFacade<T>, Facade {}
+
+export function provideArrayApiFacade(
+  provider: any,
+): (Provider | EnvironmentProviders)[] {
+  return [
+    { provide: ArrayApiFacade, useExisting: provider },
+    { provide: populateFacadeScope, useExisting: provider },
+    { provide: facadeScope, useExisting: provider },
+  ];
+}
+
+export const populateFacadeScope = new InjectionToken<IPopulateFacade>(
+  'populateFacadeScope',
+);
+export const facadeScope = new InjectionToken<Facade>('facadeScope');
+
+export function provideObjectApiFacade(
+  provider: any,
+): (Provider | EnvironmentProviders)[] {
+  return [
+    { provide: ObjectApiFacade, useExisting: provider },
+    { provide: populateFacadeScope, useExisting: provider },
+    { provide: facadeScope, useExisting: provider },
+  ];
+}
+
+export abstract class ObjectApiFacade<T>
+  implements ObjectFacade<T>, IPopulateFacade
+{
+  protected readonly _data: WritableSignal<T> = null!;
   protected readonly _initialized = signal(false);
   protected readonly _requiresInitialization = signal(true);
   protected readonly _api = inject(ApiService);
@@ -48,13 +85,9 @@ export abstract class ApiFacade<T> implements Facade<T> {
     return this._onLoaded.asObservable();
   }
 
-  constructor(defaultData: T[], endpoint: string) {
+  constructor(defaultData: T, endpoint: string) {
     this._endpoint = endpoint;
-    this._data = signal<T[]>(defaultData);
-  }
-
-  getById(id: string): T | null {
-    return this.data().find((e) => (e as any).id === id) ?? null;
+    this._data = signal<T>(defaultData);
   }
 
   async initialize(): Promise<void> {
@@ -81,7 +114,7 @@ export abstract class ApiFacade<T> implements Facade<T> {
     console.log({ headers, filter });
 
     this._loading.set(true);
-    const response = await this._api.get<T[]>(this._endpoint, {}, headers);
+    const response = await this._api.get<T>(this._endpoint, {}, headers);
     this._loading.set(false);
 
     if (response.success && response.data) {
@@ -142,7 +175,7 @@ export abstract class ApiFacade<T> implements Facade<T> {
     return response;
   }
 
-  protected withData(data: T[]) {
+  protected withData(data: T) {
     return data;
   }
 
@@ -163,5 +196,11 @@ export abstract class ApiFacade<T> implements Facade<T> {
       this._filter.set(filter);
       await this.populate();
     }
+  }
+}
+
+export abstract class ArrayApiFacade<T> extends ObjectApiFacade<T[]> {
+  public getById(id: string): T | null {
+    return this.data().find((e) => (e as any).id === id) ?? null;
   }
 }

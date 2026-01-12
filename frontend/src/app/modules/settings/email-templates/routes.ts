@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 import { provideFormService } from '@app/shared/forms/form.service';
 import { ContactsFacade } from '../contacts/contact.facade';
@@ -12,7 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     providers: [
-      provideApiFacade(SettingsEmailTemplateFacade),
+      provideArrayApiFacade(SettingsEmailTemplateFacade),
       provideDataTableService(SettingsEmailTemplateDataTableService),
     ],
     resolve: {
@@ -28,6 +28,9 @@ export const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       {
         path: 'list',
+        providers: [
+          provideDataTableService(SettingsEmailTemplateDataTableService),
+        ],
         loadComponent: () =>
           import('app/shared/data-table/data-table.template').then(
             (m) => m.DataTableTemplate,

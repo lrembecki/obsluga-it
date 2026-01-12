@@ -8,11 +8,11 @@ import {
   TextareaFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { SettingsCompanyFacade } from '../companies/company.facade';
 import { WebsiteMetaVM, WebsiteVM } from './website.vm';
 
-export class SettingsWebsiteFormService extends FormService<WebsiteVM> {
+export class SettingsWebsiteFormService extends ArrayFormService<WebsiteVM> {
   private readonly _facades = {
     companies: inject(SettingsCompanyFacade),
   };
@@ -64,15 +64,16 @@ export class SettingsWebsiteFormService extends FormService<WebsiteVM> {
                   validators: [Validators.required],
                   colClass: 'col-6',
                 }),
-                new TextFormFieldSchema<WebsiteMetaVM>({
+                new TextareaFormFieldSchema<WebsiteMetaVM>({
                   label: 'Keywords',
                   key: 'keywords',
-                  colClass: 'col-6',
+                  rows: 5,
+                  colClass: 'col-12',
                 }),
                 new TextareaFormFieldSchema<WebsiteMetaVM>({
                   label: 'Description',
                   key: 'description',
-                  rows: 5,
+                  rows: 7,
                   colClass: 'col-12',
                 }),
                 new ImageFormFieldSchema<WebsiteMetaVM>({

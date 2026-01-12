@@ -7,10 +7,10 @@ import {
   StringCollectionFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { ContactsFacade } from '../contacts/contact.facade';
 import { EmailTemplateVM } from './email-template.vm';
-export class SettingsEmailTemplateFormService extends FormService<EmailTemplateVM> {
+export class SettingsEmailTemplateFormService extends ArrayFormService<EmailTemplateVM> {
   private readonly _facades = {
     contacts: inject(ContactsFacade),
   };

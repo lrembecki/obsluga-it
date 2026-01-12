@@ -7,11 +7,11 @@ import {
   TextareaFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { FormFieldDefinitionVM } from '../settings/form-definitions/form-definition.vm';
 import { FormSessionService } from './forms.session';
 
-export class FormsFormService extends FormService<{
+export class FormsFormService extends ArrayFormService<{
   id: string;
   name: string;
 }> {

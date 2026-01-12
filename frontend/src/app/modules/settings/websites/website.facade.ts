@@ -1,7 +1,7 @@
-import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { WebsiteVM } from './website.vm';
 
-export class SettingsWebsiteFacade extends ApiFacade<WebsiteVM> {
+export class SettingsWebsiteFacade extends ArrayApiFacade<WebsiteVM> {
   constructor() {
     super([], 'settings/websites');
   }

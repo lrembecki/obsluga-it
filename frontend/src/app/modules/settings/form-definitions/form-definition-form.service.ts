@@ -8,7 +8,7 @@ import {
   SelectFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { SettingsEmailTemplateFacade } from '../email-templates/email-template.facade';
 import { EmailTemplateVM } from '../email-templates/email-template.vm';
 import { SettingsEmailFacade } from '../emails/email.facade';
@@ -33,7 +33,7 @@ const fieldTypeOptions: Array<{
   { label: 'Radio', value: 'radio' },
 ];
 
-export class SettingsFormDefinitionFormService extends FormService<FormDefinitionVM> {
+export class SettingsFormDefinitionFormService extends ArrayFormService<FormDefinitionVM> {
   private readonly facades = {
     emailTemplates: inject(SettingsEmailTemplateFacade),
     emails: inject(SettingsEmailFacade),

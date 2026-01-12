@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 import { provideFormService } from '@app/shared/forms/form.service';
 import { TrotamundosAdvantageFacade } from '../advantages/advantage.facade';
@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     path: '',
     providers: [
-      provideApiFacade(TrotamundosTripFacade),
+      provideArrayApiFacade(TrotamundosTripFacade),
       provideDataTableService(TrotamundosTripDataTableService),
       provideFormService(TrotamundosTripFormService),
     ],

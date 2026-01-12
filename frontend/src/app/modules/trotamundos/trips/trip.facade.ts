@@ -1,7 +1,7 @@
-import { ApiFacade } from '@core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@core/interfaces/facade.interface';
 import { TripVM } from './trip.vm';
 
-export class TrotamundosTripFacade extends ApiFacade<TripVM> {
+export class TrotamundosTripFacade extends ArrayApiFacade<TripVM> {
   constructor() {
     super([], 'trotamundos/trips');
   }

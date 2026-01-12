@@ -15,12 +15,12 @@ export class ApiService {
   public getObservable<T>(
     endpoint: string,
     params: { [key: string]: string } = {},
-    headers: Record<string, unknown> = {},
+    headers: Record<string, string> = {},
   ): Observable<ServiceCallResult<T>> {
     return this._http
       .get<ServiceCallResult<T>>(`${this._apiUrl}/${endpoint}`, {
         params,
-        headers: JSON.parse(JSON.stringify(headers)),
+        headers: structuredClone(headers),
       })
       .pipe(this.handleException());
   }
@@ -54,7 +54,7 @@ export class ApiService {
   public async get<T>(
     endpoint: string,
     params: { [key: string]: string } = {},
-    headers: Record<string, unknown> = {},
+    headers: Record<string, string> = {},
   ): Promise<ServiceCallResult<T>> {
     let result: ServiceCallResult<T> = {
       success: false,

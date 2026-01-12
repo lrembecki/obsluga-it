@@ -1,8 +1,10 @@
 import { effect, inject } from '@angular/core';
-import { FormService } from '../forms/form.service';
+import { ArrayFormService } from '../forms/form.service';
 import { DataTableService } from './data-table.service';
 
-export class DataTableFormService extends FormService<Record<string, any>> {
+export class DataTableFormService extends ArrayFormService<
+  Record<string, any>
+> {
   private readonly _dataTableService = inject(DataTableService);
 
   constructor() {

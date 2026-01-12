@@ -1,6 +1,6 @@
 import { Directive, inject, input, output } from '@angular/core';
 import { Confirm } from 'app/core/directives/confirm';
-import { ApiFacade } from 'app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from 'app/core/interfaces/facade.interface';
 import { TranslationService } from 'app/core/services/translation.service';
 import { Button } from './button';
 
@@ -18,8 +18,8 @@ export class ButtonDelete {
   private readonly _confirm = inject(Confirm);
   private readonly _translation = inject(TranslationService);
 
-  public readonly facade = input<{
-    facade: ApiFacade<unknown>;
+  public readonly ArrayFacade = input<{
+    ArrayFacade: ArrayApiFacade<unknown>;
     identity: string;
   }>(null!);
 

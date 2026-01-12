@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 
-import { provideApiFacade } from '@app/core/interfaces/facade.interface';
+import { provideArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideFormService } from '@app/shared/forms/form.service';
 import { TrotamundosAdvantageDataTableService } from './advantage-data-table.service';
 import { TrotamundosAdvantageFormService } from './advantage-form.service';
@@ -12,7 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     providers: [
-      provideApiFacade(TrotamundosAdvantageFacade),
+      provideArrayApiFacade(TrotamundosAdvantageFacade),
       provideDataTableService(TrotamundosAdvantageDataTableService),
       provideFormService(TrotamundosAdvantageFormService),
     ],

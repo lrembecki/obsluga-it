@@ -1,7 +1,7 @@
-import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormVM } from './form.vm';
 
-export class FormsFacade extends ApiFacade<FormVM> {
+export class FormsFacade extends ArrayApiFacade<FormVM> {
   constructor() {
     super([], 'forms/forms');
 

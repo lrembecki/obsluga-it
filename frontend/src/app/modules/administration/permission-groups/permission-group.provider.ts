@@ -1,11 +1,11 @@
 import { EnvironmentProviders, inject, Provider } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiFacade } from 'app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from 'app/core/interfaces/facade.interface';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
 import { PermissionGroupVM } from './permission-group.vm';
 
-export class SecurityPermissionGroupFacade extends ApiFacade<PermissionGroupVM> {
+export class SecurityPermissionGroupFacade extends ArrayApiFacade<PermissionGroupVM> {
   constructor() {
     super([], 'account/permission-groups');
   }
@@ -15,7 +15,10 @@ export class SecurityPermissionGroupFacade extends ApiFacade<PermissionGroupVM> 
   }
 }
 
-export function provideSecurityPermissionGroups(): (Provider | EnvironmentProviders)[] {
+export function provideSecurityPermissionGroups(): (
+  | Provider
+  | EnvironmentProviders
+)[] {
   return [SecurityPermissionGroupFacade, SecurityPermissionFacade];
 }
 

@@ -12,14 +12,14 @@ import {
   TextareaFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { TrotamundosAdvantageFacade } from '../advantages/advantage.facade';
 import { TrotamundosHighlightFacade } from '../highlights/highlight.facade';
 import { StorageVM } from '../loyality-program/loyality-program.vm';
 import { TrotamundosTripFacade } from './trip.facade';
 import { TripVM } from './trip.vm';
 
-export class TrotamundosTripFormService extends FormService<TripVM> {
+export class TrotamundosTripFormService extends ArrayFormService<TripVM> {
   private readonly _facades = {
     trips: inject(TrotamundosTripFacade),
     advantages: inject(TrotamundosAdvantageFacade),

@@ -8,11 +8,11 @@ import {
   TextFormFieldSchema,
   TextareaFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { ContactsFacade } from '../contacts/contact.facade';
 import { AddressVM, CompanyParameterVM, CompanyVM } from './company.vm';
 
-export class SettingsCompanyFormService extends FormService<CompanyVM> {
+export class SettingsCompanyFormService extends ArrayFormService<CompanyVM> {
   private readonly _facades = {
     contacts: inject(ContactsFacade),
   };

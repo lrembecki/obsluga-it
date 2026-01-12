@@ -4,10 +4,10 @@ import {
   TextFormFieldSchema,
   TextareaFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { AdvantageVM } from './advantage.vm';
 
-export class TrotamundosAdvantageFormService extends FormService<AdvantageVM> {
+export class TrotamundosAdvantageFormService extends ArrayFormService<AdvantageVM> {
   constructor() {
     super();
 

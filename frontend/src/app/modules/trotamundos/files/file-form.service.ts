@@ -5,10 +5,10 @@ import {
   TextareaFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { FileVM } from './file.vm';
 
-export class TrotamundosFileFormService extends FormService<FileVM> {
+export class TrotamundosFileFormService extends ArrayFormService<FileVM> {
   constructor() {
     super();
 

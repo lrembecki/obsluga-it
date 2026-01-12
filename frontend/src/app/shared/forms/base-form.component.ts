@@ -1,11 +1,11 @@
 import { Directive, inject, linkedSignal, Signal } from '@angular/core';
 import { FormSchema } from '@app/shared/forms';
-import { FormService } from './form.service';
+import { ArrayFormService } from './form.service';
 import { createFormFromFieldSchema } from './services/form-factory.service';
 
 @Directive()
 export abstract class BaseFormComponent<T> {
-  readonly _service = inject(FormService<T>);
+  readonly _service = inject(ArrayFormService<T>);
   abstract schema: Signal<FormSchema<T>>;
 
   // eslint-disable-next-line no-unused-vars

@@ -6,7 +6,7 @@ import {
   Provider,
   signal,
 } from '@angular/core';
-import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '../forms';
 import { DataTableColumnSchema, DataTableSchema } from './data-table.types';
 
@@ -17,7 +17,7 @@ export function provideDataTableService(
 }
 
 export abstract class DataTableService<T> {
-  public readonly facade = inject(ApiFacade<T>);
+  public readonly facade = inject(ArrayApiFacade<T>);
   protected readonly _data = signal<T[]>([]);
   protected readonly _schema = signal<DataTableSchema<T>>(null!);
   protected readonly _filterSchema = signal<FormSchema<any>>(null!);

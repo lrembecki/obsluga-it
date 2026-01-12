@@ -23,7 +23,7 @@ export class FormSchema<T> {
   }
 
   private assignRoot(fields: FormFieldSchema<any>[]) {
-    fields.forEach((e) => {
+    (fields || []).forEach((e) => {
       e.root = this;
       if (e instanceof GroupFormFieldSchema) {
         this.assignRoot(e.nestedFields);

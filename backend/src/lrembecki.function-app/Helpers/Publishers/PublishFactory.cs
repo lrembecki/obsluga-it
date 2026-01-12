@@ -3,6 +3,7 @@ using lrembecki.core.forms.FormDefinitions;
 using lrembecki.core.Services;
 using lrembecki.core.settings.Contacts;
 using lrembecki.core.trotamundos.Files;
+using lrembecki.core.trotamundos.Pages.AboutUs;
 using lrembecki.core.trotamundos.Trips;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +16,8 @@ internal sealed class PublishFactory(IServiceProvider provider) : IPublisher
         { nameof(TripEntity), typeof(TripPublisher) },
         { nameof(FileEntity), typeof(FilePublisher) },
         { nameof(ContactEntity), typeof(ContactPublisher) },
-        { nameof(FormDefinitionEntity), typeof(FormDefinitionPublisher)  }
+        { nameof(FormDefinitionEntity), typeof(FormDefinitionPublisher)  },
+        { nameof(AboutUsEntity), typeof(AboutUsPublisher) }
     };
 
     public Task Publish(DomainEvent domainEvent, CancellationToken ct)

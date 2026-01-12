@@ -1,6 +1,6 @@
 ﻿using lrembecki.core.Events;
 
-namespace lrembecki.core.Services;
+namespace lrembecki.core.Services;  
 
 public interface IPublisher
 {

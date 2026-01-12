@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 
 import { InjectionToken } from '@angular/core';
-import { ApiFacade } from '@app/core/interfaces/facade.interface';
+import { ArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { FormSchema } from '../forms';
 
 // DI tokens to allow configuring DataTable via dependency injection
 export const DataTableSchemaScope = new InjectionToken<DataTableSchema<any>>(
   'DataTableSchemaScope',
 );
-export const DataTableFacadeScope = new InjectionToken<ApiFacade<any>>(
+export const DataTableFacadeScope = new InjectionToken<ArrayApiFacade<any>>(
   'DataTableFacadeScope',
 );
 

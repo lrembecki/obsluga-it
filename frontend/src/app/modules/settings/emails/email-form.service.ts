@@ -7,10 +7,10 @@ import {
   PasswordFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { EmailVM } from './email.vm';
 
-export class SettingsEmailFormService extends FormService<EmailVM> {
+export class SettingsEmailFormService extends ArrayFormService<EmailVM> {
   constructor() {
     super();
 

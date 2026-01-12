@@ -5,10 +5,10 @@ import {
   TextFormFieldSchema,
   TextareaFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { LoyalityProgramVM } from './loyality-program.vm';
 
-export class TrotamundosLoyalityProgramFormService extends FormService<LoyalityProgramVM> {
+export class TrotamundosLoyalityProgramFormService extends ArrayFormService<LoyalityProgramVM> {
   constructor() {
     super();
 

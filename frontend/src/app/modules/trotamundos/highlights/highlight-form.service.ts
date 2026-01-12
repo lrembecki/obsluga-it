@@ -1,9 +1,9 @@
 import { Validators } from '@angular/forms';
 import { FormSchema, TextFormFieldSchema } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { HighlightVM } from './highlight.vm';
 
-export class TrotamundosHighlightFormService extends FormService<HighlightVM> {
+export class TrotamundosHighlightFormService extends ArrayFormService<HighlightVM> {
   constructor() {
     super();
 

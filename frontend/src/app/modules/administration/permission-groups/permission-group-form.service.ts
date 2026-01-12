@@ -5,11 +5,11 @@ import {
   MultiSelectFormFieldSchema,
   TextFormFieldSchema,
 } from '@app/shared/forms';
-import { FormService } from '@app/shared/forms/form.service';
+import { ArrayFormService } from '@app/shared/forms/form.service';
 import { SecurityPermissionFacade } from '../permissions/permission.provider';
 import { PermissionGroupVM } from './permission-group.vm';
 
-export class AdministrationPermissionGroupFormService extends FormService<PermissionGroupVM> {
+export class AdministrationPermissionGroupFormService extends ArrayFormService<PermissionGroupVM> {
   private readonly _facades = {
     permissions: inject(SecurityPermissionFacade),
   };
