@@ -11,6 +11,18 @@ export class AboutUsItemVM {
   }
 }
 
+export class AboutUsPersonVM {
+  order: number = null!;
+  name: string = null!;
+  description: string = null!;
+  imageId: string = null!;
+  image: StorageVM = new StorageVM();
+
+  constructor(init?: Partial<AboutUsPersonVM>) {
+    Object.assign(this, init);
+    this.image = new StorageVM(init?.image);
+  }
+}
 export class AboutUsVM {
   id: string = null!;
   title: string = null!;
@@ -18,10 +30,13 @@ export class AboutUsVM {
   imageId: string = null!;
   image: StorageVM = new StorageVM();
   items: AboutUsItemVM[] = [];
+  persons: AboutUsPersonVM[] = [];
 
   constructor(init?: Partial<AboutUsVM>) {
     Object.assign(this, init);
     this.image = new StorageVM(init?.image);
     this.items = init?.items?.map((item) => new AboutUsItemVM(item)) ?? [];
+    this.persons =
+      init?.persons?.map((person) => new AboutUsPersonVM(person)) ?? [];
   }
 }

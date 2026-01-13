@@ -47,14 +47,14 @@ public record AboutUsCreateOrUpdateRequest(AboutUsDto Model) : IRequest<AboutUsV
                 for (var i = 0; i < persons.Count; i++)
                 {
                     var person = persons[i];
-                    if (person.ImageId == Guid.Empty)
+                    if (person.ImageId is null || person.ImageId == Guid.Empty)
                     {
                         var storedImage = await storage.CreateAsync(person.Image, cancellationToken);
-                        persons[i] = person with { ImageId = storedImage.Id };
+                        persons[i] = person = person with { ImageId = storedImage.Id };
                     }
                     else
                     {
-                        await storage.UpdateAsync(person.ImageId, person.Image, cancellationToken);
+                        await storage.UpdateAsync(person.ImageId!.Value, person.Image, cancellationToken);
                     }
                 }
 

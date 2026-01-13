@@ -20,7 +20,7 @@ internal class AboutUsEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
 
         builder.Property(e => e.Description)
             .IsRequired()
-            .HasMaxLength(2000);
+            .HasMaxLength(5000);
 
         builder.HasOne(e => e.Image)
             .WithMany()

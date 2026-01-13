@@ -77,9 +77,17 @@ export class FormTemplate extends BaseFormComponent<any> {
 
   constructor() {
     super();
-    effect(() =>
-      this._modelProvider.id.set(this.routeParams()!['id'] as string),
-    );
+    effect(() => {
+      this._modelProvider.id.set(this.routeParams()!['id'] as string);
+      this._modelProvider.mode.set(
+        this.routeParams()!['id']! === 'create' ? 'create' : 'edit',
+      );
+
+      console.log({
+        id: this._modelProvider.id(),
+        mode: this._modelProvider.mode(),
+      });
+    });
   }
 
   async submit(data: any): Promise<void> {

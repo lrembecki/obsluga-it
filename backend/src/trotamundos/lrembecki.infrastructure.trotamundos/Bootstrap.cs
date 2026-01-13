@@ -5,6 +5,7 @@ using lrembecki.core.trotamundos.Files;
 using lrembecki.core.trotamundos.Highlights;
 using lrembecki.core.trotamundos.LoyalityPrograms;
 using lrembecki.core.trotamundos.Pages.AboutUs;
+using lrembecki.core.trotamundos.Pages.HowItWorks;
 using lrembecki.core.trotamundos.Trips;
 using lrembecki.infrastructure.shared;
 
@@ -26,6 +27,9 @@ public static class BootstrapTrotamundos
 
         services.AddScoped<IHandler<AboutUsGetAllRequest, AboutUsVM>, AboutUsGetAllRequest.Handler>();
         services.AddScoped<IHandler<AboutUsCreateOrUpdateRequest, AboutUsVM>, AboutUsCreateOrUpdateRequest.Handler>();
+
+        services.AddScoped<IHandler<HowItWorksGetAllRequest, HowItWorksVM>, HowItWorksGetAllRequest.Handler>();
+        services.AddScoped<IHandler<HowItWorksCreateOrUpdateRequest, HowItWorksVM>, HowItWorksCreateOrUpdateRequest.Handler>();
 
         return services;
     }
@@ -52,6 +56,7 @@ public static class BootstrapTrotamundos
             .WithTags("Trotamundos Pages");
 
         MapPagesAboutUs(pagesGroup);
+        MapPagesHowItWorks(pagesGroup);
     }
     private static void MapPagesAboutUs(RouteGroupBuilder pagesGroup)
     {
@@ -66,6 +71,21 @@ public static class BootstrapTrotamundos
                 sender.Send(new AboutUsCreateOrUpdateRequest(model), ct)
                 .ToServiceCallResultAsync())
             .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.AboutUs"));
+    }
+
+    private static void MapPagesHowItWorks(RouteGroupBuilder pagesGroup)
+    {
+        pagesGroup
+            .MapGet("how-it-works", (ISender sender, CancellationToken ct) =>
+                sender.Send(new HowItWorksGetAllRequest(), ct)
+                .ToServiceCallResultAsync())
+            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.HowItWorks"));
+
+        pagesGroup
+            .MapPut("how-it-works", (HowItWorksDto model, ISender sender, CancellationToken ct) =>
+                sender.Send(new HowItWorksCreateOrUpdateRequest(model), ct)
+                .ToServiceCallResultAsync())
+            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.HowItWorks"));
     }
 
     public static ModelBuilder ApplyConfigurationFromTrotamundos(this ModelBuilder modelBuilder)

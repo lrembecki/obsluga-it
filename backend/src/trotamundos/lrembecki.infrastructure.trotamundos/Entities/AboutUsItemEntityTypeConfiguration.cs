@@ -17,6 +17,6 @@ internal class AboutUsItemEntityTypeConfiguration : IEntityTypeConfiguration<Abo
 
         builder.Property(e => e.Description)
             .IsRequired()
-            .HasMaxLength(1000);
+            .HasMaxLength(5000);
     }
 }

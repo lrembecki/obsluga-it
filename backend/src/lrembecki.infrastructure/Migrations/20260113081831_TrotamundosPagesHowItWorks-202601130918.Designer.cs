@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure;
 
@@ -11,9 +12,11 @@ using lrembecki.infrastructure;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260113081831_TrotamundosPagesHowItWorks-202601130918")]
+    partial class TrotamundosPagesHowItWorks202601130918
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1035,8 +1038,8 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
@@ -1074,8 +1077,8 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -1104,8 +1107,8 @@ namespace lrembecki.infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
