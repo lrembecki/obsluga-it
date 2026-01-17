@@ -39,5 +39,6 @@ builder.Services.AddScoped<ContactPublisher>();
 builder.Services.AddScoped<FilePublisher>();
 builder.Services.AddScoped<FormDefinitionPublisher>();
 builder.Services.AddScoped<AboutUsPublisher>();
+builder.Services.AddScoped<HowItWorksPublisher>();
 
 await builder.Build().RunAsync();

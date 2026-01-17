@@ -7,6 +7,7 @@ public interface IStorageService : ICrudService<StorageDto, StorageVM>
 {
     Task<List<StorageVM>> GetAllImagesAsync(List<Guid>? imageIds, CancellationToken cancellationToken);
     Task<List<StorageVM>> GetAllFilesAsync(CancellationToken cancellationToken);
+    Task<StorageVM> SyncAsync(Guid? storageId, StorageDto? storageDto, CancellationToken ct);
 }
 
 internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCrudService<StorageEntity, StorageVM, StorageDto>(uow), IStorageService
@@ -16,10 +17,8 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
 
     protected override async Task<StorageEntity> CreateEntity(Guid id, StorageDto model, CancellationToken cancellationToken)
         => await base.CreateEntity(id, await UploadBlob(id, model, null!), cancellationToken);
-
     protected override async Task UpdateEntity(StorageEntity entity, StorageDto model)
         => await base.UpdateEntity(entity, await UploadBlob(entity.Id, model, entity.BlobPath));
-
     public Task<List<StorageVM>> GetAllImagesAsync(List<Guid>? imageIds, CancellationToken cancellationToken)
         => Task.Run(() =>
             _repository.GetAll()
@@ -27,20 +26,17 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
                 .Where(a => imageIds == null || imageIds.Contains(a.Id))
                 .Select(StorageVM.Map)
                 .ToList(), cancellationToken);
-
     public Task<List<StorageVM>> GetAllFilesAsync(CancellationToken cancellationToken)
         => Task.Run(() =>
             _repository.GetAll()
                 .Join(_files.GetAll(), e => e.Id, e => e.StorageId, (a, b) => a)
                 .Select(StorageVM.Map)
                 .ToList(), cancellationToken);
-
     protected override async Task DeleteEntity(StorageEntity entity, CancellationToken cancellationToken)
     {
         await base.DeleteEntity(entity, cancellationToken);
         await blobHelper.RemoveBlobAsync(entity.BlobPath, "storage", cancellationToken);
     }
-
     private async Task<StorageDto> UploadBlob(Guid id, StorageDto model, string existingBlobPath)
     {
         if (!string.IsNullOrEmpty(model.BinaryData))
@@ -72,11 +68,31 @@ internal class StorageService(IUnitOfWork uow, IBlobHelper blobHelper) : BaseCru
                     model.BlobPath!,
                     model.Filename!,
                     ms,
-                    new Dictionary<string, string> { },
+                    [],
                     default)
             };
         }
 
         return model;
+    }
+    public async Task<StorageVM> SyncAsync(Guid? storageId, StorageDto? storageDto, CancellationToken ct)
+    {
+        if (!storageId.HasValue && storageDto is not null)
+        {
+            return await CreateAsync(storageDto, ct);
+        }
+        else if (storageDto is null && storageId.HasValue)
+        {
+            await DeleteAsync(storageId.Value, ct);
+            return null!;
+        }
+        else if (storageDto is not null && storageId.HasValue)
+        {
+            return await UpdateAsync(storageId!.Value, storageDto!, ct);
+        }
+        else
+        {
+            return null!;
+        }
     }
 }

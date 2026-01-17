@@ -14,7 +14,7 @@ public record HowItWorksVM(
             entity.Title,
             entity.HeaderText,
             entity.FooterText,
-            [.. entity.Items.OrderBy(x => x.Order).Select(HowItWorksItemVM.Map)!]
+            [.. entity.Items.OrderBy(x => x.Order).Select(HowItWorksItemVM.Map)]
         );
     }
 

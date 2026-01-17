@@ -10,9 +10,9 @@ public record HowItWorksItemVM(
     StorageVM? Image
 )
 {
-    internal static HowItWorksItemVM? Map(HowItWorksItemEntity? entity)
+    internal static HowItWorksItemVM Map(HowItWorksItemEntity? entity)
     {
-        if (entity == null) return null;
+        if (entity == null) return null!;
         return new(
             entity.Order,
             entity.Title,
