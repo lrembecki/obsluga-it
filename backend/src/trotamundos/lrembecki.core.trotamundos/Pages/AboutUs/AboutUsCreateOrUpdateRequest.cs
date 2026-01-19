@@ -12,22 +12,21 @@ public record AboutUsCreateOrUpdateRequest(AboutUsDto Model) : IRequest<AboutUsV
     {
         public async Task<AboutUsVM> Handle(
             AboutUsCreateOrUpdateRequest request,
-            CancellationToken cancellationToken
+            CancellationToken ct
         )
         {
-            var model = request.Model;
+            var model = await request.Model.SyncStorageAsync(storage, ct)
+                .With(e => e.SyncStorageCollectionAsync(storage, m => m.Persons, ct));
+
             var entities = await uow.GetRepository<AboutUsEntity>().GetAsync();
             var entity = entities.FirstOrDefault() ??
                 await uow.GetRepository<AboutUsEntity>().AddAsync(
                     AboutUsEntity.Create(Guid.NewGuid(), model)
                 );
 
-            model = await model.SyncStorageAsync(storage, cancellationToken);
-            model = await model.SyncStorageCollectionAsync(storage, m => m.Persons, cancellationToken);
-
             entity.Update(model);
 
-            await uow.SaveChangesAsync(cancellationToken);
+            await uow.SaveChangesAsync(ct);
 
             return AboutUsVM.Map(entity);
         }

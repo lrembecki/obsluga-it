@@ -11,10 +11,7 @@ internal sealed class WebsiteService(IUnitOfWork uow, IStorageService storage) :
     {
         model = model with
         {
-            Meta = model.Meta with
-            {
-                ImageId = (await storage.CreateAsync(model.Meta.Image, cancellationToken)).Id
-            }
+            Meta = await model.Meta.SyncStorageAsync(storage, cancellationToken)
         };
 
         var entity = await base.CreateEntity(id, model, cancellationToken);

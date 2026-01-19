@@ -57,11 +57,11 @@ public class SubmitFormFunction(
                 }
                 catch (ValidationException ex)
                 {
-                    return new BadRequestObjectResult(ex.ToFailServiceCallResult());
+                    return new BadRequestObjectResult(ex.ToServiceCallResult());
                 }
                 catch (Exception ex)
                 {
-                    return new BadRequestObjectResult(ServiceCallResult.CreateExceptionResult(ex));
+                    return new BadRequestObjectResult(ex.ToServiceCallResult());
                 }
 
                 var fields = input.FormDefinition.Fields.Where(e => model.ContainsKey(e.FieldName))

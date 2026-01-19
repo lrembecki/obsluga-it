@@ -22,6 +22,11 @@
       <_Parameter1>lrembecki.infrastructure.trotamundos</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>lrembecki.infrastructure.website</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <!-- Core -->
   <ItemGroup>
@@ -32,6 +37,11 @@
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>lrembecki.core.trotamundos</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>lrembecki.core.website</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 

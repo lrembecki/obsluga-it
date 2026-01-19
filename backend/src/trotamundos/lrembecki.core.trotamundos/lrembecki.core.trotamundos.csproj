@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>lrembecki.core.trotamundos</AssemblyName>
   </PropertyGroup>
+  
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>lrembecki.presentation.trotamundos</_Parameter1>
@@ -25,9 +26,11 @@
       <_Parameter1>lrembecki.function-app</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\lrembecki.core\lrembecki.core.csproj" />
     <ProjectReference Include="..\..\settings\lrembecki.core.settings\lrembecki.core.settings.csproj" />
     <ProjectReference Include="..\..\storage\lrembecki.core.storage\lrembecki.core.storage.csproj" />
   </ItemGroup>
+  
 </Project>

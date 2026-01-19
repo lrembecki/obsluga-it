@@ -46,6 +46,8 @@
     <ProjectReference Include="..\storage\lrembecki.infrastructure.storage\lrembecki.infrastructure.storage.csproj" />
     <ProjectReference Include="..\settings\lrembecki.infrastructure.settings\lrembecki.infrastructure.settings.csproj" />
     <ProjectReference Include="..\trotamundos\lrembecki.infrastructure.trotamundos\lrembecki.infrastructure.trotamundos.csproj" />
+    <ProjectReference Include="..\website\lrembecki.core.website\lrembecki.core.website.csproj" />
+    <ProjectReference Include="..\website\lrembecki.infrastructure.website\lrembecki.infrastructure.website.csproj" />
   </ItemGroup>
 
 </Project>

@@ -68,9 +68,9 @@ internal class EfUnitOfWork(
 
         foreach (var entity in entities)
         {
-            if (entity.Entity is BaseEntity baseEntity && baseEntity.DomainEvents.Count > 0)
+            if (entity.Entity is IHasDomainEvents withDomainEvents && withDomainEvents.DomainEvents.Count > 0)
             {
-                baseEntity.DomainEvents.ToList().ForEach(de => notifier.Notify(de with
+                withDomainEvents.DomainEvents.ToList().ForEach(de => notifier.Notify(de with
                 {
                     SubscriptionId = session.SubscriptionId!.Value
                 }));

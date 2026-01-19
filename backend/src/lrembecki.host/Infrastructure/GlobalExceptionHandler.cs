@@ -39,9 +39,8 @@ public static class GlobalExceptionHandler
     private static async Task HandleException(HttpContext context, IUnitOfWork uow, Exception ex)
     {
         await uow.RollbackTransactionAsync();
-        var type = ex.GetType();
 
-        var result = ServiceCallResult.CreateExceptionResult(ex);
+        var result = ex.ToServiceCallResult();
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = ex switch
         {

@@ -218,7 +218,6 @@ public static class Bootstrap$formatedName
 "@
 
         Set-Content -Path $bootstrapFilePath -Value $bootstrapContent -Encoding UTF8
-        Delete-Item "Class1.cs"
     Set-Location .. # $Name directory
     Set-Location .. # src directory
     Set-Location lrembecki.infrastructure

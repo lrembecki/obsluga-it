@@ -7,8 +7,8 @@ public static class StorageServiceExtensions
     public static async Task<TDto> SyncStorageAsync<TDto>(
         this TDto dto,
         IStorageService storageService,
-        CancellationToken ct
-    ) where TDto : IHasStorage<TDto>
+        CancellationToken ct) 
+        where TDto : IHasStorage<TDto>
     {
         var updateVM = await storageService.SyncAsync(dto.GetStorageId(), dto.GetStorage(), ct);
         return dto.UpdateStorageId(updateVM?.Id);
