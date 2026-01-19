@@ -1,17 +1,16 @@
-﻿using lrembecki.core;
-using lrembecki.core.Services;
+﻿using lrembecki.core.Services;
 using lrembecki.core.trotamundos.Advantages;
 using lrembecki.core.trotamundos.Files;
 using lrembecki.core.trotamundos.Highlights;
 using lrembecki.core.trotamundos.LoyalityPrograms;
 using lrembecki.core.trotamundos.Pages.AboutUs;
+using lrembecki.core.trotamundos.Pages.Home;
 using lrembecki.core.trotamundos.Pages.HowItWorks;
 using lrembecki.core.trotamundos.Trips;
 using lrembecki.infrastructure.shared;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,54 +37,37 @@ public static class BootstrapTrotamundos
     {
         var group = app.MapGroup("/api/trotamundos")
             .WithTags("Trotamundos")
-            .RequireAuthorization("InternalJwtPolicy");
+            .RequireAuthorization("InternalJwtPolicy")
+            .MapCrud<IAdvantageService, AdvantageDto, AdvantageVM>("advantages", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Adventages")))
+            .MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Highlights")))
+            .MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.LoyalityPrograms")))
+            .MapCrud<ITripService, TripDto, TripVM>("trips", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Trips")))
+            .MapCrud<IFileService, FileDto, FileVM>("files", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Files")))
+            ;
 
-        group.MapCrud<IAdvantageService, AdvantageDto, AdvantageVM>("advantages");
-        group.MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights");
-        group.MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs");
-        group.MapCrud<ITripService, TripDto, TripVM>("trips");
-        group.MapCrud<IFileService, FileDto, FileVM>("files");
+        var pagesGroup = group.MapGroup("pages")
+            .WithTags("Trotamundos Pages")
+            ;
 
-        MapPages(group);
+        pagesGroup.MapGroup("about-us")
+            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.AboutUs"))
+            .MapGetRequest(AboutUsGetAllRequest.Delegate)
+            .MapPutRequest(AboutUsCreateOrUpdateRequest.Delegate)
+            ;
+
+        pagesGroup.MapGroup("how-it-works")
+            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.HowItWorks"))
+            .MapGetRequest(HowItWorksGetAllRequest.Delegate)
+            .MapPutRequest(HowItWorksCreateOrUpdateRequest.Delegate)
+            ;
+
+        pagesGroup.MapGroup("home")
+            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.Home"))
+            .MapGetRequest(HomeGetAllRequest.Delegate)
+            .MapPutRequest(HomeCreateOrUpdateRequest.Delegate)
+            ;
 
         return app;
-    }
-    private static void MapPages(RouteGroupBuilder group)
-    {
-        var pagesGroup = group.MapGroup("pages")
-            .WithTags("Trotamundos Pages");
-
-        MapPagesAboutUs(pagesGroup);
-        MapPagesHowItWorks(pagesGroup);
-    }
-    private static void MapPagesAboutUs(RouteGroupBuilder pagesGroup)
-    {
-        pagesGroup
-            .MapGet("about-us", (ISender sender, CancellationToken ct) =>
-                sender.Send(new AboutUsGetAllRequest(), ct)
-                .ToServiceCallResultAsync())
-            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.AboutUs"));
-
-        pagesGroup
-            .MapPut("about-us", (AboutUsDto model, ISender sender, CancellationToken ct) =>
-                sender.Send(new AboutUsCreateOrUpdateRequest(model), ct)
-                .ToServiceCallResultAsync())
-            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.AboutUs"));
-    }
-
-    private static void MapPagesHowItWorks(RouteGroupBuilder pagesGroup)
-    {
-        pagesGroup
-            .MapGet("how-it-works", (ISender sender, CancellationToken ct) =>
-                sender.Send(new HowItWorksGetAllRequest(), ct)
-                .ToServiceCallResultAsync())
-            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.HowItWorks"));
-
-        pagesGroup
-            .MapPut("how-it-works", (HowItWorksDto model, ISender sender, CancellationToken ct) =>
-                sender.Send(new HowItWorksCreateOrUpdateRequest(model), ct)
-                .ToServiceCallResultAsync())
-            .RequireAuthorization(e => e.RequireRole("Trotamundos.Pages.HowItWorks"));
     }
 
     public static ModelBuilder ApplyConfigurationFromTrotamundos(this ModelBuilder modelBuilder)

@@ -1,4 +1,5 @@
-﻿using lrembecki.core.storage;
+﻿using lrembecki.core.Events;
+using lrembecki.core.storage;
 using lrembecki.core.trotamundos.Common;
 
 namespace lrembecki.core.trotamundos.Pages.Home;
@@ -12,18 +13,30 @@ internal class HomeEntity : TrotamundosBaseEntity
     public StorageEntity TrailerVideo { get; private set; } = null!;
 
     public List<HomeOpinionEntity> Opinions { get; private set; } = [];
-}
 
-internal class HomeOpinionEntity
-{
-    public Guid HomeId { get; private set; }
-    public int Order { get; private set; }
+    public static HomeEntity Create(
+        Guid id,
+        HomeDto model
+    )
+    {
+        var entity = new HomeEntity
+        {
+            Id = id
+        };
 
-    public StorageEntity Storage { get; private set; } = null!;
-}
+        entity.Update(model);
 
-public record HomeOpinionDto
-{
-    public Guid HomeId { get; init; }
-    public int Order { get; init; }
+        return entity;
+    }
+
+    public void Update(HomeDto model)
+    {
+        BackgroundVideoId = model.BackgroundVideoId;
+        TrailerVideoId = model.TrailerVideoId;
+
+        Opinions.Clear();
+        Opinions.AddRange(model.Opinions.Select(item => HomeOpinionEntity.Create(Id, item)));
+
+        AddDomainEvent(PublishDomainEvent.Create(this));
+    }
 }

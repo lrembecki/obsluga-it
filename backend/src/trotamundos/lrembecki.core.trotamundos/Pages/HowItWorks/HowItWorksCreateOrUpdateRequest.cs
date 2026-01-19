@@ -5,6 +5,8 @@ namespace lrembecki.core.trotamundos.Pages.HowItWorks;
 
 public record HowItWorksCreateOrUpdateRequest(HowItWorksDto Model) : IRequest<HowItWorksVM>
 {
+    public static Delegate Delegate => (HowItWorksDto model, ISender sender, CancellationToken ct) => sender.Send(new HowItWorksCreateOrUpdateRequest(model), ct).ToServiceCallResultAsync();
+
     internal sealed class Handler(
         IUnitOfWork uow,
         IStorageService storage

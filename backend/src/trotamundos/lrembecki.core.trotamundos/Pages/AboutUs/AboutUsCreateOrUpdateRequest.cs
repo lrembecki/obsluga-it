@@ -5,6 +5,8 @@ namespace lrembecki.core.trotamundos.Pages.AboutUs;
 
 public record AboutUsCreateOrUpdateRequest(AboutUsDto Model) : IRequest<AboutUsVM>
 {
+    public static Delegate Delegate => (AboutUsDto model, ISender sender, CancellationToken ct) => sender.Send(new AboutUsCreateOrUpdateRequest(model), ct).ToServiceCallResultAsync();
+
     internal sealed class Handler(
         IUnitOfWork uow,
         IStorageService storage

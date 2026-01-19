@@ -4,6 +4,8 @@ namespace lrembecki.core.trotamundos.Pages.HowItWorks;
 
 public sealed record HowItWorksGetAllRequest() : IRequest<HowItWorksVM>
 {
+    public static Delegate Delegate => (ISender sender, CancellationToken ct) => sender.Send(new HowItWorksGetAllRequest(), ct).ToServiceCallResultAsync();
+
     public static Task<ServiceCallResult<HowItWorksVM>> DelegateEndpoint(
         ISender sender,
         CancellationToken cancellationToken = default
