@@ -20,11 +20,11 @@ internal class HowItWorksEntityTypeConfiguration : SubscriptionBaseEntityTypeCon
 
         builder.Property(e => e.HeaderText)
             .IsRequired()
-            .HasMaxLength(500);
+            .HasMaxLength(5000);
 
         builder.Property(e => e.FooterText)
             .IsRequired()
-            .HasMaxLength(500);
+            .HasMaxLength(5000);
 
         builder.HasMany(e => e.Items).WithOne()
             .HasForeignKey(e => e.HowItWorksId)

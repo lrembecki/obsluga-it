@@ -38,11 +38,11 @@ public static class BootstrapTrotamundos
         var group = app.MapGroup("/api/trotamundos")
             .WithTags("Trotamundos")
             .RequireAuthorization("InternalJwtPolicy")
-            .MapCrud<IAdvantageService, AdvantageDto, AdvantageVM>("advantages", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Adventages")))
-            .MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Highlights")))
-            .MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.LoyalityPrograms")))
-            .MapCrud<ITripService, TripDto, TripVM>("trips", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Trips")))
-            .MapCrud<IFileService, FileDto, FileVM>("files", _ => _.RequireAuthorization(e => e.RequireRole("Trotamundos.Files")))
+            .MapCrud<IAdvantageService, AdvantageDto, AdvantageVM>("advantages")
+            .MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights")
+            .MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs")
+            .MapCrud<ITripService, TripDto, TripVM>("trips")
+            .MapCrud<IFileService, FileDto, FileVM>("files")
             ;
 
         var pagesGroup = group.MapGroup("pages")

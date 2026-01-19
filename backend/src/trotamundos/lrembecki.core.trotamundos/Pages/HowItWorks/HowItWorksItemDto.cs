@@ -18,5 +18,5 @@ public record HowItWorksItemDto : IHasStorage<HowItWorksItemDto>
         => ImageId!;
 
     public HowItWorksItemDto UpdateStorageId(Guid? storageId)
-        => this with { ImageId = ImageId };
+        => this with { ImageId = storageId };
 }

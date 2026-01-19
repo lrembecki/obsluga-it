@@ -17,7 +17,7 @@ internal class HowItWorksItemEntityTypeConfiguration : IEntityTypeConfiguration<
 
         builder.Property(e => e.Description)
             .IsRequired()
-            .HasMaxLength(250);
+            .HasMaxLength(5000);
 
         builder.HasOne(e => e.Image)
             .WithMany()

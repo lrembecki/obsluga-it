@@ -18,7 +18,8 @@ export type TrotamundosPermissionType =
   | 'Trotamundos.Highlights'
   | 'Trotamundos.Trips'
   | 'Trotamundos.Files'
-  | 'Trotamundos.Pages.AboutUs';
+  | 'Trotamundos.Pages.AboutUs'
+  | 'Trotamundos.Pages.HowItWorks';
 
 export type PermissionType =
   | SettingsPermissionType
