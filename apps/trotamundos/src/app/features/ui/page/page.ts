@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Navbar } from '../navbar/navbar';
 import { SeoService, WebsiteFacade } from '@/app/core';
 import { RouterOutlet } from '@angular/router';
@@ -11,6 +12,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class Page implements OnInit {
   private readonly _seo = inject(SeoService);
+  private readonly _platformId = inject(PLATFORM_ID);
   private readonly _facades = {
     website: inject(WebsiteFacade),
   };
@@ -27,10 +29,12 @@ export class Page implements OnInit {
   }
 
   onActivate() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+    if (isPlatformBrowser(this._platformId)) {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
   }
 }
