@@ -6,9 +6,14 @@ namespace lrembecki.function_app.Helpers;
 
 internal class UploadHelper(IBlobHelper blob)
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
     public async Task Upload<T>(T data, string container, string blobPath, string fileName)
     {
-        using var ms = new MemoryStream(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(data)));
+        using var ms = new MemoryStream(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(data, JsonOptions)));
         blob.UploadBlobAsync(
             container,
             $"published/{blobPath}/{fileName}",

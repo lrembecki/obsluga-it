@@ -1,0 +1,39 @@
+:host {
+  width: 120px;
+  height: 120px;
+
+  position: relative;
+  display: flex;
+
+  border-radius: 50%;
+
+  svg {
+    width: 140%;
+    position: absolute;
+    left: calc(-70% + 50%);
+    top: calc(-70% + 50%);
+    margin: auto auto;
+  }
+
+
+  @media (max-height: 600px) {
+    width: 15dvw;
+    height: 15dvw;
+  }
+
+  @media (max-width: 600px) {
+    width: 25dvw !important;
+    height: 25dvw !important;
+  }
+
+  --img-logo-width: 60%;
+
+  .img-logo {
+    width: 100%;
+    padding-top: .5rem;
+    position: absolute;
+    left: calc(-var(--img-logo-width) / 2 + 50%);
+    top: calc(-var(--img-logo-width) / 2 + 50%);
+    margin: auto auto;
+  }
+}

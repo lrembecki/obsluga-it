@@ -1,1 +1,11 @@
-<p>navbar works!</p>
+<app-logo color="transparent" />
+
+<div class="spacer"></div>
+
+<ul>
+  @for (menuItem of menuItems(); track menuItem) {
+    <li>
+      <a [routerLink]="menuItem.routerLink">{{ menuItem.label }}</a>
+    </li>
+  }
+</ul>

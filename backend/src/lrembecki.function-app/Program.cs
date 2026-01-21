@@ -40,5 +40,6 @@ builder.Services.AddScoped<FilePublisher>();
 builder.Services.AddScoped<FormDefinitionPublisher>();
 builder.Services.AddScoped<AboutUsPublisher>();
 builder.Services.AddScoped<HowItWorksPublisher>();
+builder.Services.AddScoped<WebsitePublisher>();
 
 await builder.Build().RunAsync();

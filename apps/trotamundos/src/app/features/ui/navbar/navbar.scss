@@ -1,0 +1,36 @@
+@use "variables" as var;
+
+:host {
+    background-color: var.$primary;
+    display: flex;
+    padding: .5rem 4.6rem;
+    color: white;
+
+    font-weight: 500;
+    font-size: 1rem;
+
+    justify-content: end;
+    text-transform: uppercase;
+}
+
+.spacer {
+    flex: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity .2s ease;
+
+    &:hover {
+        opacity: .7;
+    }
+}
+
+ul {
+    list-style: none;
+    margin: auto 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}

@@ -1,4 +1,5 @@
-﻿using lrembecki.core.Markers;
+﻿using lrembecki.core.Events;
+using lrembecki.core.Markers;
 using lrembecki.core.settings.Companies;
 using lrembecki.core.shared.Subscriptions;
 
@@ -40,5 +41,7 @@ internal class WebsiteEntity : SubscriptionBaseEntity, IHasId<Guid>
         // Meta
         Meta ??= WebsiteMetaEntity.Create(Id, model.Meta);
         Meta.Update(model.Meta);
+
+        AddDomainEvent(PublishDomainEvent.Create(this));
     }
 }
