@@ -1,4 +1,5 @@
-﻿using lrembecki.core.Markers;
+﻿using lrembecki.core.Events;
+using lrembecki.core.Markers;
 using lrembecki.core.settings.Address;
 using lrembecki.core.settings.Contacts;
 using lrembecki.core.shared.Subscriptions;
@@ -34,6 +35,8 @@ internal class CompanyEntity : SubscriptionBaseEntity, IHasId<Guid>
 
         Parameters.Clear();
         Parameters = [.. model.Parameters.Select(e => CompanyParameterEntity.Create(Id, e)) ];
+
+        AddDomainEvent(PublishDomainEvent.Create(this));
     }
 
 }

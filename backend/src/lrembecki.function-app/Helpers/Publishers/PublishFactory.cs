@@ -22,7 +22,8 @@ internal sealed class PublishFactory(IServiceProvider provider) : IPublisher
         { nameof(FormDefinitionEntity), typeof(FormDefinitionPublisher)  },
         { nameof(AboutUsEntity), typeof(AboutUsPublisher) },
         { nameof(HowItWorksEntity), typeof(HowItWorksPublisher) },
-        { nameof(WebsiteEntity), typeof(WebsitePublisher) }
+        { nameof(WebsiteEntity), typeof(WebsitePublisher) },
+        { "CompanyEntity", typeof(CompanyPublisher)  }
     };
 
     public Task Publish(DomainEvent domainEvent, CancellationToken ct)
