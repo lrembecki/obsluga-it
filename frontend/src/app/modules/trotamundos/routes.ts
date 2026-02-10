@@ -23,6 +23,9 @@ export const facades = {
   howItWorks: await import('./how-it-works/how-it-works.facade').then(
     (e) => e.TrotamundosHowItWorksFacade,
   ),
+  individualTrips: await import(
+    './individual-trips/individual-trip.facade'
+  ).then((e) => e.TrotamundosIndividualTripFacade),
 };
 
 export const routes: Routes = [
@@ -52,5 +55,11 @@ export const routes: Routes = [
     'How It Works',
     ['Trotamundos.Pages.HowItWorks'],
     () => import('./how-it-works/routes').then((e) => e.routes),
+  ),
+  featureRoute(
+    'individual-trips',
+    'Individual Trips',
+    ['Trotamundos.IndividualTrips'],
+    () => import('./individual-trips/routes').then((e) => e.routes),
   ),
 ];
