@@ -27,6 +27,8 @@ export class AboutUsVM {
   id: string = null!;
   title: string = null!;
   description: string = null!;
+  footerDescription: string = null!;
+  footerHighlight: string = null!;
   imageId: string = null!;
   image: StorageVM = new StorageVM();
   items: AboutUsItemVM[] = [];

@@ -1,0 +1,15 @@
+@use "../../../../../node_modules/bootstrap/scss/bootstrap" as *;
+@use "styles/variables" as *;
+
+form {
+
+    padding: 1rem;
+
+    @extend .d-flex, .flex-column;
+
+    input, textarea {
+        @extend .form-control;
+        margin-bottom: 1rem;
+        background-color: white;
+    }
+}

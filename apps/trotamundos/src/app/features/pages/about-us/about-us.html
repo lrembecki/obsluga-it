@@ -1,1 +1,111 @@
-<p>about-us works!</p>
+<div class="container py-5 text-center">
+  {{ data() | json }}
+
+  <h2>{{ data().title }}</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 mb-5 mt-5">
+      <img class="img-fluid" [src]="data().image.blobUrl" alt="O nas" />
+    </div>
+  </div>
+
+  @for (item of description(); track item) {
+    <p>{{ item }}</p>
+  }
+
+  <div class="row justify-content-center mt-5 d-flex mb-5">
+    @for (item of data().items; track item) {
+      <div class="col-12 col-md-3 mb-3">
+        <div class="card shadow shadow-sm">
+          <div class="card-body text-primary d-flex flex-column">
+            <h3>{{ item.title }}</h3>
+            <div>
+              <i class="material-symbols-outlined">{{ item.icon }}</i>
+            </div>
+            <div>
+              {{ item.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <p>
+    Jeśli jednak wolisz podróżować na własnych zasadach, oferujemy indywidualne wsparcie w
+    organizacji wyjazdów – od rodzinnych wakacji, podróży poślubnych, przez wyjazdy integracyjne, po
+    wyjątkowe wydarzenia w dowolnym miejscu na świecie. Powiedz nam, o czym marzysz, a my zamienimy
+    to w rzeczywistość!
+  </p>
+
+  <p>
+    <b>Dołącz do naszej podróżniczej rodziny i pozwól się zarazić pasją do odkrywania świata!</b>
+  </p>
+
+  <div class="my-5 d-flex"></div>
+
+  <div class="row d-flex" style="flex-wrap: wrap-reverse">
+    <div class="col-12 col-md-8">
+      <h3 class="mb-5">O KUBIE</h3>
+      <p>
+        Jak wielu chłopców w dzieciństwie, marzyłem o karierze piłkarza. Niestety, seria kontuzji
+        przekreśliła te plany. Z wykształcenia jestem inżynierem budownictwa, a moje doświadczenie
+        zawodowe obejmuje różnorodne branże – od bankowości, przez handel, aż po budownictwo. Jednak
+        niezależnie od zawodowych ścieżek, odkrywanie świata zawsze było moją największą pasją,
+        równie silną jak miłość do piłki nożnej.
+      </p>
+      <p>
+        Podczas naszych wypraw to ja czuwam nad bezpieczeństwem Waszej podróży, pełniąc rolę lidera
+        i opiekuna grupy. Dbam o trasy, pilnuję harmonogramów i upewniam się, że wszystko idzie
+        zgodnie z planem. Jestem też tym, który nie pozwala się zgubić, gdy Laura wyruszy na
+        poszukiwanie nowych przygód o krok za daleko ;) Jako dusza towarzystwa, dbam też o dobry
+        nastrój grupy, atmosferę zaufania, integracji i dobrej zabawy. Moja punktualność to coś, na
+        co zawsze możecie liczyć, dzięki czemu każda wyprawa przebiega sprawnie i bez stresu.
+      </p>
+      <p>
+        Każda wyprawa to dla mnie szansa na odkrycie czegoś wyjątkowego – nie tylko kolejnego
+        zakątka naszej planety, ale również nowych stron siebie.
+      </p>
+    </div>
+    <div class="col-12 col-md-4">
+      <img class="img-fluid mb-3" src="./assets/images/O KUBIE.jpg" alt="O nas" />
+    </div>
+  </div>
+
+  <div class="my-5 d-flex"></div>
+
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <img class="img-fluid mb-3" src="./assets/images/Laura.jpg" alt="O nas" />
+    </div>
+    <div class="col-12 col-md-8">
+      <h3 class="mb-5">O LAURZE</h3>
+      <p>
+        Od zawsze jestem pasjonatką podróży. Już jako dziecko z utęsknieniem czekałam na kolejne
+        wydanie czasopisma „Wielki Atlas Świata”, by godzinami przeglądać mapy i zdjęcia
+        przedstawiające odległe zakątki globu. Ta fascynacja nie tylko rozbudziła we mnie ciekawość
+        świata, ale również ukształtowała moje spojrzenie na różnorodność i piękno naszej planety.
+      </p>
+      <p>
+        Z wykształcenia jestem inżynierem ochrony środowiska, a moje doświadczenie zawodowe obejmuje
+        wieloletnią pracę na stanowisku managerskim w dużej firmie przemysłowej. Dzięki temu
+        nauczyłam się łączyć wiedzę techniczną z umiejętnością skutecznego zarządzania i
+        organizacji.
+      </p>
+      <p>
+        Dziś to połączenie miłości do podróży, szacunku dla Matki Ziemi, oraz doświadczenia w
+        planowaniu i realizacji zadań, stanowi fundament naszej działalności. Odpowiadam za
+        organizację i zarządzanie firmą, a także stoję za każdym szczegółem naszych wypraw. Moim
+        celem jest tworzenie podróży, które inspirują, dostarczają emocji, niezapomnianych wrażeń,
+        budują więzi ale również odbywają się w zrównoważony sposób - z troską o środowisko, komfort
+        i bezpieczeństwo uczestników.
+      </p>
+      <p>
+        Moim ulubionym europejskim kierunkiem jest bez wątpienia Hiszpania (ci, którzy znają
+        znaczenie nazwy naszej firmy, pewnie już to odgadli). Jednak prawdziwą pasją pozostaje dla
+        mnie odkrywanie egzotycznych zakątków świata – takich, gdzie masowa turystyka nie zdążyła
+        jeszcze zatrzeć ich autentycznego klimatu i wyjątkowego charakteru.
+      </p>
+    </div>
+  </div>
+</div>

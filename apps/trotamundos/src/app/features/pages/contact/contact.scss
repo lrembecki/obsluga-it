@@ -1,0 +1,49 @@
+@use 'styles/variables.scss' as *;
+
+.container {
+  background-color: #0b9ba31a;
+  border-radius: 8px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  
+  // Responsywność - na mniejszych ekranach układ jednkolumnowy
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar {
+  background-color: #054d51;
+  color: whitesmoke;
+  padding: 2rem;
+  border-radius: 8px;
+  height: fit-content;
+  
+  h1 {
+    color: whitesmoke;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    
+    li {
+      color: whitesmoke;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  a {
+    color: whitesmoke;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

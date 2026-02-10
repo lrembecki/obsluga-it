@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  padding: 5rem 0;
+}
+
+.py-5 {
+  padding-top: calc(114px + 1rem);
+}
+
+.avatar-person {
+  width: 90%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.crd {
+  text-align: center;
+}
+
+:host {
+  text-align: center;
+
+  .material-symbols-outlined {
+      scale: 2;
+      margin: 1rem auto;
+  }
+}
+
+.card {
+  height: 100% !important;
+  border-radius: .015rem;
+}
+
+p {
+  text-align: justify;
+}

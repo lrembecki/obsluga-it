@@ -28,5 +28,12 @@ export class StorageVM {
 
   constructor(init?: Partial<StorageVM>) {
     Object.assign(this, init);
+
+    if (this.blobUrl) {
+      this.blobUrl = this.blobUrl.replace(
+        `https://saobslugaprd01.blob.core.windows.net/storage/`,
+        'https://trotamundos.pl/files.php/',
+      );
+    }
   }
 }

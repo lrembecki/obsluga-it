@@ -1,0 +1,12 @@
+<form>
+  @for (item of formItems(); track item) {
+    <label [for]="item.fieldName">{{ item.fieldName }}</label>
+    @if (item.fieldType == 'text') {
+      <input type="text" [id]="item.fieldName" [name]="item.fieldName" />
+    } @else if (item.fieldType == 'email') {
+      <input type="email" [id]="item.fieldName" [name]="item.fieldName" />
+    } @else if (item.fieldType == 'textarea') {
+      <textarea [id]="item.fieldName" [name]="item.fieldName"></textarea>
+    }
+  }
+</form>

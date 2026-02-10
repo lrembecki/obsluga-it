@@ -1,1 +1,32 @@
-<p>contact works!</p>
+<div class="container my-5">
+  <div class="sidebar">
+    <h1>Kontakt</h1>
+    <ul>
+      @for (email of company().emails; track email) {
+        <li>
+          Email:
+          <a [href]="'mailto:' + email.email" style="color: white; text-decoration: none">{{
+            email.email
+          }}</a>
+        </li>
+      }
+
+      @for (phone of company().phones; track phone) {
+        <li>Telefon: {{ phone.phone }}</li>
+      }
+    </ul>
+    <h1>Dane Firmy</h1>
+    <ul>
+      <li [innerText]="company().name"></li>
+      <li [innerText]="company().address.address1"></li>
+      <li>{{ company().address.postalCode }} {{ company().address.city }}</li>
+      <li>&nbsp;</li>
+
+      @for (keyValue of keyValues(); track keyValue) {
+        <li>{{ keyValue.name }}: {{ keyValue.value }}</li>
+      }
+    </ul>
+  </div>
+
+  <app-form [formDefinition]="formDefinition()" />
+</div>

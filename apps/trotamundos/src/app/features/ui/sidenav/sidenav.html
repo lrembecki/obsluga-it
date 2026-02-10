@@ -1,0 +1,15 @@
+<div class="sidenav-overlay" (click)="onClose()">
+  <nav class="sidenav" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="onClose()" aria-label="Close menu">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <ul class="menu-list">
+      @for (menuItem of menuItems(); track menuItem) {
+        <li>
+          <a [routerLink]="menuItem.routerLink" (click)="onMenuItemClick()">{{ menuItem.label }}</a>
+        </li>
+      }
+    </ul>
+  </nav>
+</div>

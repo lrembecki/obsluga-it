@@ -1,11 +1,22 @@
-<app-logo color="transparent" />
+<a href="/"><app-logo color="transparent" /></a>
 
 <div class="spacer"></div>
 
-<ul>
+<!-- Desktop Menu -->
+<ul class="desktop-menu">
   @for (menuItem of menuItems(); track menuItem) {
     <li>
       <a [routerLink]="menuItem.routerLink">{{ menuItem.label }}</a>
     </li>
   }
 </ul>
+
+<!-- Mobile Hamburger Menu Button -->
+<button class="hamburger-button" (click)="openSidenav()" aria-label="Open menu">
+  <span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- Sidenav -->
+@if (isSidenavOpen()) {
+  <app-sidenav [menuItems]="menuItems()" (close)="closeSidenav()" />
+}

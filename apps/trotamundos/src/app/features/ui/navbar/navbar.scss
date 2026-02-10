@@ -1,4 +1,4 @@
-@use "variables" as var;
+@use "styles/variables" as var;
 
 :host {
     background-color: var.$primary;
@@ -11,13 +11,29 @@
 
     justify-content: end;
     text-transform: uppercase;
+
+    @media screen and (max-width: 760px) {
+        padding: .5rem 1.5rem;
+    }
+
+  .on-top & {
+    position: fixed;
+    background-color: transparent;
+  }
+
+  .not-on-top & {
+
+    position: sticky;
+    top: 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
 }
 
 .spacer {
     flex: auto;
 }
 
-a {
+li a {
     text-decoration: none;
     color: inherit;
     transition: opacity .2s ease;
@@ -27,10 +43,42 @@ a {
     }
 }
 
-ul {
+// Desktop Menu
+.desktop-menu {
     list-style: none;
     margin: auto 0;
     padding: 0;
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: 760px) {
+        display: none;
+    }
+}
+
+// Hamburger Menu Button
+.hamburger-button {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: auto 0;
+    color: white;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+    .material-symbols-outlined {
+        font-size: 2rem;
+    }
+
+    @media screen and (max-width: 760px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

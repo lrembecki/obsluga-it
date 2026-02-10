@@ -10,6 +10,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { environment } from '../environments/environment';
 import { BaseApiUrlScope } from './core/defaults/base-storage-url';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { TranslateFileUrlPipe } from './core/pipes/translate-file-url-pipe';
 
 export const appConfig: ApplicationConfig = {
   providers: [

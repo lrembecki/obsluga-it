@@ -35,6 +35,17 @@ export class TrotamundosAboutUsFormService extends ArrayFormService<AboutUsVM> {
               rows: 6,
               colClass: 'col-12',
             }),
+            new TextareaFormFieldSchema<AboutUsVM>({
+              label: 'Footer description',
+              key: 'footerDescription',
+              rows: 6,
+              colClass: 'col-12',
+            }),
+            new TextFormFieldSchema<AboutUsVM>({
+              label: 'Footer highlight',
+              key: 'footerHighlight',
+              colClass: 'col-12',
+            }),
             new TextFormFieldSchema<AboutUsVM>({
               key: 'imageId',
               isVisible: false,

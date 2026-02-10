@@ -22,6 +22,12 @@ internal class AboutUsEntityTypeConfiguration : SubscriptionBaseEntityTypeConfig
             .IsRequired()
             .HasMaxLength(5000);
 
+        builder.Property(e => e.FooterDescription)
+            .HasMaxLength(2000);
+
+        builder.Property(e => e.FooterHighlight)
+            .HasMaxLength(2000);
+
         builder.HasOne(e => e.Image)
             .WithMany()
             .HasForeignKey(e => e.ImageId)

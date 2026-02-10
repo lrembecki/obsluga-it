@@ -6,35 +6,33 @@ namespace lrembecki.infrastructure.shared;
 
 public static class RouteGroupBuilderExtensions
 {
-    public static RouteGroupBuilder MapGetRequest(
-        this RouteGroupBuilder group,
+    public static IEndpointRouteBuilder MapGetRequest(
+        this IEndpointRouteBuilder group,
         Delegate delegateHandler,
         string route = "",
         string[] roles = null!)
     {
         var endpoint = group
-            .MapGet(route, delegateHandler);
-
-        endpoint = MapAuthorization(roles, endpoint);
+            .MapGet(route, delegateHandler)
+            .MapAuthorization(roles);
 
         return group;
     }
 
-    public static RouteGroupBuilder MapPutRequest(
-        this RouteGroupBuilder group,
+    public static IEndpointRouteBuilder MapPutRequest(
+        this IEndpointRouteBuilder group,
         Delegate delegateHandler,
         string route = "",
         string[] roles = null!)
     {
         var endpoint = group
-            .MapPut(route, delegateHandler);
-
-        endpoint = MapAuthorization(roles, endpoint);
+            .MapPut(route, delegateHandler)
+            .MapAuthorization(roles);
 
         return group;
     }
 
-    private static RouteHandlerBuilder MapAuthorization(string[] roles, RouteHandlerBuilder endpoint)
+    private static RouteHandlerBuilder MapAuthorization(this RouteHandlerBuilder endpoint, string[] roles)
     {
         if (roles?.Length > 0)
         {

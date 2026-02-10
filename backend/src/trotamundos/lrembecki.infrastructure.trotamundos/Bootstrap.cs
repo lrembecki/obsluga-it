@@ -2,6 +2,7 @@
 using lrembecki.core.trotamundos.Advantages;
 using lrembecki.core.trotamundos.Files;
 using lrembecki.core.trotamundos.Highlights;
+using lrembecki.core.trotamundos.IndividualTrips;
 using lrembecki.core.trotamundos.LoyalityPrograms;
 using lrembecki.core.trotamundos.Pages.AboutUs;
 using lrembecki.core.trotamundos.Pages.Home;
@@ -30,6 +31,9 @@ public static class BootstrapTrotamundos
         services.AddScoped<IHandler<HowItWorksGetAllRequest, HowItWorksVM>, HowItWorksGetAllRequest.Handler>();
         services.AddScoped<IHandler<HowItWorksCreateOrUpdateRequest, HowItWorksVM>, HowItWorksCreateOrUpdateRequest.Handler>();
 
+        services.AddScoped<IHandler<IndividualTripGetRequest, IndividualTripVM>, IndividualTripGetRequest.Handler>();
+        services.AddScoped<IHandler<IndividualTripCreateOrUpdateCommand, IndividualTripVM>, IndividualTripCreateOrUpdateCommand.Handler>();
+
         return services;
     }
 
@@ -44,6 +48,10 @@ public static class BootstrapTrotamundos
             .MapCrud<ITripService, TripDto, TripVM>("trips")
             .MapCrud<IFileService, FileDto, FileVM>("files")
             ;
+
+        group.MapGroup("individual-trips")
+            .MapGetRequest(IndividualTripGetRequest.Delegate)
+            .MapPutRequest(IndividualTripCreateOrUpdateCommand.Delegate);
 
         var pagesGroup = group.MapGroup("pages")
             .WithTags("Trotamundos Pages")

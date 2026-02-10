@@ -8,6 +8,8 @@ internal class AboutUsEntity : TrotamundosBaseEntity
 {
     public string Title { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
+    public string FooterDescription { get; private set; } = string.Empty;
+    public string FooterHighlight { get; private set; } = string.Empty;
     public Guid ImageId { get; private set; }
     public StorageEntity Image { get; private set; } = null!;
     public List<AboutUsItemEntity> Items { get; private set; } = [];
@@ -32,6 +34,8 @@ internal class AboutUsEntity : TrotamundosBaseEntity
     {
         Title = model.Title;
         Description = model.Description;
+        FooterDescription = model.FooterDescription;
+        FooterHighlight = model.FooterHighlight;
         ImageId = model.ImageId;
 
         // Update Items

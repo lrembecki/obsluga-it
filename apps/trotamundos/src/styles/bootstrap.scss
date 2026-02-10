@@ -1,0 +1,7 @@
+@use 'variables' as *;
+@import "~/../bootstrap/scss/bootstrap.scss";
+
+:root {
+  --main-theme-color: #{$primary};
+  --wrapper-odd-background-color: #{$primary-light};
+}

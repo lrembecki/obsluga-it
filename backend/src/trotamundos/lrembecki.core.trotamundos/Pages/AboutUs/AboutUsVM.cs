@@ -5,6 +5,8 @@ namespace lrembecki.core.trotamundos.Pages.AboutUs;
 public record AboutUsVM(
     string Title,
     string Description,
+    string FooterDescription,
+    string FooterHighlight,
     Guid ImageId,
     StorageVM Image,
     List<AboutUsItemVM> Items,
@@ -18,6 +20,8 @@ public record AboutUsVM(
         return new(
             entity.Title,
             entity.Description,
+            entity.FooterDescription,
+            entity.FooterHighlight,
             entity.ImageId,
             StorageVM.Map(entity.Image),
             [.. entity.Items.Select(AboutUsItemVM.Map)],
@@ -26,12 +30,14 @@ public record AboutUsVM(
     }
 
     public static AboutUsVM Empty => new(
-        string.Empty,
-        string.Empty,
-        new Guid(),
-        null!,
-        [],
-        []
+        Title: string.Empty,
+        Description: string.Empty,
+        FooterDescription: string.Empty,
+        FooterHighlight: string.Empty,
+        ImageId: new Guid(),
+        Image: null!,
+        Items: [],
+        Persons: []
     );
 
 }
