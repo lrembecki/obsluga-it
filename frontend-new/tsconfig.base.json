@@ -26,7 +26,8 @@
       "@obsluga-it/users/data-access": ["libs/users/data-access/src/index.ts"],
       "@obsluga-it/users/feature": ["libs/users/feature/src/index.ts"],
       "@obsluga-it/core/notification": ["libs/core/notification/src/index.ts"],
-      "@obsluga-it/users/ui": ["libs/users/ui/src/index.ts"]
+      "@obsluga-it/users/ui": ["libs/users/ui/src/index.ts"],
+      "@obsluga-it/core/theme": ["libs/core/theme/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
