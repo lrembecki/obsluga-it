@@ -28,7 +28,8 @@
       "@obsluga-it/core/notification": ["libs/core/notification/src/index.ts"],
       "@obsluga-it/users/ui": ["libs/users/ui/src/index.ts"],
       "@obsluga-it/core/theme": ["libs/core/theme/src/index.ts"],
-      "@obsluga-it/core/breadcrumbs": ["libs/core/breadcrumbs/src/index.ts"]
+      "@obsluga-it/core/breadcrumbs": ["libs/core/breadcrumbs/src/index.ts"],
+      "@obsluga-it/core/permissions": ["libs/core/permissions/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
