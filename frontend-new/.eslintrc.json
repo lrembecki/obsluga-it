@@ -1,0 +1,72 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "allowCircularSelfDependency": false,
+            "enforceBuildableLibDependency": true,
+            "depConstraints": [
+              { "sourceTag": "type:domain", "onlyDependOnLibsWithTags": [] },
+              { "sourceTag": "type:data-access", "onlyDependOnLibsWithTags": ["type:domain", "scope:core"] },
+              { "sourceTag": "type:feature", "onlyDependOnLibsWithTags": ["type:data-access", "type:domain", "type:ui", "scope:core", "scope:shared"] },
+              { "sourceTag": "type:ui", "onlyDependOnLibsWithTags": ["scope:shared", "scope:core"] },
+              { "sourceTag": "scope:shared", "onlyDependOnLibsWithTags": ["scope:core", "scope:shared:self"] }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["libs/**/src/**/*.ts"],
+      "excludedFiles": [
+        "libs/shared/ui-kit/**",
+        "libs/core/auth/**",
+        "libs/core/i18n/**"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              "primeng/*",
+              "@azure/msal-*",
+              "@ngx-translate/*"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "Decorator[expression.callee.name='Input']",
+            "message": "Use input() signal binding instead of @Input."
+          },
+          {
+            "selector": "Decorator[expression.callee.name='Output']",
+            "message": "Use output() signal binding instead of @Output."
+          }
+        ]
+      }
+    }
+  ]
+}

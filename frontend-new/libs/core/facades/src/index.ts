@@ -1,0 +1,15 @@
+export {
+  IDataFacade,
+  IArrayFacade,
+  IPopulateFacade,
+  IEditableFacade,
+  Facade,
+  ArrayFacade,
+  ObjectFacade,
+  ObjectApiFacade,
+  ArrayApiFacade,
+  provideArrayApiFacade,
+  provideObjectApiFacade,
+  populateFacadeScope,
+  facadeScope,
+} from './lib/facade.interface';
