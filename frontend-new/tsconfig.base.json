@@ -33,7 +33,8 @@
       "@obsluga-it/core/permissions": ["libs/core/permissions/src/index.ts"],
       "@obsluga-it/core/facades": ["libs/core/facades/src/index.ts"],
       "@obsluga-it/core/navigation": ["libs/core/navigation/src/index.ts"],
-      "@obsluga-it/shared/data-table": ["libs/shared/data-table/src/index.ts"]
+      "@obsluga-it/shared/data-table": ["libs/shared/data-table/src/index.ts"],
+      "@obsluga-it/shared/forms": ["libs/shared/forms/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
