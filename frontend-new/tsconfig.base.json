@@ -25,6 +25,7 @@
       "@obsluga-it/users/domain": ["libs/users/domain/src/index.ts"],
       "@obsluga-it/users/data-access": ["libs/users/data-access/src/index.ts"],
       "@obsluga-it/users/feature": ["libs/users/feature/src/index.ts"],
+      "@obsluga-it/core/notification": ["libs/core/notification/src/index.ts"],
       "@obsluga-it/users/ui": ["libs/users/ui/src/index.ts"]
     }
   },
