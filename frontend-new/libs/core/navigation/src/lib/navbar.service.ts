@@ -11,11 +11,8 @@ export class NavbarService {
     ),
   );
 
-  async initialize(): Promise<void> {
+  async initialize(moduleRoutes: Routes = []): Promise<void> {
     const modules: ModuleItem[] = [];
-    const moduleRoutes = await import('../../../modules-routes').then(
-      (m) => m.modulesRoutes,
-    ).catch(() => [] as Routes);
 
     for (const moduleRoute of moduleRoutes) {
       if (!moduleRoute.data || !moduleRoute.data['title']) continue;

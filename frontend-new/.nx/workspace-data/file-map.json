@@ -1,0 +1,1292 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.5.2",
+  "pathMappings": {
+    "@obsluga-it/core/api": [
+      "libs/core/api/src/index.ts"
+    ],
+    "@obsluga-it/core/auth": [
+      "libs/core/auth/src/index.ts"
+    ],
+    "@obsluga-it/core/session-store": [
+      "libs/core/session-store/src/index.ts"
+    ],
+    "@obsluga-it/core/app-config-store": [
+      "libs/core/app-config-store/src/index.ts"
+    ],
+    "@obsluga-it/core/http": [
+      "libs/core/http/src/index.ts"
+    ],
+    "@obsluga-it/core/i18n": [
+      "libs/core/i18n/src/index.ts"
+    ],
+    "@obsluga-it/shared/ui-kit": [
+      "libs/shared/ui-kit/src/index.ts"
+    ],
+    "@obsluga-it/shared/util": [
+      "libs/shared/util/src/index.ts"
+    ],
+    "@obsluga-it/users/domain": [
+      "libs/users/domain/src/index.ts"
+    ],
+    "@obsluga-it/users/data-access": [
+      "libs/users/data-access/src/index.ts"
+    ],
+    "@obsluga-it/users/feature": [
+      "libs/users/feature/src/index.ts"
+    ],
+    "@obsluga-it/core/notification": [
+      "libs/core/notification/src/index.ts"
+    ],
+    "@obsluga-it/users/ui": [
+      "libs/users/ui/src/index.ts"
+    ],
+    "@obsluga-it/core/theme": [
+      "libs/core/theme/src/index.ts"
+    ],
+    "@obsluga-it/core/breadcrumbs": [
+      "libs/core/breadcrumbs/src/index.ts"
+    ],
+    "@obsluga-it/core/permissions": [
+      "libs/core/permissions/src/index.ts"
+    ],
+    "@obsluga-it/core/facades": [
+      "libs/core/facades/src/index.ts"
+    ],
+    "@obsluga-it/core/navigation": [
+      "libs/core/navigation/src/index.ts"
+    ],
+    "@obsluga-it/shared/data-table": [
+      "libs/shared/data-table/src/index.ts"
+    ],
+    "@obsluga-it/shared/forms": [
+      "libs/shared/forms/src/index.ts"
+    ],
+    "@obsluga-it/administration/permissions": [
+      "libs/administration/permissions/src/index.ts"
+    ],
+    "@obsluga-it/administration/permission-groups": [
+      "libs/administration/permission-groups/src/index.ts"
+    ],
+    "@obsluga-it/administration/subscription-accounts": [
+      "libs/administration/subscription-accounts/src/index.ts"
+    ],
+    "@obsluga-it/administration/routes": [
+      "libs/administration/routes.ts"
+    ],
+    "@obsluga-it/settings/companies": [
+      "libs/settings/companies/src/index.ts"
+    ],
+    "@obsluga-it/settings/contacts": [
+      "libs/settings/contacts/src/index.ts"
+    ],
+    "@obsluga-it/settings/websites": [
+      "libs/settings/websites/src/index.ts"
+    ],
+    "@obsluga-it/settings/emails": [
+      "libs/settings/emails/src/index.ts"
+    ],
+    "@obsluga-it/settings/email-templates": [
+      "libs/settings/email-templates/src/index.ts"
+    ],
+    "@obsluga-it/settings/form-definitions": [
+      "libs/settings/form-definitions/src/index.ts"
+    ],
+    "@obsluga-it/settings/routes": [
+      "libs/settings/routes.ts"
+    ],
+    "@obsluga-it/trotamundos/advantages": [
+      "libs/trotamundos/advantages/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/highlights": [
+      "libs/trotamundos/highlights/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/loyality-program": [
+      "libs/trotamundos/loyality-program/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/trips": [
+      "libs/trotamundos/trips/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/files": [
+      "libs/trotamundos/files/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/about-us": [
+      "libs/trotamundos/about-us/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/how-it-works": [
+      "libs/trotamundos/how-it-works/src/index.ts"
+    ],
+    "@obsluga-it/trotamundos/routes": [
+      "libs/trotamundos/routes.ts"
+    ],
+    "@obsluga-it/forms": [
+      "libs/forms/src/index.ts"
+    ],
+    "@obsluga-it/account": [
+      "libs/account/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "core-session-store": [
+        {
+          "file": "libs/core/session-store/project.json",
+          "hash": "6380063513162735809"
+        },
+        {
+          "file": "libs/core/session-store/src/index.ts",
+          "hash": "14500625165377061570"
+        },
+        {
+          "file": "libs/core/session-store/src/lib/global-session.store.ts",
+          "hash": "4661855822164049779",
+          "deps": [
+            "npm:@angular/core",
+            "core-auth"
+          ]
+        },
+        {
+          "file": "libs/core/session-store/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/core/session-store/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "users-domain": [
+        {
+          "file": "libs/users/domain/project.json",
+          "hash": "6872321824766482514"
+        },
+        {
+          "file": "libs/users/domain/src/index.ts",
+          "hash": "13899235573294293852"
+        },
+        {
+          "file": "libs/users/domain/src/lib/user.dto.ts",
+          "hash": "9380776217502509762"
+        },
+        {
+          "file": "libs/users/domain/src/lib/user.errors.ts",
+          "hash": "16898066922426536598",
+          "deps": [
+            "core-http"
+          ]
+        },
+        {
+          "file": "libs/users/domain/src/lib/user.mapper.ts",
+          "hash": "6747673382287000076"
+        },
+        {
+          "file": "libs/users/domain/src/lib/user.model.ts",
+          "hash": "10815802827827142202"
+        },
+        {
+          "file": "libs/users/domain/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/users/domain/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "users-ui": [
+        {
+          "file": "libs/users/ui/project.json",
+          "hash": "2913071422972807339"
+        },
+        {
+          "file": "libs/users/ui/src/index.ts",
+          "hash": "16933765654312633315"
+        },
+        {
+          "file": "libs/users/ui/src/lib/users-table.component.ts",
+          "hash": "8491392424497711721",
+          "deps": [
+            "npm:@angular/core",
+            "users-domain",
+            "shared-ui-kit"
+          ]
+        },
+        {
+          "file": "libs/users/ui/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/users/ui/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "core-i18n": [
+        {
+          "file": "libs/core/i18n/project.json",
+          "hash": "18380873876113375486"
+        },
+        {
+          "file": "libs/core/i18n/src/index.ts",
+          "hash": "6201191651573083446"
+        },
+        {
+          "file": "libs/core/i18n/src/lib/i18n.facade.ts",
+          "hash": "8773661415157327675",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ngx-translate/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "libs/core/i18n/src/lib/language-switch.service.ts",
+          "hash": "12295512076787883678",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/core/i18n/src/lib/translate.pipe.wrapper.ts",
+          "hash": "14176034669389558802",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/core/i18n/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/core/i18n/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "core-app-config-store": [
+        {
+          "file": "libs/core/app-config-store/project.json",
+          "hash": "13897958121380866582"
+        },
+        {
+          "file": "libs/core/app-config-store/src/index.ts",
+          "hash": "4383243672611489387"
+        },
+        {
+          "file": "libs/core/app-config-store/src/lib/global-app-config.store.ts",
+          "hash": "3059253916051171000",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/core/app-config-store/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/core/app-config-store/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "core-http": [
+        {
+          "file": "libs/core/http/jest.config.ts",
+          "hash": "5157980074812471314"
+        },
+        {
+          "file": "libs/core/http/project.json",
+          "hash": "7699041730151021691"
+        },
+        {
+          "file": "libs/core/http/src/index.ts",
+          "hash": "16088116948849378081"
+        },
+        {
+          "file": "libs/core/http/src/lib/api-error-normalizer.ts",
+          "hash": "11533604527419231753",
+          "deps": [
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "libs/core/http/src/lib/domain-error.types.ts",
+          "hash": "18435767625539246396"
+        },
+        {
+          "file": "libs/core/http/src/lib/http-client.token.ts",
+          "hash": "13721465600097903158",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "libs/core/http/tsconfig.json",
+          "hash": "16936291690604743448"
+        },
+        {
+          "file": "libs/core/http/tsconfig.lib.json",
+          "hash": "10578244618206437458"
+        },
+        {
+          "file": "libs/core/http/tsconfig.spec.json",
+          "hash": "16885429057150588397"
+        }
+      ],
+      "shared-ui-kit": [
+        {
+          "file": "libs/shared/ui-kit/project.json",
+          "hash": "1797494912161126561"
+        },
+        {
+          "file": "libs/shared/ui-kit/src/index.ts",
+          "hash": "11847993252104240551"
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/breadcrumbs/breadcrumbs.component.ts",
+          "hash": "15415668237195974499",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/button/button.component.ts",
+          "hash": "1508696263271390520",
+          "deps": [
+            "npm:@angular/core",
+            "npm:primeng"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/footer/footer.component.ts",
+          "hash": "13411647066889777319",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/input-text/input-text.component.ts",
+          "hash": "15308017813644931130",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/forms",
+            "npm:primeng"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/loading/loading.component.ts",
+          "hash": "7156133193288218418",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/panel/panel.component.ts",
+          "hash": "10724601818036641519",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/sidebar/sidebar.component.ts",
+          "hash": "510325545781870599",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/table/table.component.ts",
+          "hash": "13190223927037291139",
+          "deps": [
+            "npm:@angular/core",
+            "npm:primeng"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/src/lib/toast/toast.component.ts",
+          "hash": "5648646943020812508",
+          "deps": [
+            "npm:@angular/core",
+            "npm:primeng"
+          ]
+        },
+        {
+          "file": "libs/shared/ui-kit/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/shared/ui-kit/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "shared-util": [
+        {
+          "file": "libs/shared/util/project.json",
+          "hash": "848733116298375733"
+        },
+        {
+          "file": "libs/shared/util/src/index.ts",
+          "hash": "11101969767656802638"
+        },
+        {
+          "file": "libs/shared/util/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/shared/util/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "web": [
+        {
+          "file": "apps/web/project.json",
+          "hash": "14849383088101975161"
+        },
+        {
+          "file": "apps/web/public/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/src/app/app.component.ts",
+          "hash": "2617688588363953303",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "shared-ui-kit",
+            "core-auth"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/app.config.ts",
+          "hash": "10178306652441098542",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "npm:@angular/common",
+            "npm:@angular/platform-browser",
+            "npm:primeng",
+            "core-auth"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/app.routes.ts",
+          "hash": "8388983436222558346",
+          "deps": [
+            "npm:@angular/router",
+            [
+              "users-feature",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "apps/web/src/index.html",
+          "hash": "12735797036243055004"
+        },
+        {
+          "file": "apps/web/src/main.ts",
+          "hash": "16635586463787978962",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/web/tsconfig.app.json",
+          "hash": "14802413014354778282"
+        },
+        {
+          "file": "apps/web/tsconfig.json",
+          "hash": "8200422682881560720"
+        }
+      ],
+      "users-data-access": [
+        {
+          "file": "libs/users/data-access/jest.config.ts",
+          "hash": "6575767627152627306"
+        },
+        {
+          "file": "libs/users/data-access/project.json",
+          "hash": "1097988649901904449"
+        },
+        {
+          "file": "libs/users/data-access/src/index.ts",
+          "hash": "5749531987977725218"
+        },
+        {
+          "file": "libs/users/data-access/src/lib/users.api.ts",
+          "hash": "12060333445387477135",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs",
+            "users-domain"
+          ]
+        },
+        {
+          "file": "libs/users/data-access/src/lib/users.gateway.spec.ts",
+          "hash": "2538587598832899160",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs",
+            "npm:@angular/common",
+            "users-domain"
+          ]
+        },
+        {
+          "file": "libs/users/data-access/src/lib/users.gateway.ts",
+          "hash": "12814207984516645449",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs",
+            "core-http",
+            "users-domain"
+          ]
+        },
+        {
+          "file": "libs/users/data-access/tsconfig.json",
+          "hash": "12508969343052079177"
+        },
+        {
+          "file": "libs/users/data-access/tsconfig.lib.json",
+          "hash": "5442251950026625560"
+        },
+        {
+          "file": "libs/users/data-access/tsconfig.spec.json",
+          "hash": "6722839012535807551"
+        }
+      ],
+      "users-feature": [
+        {
+          "file": "libs/users/feature/project.json",
+          "hash": "13985883209981991759"
+        },
+        {
+          "file": "libs/users/feature/src/index.ts",
+          "hash": "11406300257747170525"
+        },
+        {
+          "file": "libs/users/feature/src/lib/users.page.ts",
+          "hash": "14567471383372539049",
+          "deps": [
+            "npm:@angular/core",
+            "users-ui",
+            "users-domain"
+          ]
+        },
+        {
+          "file": "libs/users/feature/src/lib/users.routes.ts",
+          "hash": "7321588076719147515",
+          "deps": [
+            "npm:@angular/router",
+            "core-auth"
+          ]
+        },
+        {
+          "file": "libs/users/feature/src/lib/users.store.ts",
+          "hash": "4952012359782523530",
+          "deps": [
+            "npm:@angular/core",
+            "users-data-access",
+            "core-http"
+          ]
+        },
+        {
+          "file": "libs/users/feature/tsconfig.json",
+          "hash": "14467724389661788855"
+        },
+        {
+          "file": "libs/users/feature/tsconfig.lib.json",
+          "hash": "14513999718035362854"
+        }
+      ],
+      "core-auth": [
+        {
+          "file": "libs/core/auth/jest.config.ts",
+          "hash": "11467699863901798563"
+        },
+        {
+          "file": "libs/core/auth/project.json",
+          "hash": "5990084893722076582"
+        },
+        {
+          "file": "libs/core/auth/src/index.ts",
+          "hash": "15191249564082836018"
+        },
+        {
+          "file": "libs/core/auth/src/lib/facades/auth.facade.ts",
+          "hash": "11227371633291977612",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/facades/msal-auth.facade.ts",
+          "hash": "2602582182705060177",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@azure/msal-angular",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/guards/auth.guard.ts",
+          "hash": "4621824072040668116",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/interceptors/internal-jwt.interceptor.spec.ts",
+          "hash": "12660539553234286594",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/interceptors/internal-jwt.interceptor.ts",
+          "hash": "3337169702197128099",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/models/auth-session.model.ts",
+          "hash": "12547367181743860280"
+        },
+        {
+          "file": "libs/core/auth/src/lib/services/jwt-storage.service.spec.ts",
+          "hash": "18300048923049786598",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/services/jwt-storage.service.ts",
+          "hash": "13207284560032610447",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/lib/services/token-rotation.service.ts",
+          "hash": "799028517644133435",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/core/auth/src/test-setup.ts",
+          "hash": "17711435995618823417"
+        },
+        {
+          "file": "libs/core/auth/tsconfig.json",
+          "hash": "16936291690604743448"
+        },
+        {
+          "file": "libs/core/auth/tsconfig.lib.json",
+          "hash": "18049561517523558538"
+        },
+        {
+          "file": "libs/core/auth/tsconfig.spec.json",
+          "hash": "5366006903442206988"
+        }
+      ]
+    },
+    "nonProjectFiles": [
+      {
+        "file": ".eslintrc.json",
+        "hash": "15430292655792347062"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "9555984629071555672"
+      },
+      {
+        "file": "README.md",
+        "hash": "4940454385028312567"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9894787809337442656"
+      },
+      {
+        "file": "libs/account/src/index.ts",
+        "hash": "12174330283790466617"
+      },
+      {
+        "file": "libs/account/src/lib/forbidden.ts",
+        "hash": "9368265703087928553"
+      },
+      {
+        "file": "libs/account/src/lib/routes.ts",
+        "hash": "10870560574722652544"
+      },
+      {
+        "file": "libs/account/src/lib/sign-in.ts",
+        "hash": "10003027274289446959"
+      },
+      {
+        "file": "libs/account/src/lib/unauthorized.ts",
+        "hash": "12805267520393371957"
+      },
+      {
+        "file": "libs/administration/permission-groups/src/index.ts",
+        "hash": "9639165417256089126"
+      },
+      {
+        "file": "libs/administration/permission-groups/src/lib/permission-group-data-table.service.ts",
+        "hash": "976222488880318468"
+      },
+      {
+        "file": "libs/administration/permission-groups/src/lib/permission-group-form.service.ts",
+        "hash": "17970345576466309259"
+      },
+      {
+        "file": "libs/administration/permission-groups/src/lib/permission-group.provider.ts",
+        "hash": "11730743081242158225"
+      },
+      {
+        "file": "libs/administration/permission-groups/src/lib/permission-group.vm.ts",
+        "hash": "9024559022335361986"
+      },
+      {
+        "file": "libs/administration/permission-groups/src/lib/routes.ts",
+        "hash": "11107652626008629700"
+      },
+      {
+        "file": "libs/administration/permissions/src/index.ts",
+        "hash": "10419343770427844356"
+      },
+      {
+        "file": "libs/administration/permissions/src/lib/permission-data-table.service.ts",
+        "hash": "11868929761734786724"
+      },
+      {
+        "file": "libs/administration/permissions/src/lib/permission-form.service.ts",
+        "hash": "619274598597070650"
+      },
+      {
+        "file": "libs/administration/permissions/src/lib/permission.provider.ts",
+        "hash": "8479179055381961374"
+      },
+      {
+        "file": "libs/administration/permissions/src/lib/permission.vm.ts",
+        "hash": "7007754070623212091"
+      },
+      {
+        "file": "libs/administration/permissions/src/lib/routes.ts",
+        "hash": "1137588402377849369"
+      },
+      {
+        "file": "libs/administration/routes.ts",
+        "hash": "11782469119398919956"
+      },
+      {
+        "file": "libs/administration/subscription-accounts/src/index.ts",
+        "hash": "3573606610700204246"
+      },
+      {
+        "file": "libs/administration/subscription-accounts/src/lib/account-subscription-data-table.service.ts",
+        "hash": "2214838695534030777"
+      },
+      {
+        "file": "libs/administration/subscription-accounts/src/lib/account-subscription-form.service.ts",
+        "hash": "9038560164147489125"
+      },
+      {
+        "file": "libs/administration/subscription-accounts/src/lib/account-subscription.provider.ts",
+        "hash": "13494080705585676137"
+      },
+      {
+        "file": "libs/administration/subscription-accounts/src/lib/account-subscription.vm.ts",
+        "hash": "12521773157578628151"
+      },
+      {
+        "file": "libs/administration/subscription-accounts/src/lib/routes.ts",
+        "hash": "4205001669700083317"
+      },
+      {
+        "file": "libs/core/api/src/index.ts",
+        "hash": "11329933632158201764"
+      },
+      {
+        "file": "libs/core/api/src/lib/api.service.ts",
+        "hash": "13053212217350152089"
+      },
+      {
+        "file": "libs/core/api/src/lib/service-call-result.model.ts",
+        "hash": "15031679343493332707"
+      },
+      {
+        "file": "libs/core/breadcrumbs/src/index.ts",
+        "hash": "11303186076720368713"
+      },
+      {
+        "file": "libs/core/breadcrumbs/src/lib/breadcrumbs.service.ts",
+        "hash": "7513759814694037538"
+      },
+      {
+        "file": "libs/core/facades/src/index.ts",
+        "hash": "9344311325503701534"
+      },
+      {
+        "file": "libs/core/facades/src/lib/facade.interface.ts",
+        "hash": "4096057538245197339"
+      },
+      {
+        "file": "libs/core/navigation/src/index.ts",
+        "hash": "6339655232027896615"
+      },
+      {
+        "file": "libs/core/navigation/src/lib/navbar.service.ts",
+        "hash": "3372510603426124531"
+      },
+      {
+        "file": "libs/core/notification/src/index.ts",
+        "hash": "6765521942098326038"
+      },
+      {
+        "file": "libs/core/notification/src/lib/notification.service.ts",
+        "hash": "17316106292283042777"
+      },
+      {
+        "file": "libs/core/permissions/src/index.ts",
+        "hash": "6586727573198769507"
+      },
+      {
+        "file": "libs/core/permissions/src/lib/authorized.guard.ts",
+        "hash": "5465575284331152957"
+      },
+      {
+        "file": "libs/core/permissions/src/lib/permission.types.ts",
+        "hash": "287108836961817313"
+      },
+      {
+        "file": "libs/core/theme/src/index.ts",
+        "hash": "9708810566828122063"
+      },
+      {
+        "file": "libs/core/theme/src/lib/theme.service.ts",
+        "hash": "5098008073443315964"
+      },
+      {
+        "file": "libs/forms/src/index.ts",
+        "hash": "15187628231516657904"
+      },
+      {
+        "file": "libs/forms/src/lib/form.vm.ts",
+        "hash": "1436034613267173278"
+      },
+      {
+        "file": "libs/forms/src/lib/forms-data-table.service.ts",
+        "hash": "15664089297808395777"
+      },
+      {
+        "file": "libs/forms/src/lib/forms-form.service.ts",
+        "hash": "10255376024996309953"
+      },
+      {
+        "file": "libs/forms/src/lib/forms.facade.ts",
+        "hash": "3433905205259613790"
+      },
+      {
+        "file": "libs/forms/src/lib/routes.ts",
+        "hash": "10928168189041741455"
+      },
+      {
+        "file": "libs/settings/companies/src/index.ts",
+        "hash": "10333479867417393233"
+      },
+      {
+        "file": "libs/settings/companies/src/lib/company-data-table.service.ts",
+        "hash": "12795029304280282863"
+      },
+      {
+        "file": "libs/settings/companies/src/lib/company-form.service.ts",
+        "hash": "14727256899027250588"
+      },
+      {
+        "file": "libs/settings/companies/src/lib/company.facade.ts",
+        "hash": "2101185738446801632"
+      },
+      {
+        "file": "libs/settings/companies/src/lib/company.vm.ts",
+        "hash": "13227029826972569031"
+      },
+      {
+        "file": "libs/settings/companies/src/lib/routes.ts",
+        "hash": "6894631488114610535"
+      },
+      {
+        "file": "libs/settings/contacts/src/index.ts",
+        "hash": "9518937907318454612"
+      },
+      {
+        "file": "libs/settings/contacts/src/lib/contact-data-table.service.ts",
+        "hash": "8585980423840993580"
+      },
+      {
+        "file": "libs/settings/contacts/src/lib/contact-form.service.ts",
+        "hash": "4462652748680177446"
+      },
+      {
+        "file": "libs/settings/contacts/src/lib/contact.facade.ts",
+        "hash": "6904999386918279783"
+      },
+      {
+        "file": "libs/settings/contacts/src/lib/contact.vm.ts",
+        "hash": "1976531785336926253"
+      },
+      {
+        "file": "libs/settings/contacts/src/lib/routes.ts",
+        "hash": "9207821851259065013"
+      },
+      {
+        "file": "libs/settings/email-templates/src/index.ts",
+        "hash": "6052231614654802472"
+      },
+      {
+        "file": "libs/settings/email-templates/src/lib/email-template-data-table.service.ts",
+        "hash": "14755080960888539646"
+      },
+      {
+        "file": "libs/settings/email-templates/src/lib/email-template-form.service.ts",
+        "hash": "17023020833973027933"
+      },
+      {
+        "file": "libs/settings/email-templates/src/lib/email-template.facade.ts",
+        "hash": "15834806472735821498"
+      },
+      {
+        "file": "libs/settings/email-templates/src/lib/email-template.vm.ts",
+        "hash": "17300948711798122117"
+      },
+      {
+        "file": "libs/settings/email-templates/src/lib/routes.ts",
+        "hash": "972459792420769865"
+      },
+      {
+        "file": "libs/settings/emails/src/index.ts",
+        "hash": "8553621639390418819"
+      },
+      {
+        "file": "libs/settings/emails/src/lib/email-data-table.service.ts",
+        "hash": "18290328156086633509"
+      },
+      {
+        "file": "libs/settings/emails/src/lib/email-form.service.ts",
+        "hash": "12005323597849209889"
+      },
+      {
+        "file": "libs/settings/emails/src/lib/email.facade.ts",
+        "hash": "227055510990097650"
+      },
+      {
+        "file": "libs/settings/emails/src/lib/email.vm.ts",
+        "hash": "16449782700649568913"
+      },
+      {
+        "file": "libs/settings/emails/src/lib/routes.ts",
+        "hash": "3398539522227170885"
+      },
+      {
+        "file": "libs/settings/form-definitions/src/index.ts",
+        "hash": "1857743862245888622"
+      },
+      {
+        "file": "libs/settings/form-definitions/src/lib/form-definition-data-table.service.ts",
+        "hash": "693875098117078710"
+      },
+      {
+        "file": "libs/settings/form-definitions/src/lib/form-definition-form.service.ts",
+        "hash": "10175020532422203048"
+      },
+      {
+        "file": "libs/settings/form-definitions/src/lib/form-definition.facade.ts",
+        "hash": "1607480805394849100"
+      },
+      {
+        "file": "libs/settings/form-definitions/src/lib/form-definition.vm.ts",
+        "hash": "13447638434551988258"
+      },
+      {
+        "file": "libs/settings/form-definitions/src/lib/routes.ts",
+        "hash": "11644941657428532911"
+      },
+      {
+        "file": "libs/settings/routes.ts",
+        "hash": "13895457178448211876"
+      },
+      {
+        "file": "libs/settings/websites/src/index.ts",
+        "hash": "10823547361885036032"
+      },
+      {
+        "file": "libs/settings/websites/src/lib/routes.ts",
+        "hash": "15158631109995777598"
+      },
+      {
+        "file": "libs/settings/websites/src/lib/website-data-table.service.ts",
+        "hash": "12009215376231153357"
+      },
+      {
+        "file": "libs/settings/websites/src/lib/website-form.service.ts",
+        "hash": "12838521100677514867"
+      },
+      {
+        "file": "libs/settings/websites/src/lib/website.facade.ts",
+        "hash": "3999662958673898267"
+      },
+      {
+        "file": "libs/settings/websites/src/lib/website.vm.ts",
+        "hash": "9181568273507382750"
+      },
+      {
+        "file": "libs/shared/data-table/src/index.ts",
+        "hash": "7157222073634836517"
+      },
+      {
+        "file": "libs/shared/data-table/src/lib/data-table.component.ts",
+        "hash": "6333322391730994076"
+      },
+      {
+        "file": "libs/shared/data-table/src/lib/data-table.service.ts",
+        "hash": "9087706141691084097"
+      },
+      {
+        "file": "libs/shared/data-table/src/lib/data-table.template.ts",
+        "hash": "3552540603163425195"
+      },
+      {
+        "file": "libs/shared/data-table/src/lib/data-table.types.ts",
+        "hash": "10492649183117038611"
+      },
+      {
+        "file": "libs/shared/forms/src/index.ts",
+        "hash": "385648227286807244"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/base-form.component.ts",
+        "hash": "10944814913015457569"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/form-field.schema.ts",
+        "hash": "8331775375023947102"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/form-model.provider.ts",
+        "hash": "13366088082766137788"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/form-renderer.ts",
+        "hash": "16074521104892590026"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/form-template.ts",
+        "hash": "9734954222162550738"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/form.service.ts",
+        "hash": "4627966062662259825"
+      },
+      {
+        "file": "libs/shared/forms/src/lib/tokens.ts",
+        "hash": "9563871868133304145"
+      },
+      {
+        "file": "libs/trotamundos/about-us/src/index.ts",
+        "hash": "1100543987867492735"
+      },
+      {
+        "file": "libs/trotamundos/about-us/src/lib/about-us-data-table.service.ts",
+        "hash": "12315653854482942293"
+      },
+      {
+        "file": "libs/trotamundos/about-us/src/lib/about-us-form.service.ts",
+        "hash": "10518712955107588310"
+      },
+      {
+        "file": "libs/trotamundos/about-us/src/lib/about-us.facade.ts",
+        "hash": "596310431804669671"
+      },
+      {
+        "file": "libs/trotamundos/about-us/src/lib/about-us.vm.ts",
+        "hash": "16446529421409003298"
+      },
+      {
+        "file": "libs/trotamundos/about-us/src/lib/routes.ts",
+        "hash": "5178642873725680460"
+      },
+      {
+        "file": "libs/trotamundos/advantages/src/index.ts",
+        "hash": "10633272626257624307"
+      },
+      {
+        "file": "libs/trotamundos/advantages/src/lib/advantage-data-table.service.ts",
+        "hash": "1054418859813430551"
+      },
+      {
+        "file": "libs/trotamundos/advantages/src/lib/advantage-form.service.ts",
+        "hash": "2240236917701839394"
+      },
+      {
+        "file": "libs/trotamundos/advantages/src/lib/advantage.facade.ts",
+        "hash": "15491348751477547227"
+      },
+      {
+        "file": "libs/trotamundos/advantages/src/lib/advantage.vm.ts",
+        "hash": "8839201561565796098"
+      },
+      {
+        "file": "libs/trotamundos/advantages/src/lib/routes.ts",
+        "hash": "11161470961792814637"
+      },
+      {
+        "file": "libs/trotamundos/files/src/index.ts",
+        "hash": "7327361369078469722"
+      },
+      {
+        "file": "libs/trotamundos/files/src/lib/file-data-table.service.ts",
+        "hash": "13931820669452327903"
+      },
+      {
+        "file": "libs/trotamundos/files/src/lib/file-form.service.ts",
+        "hash": "4682961512367369354"
+      },
+      {
+        "file": "libs/trotamundos/files/src/lib/file.facade.ts",
+        "hash": "11002362169794409404"
+      },
+      {
+        "file": "libs/trotamundos/files/src/lib/file.vm.ts",
+        "hash": "11097167833850129325"
+      },
+      {
+        "file": "libs/trotamundos/files/src/lib/routes.ts",
+        "hash": "5841726406813469410"
+      },
+      {
+        "file": "libs/trotamundos/highlights/src/index.ts",
+        "hash": "13824061776342315777"
+      },
+      {
+        "file": "libs/trotamundos/highlights/src/lib/highlight-data-table.service.ts",
+        "hash": "11400477101674448718"
+      },
+      {
+        "file": "libs/trotamundos/highlights/src/lib/highlight-form.service.ts",
+        "hash": "3958542428434126273"
+      },
+      {
+        "file": "libs/trotamundos/highlights/src/lib/highlight.facade.ts",
+        "hash": "11718372826922338928"
+      },
+      {
+        "file": "libs/trotamundos/highlights/src/lib/highlight.vm.ts",
+        "hash": "9073077614208039588"
+      },
+      {
+        "file": "libs/trotamundos/highlights/src/lib/routes.ts",
+        "hash": "4491118408651879437"
+      },
+      {
+        "file": "libs/trotamundos/how-it-works/src/index.ts",
+        "hash": "6572693530041441685"
+      },
+      {
+        "file": "libs/trotamundos/how-it-works/src/lib/how-it-works-data-table.service.ts",
+        "hash": "5058693764896569982"
+      },
+      {
+        "file": "libs/trotamundos/how-it-works/src/lib/how-it-works-form.service.ts",
+        "hash": "15914486856738913574"
+      },
+      {
+        "file": "libs/trotamundos/how-it-works/src/lib/how-it-works.facade.ts",
+        "hash": "10092090867092194498"
+      },
+      {
+        "file": "libs/trotamundos/how-it-works/src/lib/how-it-works.vm.ts",
+        "hash": "9351335875368923453"
+      },
+      {
+        "file": "libs/trotamundos/how-it-works/src/lib/routes.ts",
+        "hash": "17020509648741077991"
+      },
+      {
+        "file": "libs/trotamundos/loyality-program/src/index.ts",
+        "hash": "8426221281134365242"
+      },
+      {
+        "file": "libs/trotamundos/loyality-program/src/lib/loyality-program-data-table.service.ts",
+        "hash": "6493374461255380082"
+      },
+      {
+        "file": "libs/trotamundos/loyality-program/src/lib/loyality-program-form.service.ts",
+        "hash": "12700087488717996023"
+      },
+      {
+        "file": "libs/trotamundos/loyality-program/src/lib/loyality-program.facade.ts",
+        "hash": "11548933798489594375"
+      },
+      {
+        "file": "libs/trotamundos/loyality-program/src/lib/loyality-program.vm.ts",
+        "hash": "12837029039812343556"
+      },
+      {
+        "file": "libs/trotamundos/loyality-program/src/lib/routes.ts",
+        "hash": "11892275306465024020"
+      },
+      {
+        "file": "libs/trotamundos/routes.ts",
+        "hash": "11011809179894074011"
+      },
+      {
+        "file": "libs/trotamundos/trips/src/index.ts",
+        "hash": "9813556510984965693"
+      },
+      {
+        "file": "libs/trotamundos/trips/src/lib/routes.ts",
+        "hash": "7619391238842553630"
+      },
+      {
+        "file": "libs/trotamundos/trips/src/lib/trip-data-table.service.ts",
+        "hash": "14050844888057030951"
+      },
+      {
+        "file": "libs/trotamundos/trips/src/lib/trip-form.service.ts",
+        "hash": "2755475710631960565"
+      },
+      {
+        "file": "libs/trotamundos/trips/src/lib/trip.facade.ts",
+        "hash": "5832046115201122624"
+      },
+      {
+        "file": "libs/trotamundos/trips/src/lib/trip.vm.ts",
+        "hash": "16729987258999543207"
+      },
+      {
+        "file": "nx.json",
+        "hash": "13272606992900346266"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "4261358583155828455"
+      },
+      {
+        "file": "package.json",
+        "hash": "15037233246014467365"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16012707426056190431"
+      }
+    ]
+  },
+  "externalNodesHash": "11335069431329270542"
+}

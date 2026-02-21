@@ -1,4 +1,4 @@
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -16,7 +16,7 @@ import { DataTableColumnSchema, TableSort } from './data-table.types';
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [NgClass, FormsModule, NgTemplateOutlet, RouterLink],
+  imports: [NgClass, FormsModule, RouterLink],
   host: { role: 'grid', class: 'data-table' },
   styles: [`
     :host {

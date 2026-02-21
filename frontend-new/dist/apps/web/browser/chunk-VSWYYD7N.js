@@ -1,0 +1,1 @@
+var n=[{path:"sign-in",loadComponent:()=>import("./chunk-BGHDV7VJ.js").then(o=>o.SignInComponent)},{path:"unauthorized",loadComponent:()=>import("./chunk-BRUJJAMR.js").then(o=>o.UnauthorizedComponent)},{path:"forbidden",loadComponent:()=>import("./chunk-RJXVTWKB.js").then(o=>o.ForbiddenComponent)}];export{n as a};
