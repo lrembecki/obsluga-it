@@ -53,7 +53,9 @@
       "@obsluga-it/trotamundos/files": ["libs/trotamundos/files/src/index.ts"],
       "@obsluga-it/trotamundos/about-us": ["libs/trotamundos/about-us/src/index.ts"],
       "@obsluga-it/trotamundos/how-it-works": ["libs/trotamundos/how-it-works/src/index.ts"],
-      "@obsluga-it/trotamundos/routes": ["libs/trotamundos/routes.ts"]
+      "@obsluga-it/trotamundos/routes": ["libs/trotamundos/routes.ts"],
+      "@obsluga-it/forms": ["libs/forms/src/index.ts"],
+      "@obsluga-it/account": ["libs/account/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
