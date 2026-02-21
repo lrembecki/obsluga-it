@@ -29,6 +29,6 @@ export class UsersTableComponent {
   }
 
   protected onRowSelected(row: Record<string, unknown>): void {
-    this.userSelected.emit(row as User);
+    this.userSelected.emit(row as unknown as User);
   }
 }

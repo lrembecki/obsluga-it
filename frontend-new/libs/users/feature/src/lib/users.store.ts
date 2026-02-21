@@ -8,7 +8,7 @@ export class UsersStore {
   private readonly usersGateway = inject(UsersGateway);
 
   readonly usersResource = rxResource<UsersList, void>({
-    loader: () => this.usersGateway.getUsers(),
+    stream: () => this.usersGateway.getUsers(),
   });
 
   get isLoading() {
@@ -22,7 +22,7 @@ export class UsersStore {
   get error(): DomainError | null {
     const err = this.usersResource.error();
     if (!err) return null;
-    return err as DomainError;
+    return err as unknown as DomainError;
   }
 
   reload(): void {
