@@ -1,26 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { signal } from '@angular/core';
 import { internalJwtInterceptor } from './internal-jwt.interceptor';
-import { AuthFacade } from '../facades/auth.facade';
+import { JwtStorageService } from '../services/jwt-storage.service';
 import { AuthSession } from '../models/auth-session.model';
 
 describe('internalJwtInterceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
-  let mockSession: ReturnType<typeof signal<AuthSession | null>>;
+  let storedSession: AuthSession | null;
 
   beforeEach(() => {
-    mockSession = signal<AuthSession | null>(null);
+    storedSession = null;
 
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(withInterceptors([internalJwtInterceptor])),
         provideHttpClientTesting(),
         {
-          provide: AuthFacade,
-          useValue: { session: mockSession },
+          provide: JwtStorageService,
+          useValue: { retrieve: () => storedSession },
         },
       ],
     });
@@ -32,7 +31,7 @@ describe('internalJwtInterceptor', () => {
   afterEach(() => httpMock.verify());
 
   it('should NOT attach JWT to auth endpoint', () => {
-    mockSession.set({ internalJwt: 'internal-jwt', expiresAt: Date.now() + 3600000 });
+    storedSession = { internalJwt: 'internal-jwt', expiresAt: Date.now() + 3600000 };
 
     http.post('api-endpoint/account/authenticate', {}).subscribe();
     const req = httpMock.expectOne('api-endpoint/account/authenticate');
@@ -41,7 +40,7 @@ describe('internalJwtInterceptor', () => {
   });
 
   it('should attach internal JWT to business API requests', () => {
-    mockSession.set({ internalJwt: 'internal-jwt', expiresAt: Date.now() + 3600000 });
+    storedSession = { internalJwt: 'internal-jwt', expiresAt: Date.now() + 3600000 };
 
     http.get('/api/users').subscribe();
     const req = httpMock.expectOne('/api/users');
@@ -50,7 +49,7 @@ describe('internalJwtInterceptor', () => {
   });
 
   it('should NOT attach any token when no session', () => {
-    mockSession.set(null);
+    storedSession = null;
 
     http.get('/api/users').subscribe();
     const req = httpMock.expectOne('/api/users');
