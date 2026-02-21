@@ -38,7 +38,14 @@
       "@obsluga-it/administration/permissions": ["libs/administration/permissions/src/index.ts"],
       "@obsluga-it/administration/permission-groups": ["libs/administration/permission-groups/src/index.ts"],
       "@obsluga-it/administration/subscription-accounts": ["libs/administration/subscription-accounts/src/index.ts"],
-      "@obsluga-it/administration/routes": ["libs/administration/routes.ts"]
+      "@obsluga-it/administration/routes": ["libs/administration/routes.ts"],
+      "@obsluga-it/settings/companies": ["libs/settings/companies/src/index.ts"],
+      "@obsluga-it/settings/contacts": ["libs/settings/contacts/src/index.ts"],
+      "@obsluga-it/settings/websites": ["libs/settings/websites/src/index.ts"],
+      "@obsluga-it/settings/emails": ["libs/settings/emails/src/index.ts"],
+      "@obsluga-it/settings/email-templates": ["libs/settings/email-templates/src/index.ts"],
+      "@obsluga-it/settings/form-definitions": ["libs/settings/form-definitions/src/index.ts"],
+      "@obsluga-it/settings/routes": ["libs/settings/routes.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
