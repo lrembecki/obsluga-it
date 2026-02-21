@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@obsluga-it/core/auth": ["libs/core/auth/src/index.ts"],
+      "@obsluga-it/core/session-store": ["libs/core/session-store/src/index.ts"],
+      "@obsluga-it/core/app-config-store": ["libs/core/app-config-store/src/index.ts"],
+      "@obsluga-it/core/http": ["libs/core/http/src/index.ts"],
+      "@obsluga-it/core/i18n": ["libs/core/i18n/src/index.ts"],
+      "@obsluga-it/shared/ui-kit": ["libs/shared/ui-kit/src/index.ts"],
+      "@obsluga-it/shared/util": ["libs/shared/util/src/index.ts"],
+      "@obsluga-it/users/domain": ["libs/users/domain/src/index.ts"],
+      "@obsluga-it/users/data-access": ["libs/users/data-access/src/index.ts"],
+      "@obsluga-it/users/feature": ["libs/users/feature/src/index.ts"],
+      "@obsluga-it/users/ui": ["libs/users/ui/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

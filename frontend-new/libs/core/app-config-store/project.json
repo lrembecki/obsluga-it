@@ -1,0 +1,16 @@
+{
+  "name": "core-app-config-store",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/core/app-config-store/src",
+  "projectType": "library",
+  "tags": ["scope:core", "type:app-config-store"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/core/app-config-store/**/*.ts"]
+      }
+    }
+  }
+}
