@@ -36,8 +36,9 @@ import { FormRenderer } from './form-renderer';
           />
 
           @if (
-            this._service.mode() === 'edit' &&
-            this._service.schema().canDelete(this.form()!.value)
+            this._service
+              .schema()
+              .canDelete(this._modelProvider.mode(), this.form()!.value)
           ) {
             <app-button
               delete
@@ -67,7 +68,7 @@ import { FormRenderer } from './form-renderer';
   `,
 })
 export class FormTemplate extends BaseFormComponent<any> {
-  private readonly _modelProvider = inject(FormTemplateModelProvider);
+  readonly _modelProvider = inject(FormTemplateModelProvider);
   readonly schema = computed(() => this._service.schema());
   readonly #returnRoute = computed(() => this._service.returnRoute());
 
@@ -80,7 +81,7 @@ export class FormTemplate extends BaseFormComponent<any> {
     effect(() => {
       this._modelProvider.id.set(this.routeParams()!['id'] as string);
       this._modelProvider.mode.set(
-        this.routeParams()!['id']! === 'create' ? 'create' : 'edit',
+        this.routeParams()!['id'] === 'create' ? 'create' : 'edit',
       );
 
       console.log({

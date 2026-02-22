@@ -13,7 +13,7 @@ export class FormSchema<T> {
   patchValue: Partial<T> = {} as Partial<T>;
 
   onChange: (formGroup: FormGroup) => void = () => {};
-  canDelete: (...args: any[]) => boolean = () => true;
+  canDelete: (mode: 'create' | 'edit', ...args: any[]) => boolean = () => true;
 
   constructor(init?: Partial<FormSchema<T>>) {
     Object.assign(this, init);

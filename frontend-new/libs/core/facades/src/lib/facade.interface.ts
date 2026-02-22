@@ -37,6 +37,7 @@ export function provideArrayApiFacade(
   provider: any,
 ): (Provider | EnvironmentProviders)[] {
   return [
+    provider,
     { provide: ArrayApiFacade, useExisting: provider },
     { provide: populateFacadeScope, useExisting: provider },
     { provide: facadeScope, useExisting: provider },
@@ -52,6 +53,7 @@ export function provideObjectApiFacade(
   provider: any,
 ): (Provider | EnvironmentProviders)[] {
   return [
+    provider,
     { provide: ObjectApiFacade, useExisting: provider },
     { provide: populateFacadeScope, useExisting: provider },
     { provide: facadeScope, useExisting: provider },

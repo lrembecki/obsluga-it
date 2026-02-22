@@ -21,6 +21,8 @@ builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
     .ConfigureFunctionsApplicationInsights();
 
+builder.Services.AddHttpClient();
+
 builder.AddInfrastructure(
     isDevelopment: Environment.GetEnvironmentVariable("IsDevelopment") == "true",
     appConfiguration: Environment.GetEnvironmentVariable("AppConfiguration")!, 

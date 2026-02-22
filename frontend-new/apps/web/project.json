@@ -15,7 +15,7 @@
         "browser": "apps/web/src/main.ts",
         "tsConfig": "apps/web/tsconfig.app.json",
         "assets": [{ "glob": "**/*", "input": "apps/web/public" }],
-        "styles": [],
+        "styles": ["node_modules/primeicons/primeicons.css"],
         "scripts": []
       },
       "configurations": {

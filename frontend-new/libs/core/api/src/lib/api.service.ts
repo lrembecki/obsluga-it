@@ -1,12 +1,17 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 import { NotificationService, NotificationInput } from '@obsluga-it/core/notification';
 import { ServiceCallResult } from './service-call-result.model';
 
+export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL', {
+  providedIn: 'root',
+  factory: () => '/api',
+});
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private readonly _apiUrl = '/api';
+  private readonly _apiUrl = inject(API_BASE_URL);
   private readonly _http = inject(HttpClient);
   private readonly _message = inject(NotificationService);
 

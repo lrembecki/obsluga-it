@@ -38,6 +38,11 @@ export class TrotamundosTripFormService extends ArrayFormService<TripVM> {
 
       this._schema.set(
         new FormSchema<TripVM>({
+          canDelete: (mode: 'edit' | 'create', vm: any) => {
+            console.log({ vm });
+
+            return mode == 'edit';
+          },
           patchValue: {
             highlights: highlights.map((e, index) => ({
               order: index + 1,
