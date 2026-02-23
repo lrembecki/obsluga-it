@@ -1,11 +1,13 @@
 import { effect, inject } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ImageFacade } from '@app/core/facades/image.facade';
+import { PriceVM } from '@app/core/models/price.model';
 import {
   CheckboxFormFieldSchema,
   CollectionFormFieldSchema,
   DateFormFieldSchema,
   FormSchema,
+  GroupFormFieldSchema,
   ImageFormFieldSchema,
   MultiSelectFormFieldSchema,
   SelectFormFieldSchema,
@@ -52,16 +54,18 @@ export class TrotamundosTripFormService extends ArrayFormService<TripVM> {
             advantages: advantages.map((e) => e.id),
             schedules: [
               { order: 1, title: 'DZIEŃ 1', content: '' },
-              { order: 1, title: 'DZIEŃ 2', content: '' },
-              { order: 1, title: 'DZIEŃ 3', content: '' },
-              { order: 1, title: 'DZIEŃ 4', content: '' },
+              { order: 2, title: 'DZIEŃ 2', content: '' },
+              { order: 3, title: 'DZIEŃ 3', content: '' },
+              { order: 4, title: 'DZIEŃ 4', content: '' },
             ],
             paymentSchedules: [
-              { order: 1, title: '1', price: '', description: '' },
-              { order: 1, title: '2', price: '', description: '' },
-              { order: 1, title: '3', price: '', description: '' },
+              { order: 1, title: 'RATA 1', price: '', description: '' },
+              { order: 2, title: 'RATA 2', price: '', description: '' },
+              { order: 3, title: 'RATA 3', price: '', description: '' },
             ],
             requirements: [],
+            suggestedFlightNotes:
+              'UWAGA! Nie kupuj lotu do momentu, kiedy nie potwierdzimy wyjazdu! Po zebraniu minimalnej ilości chętnych na wyjazd otrzymasz od nas potwierdzenie realizacji wyprawy. Po otrzymaniu potwierdzenia można kupować lot samodzielnie lub zgłosić się do nas jeśli potrzebujesz w tym zakresie pomocy.',
             suggestedFlights: [],
           },
           fields: [
@@ -138,6 +142,32 @@ export class TrotamundosTripFormService extends ArrayFormService<TripVM> {
               key: 'calendar',
               validators: [],
               colClass: 'col-3',
+            }),
+
+            new GroupFormFieldSchema<TripVM, PriceVM>({
+              label: 'Price',
+              key: 'price',
+              colClass: 'col-3',
+              nestedFields: [
+                new TextFormFieldSchema<PriceVM>({
+                  label: 'Value',
+                  key: 'value',
+                  validators: [Validators.required],
+                  colClass: 'col-6',
+                }),
+                new TextFormFieldSchema<PriceVM>({
+                  label: 'Currency',
+                  key: 'currency',
+                  validators: [Validators.required],
+                  colClass: 'col-6',
+                }),
+                new TextFormFieldSchema<PriceVM>({
+                  label: 'Description',
+                  key: 'description',
+                  validators: [Validators.required],
+                  colClass: 'col-12',
+                }),
+              ],
             }),
 
             // MultiSelect: advantages (string[])

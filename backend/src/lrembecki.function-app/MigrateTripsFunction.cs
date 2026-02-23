@@ -1,6 +1,7 @@
 using lrembecki.core.Helpers;
 using lrembecki.core.storage;
 using lrembecki.core.trotamundos.Trips;
+using lrembecki.core.trotamundos.Trips.Dtos;
 using lrembecki.infrastructure.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

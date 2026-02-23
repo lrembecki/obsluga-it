@@ -1,3 +1,4 @@
+import { PriceVM } from '@app/core/models/price.model';
 import { StorageVM } from 'app/shared/storage/storage.vm';
 
 export class TripVM {
@@ -8,6 +9,7 @@ export class TripVM {
   title: string = null!;
   subtitle: string = null!;
   description: string = null!;
+  price: PriceVM = null!;
   suggestedFlightNotes: string = null!;
   startDate: Date = null!;
   endDate: Date = null!;
@@ -29,6 +31,8 @@ export class TripVM {
 
   constructor(init?: Partial<TripVM>) {
     Object.assign(this, init);
+
+    this.price = new PriceVM(this.price ?? { value: null!, currency: 'PLN' });
 
     if (this.startDate) {
       this.startDate = Date.normalizeUtcDateToLocalCalendar(this.startDate)!;

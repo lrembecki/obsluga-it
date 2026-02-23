@@ -2,6 +2,9 @@ using lrembecki.core.Services;
 using lrembecki.core.storage;
 using lrembecki.core.trotamundos.Advantages;
 using lrembecki.core.trotamundos.LoyalityPrograms;
+using lrembecki.core.trotamundos.Trips.Dtos;
+using lrembecki.core.trotamundos.Trips.Entities;
+using lrembecki.core.trotamundos.Trips.ViewModels;
 
 namespace lrembecki.core.trotamundos.Trips;
 

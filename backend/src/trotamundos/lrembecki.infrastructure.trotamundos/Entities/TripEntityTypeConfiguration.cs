@@ -1,5 +1,5 @@
 ﻿using lrembecki.core.trotamundos.Advantages;
-using lrembecki.core.trotamundos.Trips;
+using lrembecki.core.trotamundos.Trips.Entities;
 using lrembecki.infrastructure.shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -23,6 +23,13 @@ internal class TripEntityTypeConfiguration : SubscriptionBaseEntityTypeConfigura
 
         builder.Property(e => e.Description)
             .IsRequired(false).HasMaxLength(2048);
+
+        builder.ComplexProperty(e => e.Price, p =>
+        {
+            p.Property(p => p.Value).HasColumnName("PriceAmount").HasPrecision(18, 2).IsRequired(false);
+            p.Property(p => p.Currency).HasColumnName("PriceCurrency").HasMaxLength(5).IsRequired(false);
+            p.Property(p => p.Description).HasColumnName("PriceDescription").HasMaxLength(250).IsRequired(false);
+        });
 
         builder.Property(e => e.SuggestedFlightNotes)
             .IsRequired(false).HasMaxLength(2048);

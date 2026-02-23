@@ -18,6 +18,18 @@ public static class RouteGroupBuilderExtensions
 
         return group;
     }
+    public static IEndpointRouteBuilder MapDeleteRequest(
+        this IEndpointRouteBuilder group,
+        Delegate delegateHandler,
+        string route = "",
+        string[] roles = null!)
+    {
+        var endpoint = group
+            .MapDelete(route, delegateHandler)
+            .MapAuthorization(roles);
+
+        return group;
+    }
 
     public static IEndpointRouteBuilder MapPutRequest(
         this IEndpointRouteBuilder group,
@@ -27,6 +39,19 @@ public static class RouteGroupBuilderExtensions
     {
         var endpoint = group
             .MapPut(route, delegateHandler)
+            .MapAuthorization(roles);
+
+        return group;
+    }
+
+    public static IEndpointRouteBuilder MapPostRequest(
+        this IEndpointRouteBuilder group,
+        Delegate delegateHandler,
+        string route = "",
+        string[] roles = null!)
+    {
+        var endpoint = group
+            .MapPost(route, delegateHandler)
             .MapAuthorization(roles);
 
         return group;

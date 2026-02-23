@@ -26,7 +26,8 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
     }
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await DeleteEntity(await _repository.RequireByIdAsync(id, cancellationToken), cancellationToken);
+        var entity = await _repository.RequireByIdAsync(id, cancellationToken);
+        await DeleteEntity(entity, cancellationToken);
         await _uow.SaveChangesAsync(cancellationToken);
     }
     public virtual Task<List<TVM>> GetAllAsync<TFilter>(TFilter filter, CancellationToken cancellationToken = default)
@@ -45,7 +46,7 @@ public class BaseCrudService<TEntity, TVM, TDto>(IUnitOfWork uow) : ICrudService
 
     private MethodInfo GetMapMethod()
     {
-        var vmType = typeof(TVM);
+        var vmType = typeof(TVM);               
         var entityType = typeof(TEntity);
         
         var mapMethod = vmType.GetMethod("Map", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, [entityType]);

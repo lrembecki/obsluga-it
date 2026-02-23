@@ -8,6 +8,10 @@ using lrembecki.core.trotamundos.Pages.AboutUs;
 using lrembecki.core.trotamundos.Pages.Home;
 using lrembecki.core.trotamundos.Pages.HowItWorks;
 using lrembecki.core.trotamundos.Trips;
+using lrembecki.core.trotamundos.Trips.Commands;
+using lrembecki.core.trotamundos.Trips.Dtos;
+using lrembecki.core.trotamundos.Trips.Queries;
+using lrembecki.core.trotamundos.Trips.ViewModels;
 using lrembecki.infrastructure.shared;
 
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +28,12 @@ public static class BootstrapTrotamundos
         services.AddScoped<ILoyalityProgramService, LoyalityProgramService>();
         services.AddScoped<ITripService, TripService>();
         services.AddScoped<IFileService, FileService>();
+
+        services.AddScoped<IHandler<TripsGetAllQuery, List<TripListItemVM>>, TripsGetAllQuery.Handler>();
+        services.AddScoped<IHandler<TripsGetByIdQuery, TripVM>, TripsGetByIdQuery.Handler>();
+        services.AddScoped<IHandler<TripsCreateCommand, TripVM>, TripsCreateCommand.Handler>();
+        services.AddScoped<IHandler<TripsUpdateCommand, TripVM>, TripsUpdateCommand.Handler>();
+        services.AddScoped<IHandler<TripsDeleteCommand, bool>, TripsDeleteCommand.Handler>();
 
         services.AddScoped<IHandler<AboutUsGetAllRequest, AboutUsVM>, AboutUsGetAllRequest.Handler>();
         services.AddScoped<IHandler<AboutUsCreateOrUpdateRequest, AboutUsVM>, AboutUsCreateOrUpdateRequest.Handler>();
@@ -45,8 +55,16 @@ public static class BootstrapTrotamundos
             .MapCrud<IAdvantageService, AdvantageDto, AdvantageVM>("advantages")
             .MapCrud<IHighlightService, HighlightDto, HighlightVM>("highlights")
             .MapCrud<ILoyalityProgramService, LoyalityProgramDto, LoyalityProgramVM>("loyality-programs")
-            .MapCrud<ITripService, TripDto, TripVM>("trips")
             .MapCrud<IFileService, FileDto, FileVM>("files")
+            ;
+
+        group.MapGroup("trips")
+            .RequireAuthorization(e => e.RequireRole("Trotamundos.Trips"))
+            .MapDeleteRequest(TripsDeleteCommand.Delegate, "{id}")
+            .MapPostRequest(TripsCreateCommand.Delegate)
+            .MapPutRequest(TripsUpdateCommand.Delegate, "{id}")
+            .MapGetRequest(TripsGetByIdQuery.Delegate, "{id}")
+            .MapGetRequest(TripsGetAllQuery.Delegate)
             ;
 
         group.MapGroup("individual-trips")

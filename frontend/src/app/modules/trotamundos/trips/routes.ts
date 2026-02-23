@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { provideArrayApiFacade } from '@app/core/interfaces/facade.interface';
 import { provideDataTableService } from '@app/shared/data-table/data-table.service';
 import { provideFormService } from '@app/shared/forms/form.service';
@@ -39,6 +39,13 @@ export const routes: Routes = [
       },
       {
         path: ':id',
+        resolve: {
+          _init: (route: ActivatedRouteSnapshot) => {
+            const id = route.paramMap.get('id');
+            if (id === 'new') return Promise.resolve();
+            return inject(TrotamundosTripFacade).populateById(id as string);
+          },
+        },
         loadComponent: () =>
           import('app/shared/forms/form-template').then((m) => m.FormTemplate),
       },

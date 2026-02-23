@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using lrembecki.infrastructure;
 
@@ -12,9 +13,11 @@ using lrembecki.infrastructure;
 namespace lrembecki.infrastructure.Migrations
 {
     [DbContext(typeof(ObslugaItDbContext))]
-    partial class ObslugaItDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260222143825_TrotamundosTrips-202602221538")]
+    partial class TrotamundosTrips202602221538
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1442,11 +1445,6 @@ namespace lrembecki.infrastructure.Migrations
                                 .HasMaxLength(5)
                                 .HasColumnType("nvarchar(5)")
                                 .HasColumnName("PriceCurrency");
-
-                            b1.Property<string>("Description")
-                                .HasMaxLength(250)
-                                .HasColumnType("nvarchar(250)")
-                                .HasColumnName("PriceDescription");
 
                             b1.Property<decimal?>("Value")
                                 .HasPrecision(18, 2)

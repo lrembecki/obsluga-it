@@ -1,4 +1,4 @@
-﻿using lrembecki.core.trotamundos.Trips;
+﻿using lrembecki.core.trotamundos.Trips.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

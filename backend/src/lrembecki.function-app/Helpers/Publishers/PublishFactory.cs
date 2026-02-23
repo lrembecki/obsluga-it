@@ -6,8 +6,7 @@ using lrembecki.core.settings.Website;
 using lrembecki.core.trotamundos.Files;
 using lrembecki.core.trotamundos.Pages.AboutUs;
 using lrembecki.core.trotamundos.Pages.HowItWorks;
-using lrembecki.core.trotamundos.Trips;
-
+using lrembecki.core.trotamundos.Trips.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace lrembecki.function_app.Helpers.Publishers;

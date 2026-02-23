@@ -96,6 +96,30 @@ export abstract class ObjectApiFacade<T>
     await this.populate();
   }
 
+  protected async populateByRoute<Y>(
+    route: string,
+  ): Promise<ServiceCallResult<Y>> {
+    const headers: Record<string, string> = {};
+    const filter = this._filter();
+
+    if (Object.values(filter).length) {
+      headers['filter'] = JSON.stringify(filter);
+    }
+
+    this._loading.set(true);
+
+    let endpoint = `${this._endpoint}`;
+    if (route) {
+      endpoint += `/${route}`;
+    }
+
+    const response = await this._api.get<Y>(endpoint, {}, headers);
+
+    this._loading.set(false);
+
+    return response;
+  }
+
   async populate(): Promise<this> {
     if (this._loading()) {
       await Promise.resolve(() => {
@@ -104,17 +128,7 @@ export abstract class ObjectApiFacade<T>
       return this;
     }
 
-    const headers: Record<string, string> = {};
-    const filter = this._filter();
-
-    if (Object.values(filter).length) {
-      headers['filter'] = JSON.stringify(filter);
-    }
-
-    console.log({ headers, filter });
-
-    this._loading.set(true);
-    const response = await this._api.get<T>(this._endpoint, {}, headers);
+    const response = await this.populateByRoute<T>(null!);
     this._loading.set(false);
 
     if (response.success && response.data) {
@@ -200,7 +214,24 @@ export abstract class ObjectApiFacade<T>
 }
 
 export abstract class ArrayApiFacade<T> extends ObjectApiFacade<T[]> {
+  public getId(model: T): string {
+    return (model as any).id;
+  }
+
   public getById(id: string): T | null {
-    return this.data().find((e) => (e as any).id === id) ?? null;
+    return this.data().find((e) => this.getId(e) === id) ?? null;
+  }
+
+  public async populateById(id: string): Promise<this> {
+    const response = await this.populateByRoute<unknown>(id);
+
+    if (response.success && response.data) {
+      const data = this._data();
+      const existing = data.findIndex((e) => this.getId(e) === id);
+      data[existing] = response.data as T;
+      this._data.set([...data]);
+    }
+
+    return this;
   }
 }
